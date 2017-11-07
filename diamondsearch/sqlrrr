@@ -1,0 +1,1 @@
+SELECT  * FROM  dev_products where price > 0  AND carat >= 0.15 AND carat <= 9.99 AND shape in ('AS') AND cut in ('Good','Very Good','Ideal','Premium') ORDER BY price desc LIMIT 0, 15

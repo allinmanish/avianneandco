@@ -1,0 +1,451 @@
+/* CSS Document */
+body {
+	background:#e0f0c0 url(http://www.intercarats.com/images/bg.jpg) repeat-x top left;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#555555;
+	font-size:12px;
+}
+
+.commonheader{background-color:#81ae33; font-weight:bold; height:20px; padding-left:5px; padding-top:6px;margin-top:5px;}
+
+body,h1,h2,h3,h4,h5,table,tr,td,p,table tr td,form{
+margin: 0px;
+padding: 0px;
+}
+h1{font-size: 20px;}
+h2{font-size: 18px;}
+h3{font-size: 16px;}
+h4{font-size: 14px;}
+h5{font-size: 12px;}
+
+a{text-decoration:none; color:#81ae33;}
+
+.txtcenter{text-align: center;} 
+.txtleft{text-align: left;} 
+.txtright{text-align: right;} 
+.center{
+margin: 0px auto;
+padding: 0px;
+}
+.w950px{width: 950px;}
+.w600px{width: 600px;}
+.w700px{width: 700px; }
+.w400px{width: 400px; }
+.w195px{width: 195px;}
+
+.pad10{padding: 10px 10px 0px 10px;}
+.pad5{padding:5px;}
+.pad05{padding:0px 5px 5px 5px;}
+.m10,.footer img{
+margin: 10px 10px 0px 10px;
+}
+.white,a.white,.white a{color: #000000; text-decoration: none;}
+.white a:hover{text-decoration: underline;}
+
+.mcontent{
+min-height: 750px;
+}
+
+img,table,tr,td, table tr, table tr td{
+border: 0px;
+}
+
+.footer{
+/*background: url(http://www.intercarats.com/images/footerback.jpg) repeat-x;*/
+background-color:#80ad32;
+width: 100%;
+height: 110px;
+}
+ 
+ 
+
+.lispace {
+	width:5px;
+	height:4px;
+	
+}
+.floatr{float:right;}
+.floatl,.lispace,.top_menu_ir,.top_menu_im,.top_menu_il,.atop_menu_ir,.atop_menu_im,.atop_menu_il{float: left;}
+.clear{clear: both;}
+
+ul{
+margin: 0px;
+padding: 0px;
+list-style: none;
+}
+
+.page{
+background: #81ae33;
+min-height: 985px;
+}
+
+.footermenu{
+ background: url(http://www.intercarats.com/images/footermenuback.jpg) repeat-x;
+ height: 122px;
+}
+.footermenu a:hover,.footermenu p:hover{
+ color: #333333;
+}
+
+.footermenu h1,.footermenu h1 a{
+font-size: 14px;
+padding-bottom: 5px;
+color: #90bd43;
+}
+
+.footerdiv{
+ background: url(http://www.intercarats.com/images/footerdiv.jpg) no-repeat;
+ height: 122px;
+ padding: 10px 25px 0px 25px;
+}
+
+.footermenu ul{
+list-style: none;
+}
+.footermenu ul li{
+background: none;
+}
+ 
+.footermenu ul li a,.footermenu p{
+ color: #90bd43;
+} 
+
+
+.boxdiv{
+background: #FFFFFF url(http://www.intercarats.com/images/boxdivback.jpg) repeat-x top left; /*cbef8d*/
+border:#006600 1px solid;
+padding: 3px;
+}
+
+.boxdiv h1{
+font-size: 14px;
+color: #608819;
+}
+
+.boxdiv ul{
+margin-top: 10px;
+}
+.boxdiv ul li{
+padding: 4px 0px 4px 0px;
+}
+.boxdiv ul li a{
+font-size: 10px;
+font-weight: bold;
+/*color: #0489AA;*/
+color:#608819;
+/*background: url(http://www.intercarats.com/images/arrow.jpg) no-repeat;*/
+padding-left: 13px;
+}
+
+.boxdiv ul li a:hover,.boxdiv ul li a.active{background: url(http://www.intercarats.com/images/arrowactive.jpg) no-repeat;color: #9E8507;}
+.greena,a.greena{color: #65A157; font-size: 11px;}
+.cbg{background:#81ae33;}
+.body{
+width: 720px;
+overflow: hidden;
+padding:0px 5px;
+font-size: 11px;
+}
+.bodytop{background: url(http://www.intercarats.com/images/bodytop.jpg) no-repeat;width: 720px; height: 12px;}
+.bodymid{background: url(http://www.intercarats.com/images/bodymid.jpg) repeat-y; width: 710px; padding: 0px 5px;}
+.bodymid a{color:#006600;}
+.bodybottom{background:url(http://www.intercarats.com/images/bodybottom.jpg) no-repeat;width: 720px; height: 12px;}
+ 
+.dbr{height: 20px;}
+
+.searchbtn{
+background: url(http://www.intercarats.com/images/go.jpg) no-repeat;
+border:0px;
+width: 35px;
+height: 19px;
+margin-left: 140px;
+}
+
+.searchleft{
+width: 170px;
+border: 1px #999999 solid;
+margin: 2px 0px 2px 0px;
+}
+
+.minh500px{
+min-height: 500px;
+margin-bottom: 10px;
+}
+.mainmenudiv{width: 545px; height: 34px; padding: 0px; margin:0px;}
+#mainmenu, #mainmenu ul {padding:0; margin:0 auto; list-style:none; background:#fff;}
+#mainmenu {position:relative; z-index:50;}
+#mainmenu ul {display:none;}
+
+#mainmenu li {float:left; position:relative;}
+#mainmenu li a {text-decoration:none; white-space:nowrap; text-align: center; border-bottom: 1px #b4df69 solid; padding}
+#mainmenu li b {display:block;cursor:pointer; height:30px; line-height:30px; float:left;color:#000;}
+#mainmenu li a b.clicked {color:#000;}
+
+#mainmenu li ul {position:absolute; left:0; top:35px; height:auto; float:left; background:#f8f8f8; padding:0px; border:1px solid #b4df69; border-bottom: none;} 
+#mainmenu li ul.w1 {width:200px;}
+#mainmenu li ul.w2 {width:250px;}
+#mainmenu li ul.w3 {width:250px;}
+#mainmenu li ul.w4 {width:200px;}
+#mainmenu li ul.w5 {width:200px;}
+#mainmenu li ul.w6 {width:200px;}
+
+#mainmenu li ul li {float:none;}
+#mainmenu li ul li a {display:block; height:20px; line-height:20px; padding:0 5px; color:#000; text-align: left;}
+#mainmenu li ul li a:hover {background:#81ae33; color:#fff;}
+
+.diamond{
+background: 
+}
+
+.overh{
+overflow: hidden;
+}
+
+li.mainmenu{
+background: url(http://www.intercarats.com/images/mainmenu1.gif) no-repeat;
+width: 95px;
+padding-left: 10px;
+
+}
+li.mainmenu2{
+background: url(http://www.intercarats.com/images/mainmenu2.gif) no-repeat;
+width: 71px;
+padding-left: 15px;
+}
+li.mainmenu3{
+padding-left: 5px;
+background: url(http://www.intercarats.com/images/mainmenu3.gif) no-repeat;
+width: 127px;
+}
+
+li.amainmenu,li.mainmenu:hover{
+background: url(http://www.intercarats.com/images/amainmenu1.jpg) no-repeat;
+width: 95px;
+padding-left: 10px;
+
+}
+li.amainmenu2,li.mainmenu2:hover{
+background: url(http://www.intercarats.com/images/amainmenu2.jpg) no-repeat;
+width: 71px;
+padding-left: 15px;
+}
+li.amainmenu3,li.mainmenu3:hover{
+padding-left: 5px;
+background: url(http://www.intercarats.com/images/amainmenu3.jpg) no-repeat;
+width: 127px;
+}
+
+
+.mainmenu3,.mainmenu2,.mainmenu,.amainmenu3,.amainmenu2,.amainmenu{
+height: 34px;
+margin-left: 7px;
+}
+
+.button{ background: url(http://www.intercarats.com/images/buttonbg.jpg) repeat-x ; border: 1px solid #b4df69; font-size:11px; color: #FFFFFF; padding: 2px; margin: 10px; cursor: help;}
+.adminbutton{ background:#0392B4; padding: 8px; border: 1px #003300 solid; color: #FFFFFF; font-weight: bold;}
+.adminbutton:hover{ background:#0099CC; padding: 8px; border: 1px #003300 solid; }
+
+
+.error,.require{
+color:#FFFF00;
+font-weight: bold;
+border: 1px solid #ff0000;
+background: #ff0000;
+}
+.success{
+background: #CFF5D9;
+color:#003300;
+border:#006633 1px dotted;
+font-weight: bold;
+}
+
+.require{
+float: left;
+}
+
+input{
+border: 1px #E1E1E1 solid;
+margin-bottom: 3px;
+}
+input:focus {
+border: 1px #666666 solid;
+/*background:#F7F7F7;*/
+}
+
+.price {background: url(http://www.intercarats.com/images/dollar.jpg) no-repeat; padding-left: 13px;  }
+.price:focus {background:#F7F7F7 url(http://www.intercarats.com/images/dollar.jpg) no-repeat;
+padding-left: 13px;  }
+
+.tborder{ border: 1px solid #F3F3F3; }
+
+ 
+ 
+ 
+ 
+#facebox .b {  background:url(http://www.intercarats.com/images/b.png); }
+
+#facebox .tl {  background:url(http://www.intercarats.com/images/tl.png);}
+
+#facebox .tr {  background:url(http://www.intercarats.com/images/tr.png);}
+
+#facebox .bl {  background:url(http://www.intercarats.com/images/bl.png);}
+
+#facebox .br {  background:url(http://www.intercarats.com/images/br.png);}
+
+#facebox {  
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  text-align: left;
+}
+
+#facebox .popup {  position: relative;}
+
+#facebox table {  border-collapse: collapse;}
+
+#facebox td {  border-bottom: 0;  padding: 0;}
+
+#facebox .body {
+  padding: 10px;
+  background: #ffffff url(http://www.intercarats.com/images/boxdivback.jpg) repeat-x;
+  width: 370px;
+}
+
+#facebox .loading {  text-align: center; }
+
+#facebox .image {  text-align: center; }
+
+#facebox img {
+  border: 0;
+  margin: 0;
+}
+
+#facebox .ffooter {
+  border-top: 1px solid #DDDDDD;
+  padding-top: 5px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+#facebox .tl, #facebox .tr, #facebox .bl, #facebox .br {
+  height: 10px;
+  width: 10px;
+  overflow: hidden;
+  padding: 0;
+}
+
+#facebox_overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height:100%;
+  width:100%;
+}
+
+.facebox_hide {  z-index:-100; }
+
+.facebox_overlayBG {  background-color: #000;  z-index: 99; }
+
+* html #facebox_overlay { /* ie6 hack */
+  position: absolute;
+  height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+}
+
+
+.searchdiamondsshape img{
+width: 15px;
+height: 15px;
+overflow: hidden;
+border: 1px #eeeeee solid;
+float: left;
+opacity: 0.8; filter: alpha(opacity=80); 
+margin: 1px;
+}
+.searchdiamondsshape img:hover{
+opacity: 1.0; filter: alpha(opacity=100); 
+}
+
+.searchdiamondsshape img.selected{
+border: 1px #000 solid;
+opacity: 1.0; filter: alpha(opacity=100); 
+}
+
+
+
+.pagingdiv{
+  text-align: right;
+  float: right;
+  margin-right: 10px;
+  }
+ .pagingdiv ul{
+  list-style: none;
+  padding: 0px;
+  margin: 0px auto;
+ 
+  
+  }
+ .pagingdiv ul li{
+  float: left;
+  margin: 0px;
+  }
+.pagingdiv ul li a{
+   display: block;
+  padding: 4px;
+  color: #cccccc;
+  border: 1px #eaeaea solid;
+  text-decoration: none;
+   margin: 4px; 
+  }
+.pagingdiv ul li.active{
+  display: block;
+  background: #eaedea;
+  padding: 4px;
+  border: 1px #eaeaea solid;
+  margin: 4px;
+  font-weight: bold;
+  }
+.pagingdiv ul li a:hover{
+	background: #eaedea;
+	color: #000;
+	}
+  
+a.search{
+background:  url(http://www.intercarats.com/images/search.png) no-repeat;
+margin: 3px;
+padding: 0px 5px 5px 18px;
+}
+.ringtile{
+width: 80px;
+height:80px; 
+overflow:hidden;
+}
+.shapetile{
+width: 20px;
+height: 20px;
+overflow: hidden;
+padding: 1px;
+margin: 1px 1px 1px 1px;
+
+}
+.w100pc{
+width: 100%;
+}
+.inline{
+display: inline;
+}
+ 
+/*celverweb*/ 
+#slideblocker{
+display:none;
+cursor:wait;
+background:transparent;
+position:fixed;
+height:100%;
+width:100%;
+left:0;
+top:0;
+z-index:3000;
+}
+  
+.commonheader{ background-color:#81ae33; font-weight:bold; height:20px; padding-left:5px; padding-top:6px;margin-top:5px;}

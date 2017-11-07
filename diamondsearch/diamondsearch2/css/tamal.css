@@ -1,0 +1,219 @@
+
+.pageheader{font-size:20px; color:#305D83; font-family:Georgia,Century Schoolbook L,Palatino,serif;}
+.pageheader2{text-align:center;}
+.divheader{font-size:16px; color:#305D83; font-family:Georgia,Century Schoolbook L,Palatino,serif; font-weight:bold;}
+.tileheader{font-size:11px; color:#305D83; font-family:Georgia,Century Schoolbook L,Palatino,serif; font-weight:bold;}
+.tilecontainer{font-size:9px;}
+ul.arrowlist li{background:  url(../images/tamal/arrow_sm.jpg) no-repeat; padding-left: 6px;}
+
+.welcomediv{width: 410px;}
+.bigcontainerL{width:195px;}
+.bigcontainerL1{width:210px;}
+.bigcontainerR{width:315px;}
+.tile{width:250px;}
+.tile0{width:220px; }
+.tileL{width:100px;}
+.tileR{width:140px;}
+.w20px{width:20px;}
+.w25px{width:25px;}
+.w35px{width:35px;}
+.w50px{width:50px;}
+.w60px{width:60px;margin:2px;}
+.w80px{width:80px;}
+.w85px{width:85px;}
+.w100px{width:100px;}
+.w125px{width:125px;}
+.w150px{width:150px;}
+.w200px{width:200px;}
+.w350px{width:350px;}
+.inboxcolumn{width:240px;}
+.column{width:255px;}
+.triplecolumn{width:160px;}
+
+.vsmall{font-size:9px; color:#305D83;}
+.more{background:url(../images/tamal/more.jpg) no-repeat; width:40px; height:16px; border:none;}
+
+
+.hr{border-bottom: 1px #E0E0E0 solid; padding: 5px;} 
+.line{border-bottom: 1px #999999 solid;}
+/* -----------------This file skins sliders--------------------- */
+
+.ui-slider { width: 180px; height: 23px; position: relative; background-repeat: no-repeat; background-position: center center; }
+.ui-slider-handle { position: absolute; z-index: 1; height: 23px; width: 11px;  top: 0px; left: 0px; background-image: url(../images/slider_handle.png);  }
+.ui-slider-handle-active { border: none;  }
+ 
+.ui-slider-range { position: absolute; background:  url(../images/range.png) repeat-x; opacity: 1.0; filter: alpha(opacity=10); width: 100%; height: 100%; }
+
+/* Default slider backgrounds */
+.ui-slider, .ui-slider-1 { background-image: url(../iimages/slider_bar.png); }
+.ui-slider-2 { background-image: url(../images/slider_bar2.jpg); }
+.ui-slider-3 { background-image: url(../images/slider_bar3.jpg); }
+/*------------------------------------------------------------------*/
+.blue{color:#305D83;}
+.gold{color:#305D83;}
+.gray{color:#555555;}
+.bgblue{color:#305D83; font-weight:bold;}
+.bgblue1{color:#305D83; font-weight:bold;}
+.white{color:#FFFFFF;}
+
+.selectedtab{background:#FFF;font-size:10px; width:164px; border:1px solid #E5E5E5; height:35px; text-align:left; font-weight:bold; margin:2px;margin-bottom:0px;}
+.tabheader{background:#F5F3F4;font-size:10px; width:164px; border:1px solid #DBDBDB; height:35px; text-align:left; font-weight:bold; margin:2px;margin-bottom:0px;}
+.smalltabheader{background:#F5F3F4;font-size:10px; width:120px; border:1px solid #DBDBDB; height:40px; text-align:left; font-weight:bold; margin:2px;}
+.smalltabselected{background:#FFF;font-size:10px; width:120px; border:1px solid #E5E5E5; height:40px; text-align:left; font-weight:bold; margin:2px;}
+
+.txtsmall{font-size:9px;}
+
+
+ul.buttonlist li{
+	background:url(../images/tamal/diamond_lst.jpg) no-repeat;
+	 height:9px; 
+	 border:none;
+	 }
+
+.linkmanu{position:relative;top:4px;left:30px;background:#B1BDCD;width:inherit;}
+ul.lhight14 li{
+	list-style-image:url(../images/tamal/diamond_lst.jpg);
+	margin-left:15px;
+	text-decoration:underline;
+}
+
+.relativediv {
+	display:block;
+	position:relative;
+	margin:0 auto;
+	width:200px;
+	
+}
+.txtred{color:#FF0000;}
+.headerbg{background:#F0EEEF;}
+/*----------------------------------------------New design-----------------------------------------------*/
+.topdiv{text-align:center;font-size:14px; color:#305D83; font-family:Georgia,Century Schoolbook L,Palatino,serif;}
+.topdiv a{color:#000000;}
+.marginR5{margin-right:5px;}
+.newtileheader{font-size:13px; color:#305D83; font-family:Georgia,Century Schoolbook L,Palatino,serif; font-weight:bold;}
+.fakaline{line-height:18px;}
+
+.boxrow{width:480px; border:#E5E5E5;border:1px solid #E5E5E5;margin:10px;}
+.boxitem{ width:230px;border:#E5E5E5;border:1px solid #E5E5E5;margin:10px;}
+
+.tbuttonx{background:url(../images/tamal/button_bg.jpg) repeat-x; font-size:11px; font-family:Verdana, Arial, Helvetica, sans-serif; font-weight:bold; color:#0289A9; }
+
+/*.searchdiamondbtn{background:url(../images/tamal/search_diamond.png) no-repeat; width:137px; height:25px; border:none;}*/
+.searchdiamondbtn{background:#1E2D5B; color:#FFF; font-weight:bold;  border:none; padding:5px 10px 5px 10px}
+
+/*.resumebtn{background:url(../images/tamal/resume_last_src.png) no-repeat; width:143px; height:24px; border:none;}*/
+.resumebtn{background:#934242; color:#FFF; font-weight:bold;  border:none; padding:5px 10px 5px 10px}
+
+
+.buildearringbtn{background:url(../images/tamal/build_earring_btn.png) no-repeat;width:147px; height:20px; border:none;margin:10px;}
+
+.m2{margin: 2px 2px 0px;}
+.m5{margin: 5px 5px 0px;}
+.m7{margin:7px 7px 0px;}
+.m10{margin:10px 10px 0px 10px;}
+.ml4{margin-left:4px;}
+.vmiddle{vertical-align:middle;}
+.border{border:#E5E5E5;border:1px solid #E5E5E5; margin:4px;}
+.borderrigth{border-right: 1px #e0e0e0 solid;}
+
+.txtcenter1{margin:0 auto;width:150px;}
+
+.depthpercent{
+	background-color:#FFFFFF;
+	left:150px;
+	padding-bottom:2px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;	
+	text-align:center;
+	top:90px;
+	width:40px;
+	position:relative;
+}
+
+.tablepercent {
+	background-color:#FFFFFF;
+	left:67px;
+	padding-bottom:2px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	position:relative;
+	text-align:center;
+	top:-39px;
+	width:40px;
+}
+.depth{
+	background-color:#FFFFFF;
+	left:-8px;
+	padding-bottom:2px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	position:relative;
+	text-align:center;
+	top:25px;
+	width:40px;
+}
+.culet{
+	background-color:#FFFFFF;
+	left:112px;
+	padding-bottom:2px;
+	padding-left:2px;
+	padding-right:2px;
+	padding-top:2px;
+	position:relative;
+	text-align:center;
+	top:67px;
+	width:40px;
+}
+.sidedetail{
+
+ height:151px; 
+ width:184px;}
+
+.hiddendiv{width: 55px;height: 37px;background: none;display:block;}
+.underline{text-decoration:underline;}
+.tablaheader{background-color:#305D83;color:#fff; border:1px solid #FFFFFF;border-collapse: separate; height:30px; font-weight:bold;}
+.rowstyleodd{background:#fff;}
+.commonheader{background-color:#305D83; font-weight:bold; color:#FFFFFF; height:20px; padding-left:5px; padding-top:6px;margin-top:5px;}
+
+.smallbox : hover {
+border-color:#D6DEFC;
+border-style:solid;
+border-width:1px 1px 5px;
+opacity:1;
+}
+.smallbox { 
+	background:#FFFFFF none repeat scroll 0; 
+	border-color:#FFFFFF #FFFFFF;
+ 	border-style:solid;
+	 border-width:1px 1px 5px;
+  	display:block;
+	padding:10px 10px 0 0;
+   	width:150px; 
+}
+.tbutton {background-color:#305D83; color:#FFFFFF; font-size:9px; border:none; cursor:pointer;}
+.tbutton2{background-color:#305D83; color:#FFFFFF; font-size:9px; border:none; cursor:pointer; height: 20px; font-weight:bold; margin:5px 2px 5px 2px; vertical-align:middle;}
+.tbutton3{background: url(../images/tamal/tbutton.jpg) no-repeat; height:25px; width:108px; text-align:center; vertical-align:middle; border:none;color:#FFFFFF; font-size:10px; cursor:pointer; padding-bottom:2px;}
+.quantity{width:30px; vertical-align:middle; margin:3px;; text-align:center}
+.rowborder {border:1px solid #044352;}
+.cartrowodd{background-color:#F0EEEF ;}
+.cartroweven{background-color:#CCCCCC;}	
+.cartheader{background-color:#305D83; color:#FFF; font-weight:bold; height:20px; padding-left:5px; padding-top:6px;margin-top:5px;}
+.remove,a.remove{ background: url(../images/delete.png) no-repeat; padding : 0px 10px 10px 10px;}
+.update,a.update{ background:url(../images/update.png) no-repeat; padding : 0px 10px 10px 10px;}
+.lebelfield{width:125px; text-align:right; margin:0px 5px 5px 5px;}
+.inputfield{width:350px; text-align:left; margin:0px 5px 5px 5px;}
+.lebelfieldsmall{width:80px; text-align:left; margin:5px 5px 0px 0px;}
+.inputfieldsmall{width:140px; text-align:left; margin:5px 5px 0px 0px;}
+.valignmiddle{ vertical-align:bottom;}
+.required{color:#FF0000;}
+.resultheader{font-size:16px; font-weight:bold; color:#0289A9;}
+.noresult{font-size:16px; font-weight:bold; color:#FF0000;}
+.searchFirst{
+	background:#FFF;
+	height:700px;
+	width:730px;
+	overflow:hidden;
+}

@@ -1,0 +1,89 @@
+  	   <div class="clear"></div>
+   	   </div>
+   	   
+
+   	   </div>
+   	</td>
+  </tr>
+  
+  
+  <tr>
+   <td>
+     <div class="footermenu">
+           	<div class="floatl pad10">
+            	<h1><a href="#">Contact us</a></h1>
+            	
+            </div>
+            <div class="footerdiv floatl pad10">
+            	<h1><a href="<?php echo config_item('base_url') ?>site/page/aboutus">About us</a></h1>
+            	<ul>
+            	 	<li><a href="<?php echo config_item('base_url') ?>site/page/erdadvantage">ERD Advantage</a></li>
+            	 	<li><a href="<?php echo config_item('base_url') ?>site/page/conflictfreepolicy">Conflict-free Policy</a></li>
+            	 	<li><a href="<?php echo config_item('base_url') ?>site/page/careers">Careers</a></li>
+            	 	<li><a href="<?php echo config_item('base_url') ?>site/page/sitemap">Site Map</a></li>
+            	</ul>
+            </div>
+            <div class="footerdiv floatl pad10">
+            	<h1>Services</h1>
+            	<ul>
+            	 <li><a href="<?php echo config_item('base_url') ?>site/page/freefedEx">Free FedEx Overnight</a></li>
+            	 <li><a href="<?php echo config_item('base_url') ?>site/page/returnsFinancingInsurance">Returns Financing & Insurance</a></li>
+            	 <li><a href="#">Refer a Friend</a></li>
+            	 <li><a href="#">Sweepstakes</a></li>
+            	 
+            	</ul>
+            </div>
+            <div class="footerdiv floatl pad10">
+            	<h1>We Bye Diamonds</h1>
+            	<ul>
+            	 <li><a href="#">Sell Your Dimond</a></li>
+            	</ul>
+            </div>
+            <div class="footerdiv floatl pad10">
+            	<h1>Newsletter And Offers</h1>
+            	<p style="width:180px;">
+            		Receive Special offers and gift ideas from Engagement Rings Direct 
+            	</p>
+            </div>
+            <div class="clear"></div>
+     </div>
+   </td>
+  </tr>
+  
+  
+</table>
+
+</div>
+
+
+
+
+
+<div class="footer txtcenter">
+ 	<div class="center w950px pad10">
+ 	    <div class="white">
+		  
+		    	<a href="<?php echo config_item('base_url') ?>site/page/sitemap">Site map</a> | 
+		    	<a href="<?php echo config_item('base_url') ?>site/page/legalnotices">Legal Notices</a> | 
+		    	<a href="<?php echo config_item('base_url') ?>site/page/privacypolicy">Privacy Policy</a> | 
+		    	<a href="<?php echo config_item('base_url') ?>site/page/conflictfreepolicy">Conflict-free Policy</a> | 
+		    	<a href="<?php echo config_item('base_url') ?>site/page/copyrigth">&copy; 1999-<?php echo date('Y');?></a>,E.R.D.,Inc.
+		   
+		 </div>
+		 <div><br></div>
+		 <div id="fisheye2" class="fisheye1">
+			<div class="fisheyeContainter">
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/versign.png" width="10"/></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/fedex.png" /></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/ags.png" /></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/creditcard.png" /></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/gia.png" /></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/vatche.png" /></a>
+		 		<a href="#" class="fisheyeItem"><span></span><img src="<?php echo config_item('base_url');?>images/jewelers.png" /></a>
+	 		</div>
+ 		</div>   
+ 	</div>
+</div>
+
+</body>
+</html>

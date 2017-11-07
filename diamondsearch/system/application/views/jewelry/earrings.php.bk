@@ -1,0 +1,211 @@
+<div class="floatl pad05 body">
+  <div class="bodytop"></div>
+	  <div class="bodymid">
+	  
+	  		<div class="topdiv">
+				<?php echo $top_ads;?>
+			</div>	   				   
+	   			  		
+	  		<div class="divheader m10"> DIAMOND EARRINGS </div>
+			<div class="dbr"></div>	
+			
+			<div class="m10">
+					Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script Demo Script 
+			</div>
+			<div class="dbr"></div>
+			
+			<div>			
+					<div class="floatl inboxcolumn borderrigth m5">
+						<p class="divheader">Build Your Own Earring</p>
+						<div class="floatl tileR"><img src="<?php echo config_item('base_url')?>/images/tamal/earring/earring_sm.jpg"></div>
+						<div class="floatl tileL">
+								Custom earrings with certified diamonds in 2 to 5 days. From $900 to over $200,000.
+								<br><br><p><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a> </p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					
+					<div class="floatl inboxcolumn m5">
+						<p class="divheader">Dimaond Stud Earrings</p>
+						<div class="floatl tileR"><img src="<?php echo config_item('base_url')?>/images/tamal/earring/earrings_stud_sm.jpg"></div>
+						<div class="floatl tileL">
+								Popular sizes and shapes available for same-day shipping. Starting at $225.
+								<br><br><p><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+			</div>	
+			
+	   		
+	   		<!--<div>
+	   				<div class="floatl column">
+	   						<img src="<?php echo config_item('base_url')?>images/ruman/jewelry/Jewelry_01.jpg">
+	   				</div>	   				
+	   				
+	   				<div class="floatl column">
+	   						<div class="newtileheader txtleft padt10">
+	   							<div class="floatl"><img src="<?php echo config_item('base_url')?>/images/ruman/jewelry/Bracelets_02.jpg" align="bottom">&nbsp;</div>
+   								<div class="floatl padt10 font12">Find the Perfect Earrings</div>
+   								<div class="clear"></div>
+	   						</div>
+	   						<div class="divcontainer fakaline   padl10">
+	   								<p>Find diamond jewelry within your budget.</p> 	   								
+	   								<ul class="arrowbrown padl10">
+	   									<li><a href="#" class="underline">Under $100 </a></li>
+	   									<li><a href="#" class="underline">$100 to $250</a></li>
+	   									<li><a href="#" class="underline">$2500 to $500 </a></li>
+	   									<li><a href="#" class="underline">Over $500</a></li>
+	   									<li><a href="#" class="underline">Build Yout Own Earrings</a></li>
+	   								</ul>
+	   						</div>
+	   				</div>	   		
+	   				
+	   				<div class="clear"></div>		   		
+	   		</div>-->
+	   		
+	   		<div class="txtcenter">
+	   			<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Diamond Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<div class="floatl tileL">
+		   				<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/diamond_05.jpg"><br>
+	   				</div>
+	   				<div class="floatl w125px">
+						<div class="pad10 textleft">
+			   				For a stunning gift, give her brilliant diamond earrings,. starting at $385.
+			   			</div>
+			   			<div><br></div>
+			   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+			   			<div class="clear"></div>
+			   		</div>
+			   		<div class="clear"></div>
+		   		</div>
+				<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Pearl Stud Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<div class="floatl tileL">
+		   				<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_07.jpg"><br>
+	   				</div>
+	   				<div class="floatl w125px">
+						<div class="pad10 textleft">
+			   				Surprise her with a gift of beautiful pearl stud earring, starting at $50.
+			   			</div>
+			   			<div><br></div>
+			   			
+			   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+			   			<div class="clear"></div>
+			   		</div>
+			   		<div class="clear"></div>
+		   		</div>	   		
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		<div class="txtcenter">
+	   			<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Pearl Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<div class="floatl tileL">
+		   				<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_01.jpg"><br>
+	   				</div>
+	   				<div class="floatl w125px">
+						<div class="pad10 textleft">
+			   				Give her high-quality cultured pearl earrings, a classic, from $45.
+			   			</div>
+			   			<div class="dbr"></div>
+			   			
+			   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+			   			<div class="clear"></div>
+			   		</div>
+			   		<div class="clear"></div>
+		   		</div>
+				<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Silver Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_02.jpg">
+		   			<div class="pad10 textleft">
+		   				Beautiful sterling silver shine with outstanding value, staring at $35.
+		   			</div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>		   		
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		
+	   		
+	   		
+	   		<div class="txtcenter">
+				<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Top Ten Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/diamond_09.jpg">
+		   			<div class="pad10 textleft">
+		   				With a board range of style to choose from, you're sure to find a gift she'll love.
+		   			</div>
+		   			<div class="dbr"></div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>		   		
+		   		<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Gemstone Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_03.jpg">
+		   			<div class="pad10 textleft">
+		   				Choose from vivid blue sapphires and red rubies, or view our pink sapphires, from $250.
+		   			</div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		<div class="txtcenter">
+				<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Platinum Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_04.jpg">
+		   			<div class="pad10 textleft">
+		   				An outstanding value, quality platinum earrings, staring at $235.
+		   			</div>
+		   			<div><br></div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>	
+		   		<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Gemstone Earrings-Studs&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_05.jpg">
+		   			<div class="pad10 textleft">
+		   				Vibrant, eye-catching gemstones set with diamonds or as solitaires, from $80.
+		   			</div>
+		   			<div style="height:7px;"></div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>		   		
+		   		
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		<div class="txtcenter">
+				<div class="boxitem floatl">
+		   			<p class="pad10 txtleft"><a class="newtileheader font12" href="#">Gold Earrings&nbsp;&nbsp;<img src="<?php echo config_item('base_url')?>images/tamal/arrow_bg2.jpg"></a></p>
+		   			<img src="<?php echo config_item('base_url');?>/images/ruman/jewelry/earring_06.jpg">
+		   			<div class="pad10 textleft">
+		   				A pair of 18k gold earrings are perfect for any occasion, from $50.
+		   			</div>
+		   			<div><br></div>
+		   			<div class="txtleft morebtn floatr"><a href="#"><img src="<?php echo config_item('base_url')?>images/ruman/engagement/more.jpg"></a></div> 
+		   			<div class="clear"></div>
+		   			
+		   		</div>	
+		   		
+		   		<div class="clear"></div>
+	   		</div>
+	   		
+	   		
+	   		
+	   		
+	   		
+	   		
+	  </div>
+ <div class="bodybottom"></div>
+</div>
+	   	 

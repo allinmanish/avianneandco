@@ -1,0 +1,200 @@
+<div class="floatl pad05 body">
+  <div class="bodytop"></div>
+	  <div class="bodymid">
+			
+			<div class="commonheader">1. Select Diamond Shape</div>
+	   		<div>
+			   		<div class="floatl smallbox txtcenter">
+			   				<label for="B"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_shape_r.jpg"></label> <br>
+			   				<input type="radio" name="shape" checked id="B" onclick="getearringmetalstyle('B'); setdiamondshape(this)" ><label for="B">Round</label>
+			   		</div>
+			   		<div class="floatl smallbox txtcenter">
+			   				<label for="PR"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_shape_p.jpg"></label> <br>
+			   				<input type="radio" name="shape" id="PR" onclick="getearringmetalstyle('PR'); setdiamondshape(this)"><label for="PR">Princess-Cut</label> 
+			   		</div>
+			   		<div class="floatl smallbox txtcenter">
+			   				<label for="E"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_shape_as.jpg"></label> <br>
+			   				<input type="radio" name="shape" id="E" onclick="getearringmetalstyle('E'); setdiamondshape(this)"><label for="E"> Emerald-Cut</label> 
+			   		</div>
+			   		<div class="clear"></div>
+	   		</div>
+	   		 
+	   		<div id="Bdiv">
+	   		
+				   		<div class="commonheader">2. Select Your Metal</div>
+				   		<div>
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="Bpl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl_r.jpg"></label> <br>
+						   				<input type="radio" name="Bmetal" id="Bpl" checked onclick="showearringstyle('Bpl')" >Platinum
+						   		</div>						   		
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Bwg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl_r.jpg"></label> <br>
+						   				<input type="radio" name="Bmetal" id="Bwg" onclick="showearringstyle('Bwg')">18k White Gold
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Byg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_18y_r.jpg"></label> <br>
+						   				<input type="radio" name="Bmetal" id="Byg" onclick="showearringstyle('Byg')">18k Yellow Gold
+						   		</div>
+						   		<div class="clear"></div>
+				   		</div>
+				   		
+				   		<div class="commonheader">3. Select Your Style</div>
+				   		<div id="div11">	   		
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="Bfpr_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bfpr_pl" checked >Four-Prong
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Bbz_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_bezel_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bbz_pl" >Bezel-Set 
+						   		</div>	
+						   		<div class="clear"></div>					   		
+						   		<!--<div class="floatl smallbox txtcenter">
+						   				<label for="Bm_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_3prong_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bm_pl">Martini Three-Prong 
+						   		</div>
+						   		<div class="clear"></div>
+						   		<center>
+								   		<div class="smallbox txtcenter">
+								   				<label for="Bcl_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_classic_r.jpg"></label> <br>
+								   				<input type="radio" name="Bstyle" id="Bcl_pl" >Classic Three-Prong 
+								   		</div>
+						   		</center>-->
+						   		
+				   		</div>
+						
+						<div id="div12" style="display:none">	   		
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="Bfpr_18wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bfpr_18wg" checked >Four-Prong
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Bbz_18wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_bezel_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bbz_18wg" >Bezel-Set 
+						   		</div>
+						   		<div class="clear"></div>					   		
+						   		<!--<div class="floatl smallbox txtcenter">
+						   				<label for="Bm_18wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_3prong_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bm_18wg" >Martini Three-Prong 
+						   		</div>
+						   		<div class="clear"></div>
+						   		<center>
+								   		<div class="smallbox txtcenter">
+								   				<label for="Bcl_18wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_classic_r.jpg"></label> <br>
+								   				<input type="radio" name="Bstyle" id="Bcl_18wg" >Classic Three-Prong 
+								   		</div>
+						   		</center>	-->					   		
+						   		
+				   		</div>
+						
+						<div id="div13" style="display:none;">   		
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="Bfpr_18yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_4prong_yg_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bfpr_18yg" checked >Four-Prong
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Bbz_18yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_bez_yg_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bbz_18yg" >Bezel-Set 
+						   		</div>	
+						   		<div class="clear"></div>					   		
+						   		<!--<div class="floatl smallbox txtcenter">
+						   				<label for="Bm_18yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_mart_yg_r.jpg"></label> <br>
+						   				<input type="radio" name="Bstyle" id="Bm_18yg" >Martini Three-Prong 
+						   		</div>
+						   		<div class="clear"></div>
+						   		<center>
+								   		<div class="smallbox txtcenter">
+								   				<label for="Bcl_18yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_style_classic_r.jpg"></label> <br>
+								   				<input type="radio" name="Bstyle" id="Bcl_18yg" >Classic Three-Prong 
+								   		</div>
+						   		</center> -->
+						   		
+				   		</div>
+			 </div>
+			 
+			<div id="PRdiv" style="display:none;">
+	   		
+				   		<div class="commonheader">2. Select Your Metal</div>
+				   		<div>
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="PRpl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="PRmetal" id="PRpl" onclick="showearringstyle('PRpl')" >Platinum
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="PRyg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_18y.jpg"></label> <br>
+						   				<input type="radio" name="PRmetal" id="PRyg" onclick="showearringstyle('PRyg')" >18k Yellow Gold
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="PRwg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="PRmetal" id="PRwg" onclick="showearringstyle('PRwg')" >18k White Gold
+						   		</div>
+						   		<div class="clear"></div>
+				   		</div>				   		
+				   		
+				   		<div class="commonheader">3. Select Your Style</div>
+				   		<center>	   		
+				   				<div class="smallbox" id="div21">
+						   				<label for="PRfpr_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="PRstyle" id="PRfpr_pl" checked>Four-Prong
+						   		</div>
+								<div class="smallbox" id="div22" style="display:none;">
+						   				<label for="PRfpr_wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="PRstyle" id="PRfpr_wg" >Four-Prong
+						   		</div>
+								<div class="smallbox" id="div23" style="display:none;">
+						   				<label for="PRfpr_yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_18y.jpg"></label> <br>
+						   				<input type="radio" name="PRstyle" id="PRfpr_yg" >Four-Prong
+						   		</div>
+														   		
+				   		</center>
+			 </div>			
+			 			 
+			<div id="Ediv" style="display:none;">
+	   		
+				   		<div class="commonheader">2. Select Your Metal</div>
+				   		<div>
+				   				<div class="floatl smallbox txtcenter">
+						   				<label for="Epl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="Emetal" id="Epl" onclick="showearringstyle('Epl')"  >Platinum
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Eyg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_18y.jpg"></label> <br>
+						   				<input type="radio" name="Emetal" id="Eyg" onclick="showearringstyle('Eyg')" >18k Yellow Gold
+						   		</div>
+						   		<div class="floatl smallbox txtcenter">
+						   				<label for="Ewg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="Emetal" id="Ewg" onclick="showearringstyle('Ewg')" >18k White Gold
+						   		</div>
+						   		<div class="clear"></div>
+				   		</div>				   		
+				   		
+				   		<div class="commonheader">3. Select Your Style</div>
+				   		<center> 		
+				   				<div class="smallbox" id="div31">
+						   				<label for="Efpr_pl"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="Estyle" id="Efpr_pl" >Four-Prong
+						   		</div>
+								<div class="smallbox" id="div32" style="display:none;">
+						   				<label for="Efpr_wg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_pl.jpg"></label> <br>
+						   				<input type="radio" name="Estyle" id="Efpr_wg" >Four-Prong
+						   		</div>
+								<div class="smallbox" id="div33" style="display:none;">
+						   				<label for="Efpr_yg"><img src="<?php echo config_item('base_url');?>images/tamal/jewelry/sel_metal_18y.jpg"></label> <br>
+						   				<input type="radio" name="Estyle" id="Efpr_yg" >Four-Prong
+						   		</div>						   		
+				   		</center>
+			 </div>
+			<div class="dbr"></div>
+			 
+			 
+			<center> 
+				 <div>
+						<div class="floatl blurleft"></div>
+						<div class="floatl bluemiddle"><a href="#">add this style</a></div>
+						<div class="floatl blueright"></div>
+						<div class="clear"></div>
+				</div> 
+			</center>
+	</div>
+ <div class="bodybottom"></div>
+</div>

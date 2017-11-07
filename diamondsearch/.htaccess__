@@ -1,0 +1,18 @@
+RewriteEngine on
+
+RewriteRule ^admin - [R=404]
+RewriteRule ^third_party/(.*) third_party/$1 [L]
+RewriteRule ^css/(.*) css/$1 [L]
+RewriteRule ^js/(.*) js/$1 [L]
+RewriteRule ^flash/(.*) flash/$1 [L]
+RewriteRule ^flash/(.*) 180/$1 [L]
+RewriteRule ^flash/(.*) 90/$1 [L]
+RewriteRule ^flash/(.*) 45/$1 [L]
+RewriteCond ^images/(.*) !-f
+RewriteRule ^images/(.*) getimage.php?img=$1 [L]
+
+RewriteCond %{SCRIPT_FILENAME} !index.php
+RewriteCond %{SCRIPT_FILENAME} !run.php
+#RewriteCond %{SCRIPT_FILENAME} !getimage.php
+RewriteRule .* index.php/$0
+

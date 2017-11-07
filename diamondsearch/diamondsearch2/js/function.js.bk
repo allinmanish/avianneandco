@@ -1,0 +1,87 @@
+
+function modifyresult(svar , sval){
+	urllink = base_url+'site/setsession/'+svar+'/'+ sval;
+	$.ajax({
+                 type: "POST",
+                 url:urllink,
+                 success: function(response) {
+                   searchdiamonds();
+                },
+				error: function(){alert('Error ');}
+             }) 
+}
+
+function setsession(svar , sval){
+	urllink = base_url+'site/setsession/'+svar+'/'+ sval;
+	$.ajax({
+                 type: "POST",
+                 url:urllink,
+                 success: function(response) {
+                   
+                },
+				error: function(){alert('Error ');}
+             }) 
+}
+
+function changeslider(sobj, v , i){
+	 $('#'+sobj).slider( "moveTo", v, i)
+}
+
+function searchdiamonds(){
+	 $("#searchresult").flexReload(); 
+}
+
+
+function toggleopacity(e, flxgrid){
+	id = (e.id);
+	
+	if($('#'+id).hasClass('selected')){
+		$('#'+id).removeClass('selected');
+	}else{
+	  $('#'+id).addClass('selected');	
+	}
+	
+	var shape = '';
+	
+	if($('#B').hasClass('selected')) shape += 'B_';	
+	if($('#R').hasClass('selected')) shape += 'R_';
+	if($('#PR').hasClass('selected')) shape += 'PR_';
+	if($('#C').hasClass('selected')) shape += 'C_';
+	if($('#AS').hasClass('selected')) shape += 'AS_';
+	if($('#H').hasClass('selected')) shape += 'H_';
+	if($('#E').hasClass('selected')) shape += 'E_';
+	if($('#M').hasClass('selected')) shape += 'M_';
+	if($('#O').hasClass('selected')) shape += 'O_';
+	if($('#P').hasClass('selected')) shape += 'P_';
+	
+	if(flxgrid) {modifyresult('shape' , shape);}
+	else {
+		setsession('shape' , shape);
+	}
+	
+	
+}
+
+function checkMinMaxPrice(e,e2, minvalue, maxvalue, minormax){
+	id=e.id;
+	if(minormax == 'min'){
+		if(parseFloat($('#'+id).val()) < minvalue || parseFloat($('#'+id).val()) > parseFloat($('#'+e2).val())) {
+			$('#'+id).val(minvalue);
+			setsession('searchminprice' , minvalue);
+		}
+		else{
+			setsession('searchminprice' , e.value);
+		}
+	}
+	if(minormax == 'max'){
+		if(parseFloat($('#'+id).val()) > maxvalue || parseFloat($('#'+id).val()) < parseFloat($('#'+e2).val())) {
+			$('#'+id).val(maxvalue);
+			setsession('searchmaxprice' , maxvalue);
+		}
+		else{
+			setsession('searchmaxprice' , e.value);
+		}
+	}
+	
+	
+}
