@@ -1,0 +1,1 @@
+merchant order id	tracking number	carrier code	other carrier name	ship date
