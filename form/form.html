@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Avianne Work Order Form</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+
+</head>
+<body id="main_body" >
+<form action="insert.php" method="post" enctype="text/plain">	
+	<img id="top" src="top.png" alt="">
+	<div id="form_container">
+	
+		<h1><a>Avianne Work Order Form</a></h1>
+					<div class="form_description">
+			<h2>Avianne Work Order Form</h2>
+			<p></p>
+		</div>						
+			<ul >
+			
+					<li id="li_1" >
+		<label class="description" for="item_sku">Item SKU </label>
+		<div>
+			<input id="item_sku" name="item_sku" class="element text small" type="text" maxlength="255" value=""/> 
+		</div><p class="guidelines" id="guide_1"><small>Enter the SKU of the item you wish to begin a work order on. Don't fuck up.</small></p> 
+		</li>		<li id="li_5" >
+		<label class="description" for="jeweler">Jeweler </label>
+		<div>
+		<select class="element select small" id="jeweler" name="jeweler"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Feng</option>
+<option value="2" >Romel</option>
+<option value="3" >Doo</option>
+<option value="4" >Joon</option>
+<option value="5" >1204</option>
+
+		</select>
+		</div><p class="guidelines" id="guide_5"><small>Select the jeweler you wish to torture today</small></p> 
+		</li>		<li id="li_6" >
+		<label class="description" for="priority">Priority </label>
+		<div>
+		<select class="element select medium" id="priority" name="priority"> 
+			<option value="" selected="selected"></option>
+<option value="1" >High</option>
+<option value="2" >Medium</option>
+<option value="3" >Low</option>
+
+		</select>
+		</div><p class="guidelines" id="guide_6"><small>Select the priority of the job, from "kinda important" to "get this shit done now or I'll send the buhkarian mafia" </small></p> 
+		</li>		<li id="li_7" >
+		<label class="description" for="runner">Runner </label>
+		<div>
+		<select class="element select small" id="runner" name="runner"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Alex</option>
+<option value="2" >Igor</option>
+<option value="3" >George</option>
+<option value="4" >Random Fag</option>
+
+		</select>
+		</div><p class="guidelines" id="guide_7"><small>Select the Runner responsible in order to lay proper blame and open the gates of hell in the event of a royal fuckup.</small></p> 
+		</li>		<li id="li_8" >
+		<label class="description" for="job_status">Current Status </label>
+		<div>
+		<select class="element select small" id="job_status" name="job_status"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Unassigned</option>
+<option value="2" >Assigned</option>
+<option value="3" >Completed</option>
+
+		</select>
+		</div><p class="guidelines" id="guide_8"><small>Select the status of the job. If it's not "Completed" you should probably get moving...asshole</small></p> 
+		</li>		<li id="li_9" >
+		<label class="description" for="job_type">Type </label>
+		<div>
+		<select class="element select medium" id="job_type" name="job_type"> 
+			<option value="" selected="selected"></option>
+<option value="1" >Casting</option>
+<option value="2" >Molding</option>
+<option value="3" >Wax</option>
+<option value="4" >Setting</option>
+<option value="5" >Rhodium Plating</option>
+<option value="6" >Sizing</option>
+<option value="6" >Good Job</option>
+
+		</select>
+		</div><p class="guidelines" id="guide_9"><small>Select the Job Type</small></p> 
+		</li>		<li id="li_2" >
+		<label class="description" for="job_price">Price </label>
+		<span class="symbol">$</span>
+		<span>
+			<input id="job_price" name="job_price" class="element text currency" size="10" value="" type="text" />	
+		</span>
+		 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Upload Picture </label>
+		<div>
+			<input id="element_3" name="element_3" class="element file" type="file"/> 
+		</div> <p class="guidelines" id="guide_3"><small>Upload a Picture of the item associated with the Job</small></p> 
+		</li>		<li id="li_4" >
+		<label class="description" for="element_4">Notes </label>
+		<div>
+			<textarea id="element_4" name="element_4" class="element textarea medium"></textarea> 
+		</div> 
+		</li>
+			
+					<li class="buttons">
+			    <input type="hidden" name="form_id" value="583492" />
+			    
+				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
+		</li>
+			</ul>
+		</form>	
+	
+	</div>
+	<img id="bottom" src="bottom.png" alt="">
+	</body>
+</html>
