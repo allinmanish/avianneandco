@@ -1,0 +1,159 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="page-head">
+    <h3 style="font-size:26px; margin-top:5px;"><?php echo $this->__('Shopping Bag is Empty') ?></h3>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="empty-cart">
+	<p><?php echo $this->__('Your Shopping Bag is empty. Follow the links below for assistance.') ?></p>
+	<div class="csp shopping-cart-totals">
+		<h3>Customer Service Policies</h3>
+		<ul class="disc customer-service-navy" style="margin-bottom: 15px;">
+			<li><a href="/customer-service/#answer1">14-Day Return Policy</a></li>
+			<li><a href="/customer-service/#answer2">Free Shipping via FedEx</a></li>
+			<li><a href="/customer-service/#answer3">APO/FPO Shipping</a></li>
+			<li><a href="/customer-service/#answer4">Appraisal Certificates</a></li>
+			<li><a href="/customer-service/#answer5">Payment Methods</a></li>
+			<li><a href="/customer-service/#answer6">International Orders</a></li>
+			<li><a href="/customer-service/#answer7">Secure Shopping Online</a></li>
+			<li><a href="/customer-service/#answer8">Layaway Programs</a></li>
+			<li><a href="/customer-service/#answer9">Diamond Jewelry Financing</a></li>
+			<li><a href="/customer-service/#answer10">The Avianne &amp; Co Warranty </a></li>
+			<li><a href="/customer-service/#answer11">Free Gift Packaging</a></li>
+			<li><a href="/customer-service/#answer13">Privacy Policy</a></li>
+		</ul>
+	</div>
+	<div class="follow-cats">
+		<div class="follow-cats-item">
+			<a href="/diamond-eternity-bands"><img src="/media/diamond_eternity_bands.jpg" title="Diamond Eternity Bands" alt="" /></a>
+			<p><a href="/diamond-eternity-bands">Diamond Eternity Bands</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/mens-diamond-bracelets-1"><img src="/media/diamond_bracelets.jpg" title="Diamond Bracelets" alt="" /></a>
+			<p><a href="/mens-diamond-bracelets-1">Diamond Bracelets</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/mens-diamond-chains-1"><img src="/media/diamond_chains.jpg" title="Diamond Chains" alt="" /></a>
+			<p><a href="/mens-diamond-chains-1">Diamond Chains</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/bling-hip-hop-diamond-jewelry"><img src="/media/hip_hop_jewelry.jpg" title="Hip Hop Jewelry" alt="" /></a>
+			<p><a href="/bling-hip-hop-diamond-jewelry">Hip Hop Jewelry</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/mens-solid-gold-jewelry"><img src="/media/solid_gold_jewelry.jpg" title="Solid Gold Jewelry" alt="" /></a>
+			<p><a href="/mens-solid-gold-jewelry">Solid Gold Jewelry</a></p>
+		</div>
+		
+		<div style="clear:left;"></div>
+		
+		<div class="follow-cats-item">
+			<a href="/womens-diamond-rings-1"><img src="/media/diamond_rings_1.jpg" title="Diamond Rings" alt="" /></a>
+			<p><a href="/womens-diamond-rings-1">Diamond Rings</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/womens-diamond-bracelets-1"><img src="/media/diamond_bracelets_1.jpg" title="Diamond Bracelets" alt="" /></a>
+			<p><a href="/womens-diamond-bracelets-1">Diamond Bracelets</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/womens-diamond-earrings-1"><img src="/media/diamond_earrings_1.jpg" title="Diamond Earrings" alt="" /></a>
+			<p><a href="/womens-diamond-earrings-1">Diamond Earrings</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/womens-diamond-pendants-1"><img src="/media/diamond_pendants_1.jpg" title="Daimond Pendants" alt="" /></a>
+			<p><a href="/womens-diamond-pendants-1">Daimond Pendants</a></p>
+		</div>
+		<div class="follow-cats-item">
+			<a href="/gemstone-jewelry"><img src="/media/gemstone_jewelry.jpg" title="Gemstone Jewelry" alt="" /></a>
+			<p><a href="/gemstone-jewelry">Gemstone Jewelry</a></p>
+		</div>
+		
+		<div style="clear:both;"></div>
+	</div>
+</div>
+<?php /* ?>
+<div class="share-top black-friday">
+	<img src="<?php echo $this->getSkinUrl('images/black-friday.jpg') ?>" alt="<?php echo $this->__('Black Friday'); ?>" />
+</div>
+<div class="share-top post-black-friday">
+	<?php echo $this->__('Share This Page And Save 5% On Your Purchase'); ?>
+	<div id="top-social-buttons">
+		<i id="counter-overlay"></i>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.avianneandco.com/" data-text="Diamond Jewelry by Avianne &amp; Co" data-count="none">Tweet</a>
+		<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+		<a href="http://pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl('web') ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+		<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+	</div>
+</div>
+<?php */ ?>
+<div class="empty-cart-container">
+	<h6><span><?php echo $this->__('Recently Viewed Items'); ?></span></h6>
+	<div class="recently-viewed">
+		<?php $productsCollection = Mage::getSingleton('Mage_Reports_Block_Product_Viewed')->getItemsCollection(); $i = 0; ?>
+		<?php foreach ($productsCollection as $product):?>
+			<?php if($i==4): break; endif;?>
+			<?php $_item = Mage::getModel('catalog/product')->load($product->getID()); $product_block = new Mage_Catalog_Block_Product; ?>
+			<div class="box">
+				<a href="/<?php echo $_item->getUrlPath(); ?>"><center><img src="<?php echo $this->helper('catalog/image')->init($_item,'thumbnail')->resize(150)?>" alt="<?php echo $this->htmlEscape($_item->getName())?>" width="150" height="150" /></a></center>
+				<a href="/<?php echo $_item->getUrlPath(); ?>"><?php echo $this->htmlEscape($_item->getName())?> </a>
+				<center><b><?php echo $product_block->getPriceHtml($_item,true)?></b><br></center>
+			</div>
+			<?php $i++;?>
+		<?php endforeach; ?>
+		<?php if($i < 4): ?>
+			<?php 
+			$recentProductsCollection = Mage::getModel("catalog/product")->getCollection()
+			->addAttributeToSort("entity_id","DESC")
+			->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInSiteIds())
+			->setPageSize(4)
+			->setCurPage(1);
+			?>
+			<?php foreach ($recentProductsCollection as $product): ?>
+				<?php if($i==4): break; endif;?>
+					<?php $_item = Mage::getModel('catalog/product')->load($product->getID()); $product_block = new Mage_Catalog_Block_Product; ?>
+					<div class="box">
+						<a href="/<?php echo $_item->getUrlPath(); ?>"><center><img src="<?php echo $this->helper('catalog/image')->init($_item,'thumbnail')->resize(150)?>" alt="<?php echo $this->htmlEscape($_item->getName())?>" width="150" height="150" /></a></center>
+						<a href="/<?php echo $_item->getUrlPath(); ?>"><?php echo $this->htmlEscape($_item->getName())?> </a>
+						<center><b><?php echo $product_block->getPriceHtml($_item,true)?></b><br></center>
+					</div>
+				<?php $i++;?>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</div>	
+	<div class="link-box-container">
+		<div class="link-box box-1" onclick="setLocation('http://www.avianneandco.com/blog/celebrity-diamond-jewelry/');">
+			<p class="line-1"><?php echo $this->__('Avianne & Co.'); ?></p>
+			<p class="line-2"><?php echo $this->__('Celebrity'); ?><br /><?php echo $this->__('Jewelry'); ?></p>
+			<p class="line-3"><?php echo $this->__('View our exclusive celebrity jewelry collection'); ?><br /><?php echo $this->__('worn by Nicki Minaj and many more'); ?></p>
+		</div>
+		<div class="link-box box-2" onclick="setLocation('/custom-jewelry');">
+			<p class="line-1"><?php echo $this->__('Avianne & Co.'); ?></p>
+			<p class="line-2"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Jewelry'); ?></p>
+			<p class="line-3"><?php echo $this->__('You draw it, we craft it.'); ?><br /><?php echo $this->__('Design your own custom piece now!'); ?></p>
+		</div>
+	</div>
+</div>

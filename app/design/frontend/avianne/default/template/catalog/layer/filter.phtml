@@ -1,0 +1,135 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @see Mage_Catalog_Block_Layer_Filter
+ */
+?>
+
+
+<ol class="layered-links<?php
+    if (Mage::app()->getRequest()->getParam($var_name)):echo " active-layer";
+    else: echo " unactive-layer";
+    endif;
+    ?>">
+
+    <?php //print_r($this->getItems());    ?>
+
+            <?php foreach ($this->getItems() as $_item): ?>
+            <li class="<?php if ($_item->isItemActive()): ?>active-filter-option <?php endif; ?><?php if ($_item->getCount() == 0): ?>no-items<?php endif; ?>">
+
+
+                    <?php if ($_item->getCount() > 0): ?><a href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?><?php if ($_item->getCount() > 0) : ?>
+                            <span class="item-count">(<?php echo $_item->getCount() ?>)</span>
+                        <?php endif; ?></a>
+        <?php else: ?>
+                <?php echo $_item->getLabel() ?>
+            <?php endif; ?>
+
+            </li>
+    <?php endforeach ?>
+    </ol>
+
+    <?php
+    
+    return false;
+  
+    
+$filter_name = $this->getItems();
+$var_name = $filter_name[0]->getFilter()->getRequestVar();
+$_is_active_layer = false;
+if (Mage::app()->getRequest()->getParam($var_name)
+)
+    $_is_active_layer = true;
+
+
+/* fix to show also selected items with count = 0  */
+$_url_param = Mage::app()->getRequest()->getParam($var_name);
+$_filter_values = array();
+if (preg_match('/^[0-9,]+$/', $_url_param)) {
+    $_filter_values = explode(',', $_url_param);
+} elseif ((int) $_url_param > 0) {
+    $_filter_values[] = $_url_param;
+}
+/* eof */
+?>
+<dd class="filter-dropdown">
+
+    <span class="attribute_code"><?php echo $var_name; ?></span>
+    <span class="filter_values"><?php echo $_url_param; ?></span>
+    <ol  class="layered-links<?php
+if ($_is_active_layer):echo " active-layer";
+else: echo " unactive-layer";
+endif;
+?>">
+
+        <?php if ($var_name == "color") { ?>
+            <?php foreach ($this->getItems() as $_item): ?>
+                <?php $_option_used = in_array($_item->getValue(), $_filter_values); ?>
+                <li class="filter-option <?php if ($_item->isItemActive() || $_option_used): ?>active-filter-option <?php endif; ?><?php if ($_item->getCount() == 0 && !$_option_used): ?>no-items<?php endif; ?>">
+
+                    
+
+
+                    <?php if ($_item->getCount() > 0 || $_option_used): ?><a rel="<?php echo $_item->getValue(); ?>" href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php
+                    $colorSwatchImage = Mage::getModel("colorswatches/colorswatches")->load($_item->getValue(), "option_id")->getFilename();
+
+                    if ($colorSwatchImage) {
+                        echo "<div class='filter-color-sample'><img src='" . Mage::getBaseUrl('media') . 'colorswatches/' . $colorSwatchImage . "' alt='" . $colorValue . "'/><div class='color-check'>&nbsp;</div></div>";
+                    }
+                    ?><?php echo $_item->getLabel() ?><?php if ($_item->getCount() > 0) : ?>
+                                <span class="item-count">(<?php echo $_item->getCount() ?>)</span>
+                            <?php endif; ?></a>
+                    <?php else: ?>
+                        <?php echo $_item->getLabel() ?>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach ?>            
+
+        <?php }else { ?>
+
+            <?php foreach ($this->getItems() as $_item): ?>
+                <?php $_option_used = in_array($_item->getValue(), $_filter_values); ?>
+                <li class="filter-option <?php if ($_item->isItemActive() || $_option_used): ?>active-filter-option <?php endif; ?><?php if ($_item->getCount() == 0 && !$_option_used): ?>no-items<?php endif; ?>">
+                    <?php if ($_item->getCount() > 0 || $_option_used): ?><a rel="<?php echo $_item->getValue(); ?>" href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?><?php if ($_item->getCount() > 0) : ?>
+                                <span class="item-count">(<?php echo $_item->getCount() ?>)</span>
+                            <?php endif; ?></a>
+                    <?php else: ?>
+                        <?php echo $_item->getLabel() ?>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach ?>
+        <?php } ?>
+        <li class="filter-options-clearer">&nbsp;</li>
+        <li class="apply-filter"><a href="#"><?php echo $this->__("Search"); ?></a></li>
+        <li class="<?php if (!$_is_active_layer)
+            echo "reset-active"; ?> reset-filter"><a href="<?php echo $filter_name[0]->getRemoveUrl(); ?>"><?php echo $this->__("Clear"); ?></a></li>
+    </ol>
+
+</dd>

@@ -1,0 +1,29 @@
+<?php
+
+?>
+<?php 
+
+?>
+<div class="header-nav-container">
+    <div class="header-nav">
+        <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+        <ul id="nav">
+			<ul class="level0">
+            
+            <li class="level1 nav-3-4 parent">
+				<a href="<?php echo $this->getUrl("catalogsearch/diamonds")?>" >
+				<span>Diamonds</span></a>
+			</li>
+            
+            </ul>
+            
+        <?php foreach ($this->getStoreCategories() as $_category): ?>
+			<?php //if ($_category->getId()==384) continue; 
+			//echo $_category->getId();
+			?>
+            <?php echo $this->drawItem($_category) ?>
+        <?php endforeach ?>
+        </ul>
+    </div>
+    <?php echo $this->getChildHtml('topLeftLinks') ?>
+</div>

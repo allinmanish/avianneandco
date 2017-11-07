@@ -1,0 +1,33 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="page-head">
+    <h3><?php echo $this->__('Shopping Cart is Empty') ?></h3>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="in-page">
+    <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+    <p><?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', Mage::getUrl()) ?></p>
+</div><br /><br />
+<script type="text/javascript">   
+    $j(document).ready(function(e){
+        mobileCart.registerSubmit('cart-form', '<?php echo $this->getUrl('awmobile/cart/updatePost') ?>');
+        mobileCart.registerCoupon('discount-coupon-form', '<?php echo $this->getUrl('awmobile/cart/couponPost') ?>');
+        mobileCart.registerGiftcard('giftcard-form', '<?php echo $this->getUrl('awmobile/cart/addGiftcard') ?>');
+        mobileCart.contentUrl = '<?php echo $this->getUrl('awmobile/cart/content'); ?>';        
+    });
+</script>

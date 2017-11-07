@@ -1,0 +1,99 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="account">
+<div class="logout cf"><a class="btn btn-logout" href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Log Out'); ?></a></div>
+<div class="sales-history-box cf">
+	<?php $_orders = $this->getOrders(); ?>
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<?php echo $this->getChildHtml('hello') ?>
+	<div class="order-items-list">
+	<h3 class="mid-black"><?php echo $this->__('Order History'); ?></h3>
+	<p class="grey"><?php echo $this->__('All of your orders within the past 6 months are listed here. If you have any questions, please contact us at 888-243-4344 or email Sales@AvianneAndCo.com'); ?></p>
+<?php if($_orders->getSize()): ?>
+<table id="my-orders-table">
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Order Date') ?></th>
+            <th>&nbsp;</th>
+            <th><?php echo $this->__('Details') ?></th>
+            <th><?php echo $this->__('Status') ?></th>
+            <th><?php echo $this->__('Price') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $_odd = ''; ?>
+        <?php foreach ($_orders as $_order): ?>
+        	<?php $i = 0; ?>
+        	<?php foreach ($_order->getAllItems() as $item): ?>
+				<?php $_item = Mage::getModel('catalog/product')->load($item->getProductId()); ?>
+	            <tr class="head-row-<?php echo $i; ?>">
+	                <td><?php if($i!=0):?>&nbsp;<?php else: ?><?php echo date('M d, Y',strtotime($_order->getCreatedAtStoreDate())); ?><?php endif; ?></td>
+	                <td><img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(80); ?>"  width="80" height="80" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" /></td>
+	                <td>
+	                	<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a><br />
+	                	<?php echo $this->__('Stock #: %s',$_item->getSku()); ?>
+	                	<?php $options = $item->getProductOptions(); ?>
+	                	<dl>
+	                		<?php foreach($options['options'] as $option): ?>
+	                			<dd><?php echo $option['label']; ?></dd>
+	                			<dt><?php echo $option['value']; ?></dt>
+	                		<?php endforeach; ?>
+	                		<dd><?php echo $this->__('Quantity'); ?></dd>
+	                		<dt><?php echo (int)$item->getQtyOrdered(); ?></dt>
+	                	</dl>
+	                </td>
+	                <td>
+	                	<?php if($i!=0):?>&nbsp;<?php else: ?><?php echo $_order->getStatusLabel() ?>
+	                	<?php
+						if($_order->hasShipments()) {
+						    $show = true;
+						    foreach($_order->getTracksCollection() as $k=>$v) {                            
+						        if($v['carrier_code'] == 'custom' || $v['carrier_code'] == '')
+						            $show = false;
+						    }
+						    if($show) {?>
+						        <span class="separator2">&nbsp;</span>
+						
+						        <a class="askTrackBtn" href="javascript:;" onclick="popWin('<?php echo Mage::helper('shipping/data')->getTrackingPopUpUrlByOrderId($_order->getId()) ?>', 'tracking the order', 'scrollbars=yes,width=800,height=600,resizable=yes');return false;"><span><?php echo $this->__('Track Order') ?></span></a>
+						       <?php 
+						    }
+						}?><?php endif; ?>
+	                </td>
+	                <td><?php if($i!=0):?>&nbsp;<?php else: ?><strong><?php echo $_order->formatPrice($_order->getGrandTotal()) ?></strong><?php endif; ?></td>
+	            </tr>
+	            <?php $i++; ?>
+	    	<?php endforeach; ?>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have placed no orders.'); ?></p>
+<?php endif ?>
+</div>
+</div>
+</div>

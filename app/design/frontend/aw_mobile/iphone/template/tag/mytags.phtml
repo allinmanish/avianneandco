@@ -1,0 +1,66 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<script type="text/javascript">
+function editTag(id, name) {
+    var new_name = prompt('Please type new tag name', name)
+    if (new_name) {
+        var req = new Ajax.Request('/tag/index/update', { 
+            method:'post',
+            parameters: {
+                tagname: new_name, 
+                tag_id: id
+            },
+            onSuccess: function(req, json){
+                eval('var json = ' + req.responseText);
+                if (1 === json.error) {                
+                    alert(json.error_message);
+                }
+            }
+        });    
+    }
+}
+
+function deleteTag(id) {
+    if (confirm('Do tou realy want to delete the Tag?')) {
+        var req = new Ajax.Request('/tag/index/delete', { 
+            method:'post',
+            parameters: {
+                tag_id: id
+            },
+            onSuccess: function(req, json){
+                eval('var json = ' + req.responseText);
+                if (1 === json.error) {                
+                    alert(json.error_message);
+                }
+            }
+        });    
+    }
+}
+</script>
+
+<?php foreach ($collection->getItems() as $tag) { /* $tag = $tag->getData();*/ ?> 
+    <span>
+        <a style="font-size:<?php echo $collection->getFSize($tag->getTag_id()); ?>" href="/tag/index/show?tag=<?php echo $tag->getTagname(); ?>">
+            <?php echo $tag->getTagname(); ?>
+        </a> 
+        <span>
+            <a href="#" title="edit tag" onclick="editTag(<?php echo $tag->getTag_id(); ?>, '<?php echo $tag->getTagname(); ?>'); return false;">e</a> 
+            <a href="#" title="delete tag" onclick="deleteTag(<?php echo $tag->getTag_id(); ?>); return false;">d</a>
+        </span>
+    </span>
+<?php } ?>

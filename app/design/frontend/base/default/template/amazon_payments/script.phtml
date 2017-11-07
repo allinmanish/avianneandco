@@ -1,0 +1,99 @@
+<?php
+/**
+ * Amazon Payments
+ *
+ * @category    Amazon
+ * @package     Amazon_Payments
+ * @copyright   Copyright (c) 2014 Amazon.com
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+
+<?php if ($this->isEnabled()) : ?>
+
+<script type='text/javascript'>
+    window.onAmazonLoginReady = function() {
+        amazon.Login.setClientId('<?php echo $this->getClientId(); ?>');
+
+        <?php if (!$this->isPopup()) : ?>
+        amazon.Login.setUseCookie(true);
+        <?php endif; ?>
+    };
+
+    <?php if (!$this->isPopup()) : ?>
+    src = '<?php echo $this->getWidgetsUrl(); ?>';
+    <?php endif; ?>
+
+    // Async render callback
+    var AmazonPaymentsCallbacks = { };
+    window.onAmazonPaymentsReady = function() {
+        jQuery.noConflict();
+        for (var i in AmazonPaymentsCallbacks) {
+            AmazonPaymentsCallbacks[i]();
+        }
+    }
+</script>
+
+
+<?php if ($this->showModal()) : ?>
+
+<script type="text/javascript">
+
+AmazonModal = Class.create();
+
+AmazonModal.prototype.initialize = function(width) {
+    this.width = width;
+}
+
+AmazonModal.prototype.show = function(url) {
+
+    if ($('amazon_modal') == undefined) {
+        this.oPopup = new Window({
+            id: 'amazon_modal',
+            className: 'alphacube',
+            url: url,
+            width: this.width,
+            height: 700,
+            minimizable: false,
+            maximizable: false,
+            showEffectOptions: {
+                duration: 0.4
+            },
+            hideEffectOptions:{
+                duration: 0.4
+            },
+            destroyOnClose: true,
+            onShow: function() { Event.observe($('overlay_modal'), 'click', function() { Windows.closeAll(); }) },
+            onClose: function() { $('overlay_modal').remove(); }
+        });
+        this.oPopup.setZIndex(100);
+        this.oPopup.showCenter(true);
+
+        // Reponsive modal
+        Event.observe(window, "resize", this.resize.bind(this));
+        this.resize();
+    }
+}
+
+AmazonModal.prototype.resize = function() {
+    var oSize = this.oPopup.getSize();
+    var width = document.viewport.getWidth();
+
+    if (this.width > width) {
+      this.oPopup.setSize(width, oSize.height);
+      this.oPopup.showCenter(true);
+    }
+}
+
+
+document.observe("dom:loaded", function() {
+    var amazonModal = new AmazonModal(1020);
+    amazonModal.show('<?php print $this->getStandaloneUrl(); ?>?ajax=1&<?php print htmlentities($_SERVER['QUERY_STRING']); ?>');
+});
+
+
+</script>
+
+<?php endif; ?>
+
+<?php endif; // isEnabled ?>

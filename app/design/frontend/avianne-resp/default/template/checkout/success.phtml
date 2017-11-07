@@ -1,0 +1,559 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<div class="page-head">
+    <h3 class="top-heading"><?php echo $this->__('Your Order Has Been Confirmed') ?></h3>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<?php
+	// 1 - NexTag; 2 - BizRate; 3 - PriceGrabber
+//	$random_survey = rand(1, 3);
+	$random_survey = 3;	// Leave PriceGrabber survey only
+
+	$pricegrabber = array();
+	$bizrate = array();
+	$nextag = array();
+	
+	$orderId = $this->getOrderId();
+    $order = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+    $amount = number_format($order->getGrandTotal(),2);
+    $customer = Mage::getModel('customer/customer')->load($order->getCustomerId());
+    $address = $order->getShippingAddress();
+    $backorder = false;
+    $download = false;
+	switch ($order->getShippingMethod()) {
+    	case "freeshipping_freeshipping":
+    		if(date('w')==0) {
+    			$shipDate = date("Y-m-d",strtotime("+5 days"));
+    		} else {
+    			$shipDate = date("Y-m-d",strtotime("+7 days"));
+    		}
+    	break;
+    	case "internationalshipping_INTERNATIONAL_SHIPPING":
+    		$shipDate = date("Y-m-d",strtotime("+30 days"));
+    	break;	
+    	default:
+    		if(date('w')==0 || date('w')==1) {
+    			$shipDate = date("Y-m-d",strtotime("+4 days"));
+    		} else {
+    			$shipDate = date("Y-m-d",strtotime("+6 days"));
+    		}
+    	break;
+    }
+    
+?>
+
+<?php /* if ($random_survey == 3) { ?>	
+<div class="box base-mini rate-experience">
+    <div class="head">
+        <h4><?php echo $this->__('Rate Your Shopping Experience') ?></h4>
+	</div>
+	<div class="for-price-grabber"></div>
+</div>
+<?php } */ ?>
+
+<div class="success-order-box">
+	<p style="font-size: 16px;"><?php echo $this->__('Thank you for your purchase!') ?></p>
+
+<?php                                                                                                                                    
+/*********Start Ebay Enterprise Affiliate Network Tracking******/                                                                        
+$lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+$order = Mage::getSingleton('sales/order');
+$order->load($lastOrderId);
+$_totalData = $order->getData();
+$_currency = $_totalData['order_currency_code'];                                                                                         
+$_productData = $order->getAllItems();                                                                                                   
+$pixelDataItem = '';                                                                                                                     
+$pixelDataQty = '';                                                                                                                      
+$pixelDataAmount = '';                                                                                                                   
+$i = 1;
+foreach ($_productData as $item){
+  if ($item->getProductType() == 'configurable') continue;
+  if ($item->getParentItemId()) {
+    $_total = number_format($item->getParentItem()->getPrice(),2);
+    $_discount = number_format(($item->getParentItem()->getDiscountAmount() / $item->getParentItem()->getQtyOrdered()),2);
+  } else {
+    $_total = number_format($item->getPrice(),2);
+    $_discount = number_format(($item->getDiscountAmount() / $item->getQtyOrdered()),2);
+  }
+  $pixelDataItem .= '&ITEM'.$i.'='.$item->getSku();
+  $pixelDataQty .= '&QTY'.$i.'='.(int)$item->getQtyOrdered();
+  $pixelDataAmount .= '&AMOUNT'.$i.'='.number_format($_total - $_discount,2);
+  $i++;                                                                                                                                  
+}                                                                                                                                        
+$pixelData = '<iframe src="https://t.pepperjamnetwork.com/track?';                                                                       
+$pixelData .="PID=7340";                                                                                                                 
+$pixelData .="&INT=ITEMIZED";                                                                                                            
+$pixelData .=$pixelDataItem.$pixelDataQty.$pixelDataAmount;                                                                              
+$pixelData .= '&OID='.$this->getOrderId().'&CURRENCY='.$_currency.'" width="1" height="1" frameborder="0"></iframe>';                    
+echo $pixelData;                                                                                                                         
+/*********End Ebay Enterprise Affiliate Network Tracking******/                                                                          
+?>
+
+	<p>
+	 	<?php if ($this->canPrint()) { ?>
+	  	<?php echo $this->__('YOUR ORDER # IS: <br><a href="%s" style="font-size: 18px;">%s</a>', $this->getViewOrderUrl(), $this->getOrderId()) ?><br/>
+	  	<?php } else { ?>
+	  	<?php echo $this->__('Your order <strong style="font-size: 18px;">#%s</strong> has been confirmed.', $this->getOrderId()) ?><br/>
+	  	<?php } ?>
+	
+	    <?php echo $this->__('<br>You will receive a confirmation e-mail <br>shortly with a link to track your purchase.') ?><br/>
+
+	    <?php if ($this->canPrint()) { ?>
+	    <?php echo '<br><img src="/skin/frontend/avianne-resp/default/images/print2-ico.png" srcset="/skin/frontend/avianne-resp/default/images/print-ico@2x.png 2x, /skin/frontend/avianne-resp/default/images/print-ico@3x.png 3x" style="margin-bottom: -4px;">&nbsp;&nbsp;&nbsp;' . $this->__('<a href="%s" onclick="this.target=\'_blank\'" style="font-size: 12px;">Print a copy of your order confirmation</a>', $this->getPrintUrl()) ?>
+	    <?php } ?>
+	    <br>
+	    <?php echo $this->getChildHtml() ?>
+	</p>
+
+	<br><br><br>
+	<hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6;">
+	<br><br><br>
+
+	<div class="success-box-set success-box-left">
+		<h4>Billing Information</h4>
+		<fieldset>
+            <address><?php echo $order->getBillingAddress()->getFormated(true) ?></address>
+        </fieldset>
+
+		<br>
+		<hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6; margin: 0.5em 0;">
+		<br>
+
+		<h4>Payment Method</h4>
+		<fieldset style="margin-bottom: .5em;">
+			<?php echo $order->getPayment()->getMethodInstance()->getTitle(); ?>
+		</fieldset>
+
+		<span class="mobile-only">
+		<br>
+		<hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6; margin: 0.5em 0;">
+		<br>
+		</span>
+	</div>
+
+	<?php if(is_object($order->getShippingAddress())): ?>
+	<div class="success-box-set success-box-right">
+		<h4>Shipping Information</h4>
+		<fieldset>
+            <address><?php echo $order->getShippingAddress()->getFormated(true) ?></address>
+        </fieldset>
+
+		<br>
+		<hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6; margin: 0.5em 0;">
+		<br>
+
+		<h4>Shipping Method</h4>
+		<fieldset style="margin-bottom: .5em;">
+			<?php if ($order->getShippingDescription()): ?>
+				<?php echo $order->getShippingDescription() ?>
+			<?php else: ?>
+				<?php echo $this->__('No shipping information available'); ?>
+			<?php endif; ?>
+		</fieldset>
+	</div>
+	<?php endif; ?>
+
+	<div class="clear"></div>
+
+	<br>
+	<hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6; margin-top: 0.5em;">
+	<br><br>
+
+	<h3 style="margin-bottom: 10px;">ORDER SUMMARY</h3>
+
+	<table id="shopping-cart-table">
+		<!-- <thead>
+			<tr>
+				<th>Item</th><th>Sku</th><th class="td-center">Qty</th><th class="td-right">Subtotal</th>
+			</tr>
+		</thead> -->
+		<tbody>
+			<?php $i=0; ?>
+			<?php foreach ($order->getAllItems() as $item): ?>
+				<?php $pricegrabber[] = 'item'.($i+1).'=avianneandco|'.$item->getSku().'|'.$item->getPrice().'|'.$item->getSku().'||'.(int)$item->getQtyOrdered();?>
+				<?php $bizrate[] = 'URL=^SKU='.htmlentities($item->getSku()).'^GTIN=^PRICE='.$item->getPrice(); ?>
+				<?php $nextag[] = htmlentities($item->getName()); ?>
+				<tr class="<?php echo ($i%2)?"odd":"even"; ?>">
+					<td class="td-image">
+						<img src="/media/catalog/product<?php echo Mage::getModel("catalog/product")->load($item->getProductId())->getImage() ?>" alt="<?php echo $this->htmlEscape($item->getName()) ?>" />
+					</td>
+					<td class="attributes-col">
+						<h4 class="title cart-title"><?php echo htmlentities($item->getName()); ?></h4>
+						<div class="attr-wrapper">
+							<div class="attr-col attr-col1">
+								<b>STOCK #</b><br><?php echo htmlentities($item->getSku()); ?>
+							</div>
+
+
+				<?php /*
+				$loose_id=array(6344,6343,6342,6341,6340,6339,6338,6337,6336,6335);
+	            $custom = Mage::getModel('catalog/product')->load($item->getProductId());
+				$custom2 = Mage::getModel('catalog/product')->load($item->getSku());
+				if (in_array($item->getProductId(),$loose_id)){
+					$_options = $this->getOptionList();
+					foreach ($_options as $_option) {
+						$_formatedOptionValue = $this->getFormatedOptionValue($_option);
+						$lotId=$_formatedOptionValue['value'];
+						break;
+					}
+				}
+				?>
+		        <?php if ($_options = $this->getOptionList()) { ?>
+		        <?php $j = 2; ?>
+		            <?php foreach ($_options as $_option) { ?>
+		            <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+		            <div class="attr-col attr-col<?php echo $j ?>">
+		            	<b><?php echo $this->htmlEscape($_option['label']) ?></b><br>
+			            <?php echo $_formatedOptionValue['value'] ?>
+	            	</div>
+	            	<?php $j++; ?>
+	            	<?php if ($j > 2) $j = 1; ?>
+		            <?php } ?>
+		        <?php } */ ?>
+
+
+
+						</div>
+						<div class="qty-price">
+							<div class="attr-col attr-col1">
+								<b>QUANTITY</b><br>
+								<?php echo (int)$item->getQtyOrdered(); ?>
+							</div>
+							<div class="attr-col attr-col2">
+								<b>PRICE</b><br>
+								<?php echo $this->helper('checkout')->formatPrice($item->getRowTotal()) ?>
+							</div>
+						</div>
+					</td>
+				</tr>
+
+					<!-- <td><?php echo htmlentities($item->getName()); ?></td> -->
+					<!-- <td><?php echo htmlentities($item->getSku()); ?></td> -->
+					<!-- <td class="td-center"><?php echo (int)$item->getQtyOrdered(); ?></td> -->
+					<!-- <td class="td-right"><?php echo $this->helper('checkout')->formatPrice($item->getRowTotal()) ?></td> -->
+				<!-- </tr> -->
+			<?php $i++; ?>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	<?php $number_of_items = $i; ?>
+
+	<br>
+	<div class="summary">
+		<table width="100%">
+			<tr>
+				<td><?php echo $this->__('Subtotal') ?></td>
+				<td><?php echo $this->helper('checkout')->formatPrice($order->getSubtotal()); ?></td>
+			</tr>
+			<tr>
+				<td><?php echo $this->__('Shipping &amp; Handling') ?></td>
+				<td><?php echo $this->helper('checkout')->formatPrice($order->getShippingAmount()); ?></td>
+			</tr>
+			<tr>
+				<td><?php echo $this->__('Tax') ?></td>
+				<td><?php echo $this->helper('checkout')->formatPrice($order->getTaxAmount()); ?></td>
+			</tr>
+			<tr><td colspan="2"><hr style="height: 0px; border: 0; border-bottom: 1px solid #e6e6e6; margin: 0.5em 0;"></td></tr>
+			<tr>
+				<td><b><?php echo $this->__('Grand Total') ?></b></td>
+				<td><b><?php echo $this->helper('checkout')->formatPrice($order->getGrandTotal()); ?></b></td>
+			</tr>
+		</table>
+	</div>
+
+	<?php /*
+				<tr><td colspan="2"></td><td class="td-right"><?php echo $this->__('Subtotal') ?></td><td class="td-right"><?php echo $this->helper('checkout')->formatPrice($order->getSubtotal()); ?></td></tr>
+				<tr><td colspan="2"></td><td class="td-right"><?php echo $this->__('Shipping &amp; Handling') ?></td><td class="td-right"><?php echo $this->helper('checkout')->formatPrice($order->getShippingAmount()); ?></td></tr>
+				<tr><td colspan="2"></td><td class="td-right"><?php echo $this->__('Tax') ?></td><td class="td-right"><?php echo $this->helper('checkout')->formatPrice($order->getTaxAmount()); ?></td></tr>
+		</tbody>
+		<tfoot>
+				<tr><td colspan="2"></td><td class="td-right"><?php echo $this->__('Grand Total') ?></td><td class="td-right"><?php echo $this->helper('checkout')->formatPrice($order->getGrandTotal()); ?></td></tr>
+		</tfoot>
+	</table>
+	*/ ?>
+
+	<div class="button-set" style="padding: 3em 0 0 0; text-align: center;">
+	    <div style="text-align: center; font-size: 14px; color: #999999;">Thank you again, Avianne and Co.</div>
+	    <br>
+	    <button type="button" class="button" onclick="window.location='<?php echo $this->getUrl() ?>'"><?php echo $this->__('Continue Shopping') ?></button>
+	</div>
+	<iframe width="2" height="2" frameborder="0" scrolling="no" src="https://ssl.kaptcha.com/logo.htm?m=200323&s=AVIANNEANDCO<?php echo $this->getOrderId();?>" ><img width="2" height="2" src="https://ssl.kaptcha.com/logo.gif?m=200323&s=AVIANNEANDCO<?php echo $this->getOrderId();?>" /></iframe><br/>
+</div>
+<!-- START Trusted Stores Order -->
+<div id="gts-order" style="display:none;">
+
+<!-- start order and merchant information -->
+<span id="gts-o-id"><?php echo $orderId; ?></span>
+<span id="gts-o-domain">www.avianneandco.com</span>
+<span id="gts-o-email"><?php echo htmlentities($customer->getEmail()); ?></span>
+<span id="gts-o-country"><?php echo htmlentities($address->getCountryId()); ?></span>
+<span id="gts-o-currency">USD</span>
+<span id="gts-o-total"><?php echo $order->getGrandTotal(); ?></span>
+<span id="gts-o-discounts">-<?php echo $order->getDiscountAmount(); ?></span>
+<span id="gts-o-shipping-total"><?php echo $order->getShippingAmount(); ?></span>
+<span id="gts-o-tax-total"><?php echo $order->getTaxAmount(); ?></span>
+<span id="gts-o-est-ship-date"><?php echo $shipDate; ?></span>
+<span id="gts-o-has-preorder"><?php echo $backorder ? 'Y' : 'N'; ?></span>
+<span id="gts-o-has-digital"><?php echo $download ? 'Y' : 'N'; ?></span>
+<!-- end order and merchant information -->
+
+<!-- start repeated item specific information -->
+<?php foreach ($order->getAllItems() as $item): ?>
+<span class="gts-item">
+<span class="gts-i-name"><?php echo htmlentities($item->getName()); ?></span>
+<span class="gts-i-price"><?php echo $item->getBasePrice(); ?></span>
+<span class="gts-i-quantity"><?php echo (int)$item->getQtyOrdered(); ?></span>
+<span class="gts-i-prodsearch-country">US</span>
+<span class="gts-i-prodsearch-language">en</span>
+</span>
+<?php endforeach; ?>
+<!-- end repeated item specific information -->
+
+</div>
+<!-- END Trusted Stores -->
+
+
+<!-- Google Code for Completed Sale Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1054978594;
+var google_conversion_language = "en_US";
+var google_conversion_format = "2";
+var google_conversion_color = "f5fbfd";
+var google_conversion_label = "5UxLCKahlwEQouSG9wM";
+var google_conversion_value = 0;
+if (50.0) {
+  google_conversion_value = 50.0;
+}
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/1054978594/?value=50.0&amp;label=5UxLCKahlwEQouSG9wM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+
+
+<!-- Variable Declarations -->	
+
+
+<!-- ShopZilla.com ROI Tracker -->
+<?php $cust_id = $order->getCustomerId(); ?>
+<script language="javascript">
+<!--
+	/* Performance Tracking Data */
+	var mid            = '231283';
+	var cust_type      = '<?php if (empty($cust_id)) echo '1'; ?>';
+	var order_value    = '<?php echo $amount ?>';
+	var order_id       = '<?php echo $orderId ?>';
+	var units_ordered  = '<?php echo $number_of_items ?>'	;
+//-->
+</script>
+<script language="javascript" src="https://www.shopzilla.com/css/roi_tracker.js"></script>
+	
+<script type="text/javascript">
+var _roi = _roi || [];
+// Step 1: add base order details
+_roi.push(['_setMerchantId', '488553']); // required
+_roi.push(['_setOrderId', '<?php echo $orderId ?>']); // unique customer order ID
+_roi.push(['_setOrderAmount', '<?php echo $order->getSubtotal(); ?>']); // order total without tax and shipping
+_roi.push(['_setOrderNotes', '']); // notes on order, up to 50 characters
+// Step 2: add every item in the order
+// where your e-commerce engine loops through each item in the cart and prints out _addItem for each
+// please note that the order of the values must be followed to ensure reporting accuracy
+<?php foreach ($order->getAllItems() as $item): ?>
+<?php 
+		$product = Mage::getModel('catalog/product')->load($item->getProductId()); 
+		$cats = $product->getCategoryIds();
+		foreach ($cats as $category_id) {
+			$_cat = Mage::getModel('catalog/category')->load($category_id) ;
+			break;
+		}
+?>
+_roi.push(['_addItem', 
+'<?php echo $item->getSku() ?>', // Merchant sku
+'<?php echo $item->getName() ?>', // Product name
+'<?php echo $_cat->getId() ?>', // Category id
+'<?php echo $_cat->getName() ?>', // Category name
+'<?php echo $item->getPrice() ?>', // Unit price
+'<?php echo (int)$item->getQtyOrdered() ?>' // Item quantity
+]);
+<?php endforeach; ?>
+// Step 3: submit transaction to SDC ROI tracker
+_roi.push(['_trackTrans']);
+</script>
+<script type="text/javascript" src="https://stat.dealtime.com/ROI/ROI2.js"></script>
+<?php 
+$nextag_p = array();
+$nextag_c = array();
+$nextag_q = array();
+?>
+
+<!-- Become.com ROI -->
+<script type="text/javascript">
+var become_merchant_id = '391F129578A7C8D8'; 
+var become_order_num = '<?php echo $orderId ?>'; 
+var become_purchased_items = new Array(); 
+<?php foreach ($order->getAllItems() as $item): ?>
+<?php 
+$product = Mage::getModel('catalog/product')->load($item->getProductId()); 
+$cats = $product->getCategoryIds();
+foreach ($cats as $category_id) {
+	$_cat = Mage::getModel('catalog/category')->load($category_id) ;
+	break;
+}
+$nextag_p[] = $item->getSku();
+$nextag_c[] = $_cat->getName();
+$nextag_q[] = (int)$item->getQtyOrdered();
+?>
+var become_item = new Object(); 
+become_item.productid = '<?php echo $product->getId(); ?>'; 
+become_item.category = '<?php echo $_cat->getName(); ?>'; 
+become_item.price = '<?php echo $item->getPrice(); ?>'; 
+become_item.quantity = <?php echo (int)$item->getQtyOrdered(); ?>; 
+become_purchased_items.push(become_item); 
+<?php endforeach; ?>
+</script> <script type="text/javascript" language="javascript" src="https://partner.become.com/roi-tracker2/conversion.js"></script> 
+<noscript><img src="https://partner.become.com/roi-tracker2/t.gif?merchantid=391F129578A7C8D8&order_id=<?php echo $orderId ?>&order_value=<?php echo $order->getGrandTotal(); ?>" style="display:none;border:0;"/></noscript>
+<!-- Become.com ROI -->
+
+<!-- Nextag ROI -->
+<script type="text/javascript">
+<!--
+    /* NexTag ROI Optimizer Data */
+    var id = '4792122';
+    var rev = '<?php echo $order->getGrandTotal(); ?>';
+    var order = '<?php echo $orderId ?>';
+    var cats = '<?php echo implode('|',$nextag_c); ?>';
+    var prods = '<?php echo implode('|',$nextag_p); ?>';
+    var units = '<?php echo implode('|',$nextag_q); ?>';
+//-->
+</script>
+<script type="text/javascript" src="https://imgsrv.nextag.com/imagefiles/includes/roitrack.js"></script>
+<!-- Nextag ROI -->
+
+
+<?php if ($random_survey == 3): ?>
+
+<!-- PriceGrabber Tracker Code -->
+<img src="https://www.pricegrabber.com/conversion.php?retid=21888">
+<?php $pg = (implode("&", $pricegrabber)); ?>
+<img src="https://www.pricegrabber.com/conversion.php?retid=21888&<?php echo $pg; ?>">
+
+<script type="text/javascript">
+<!--
+// Adjust the values of popup_pos_x, popup_pos_y to change the location of the popup layer on your confirmation page
+popup_pos_x=50;
+popup_pos_y=360;
+// fill in the order number below
+popup_order_number = '<?php echo $orderId; ?>';
+// fill in the email address below
+popup_email = '<?php echo htmlentities($customer->getEmail()); ?>';
+//-->
+</script>
+<!-- PriceGrabber Merchant Evaluation Code -->
+<script type="text/javascript" charset="UTF-8" src="https://www.pricegrabber.com/rating_merchrevpopjs.php?retid=21888">
+</script>
+<noscript>
+<a href="http://www.pricegrabber.com/rating_merchrev.php?retid=21888" target=_blank>
+<img src="https://images.pricegrabber.com/images/mr_noprize.jpg" border="0" width="272" height="238" alt="Merchant Evaluation"></a>
+</noscript>
+<!-- End PriceGrabber Code -->
+
+<?php elseif ($random_survey == 2): ?>
+
+<!-- Start Bizrate POS Code --> 
+<script language="JavaScript"> 
+// var passin_x =''; //comment out to default center or adjust horizontal position by pixel 
+// var passin_y =''; //comment out to default center or adjust vertical position by pixel 
+// var z_index =''; //default 1,000,000 
+var orderId='<?php echo $orderId; ?>'; 
+var cartTotal='<?php echo $this->helper('checkout')->formatPrice($order->getGrandTotal()); ?>'; 
+var billingZipCode=''; 
+// Pass up to 5 products from customer shopping cart 
+//var productsPurchased= 'URL=^SKU=^GTIN=^PRICE=|URL=^SKU=^GTIN=^PRICE=|URL=^SKU=^GTIN=^PRICE=|URL=^SKU=^GTIN=^PRICE=|URL=^SKU=^GTIN=^PRICE='; 
+var productsPurchased= '<?php echo htmlentities(implode('|', $bizrate)); ?>'; 
+</script> 
+<script type="text/javascript" src="//eval.bizrate.com/js/pos_231283.js"> 
+</script> 
+<!-- End Bizrate POS Code -->
+
+<?php else: ?>
+
+<!-- NexTag survey code -->
+<link rel="stylesheet" href="//merchants.nextag.com/serv/main/buyer/dhtmlpopup/dhtmlwindow.css" type="text/css" />
+<script type="text/javascript">
+    var seller_id = 4792122;
+//    var order = '<?php echo $orderId; ?>';
+//    var prods = '<<?php echo implode('|', $nextag); ?>>';
+    //popup_left and popup_top default to the center of browser window if commented
+    //var popup_left=50;
+    //var popup_top=50;
+    //var popup_width=345; // default 345
+    //var popup_height=205; // default 205
+    //var popup_resize=0; // default 0
+
+	document.write('<'+ 'script type="text/javascript" src="//merchants.nextag.com/seller/review/popup_include.js"><\/script>'); 
+</script>
+<!-- End NexTag survey code -->
+
+<?php endif; ?>
+
+
+<!--BuySafe Guarantee -->
+<!-- BEGIN: buySAFE Guarantee -->
+<script src="https://seal.buysafe.com/private/rollover/rollover.js"></script>
+<span id="BuySafeSealSpan"></span>
+<span id="BuySafeGuaranteeSpan"></span>
+<script type="text/javascript">
+  buySAFE.Hash = "8q7tsSQNpWW0V%2FRRsPCnQKXlWkIkRup8w1Fbdda3Rbq7LrqILX7py3qOYALlLxk4t4rO7QtsHL3LPdn2iINXRQ%3D%3D";
+  WriteBuySafeSeal("BuySafeSealSpan", "GuaranteedSeal");
+  WriteBuySafeGuarantee("JavaScript");
+</script>
+<!-- END: buySAFE Guarantee -->
+<script type="text/javascript">
+jQuery(function(){
+	var docWidth = jQuery(document).width();
+	var leftS = ( ( docWidth - 1000 ) / 2 ) + 697;
+	jQuery('head').append('<style type="text/css">#pgmr_box { left: '+leftS+'px !important; top: 365px; }</style>');
+})
+</script>
+
+
+<?php $total = $order->getGrandTotal();?>
+
+<script type = "text/javascript">
+adroll_conversion_value = <?php echo $total ?>;
+adroll_currency = "USD"
+adroll_custom_data = {"ORDER_ID": "<?php echo $this->__($this->escapeHtml($this->getOrderId())) ?>"};
+</script>

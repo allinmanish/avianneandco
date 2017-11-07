@@ -1,0 +1,105 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+?>
+
+<?php $_product = $this->getProduct();?>
+<?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
+<p><img id="image" src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->directResize(477, 477)->setQuality(90); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" itemprop="image" /></p>
+<?php else: ?>
+<img id="image" src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->directResize(477, 477)->setQuality(90); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" itemprop="image" />
+<?php endif; ?>
+<?php if (count($this->getGalleryImages()) > 0): ?>
+<div class="more-views">
+    <ul>
+    <?php $i=0;?>
+    <?php foreach ($this->getGalleryImages() as $_image):	?>
+        <li <?php if($i%4==0&&$i!=0): ?>class="right-li"<?php endif; ?>>
+        	<span rel="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->setQuality(90); ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>">
+        		<img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->directResize(93, 93)->setQuality(90); ?>" width="93" height="93" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+        	</span>
+        </li>
+        <?php $i++; ?>
+    <?php endforeach; ?>
+    <?php $cat_array = array(99,210,211,77,79,78,80,141,133,209,372,359,342); ?>
+    <?php if(!count(array_intersect($_product->getCategoryIds(), $cat_array))):?>
+    	<li <?php if($i%4==0):?>class="right-li"<?php endif; ?>>
+    		<span rel="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."GiftBoxLarge.jpg" ?>" title="Gift Box">
+	        	<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."giftboxdoub.jpg"; ?>" width="93" height="93" alt="Gift Box" title="Gift Box" />
+	        </span>
+    	</li>
+    	<?php $i++;?>
+	    <?php //if( ($_product->getFinalPrice() > 500)) { ?>
+	    	<li <?php if($i%4==0):?>class="right-li"<?php endif; ?>>
+	    		<?php if (is_file(Mage::getBaseDir('media').'/catalog/appraisal/'.str_replace(" ", "", $_product->getSKU()).'.png')):?>
+	    			<span rel="<?php echo Mage::getBaseUrl('media').'/catalog/appraisal/'.str_replace(" ", "", $_product->getSKU()).'.png' ?>" target="_blank" title="Appraisal Certificate">
+		        		<img src="<?php echo Mage::getBaseUrl('media').'/catalog/appraisal.jpg'; ?>" width="93" height="93" alt="Appraisal Certificate" title="Appraisal Certificate" />
+		        	</span>
+	    		<?php else: ?>
+		        	<span rel="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."appraisal.jpg" ?>" title="Appraisal Certificate">
+		        		<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."appraisal-sm.jpg" ?>" width="93" height="93" alt="Appraisal Certificate" title="Appraisal Certificate" />
+		        	</span>
+	        	<?php endif;?>
+	        </li>
+	        <?php $i++;?>
+	    <?php //} ?>
+    <?php endif;?>
+    	<?php while(($i%5)!=0): ?>
+    		<li <?php if((($i+1)%5)==0):?>class="right-li <?php echo $i; ?>"<?php endif; ?>></li>
+    		<?php $i++;?>
+    	<?php endwhile; ?>
+    </ul>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery('.product-img-box .more-views li span').hover(function(e){
+			var limgSrc = jQuery(this).attr('rel');
+			jQuery('#image').attr('src',limgSrc);
+			e.preventDefault();
+		});
+	});
+	jQuery('.product-img-box .more-views li a').click(function(e){return false;});
+	var images = new Array()
+	function preload() {
+		for (i = 0; i < preload.arguments.length; i++) {
+			images[i] = new Image()
+			images[i].src = preload.arguments[i]
+		}
+	}
+	preload(
+		<?php $i=0; $total=count($this->getGalleryImages());?>
+		<?php foreach ($this->getGalleryImages() as $_image): ?>
+			<?php $i++;?>
+			"<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->setQuality(90); ?>",
+		<?php endforeach; ?>
+		"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."GiftBoxLarge.jpg" ?>",
+		<?php if (is_file(Mage::getBaseDir('media').'/catalog/appraisal/'.str_replace(" ", "", $_product->getSKU()).'.png')):?>
+			"<?php echo Mage::getBaseUrl('media').'/catalog/appraisal/'.str_replace(" ", "", $_product->getSKU()).'.png' ?>"
+		<?php else: ?>
+    		"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."appraisal.jpg" ?>"
+		<?php endif;?>
+	);
+</script>

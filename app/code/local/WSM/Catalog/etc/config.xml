@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+<global>
+    <models>
+        <catalog>
+            <rewrite>
+                <config>WSM_Catalog_Model_Config</config>
+            </rewrite>
+        </catalog>
+    </models>
+</global>

@@ -1,0 +1,106 @@
+<ul class="breadcrumbs" xmlns:v="http://rdf.data-vocabulary.org/#">
+	<li class="home" typeof="v:Breadcrumb">
+		<a href="/" title="Go to Home Page" rel="v:url" property="v:title">Home</a>
+	</li>
+    <li> / </li>
+    <li class="cms_page" typeof="v:Breadcrumb">
+    	<span rel="v:child" property="v:title"><?php echo $this->__('Celebrity Jewelry Gallery'); ?></span>
+	</li>        
+</ul>
+<div class="gallery-head">
+	<div>
+		<h1><?php echo $this->__('Celebrity Jewelry Gallery'); ?></h1>
+		<p class="line-1"><?php echo $this->__('Presenting our exclusive and vast collection of'); ?><br /><?php echo $this->__('celebrity jewelry worn by notable celebrities such'); ?><br /><?php echo $this->__('as Ciara, Jamie Presley, Nicki Minaj, and many more!'); ?></p>
+		<p class="line-2-2"><?php echo $this->__('As Seen On:'); ?></p>
+		<p class="line-3-2">
+			<img src="<?php echo $this->getSkinUrl('images/gallery/seen-1.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/seen-2.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/seen-3.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/seen-4.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/seen-5.png') ?>" />
+		</p>
+	</div>
+</div>
+<div class="gallery-likebox">
+	<div class="share-top black-friday">
+		<img src="<?php echo $this->getSkinUrl('images/black-friday.jpg') ?>" alt="<?php echo $this->__('Black Friday'); ?>" />
+	</div>
+	<div class="share-top post-black-friday">
+		<div id="top-social-buttons">
+			<i id="counter-overlay"></i>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="<?php echo $this->__('Celebrity Jewelry Gallery'); ?>" data-count="none">Tweet</a>
+			<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+			<a href="http://pinterest.com/pin/create/button/?url=<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>&media=<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+			<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+		</div>
+		<span><?php echo $this->__('Who\'s Wearing Avianne & Co?'); ?></span>
+	</div>
+</div>
+<div class="gallery-bottom-box">
+	<div>
+		<div class="gallery-sidebar">
+			<div class="item-1"><a href="/blog/an-exclusive-look-at-ciaras-15-carat-diamond-ring-by-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-3.jpg') ?>" /></a><p><a href="/blog/an-exclusive-look-at-ciaras-15-carat-diamond-ring-by-avianne-co/"><?php echo $this->__('Read About our $500,000 Diamond Engagement Ring produced for Ciara'); ?></a></p></div>
+			<div class="item-2"><a href="/blog/juelz-santana-re-ups-on-diamond-jewelry-at-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-2.jpg') ?>" /></a><p><a href="/blog/juelz-santana-re-ups-on-diamond-jewelry-at-avianne-co/"><?php echo $this->__('Check out Juelz Santana\'s Half Kilo Solid Cuban Link Chains'); ?></a></p></div>
+			<div class="item-3"><a href="/blog/the-monarch-diamond-ring-by-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-1.jpg') ?>" /></a><p><a href="/blog/the-monarch-diamond-ring-by-avianne-co/"><?php echo $this->__('Arcangel\'s Million Dollar Jewelry Collection By Avianne &amp; Co'); ?></a></p></div>
+		</div>
+		<div class="gallery-slider">
+			<?php $_category = Mage::getModel("catalog/category")->load(211); ?>
+			<?php $collection = $_category->getProductCollection()->addAttributeToSort('position'); ?>
+			<?php $collection->getSelect()->limit( 60 ); ?>
+			<?php Mage::getModel('catalog/layer')->prepareProductCollection($collection); ?>
+			<span id="slider-prev"></span>
+			<div class="slider-wrapper">
+				<?php echo file_get_contents('http://www.avianneandco.com/wp/celebrities.php'); ?>
+			</div>
+			<span id="slider-next"></span>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var $j = jQuery.noConflict();
+var realSlider= $j(".bxslider").bxSlider({
+	speed:1000,
+	pager:false,
+	nextSelector: '#slider-next',
+	prevSelector: '#slider-prev',
+	nextText: '',
+	prevText: '',
+	infiniteLoop:false,
+	hideControlOnEnd:true,
+	onSlideBefore:function($slideElement, oldIndex, newIndex){
+		changeRealThumb(realThumbSlider,newIndex);
+	}
+});
+var realThumbSlider=$j(".thumbSlider").bxSlider({
+  	minSlides: 5,
+  	maxSlides: 5,
+  	slideWidth: 80,
+  	slideMargin: 12,
+  	moveSlides: 1,
+  	pager:false,
+  	speed:1000,
+  	infiniteLoop:false,
+  	hideControlOnEnd:true,
+  	nextText:'<span></span>',
+	prevText:'<span></span>',
+	onSlideBefore:function($slideElement, oldIndex, newIndex){
+		
+	}
+});
+function linkRealSliders(bigS,thumbS){
+	$j(".thumbSlider").on("click","img",function(event){
+		event.preventDefault();
+		var newIndex=$j(this).parent().attr("slideIndex");
+        bigS.goToSlide(newIndex);
+	});
+}
+function changeRealThumb(slider,newIndex){
+	var $thumbS=$j(".thumbSlider");
+	$thumbS.find('.active').removeClass("active");
+	$thumbS.find('li[slideIndex="'+newIndex+'"]').addClass("active");
+	if(slider.getSlideCount()-newIndex>=4)slider.goToSlide(newIndex);
+	else slider.goToSlide(slider.getSlideCount()-4);
+
+}
+linkRealSliders(realSlider,realThumbSlider);
+</script>

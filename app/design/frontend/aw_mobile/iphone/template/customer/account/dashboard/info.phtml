@@ -1,0 +1,47 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div>
+    <div class="dashboard-block">
+    	<h2><?php echo $this->__('Account Information'); ?></h2>
+        <h3><?php echo $this->__('Contact Information') ?></h3>
+        <div class=>
+            <?php echo $this->htmlEscape($this->getCustomer()->getFirstname()) ?>
+            <?php echo $this->htmlEscape($this->getCustomer()->getLastname()) ?><br />
+            <?php echo $this->htmlEscape($this->getCustomer()->getEmail()) ?><br />
+            <a href="<?php echo $this->getChangePasswordUrl() ?>"><?php echo $this->__('Change Password') ?></a>
+        </div>
+        <div class="a-right">
+        	<a class="edit" href="<?php echo $this->getUrl('customer/account/edit') ?>"><?php echo $this->__('Edit'); ?></a>
+        </div>
+    </div>
+    <?php if( $this->isNewsletterEnabled() ): ?>
+    <div class="dashboard-block">
+        <h3><?php echo $this->__('Newsletters') ?></h3>
+        <div class="">
+            <?php if( $this->getIsSubscribed() ): ?>
+                <?php echo $this->__("You are currently subscribed to 'General Subscription'.") ?>
+            <?php else: ?>
+                <?php echo $this->__('You are currently not subscribed to any newsletter.') ?>
+            <?php endif; ?>
+        </div>
+        <div class="a-right">
+        	<a class="edit" href="<?php echo $this->getUrl('newsletter/manage') ?>"><?php echo $this->__('Edit'); ?></a>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>

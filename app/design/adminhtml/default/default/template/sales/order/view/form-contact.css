@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.form-quick-contact {width:578px;border:1px solid #c5c5c5;padding: 15px; float: left; position: relative;}
+.form-quick-contact .response {display:block; }
+.form-quick-contact .title {margin:35px 0 20px 0; padding-left: 40px; color:#15256c; font-weight:normal; 
+ font-family: 'Circular Std Bold', "arial", serif; 
+ font-size:20px; position: relative; text-align: center;}
+.form-quick-contact .radio{color:#5e8096; font-weight:bold; font-family:arial,helvetica,sans-serif; font-size:13px; padding-bottom:20px;}
+.form-quick-contact .close {float: right; margin: 0; background: #4572cc; width: 30px; height: 30px; color: #fff; text-align: center;
+ line-height: 30px; position: absolute; right: 0; top: 0;}
+.form-quick-contact .close :hover{background:#0b5d9e; text-decoration: none;} 
+
+.form-quick-contact .radio .radio-box{width:135px; float:left;}
+.form-quick-contact .radio .radio-check{}
+.form-quick-contact .text{padding:0;float:left;width:100px;line-height:30px;}
+.form-quick-contact .input{float: right; width: 100%;line-height:20px;}
+.form-quick-contact .text .info-txt{width:100%;padding-bottom:12px;color:#000;vertical-align:middle; font-size:14px;}
+.form-quick-contact .input .textbox{margin-bottom: 12px; width: 100%; border: 1px solid #B6B6B6; box-sizing: border-box; height: 30px;}
+.form-quick-contact .capcha .textbox{width:60px;border:1px solid #B6B6B6;}
+.form-quick-contact .capcha .label{float:left;}
+.form-quick-contact #security_image{margin-left:5px;margin-top:1px;}
+.form-quick-contact .capcha{padding-top:10px;color:#15256c;font-weight:normal;font-family: 'Circular Std Bold', "arial", serif;
+ margin-bottom:10px; width: 100%; float: right;}
+.form-quick-contact .hm_content{color:#15256c; font-weight:normal; font-family: 'Circular Std Bold', "arial", serif; margin-bottom:10px}
+.form-quick-contact .text-area {width: 100%; float: right;}
+.form-quick-contact .text-area textarea {border:1px solid #B6B6B6; width: 100%; box-sizing: border-box;}
+.form-quick-contact .submit {text-align:right;padding:10px 0 10px 10px; width: 100%; float: left; box-sizing: border-box;}
+.form-quick-contact .submit input{vertical-align: top;}
+.form-quick-contact .submit a{}
+.form-quick-contact .submit a img{border:none}
+.form-quick-contact .info-txt {font-size: 14px; margin-bottom: 5px; color: #000;}
+
+.form-quick-contact .recaptchatable{width:100%;}
+.form-quick-contact .recaptchatable #recaptcha_response_field {font-size: 16px; height: 30px; padding: 5px; box-sizing: border-box;}
+.form-quick-contact .submit input{background-color: #4572cc; border:none; width:100px; height:40px; line-height:40px; text-align:center;
+ color: #fff; font-size: 15px; text-transform: uppercase;}
+.form-quick-contact .submit input:hover{background:#0b5d9e; text-decoration: none;} 
+
+.form-quick-contact .title:before {content: ""; background: url(../images/quickview-cls.jpg) no-repeat; display: inline-block; position: absolute;
+ left: 0; width: 40px; height: 40px; background-size: 100% 100%;}
+
+@media (max-width: 680px) {
+	
+#modalwindow #dialog {background-color: transparent; min-width: initial; max-width: 100%;}
+.form-quick-contact {width: 90%; margin: 0 auto; padding: 0; float: none; background: #fff; border: none;}
+.form-quick-contact-inner {width: 100%; float: left; background: #fff; border: 1px solid #c5c5c5; padding: 10px; box-sizing: border-box;} 
+.form-quick-contact .text-area textarea {width: 100%;}
+.form-quick-contact .text {width: 30%;}
+.form-quick-contact .capcha {}
+.form-quick-contact .submit {margin-top: 3em;}
+
+.form-quick-contact .recaptchatable{width:100%;}
+.form-quick-contact .recaptchatable #recaptcha_response_field{width:100% !important;}
+.form-quick-contact .recaptchatable .recaptcha_image_cell center img {height: auto; width: 100%;}
+.form-quick-contact .recaptchatable #recaptcha_image{width:100% !important;}
+	
+}

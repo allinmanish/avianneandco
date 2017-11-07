@@ -1,0 +1,165 @@
+<?php if(Mage::getStoreConfig('quickcontact/email/dock_link')): ?>
+<div style="display:none;"><img src="<?php echo $this->getSkinUrl('quickcontact/images/btn_feedback_hover.png')?>"></div>
+<div style="position:fixed; left:0px; top:200px;" class="bo_docklink"><a class="docklink" href="#dialog" name="modal"></a></div>
+<?php endif; ?>
+
+<div id="modalwindow">  
+	
+	<div id="dialog" class="window">	
+		
+
+						
+		<div class="form-quick-contact">
+		<div class="close"><a href="#" class="close"><img src="<?php echo $this->getSkinUrl('quickcontact/images/close_btn.png')?>" /></a></div>
+          <div style="padding-right:30px;">
+		<div class="title"><div id="quick_contact_title"><?php echo Mage::getStoreConfig("quickcontact/email/default_title") ?>   		</div>
+
+</div>
+
+
+			<form action="<?php 
+			if (!isset($_SERVER['HTTPS'])) { 
+				echo $this->getUrl('quickcontact/index/post');
+			} else {
+				if ($_SERVER['HTTPS'] != "on"){
+					echo $this->getUrl('quickcontact/index/post');
+				} else {
+					echo $this->getUrl('quickcontact/index/post', array('_secure'=>true));
+				}
+			}
+				?>" method="post" name="contactform" id="contactform">
+				<input type="hidden" id="page_title" name="page_title" value="<?php echo $this->getLayout()->getBlock('head')->getTitle(); ?>"/>
+				<input type="hidden" id="page_link" name="page_link" value="<?php echo Mage::helper('core/url')->getCurrentUrl() ;?>"/>
+								
+				<?php $allows = Mage::getStoreConfig("quickcontact/email/allow_fields"); ?>
+				
+				<input type="hidden" id="send_email_to" name="send_email_to" value="">
+				<input type="hidden" name="contact_type_title" id="contact_type_title" value="">
+				<script language="javascript">											
+					function changeEmail(email,type){
+						document.getElementById('send_email_to').value = email;
+						document.getElementById('contact_type_title').value = type;
+					}
+					function changeTitle(value){
+						document.getElementById('quick_contact_title').innerHTML = value;
+					}
+					var contactTypes = new Array();
+					
+				</script>
+				<?php 
+					if (strstr($allows,'contact_type')!='' && Mage::getStoreConfig("quickcontact/email/contact_type_ua_regexp")):
+						$contact_types = unserialize(Mage::getStoreConfig("quickcontact/email/contact_type_ua_regexp"));						
+				?>				
+				 
+				<div class="radio">
+					<ul>
+					<?php
+						$i=0; foreach ($contact_types as $contact_type):
+							if ($i==0):
+							?>
+							<script>
+								em = '<?php echo $contact_type['email']?>';
+								tp = '<?php echo $contact_type['type']?>';
+							</script>
+							<?php endif; ?>
+							<script>
+								contactTypes['<?php echo $contact_type['type']?>'] = <?php echo $i ?>;
+							</script>
+							<li class="radio-box"><input class="radio-check" type="radio" id="contact_type<?php echo $i; ?>" name="contact_type" value="<?php echo $contact_type['title']?>" onclick="changeEmail('<?php echo $contact_type['email']?>','<?php echo $contact_type['type']?>');changeTitle(this.value);">
+								<label for="contact_type<?php echo $i; ?>"><?php echo $contact_type['type']?></label></li>													
+					<?php
+							$i++;
+						endforeach;					
+					?>
+					</ul>
+				</div>
+				<br/>
+				<script language="javascript">	
+					if(document.getElementById('contact_type0')) {
+						document.getElementById('contact_type0').checked = true;
+						changeEmail(em,tp);
+						changeTitle(document.getElementById('contact_type0').value);
+					}
+					// 
+						// 
+					// 
+					<!--
+					function querySt(ji) {
+						hu = window.location.search.substring(1);
+						gy = hu.split("&");
+						for (i=0;i<gy.length;i++) {
+							ft = gy[i].split("=");
+							if (ft[0] == ji) {
+								return ft[1];
+							}
+						}
+					}
+					jQuery(document).ready(function(){
+						var contact_type = querySt("contact_type");
+						if (contact_type) {
+							jQuery('#contact_type'+contactTypes[contact_type]).click();
+						}
+					});
+					-->
+				</script>
+				<?php endif; ?>
+    	       	
+				
+				<div class="text"> 
+					<div class="info-txt"> <?php echo Mage::helper('quickcontact')->__('Your Name')?> <span style="color:#ff0000;">*</span></div>
+					<div class="info-txt"> <?php echo Mage::helper('quickcontact')->__('Your Email')?> <span style="color:#ff0000;">*</span></div>
+					<div class="info-txt" <?php if (strstr($allows,'phone')=='') echo ' style="display:none; "' ?>> <?php echo Mage::helper('quickcontact')->__('Your Phone #')?> </div>
+					<div class="info-txt" <?php if (strstr($allows,'subject')=='') echo ' style="display:none; "' ?>> <?php echo Mage::helper('quickcontact')->__('Subject')?> </div>
+				</div>
+								
+				<div class="input">
+					<input class="input-text textbox" value="<?php if(Mage::helper('customer')->isLoggedIn()) echo Mage::getSingleton('customer/session', array('name'=>'frontend'))->getCustomer()->getName()?>" type="text" name="name" id="name"/>
+					<input class="input-text textbox" value="<?php if(Mage::helper('customer')->isLoggedIn()) echo Mage::getSingleton('customer/session', array('name'=>'frontend'))->getCustomer()->getEmail()?>" type="text" name="email" id="email"/>
+					<input class="input-text textbox" type="<?php echo strstr($allows,'phone')?'text':'hidden' ?>" name="phone" id="phone" value=""/>
+					<input class="input-text textbox" style="width:440px" type="<?php echo strstr($allows,'subject')?'text':'hidden' ?>" name="subject" id="subject" value=""/>
+				</div>
+				<div style="clear:both"><span></span></div>
+				<div class="text-area">
+					<textarea name="content" id="content" class="input-text" rows="5" cols="64"></textarea>        
+				</div>
+				
+				<?php //if (!Mage::helper('customer')->isLoggedIn()): ?>
+					<?php if (Mage::getStoreConfig("quickcontact/recaptcha/enabled")==true): ?>
+					<div class="capcha">
+						<script>
+						var RecaptchaOptions = {
+						   theme : 'clean'
+						};
+						</script>
+
+						<?php
+						//require_once('recaptchalib.php');
+						$captcha = Mage::getModel('quickcontact/captcha');
+						// Get a key from https://www.google.com/recaptcha/admin/create
+						$publickey = Mage::getStoreConfig("quickcontact/recaptcha/public_key");						
+						# the response from reCAPTCHA
+						$resp = null;
+						# the error code from reCAPTCHA, if any
+						$error = null;						
+						echo $captcha->recaptcha_get_html($publickey, null, 'true');
+						?>
+						
+						
+					</div>
+					<?php else: ?>
+						<input type="hidden" name="codemd5" id="codemd5" value=""/>
+					<?php endif; ?>
+				<?php /*else: ?>
+					<input type="hidden" name="codemd5" id="codemd5" value=""/>
+				<?php endif;*/ ?>
+          		  
+				<div class="submit">                
+                <input id="submit" type="submit" value="Submit" class="button-alt" />  </div>  
+				
+        </div>
+		</div>
+	
+	</div>
+	<div id="mask"></div>
+	
+</div>

@@ -1,0 +1,201 @@
+<?php
+/**
+ * Feel free to contact me via Facebook
+ * http://www.facebook.com/rebimol
+ *
+ *
+ * @author 		Vladimir Popov
+ * @copyright  	Copyright (c) 2011 Vladimir Popov
+ */
+ 
+// in case redirect fails
+if (Mage::registry('redirect_url')){?>
+<meta http-equiv="refresh" content="0;url=<?php echo Mage::registry('redirect_url')?>">
+<script  type="text/javascript">
+	window.location='<?php echo Mage::registry('redirect_url')?>';
+</script>
+<?php }
+
+if($this->getWebform()->getIsActive() == VladimirPopov_WebForms_Model_Webforms::STATUS_DISABLED || !$this->isDirectAvailable()){
+	echo $this->getNotAvailableMessage();
+} else {
+
+if(Mage::registry('show_form_name')){?>
+<div class="page-title">
+	<h2><?php echo $this->getWebform()->getName();?></h2>
+</div>
+<?php } ?>
+
+<?php if($this->isAjax()){ ?>
+<div id="webform_<?php echo $this->getWebform()->getId()?>_success_text" class="std webforms-success-text" style="display:none"></div>
+<?php } ?>
+
+<?php if(Mage::registry('captcha_invalid')){ ?>
+<ul class="messages"><li class="error-msg"><ul><li><?php echo Mage::helper('webforms')->__('Verification code was not correct. Please try again.');?></li></ul></li></ul>
+<?php }?>
+
+<?php
+if(Mage::registry('show_success')){?>
+<div class="std webforms-success-text">
+	<?php echo $this->getWebform()->getSuccessText()?>
+</div>
+<?php } else {
+?>
+
+<div id="webform_<?php echo $this->getWebform()->getId()?>_form">
+
+<?php if($this->getWebform()->getDescription()){?>
+<div class="std">
+	<?php echo $this->getWebform()->getDescription();?>
+</div>
+<?php }?>
+
+<?php if($this->isAjax()){ ?>
+<iframe id="webform_<?php echo $this->getWebform()->getId()?>_iframe" name="webform_<?php echo $this->getWebform()->getId()?>_iframe" style="width:0;height:0;border:0;position:absolute"></iframe>
+<?php } ?>
+
+
+<form action="<?php echo str_replace('https://','http://',$this->getFormAction())?>"  method="post" name="webform_<?php echo $this->getWebform()->getId()?>" id="webform_<?php echo $this->getWebform()->getId()?>" enctype="<?php echo $this->getEnctype()?>" class="webforms-<?php echo $this->getWebform()->getCode()?>" <?php if($this->isAjax()){?>target="webform_<?php echo $this->getWebform()->getId()?>_iframe"<?php }?>>
+
+	<input type="hidden" name="submitWebform_<?php echo $this->getWebform()->getId()?>" value="1"/>
+	<input type="hidden" name="webform_id" value="<?php echo $this->getWebform()->getId()?>"/>
+
+	<?php if(is_array($this->getData('hidden'))){
+		foreach($this->getData('hidden') as $key=>$value){?>
+	<input type="hidden" name="<?php echo $key?>" value="<?php echo $value?>"/>
+	<?php
+		}
+	}?>
+
+	<?php if(count($this->getWebform()->_getHidden())){
+		foreach($this->getWebform()->_getHidden() as $field){
+			echo $field->toHtml();
+		}
+	} ?>
+	<ul class="custom-jewelry-list">
+	<?php foreach (Mage::registry('fields_to_fieldsets') as $key => $fieldset): ?>
+		<li class="parent-item item-<?php echo $key; ?> <?php if($key==9): ?>active<?php else: ?>inactive<?php endif; ?>"><a href="#"><span><?php echo $fieldset['name']?></span></a></li>
+		<li class="child-item item-<?php echo $key; ?>">
+			<?php if($key==9): ?>
+				<ul class="step-1">
+					<li class="step-1-item-1"><a data-id="field[19]0" href="#"><span><?php echo $this->__('Custom Diamond Pendants'); ?><br /><?php echo $this->__('3D Computerized Design'); ?><br /><?php echo $this->__('Solid or Semi-Sold Casting'); ?></span><br /><br /><span class="sub-grey"><?php echo $this->__('7 - 12 Day Production Time'); ?></span></a></li>
+					<li class="step-1-item-2"><a data-id="field[19]1" href="#"><span><?php echo $this->__('Custom Diamond Chains'); ?><br /><?php echo $this->__('3D Computerized Link Design'); ?><br /><?php echo $this->__('Pave, Bezel, or Prong Setting'); ?></span><br /><br /><span class="sub-grey"><?php echo $this->__('3 - 5 Day Production Time'); ?></span></a></li>
+					<li class="step-1-item-3"><a data-id="field[19]2" href="#"><span><?php echo $this->__('Custom Diamond Rings'); ?><br /><?php echo $this->__('3D Computerized Mold Design'); ?><br /><?php echo $this->__('GAL-EGL-GIA Certification'); ?></span><br /><br /><span class="sub-grey"><?php echo $this->__('7 - 10 Day Production Time'); ?></span></a></li>
+					<li class="step-1-item-4"><a data-id="field[19]3" href="#"><span><?php echo $this->__('Custom Diamond Braceletes'); ?><br /><?php echo $this->__('3D Computerized Link Design'); ?><br /><?php echo $this->__('Solid or Semi-Solid Casting'); ?></span><br /><br /><span class="sub-grey"><?php echo $this->__('10 - 15 Day Production Time'); ?></span></a></li>
+				</ul>
+			<?php endif; ?>
+			<div class="form-list" <?php if($key==9):?>style="visibility: hidden; position:absolute; "<?php endif; ?>>
+			<?php foreach($fieldset['fields'] as $field): ?>
+				<?php if($size_class != "wide"): ?>
+					<?php if ($field->getCode()=='uploaded-image-2' || $field->getCode()=='contact-by'): ?>
+						<?php continue; ?>
+					<?php elseif ($field->getID()==24): ?>
+						<h5><?php echo $this->__('Please enter your prefered method of contact.'); ?></h5>
+					<?php endif;?>
+					<div class="<?php echo $field_class?> webforms-field webforms-fields-<?php echo $field->getCode()?>">
+				<?php endif; ?>
+				<?php if($field->getType()!= 'html'&&$field->getID()!=19): ?>
+					<label for="file_<?php echo $field->getId()?>">
+						<?php if($field->getID()==20): ?>
+							<?php echo $this->__('Upload your design and click Submit!'); ?>
+						<?php elseif($field->getID()==24): ?>	
+							<?php echo $this->__('Enter Phone Number'); ?>
+						<?php elseif($field->getID()==25): ?>	
+							<?php echo $this->__('Enter Email'); ?>
+						<?php elseif($field->getID()==22): ?>	
+							<?php echo $this->__('Tell us about what you want to create.'); ?>
+						<?php else: ?>
+							<?php echo $field->getName()?>
+						<?php endif; ?>
+					</label>
+				<?php endif; ?>
+				<?php if($size_class != "wide"):?>
+					<div class="input-box">
+				<?php endif; ?>
+				<?php echo $field->toHtml(); ?>
+				<?php if($field->getComment()): ?>
+					<p class="webforms-fields-comment">
+						<?php echo nl2br($field->getComment())?>
+					</p>
+				<?php endif; ?>
+				<?php if($size_class != "wide"): ?>
+					</div>
+				<?php endif; ?>
+				<?php if($size_class != "wide"): ?>
+					</div>
+				<?php endif; ?>
+			<?php endforeach; ?>
+			</div>
+			<?php if($fieldset['name']=='Step 2: Upload your design'): ?>
+				<div class="buttons-set">	
+					<button type="button" id="webform_<?php echo $this->getWebform()->getId()?>_submit_button" onclick="webform_<?php echo $this->getWebform()->getId()?>_submit()" class="button form-buttonz form-button form-button-full" title="<?php echo $this->__('Make a Deposit')?>">
+						<span><?php echo $this->__('Make a Deposit')?></span>
+					</button>
+					<span class="please-wait" id="webform_<?php echo $this->getWebform()->getId()?>_sending_data" style="display:none;">
+						<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Sending...') ?>" title="<?php echo $this->__('Sending...') ?>" class="v-middle" /><span id="webform_<?php echo $this->getWebform()->getId()?>_progress_text"><?php echo $this->__('Sending...') ?></span>
+					</span>
+				</div>
+			<?php endif; ?>
+			<div class="clear"></div>
+		</li>
+	
+	<?php endforeach; // foreach 'fields_to_fieldsets' ?>
+		<li class="parent-item item-11 inactive"><a href="#"><span><?php echo $this->__('Step 3: Make a deposit for us to begin construction of your 3D Model'); ?></span></a></li>
+		<li class="child-item item-11">
+			<ul class="step-3">
+				<li class="step-item-1"><?php echo $this->__('We send you a detailed 3D Design.'); ?><br /><?php echo $this->__('You approve the order, we go to work!'); ?></li>
+				<li class="step-item-2"><?php echo $this->__('We send you image and video of the wax mold, with a detailed breakdown.'); ?></li>
+				<li class="step-item-3"><?php echo $this->__('We send you an image and video of the metal casting, and initiate stone setting.'); ?></li>
+				<li class="step-item-4"><?php echo $this->__('The item is completed and shipped to you overnight, via FedEx.'); ?></li>
+			</ul>
+		</li>
+	</ul>
+	<?php if(Mage::registry('use_captcha')) { ?>
+	<fieldset class="group-select wide">
+		<h2 class="legend">Captcha</h2>
+		<ul class="form-list">
+			<li>
+				<div class="input-box">
+					<?php echo $this->getCaptcha()->getHTML()?>
+				</div>
+			</li>
+		</ul>
+	</fieldset>
+	<?php }?>
+	
+	<?php /*?><p class="required"><?php echo $this->__('* Required Fields')?></p><?php */?>
+	
+
+</form>
+
+</div>
+
+<?php echo $this->getLayout()->createBlock(
+				'core/template',
+				'webform_'.$this->getWebform()->getId().'_submit_script',
+				array(
+					'webform' => $this->getWebform(),
+					'ajax' => $this->isAjax(),
+					'template' => 'webforms/scripts/submit.phtml',
+				)
+			)->toHtml();		
+?>
+
+<?php
+} // if(show_success)
+} // is active
+?>
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery('.custom-jewelry-list > li > a').click(function(e){
+			e.preventDefault();
+		});
+		jQuery('.custom-jewelry-list li .step-1 li a').click(function(e){
+			var radioId = jQuery(this).attr('data-id');
+			var child = jQuery(this).parents('.child-item');
+			jQuery('#'+radioId).attr('checked', 'checked');
+			child.hide().prev().removeClass('active').addClass('inactive').end().next().removeClass('inactive').addClass('active').end().next().next().show();
+			e.preventDefault();
+		});
+	});
+</script>

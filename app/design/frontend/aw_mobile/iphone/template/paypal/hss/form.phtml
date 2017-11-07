@@ -1,0 +1,32 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<html>
+<head></head>
+<body>
+    <form id="token_form" method="POST" action="<?php echo $this->getTransactionUrl() ?>">
+        <input type="hidden" name="SECURETOKEN" value="<?php echo $this->getSecureToken(); ?>" />
+        <input type="hidden" name="SECURETOKENID" value="<?php echo $this->getSecureTokenId(); ?>" />
+        <input type="hidden" name="MODE" value="<?php echo $this->isTestMode() ? 'TEST' : 'LIVE'; ?>" />
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        document.getElementById('token_form').submit();
+    //]]>
+    </script>
+</body>
+</html>

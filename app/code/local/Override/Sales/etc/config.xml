@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Override_Sales>
+            <version>0.1</version>
+        </Override_Sales>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <sales before="Mage_Adminhtml">Override_Sales_Adminhtml</sales> 
+                    </modules>
+               </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

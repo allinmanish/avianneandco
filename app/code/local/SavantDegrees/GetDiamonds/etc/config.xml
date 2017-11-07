@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SavantDegrees_GetDiamonds>
+            <version>0.1.0</version>
+        </SavantDegrees_GetDiamonds>
+    </modules>
+    <global>
+        <blocks>
+            <GetDiamonds>
+                <class>SavantDegrees_GetDiamonds_Block</class>
+            </GetDiamonds>
+        </blocks>
+            <models>
+        
+            <product>
+				<class>SavantDegrees_GetDiamonds_Model</class>
+				<resourceModel>product_mysql4</resourceModel>		
+            </product>
+            
+            <product_mysql4>
+                <class>SavantDegrees_GetDiamonds_Model_Mysql4</class>
+                <entities>
+                    <product>
+                        <table>dev_products</table>
+                    </product>
+                </entities>                
+            </product_mysql4>
+            
+        </models>
+       <resources>
+            <product_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </product_read>            
+            
+            <product_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </product_write>                
+		</resources>      
+    </global>
+    <frontend>
+        <routers>
+            <SavantDegrees_GetDiamonds>
+                <use>standard</use>
+                <args>
+                    <module>SavantDegrees_GetDiamonds</module>
+                    <frontName>get-diamonds</frontName>
+                </args>
+            </SavantDegrees_GetDiamonds>
+        </routers>
+    </frontend>
+    <crontab>
+        <jobs>
+            <product>
+                <schedule><cron_expr>*/1 * * * *</cron_expr></schedule>
+                <run><model>product/observer::pullFromRapnet</model></run>
+            </product>
+        </jobs>
+    </crontab>
+
+</config>

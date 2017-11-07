@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+	<catalog_product_view>
+		<reference name="right">
+			<block type="productrelater/list" name="productrelater_list" as="additional" template="productrelater/productrelater_block.phtml">
+
+			</block>
+		</reference>
+	</catalog_product_view>
+</layout> 

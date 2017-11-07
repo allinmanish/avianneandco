@@ -1,0 +1,175 @@
+<style type="text/css">
+div.col-main.is_cms > .homepage {
+	margin: 0;
+}
+.homapage-top {
+	background: #fff url(<?php echo $this->getSkinUrl('images/homapage.png') ?>) 50% 20% no-repeat;
+	width: 100%;
+	height: 352px;
+	border-top: 1px solid #f2f3f3;
+	border-bottom: 2px solid #f2f3f3;
+	position: relative;
+	margin: 10px 0;
+	text-align: center;
+	color: #00194f;
+	font-family: Hnl;
+	font-size: 22px;
+	line-height: 22px;
+}
+.homapage-top p {
+	margin-bottom: 0;
+}
+.homapage-top .premier {
+	font-family: Hnli;
+	font-size: 36px;
+	margin-top: 0;
+	line-height: 37px;
+}
+.homapage-top .bottom-line {
+	position: absolute;
+	width: 100%;
+
+	bottom: 10px;
+	font-family: Hnli;
+	font-size: 19px;
+	background-color: #cfd8eb;
+	-webkit-box-shadow: 0 2px 2px 0 #bac7e2;
+   	-moz-box-shadow: 0 2px 2px 0 #bac7e2;
+	box-shadow: 0 2px 2px 0 #bac7e2;
+}
+.homapage-top .bottom-line a {
+
+	display:block;
+	padding: 8px 0;
+	box-sizing: border-box;
+	width: 100%;
+	color: #00194f;
+}
+.homapage-bottom {
+	padding: 5px 0 15px;
+	margin-bottom: 10px;
+	background-color: #f1f2f2;
+}
+.homapage-bottom div {
+	-moz-box-shadow: 0 0 10px #888888;
+    -webkit-box-shadow: 0 0 10px #888888;
+    box-shadow: 0 0 10px #888888;
+}
+.homapage-bottom div.item {
+	float: left;
+	width: 48%;
+}
+.homapage-bottom div.item,
+.homapage-bottom div.item-line {
+	margin: 10px 1% 0;
+}
+.homapage-bottom div.item a {
+	/*background-color: #fff;*/
+	position: relative;
+	display: block;
+	height: 250px;
+	width: 100%;
+}
+.homapage-bottom div.item-line a {
+	/*background-color: #fff;*/
+	position: relative;
+	display: block;
+	height: 260px;
+	width: 100%;
+}
+.homapage-bottom div.item a span,
+.homapage-bottom div.item-line a span {
+	position: absolute;
+	box-sizing: border-box;
+	bottom: 8px;
+	display: block;
+	height: 38px;
+	width: 100%;
+	padding: 8px 13px;
+	background-color: #f6f6f6;
+	background: -moz-linear-gradient(top, #ffffff, #ebecec);
+    background: -webkit-gradient(linear, left top, left bottom,
+                color-stop(0%,#ffffff), color-stop(100%,#ebecec));
+    background: -webkit-linear-gradient(top, #ffffff, #ebecec);
+    background: -o-linear-gradient(top, #ffffff, #ebecec);
+    background: -ms-linear-gradient(top, #ffffff, #ebecec);
+    background: linear-gradient(top, #ffffff, #ebecec);
+    border-top: 1px solid #f4f5f5;
+    border-bottom: 1px solid #f4f5f5;
+    color: #00194f;
+	font-size: 32px;
+	line-height: 32px;
+	font-family: Calibri;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.homapage-bottom div.item-line a span.headline {
+	height: auto;
+	position: relative;
+	top: 10px;
+	left: 5px;
+	font-family: hnl;
+	font-size: 75px;
+	line-height: 75px;
+	font-weight: normal;
+	background: none;
+	border: 0;
+	padding-bottom: 5px;
+}
+.homapage-bottom div.item-line a span.sub-headline {
+	height: auto;
+	position: relative;
+	top: 10px;
+	left: 5px;
+	font-size: 21px;
+	line-height: 21px;
+	font-weight: normal;
+	font-style: italic;
+	background: none;
+	border: 0;
+	text-transform: none;
+	padding-top: 0;
+}
+.homapage-bottom .item-1 { background: #fff url(<?php echo $this->getSkinUrl('images/home-men.png') ?>) 50% -10px no-repeat; }
+.homapage-bottom .item-2 { background: #fff url(<?php echo $this->getSkinUrl('images/home-women.png') ?>) 50% -20px no-repeat; }
+.homapage-bottom .item-3 { background: #fff url(<?php echo $this->getSkinUrl('images/home-bridal.png') ?>) 50% -10px no-repeat; }
+.homapage-bottom .item-4 { background: #fff url(<?php echo $this->getSkinUrl('images/home-watch.png') ?>) 50% -10px no-repeat; }
+/* .homapage-bottom .item-5 { background: #fff url(<?php echo $this->getSkinUrl('images/sneaker.png') ?>) 90% 0 no-repeat; } */
+.homapage-bottom .item-6 { background: #fff url(<?php echo $this->getSkinUrl('images/home-custom.png') ?>) 90% 0 no-repeat; }
+.homapage-bottom .item-7 { background: #fff url(<?php echo $this->getSkinUrl('images/AvianneCap.png') ?>) 90% 0 no-repeat; }
+</style>
+<div class="homepage">
+	<div class="homapage-top">
+		<p><?php echo $this->__('- Avianne &amp; Co. -'); ?></p>
+		<p class="premier"><?php echo $this->__('New York\'s Premier Custom Jewelers'); ?></p>
+		<p class="bottom-line"><a href="/about"><?php echo $this->__('Click to Read More about New York\'s #1 Custom Jewelry Source'); ?></a></p>
+	</div>
+	<div class="homapage-bottom">
+		<div class="item item-1"><a href="/mens-diamond-jewelry"><span><?php echo $this->__('Men'); ?></span></a></div>
+		<div class="item item-2"><a href="/womens-diamond-jewelry"><span><?php echo $this->__('Women'); ?></span></a></div>
+		<div class="item item-3"><a href="/pre-set-diamond-engagement-rings-1"><span><?php echo $this->__('Bridal'); ?></span></a></div>
+		<div class="item item-4"><a href="/watches"><span><?php echo $this->__('Watches'); ?></span></a></div>
+		<div class="clear"></div>
+		<!-- <div class="item-line item-5">
+			<a href="/blog/celebrity-diamond-jewelry/">
+				<span class="headline"><?php echo $this->__('Celebrity'); ?><br /><?php echo $this->__('Jewelry'); ?></span>
+				<span class="sub-headline"><?php echo $this->__('View our extensive collection.'); ?></span>
+				<span><?php echo $this->__('Avianne\'s celebrity jewelry'); ?></span>
+			</a>
+		</div> -->
+		<div class="item-line item-6">
+			<a href="/custom-jewelry">
+				<span class="headline"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Jewelry'); ?></span>
+				<span class="sub-headline"><?php echo $this->__('You dream it, WE ICE IT'); ?></span>
+				<span><?php echo $this->__('Avianne\'s custom jewelry'); ?></span>
+			</a>
+		</div>
+		<div class="item-line item-7">
+			<a href="/mens-apparel">
+				<span class="headline"><?php echo $this->__('Apparel'); ?><br /></span>
+				<span class="sub-headline"><?php echo $this->__('Hats and T-Shirts'); ?></span>
+				<span><?php echo $this->__(''); ?></span>
+			</a>
+		</div>
+	</div>
+</div>

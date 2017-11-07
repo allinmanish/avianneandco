@@ -1,0 +1,437 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?> after email
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+*        <?php echo $this->getChildHtml('product_additional_data') ?>
+*<?php echo $this->getLayout()->getBlock('product.info.tabs')->toHtml()?>
+*
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php
+function time_since($original) {
+    // array of time period chunks
+    $chunks = array(
+        array(60 * 60 * 24 * 365 , 'year'),
+        array(60 * 60 * 24 * 30 , 'month'),
+        array(60 * 60 * 24 * 7, 'week'),
+        array(60 * 60 * 24 , 'day'),
+        array(60 * 60 , 'hour'),
+        array(60 , 'minute'),
+    );
+
+    $today = time(); /* Current unix time  */
+    $since = $original-$today ;
+
+    // $j saves performing the count function each time around the loop
+    for ($i = 0, $j = count($chunks); $i < $j; $i++) {
+
+        $seconds = $chunks[$i][0];
+        $name = $chunks[$i][1];
+
+        // finding the biggest chunk (if the chunk fits, break)
+        if (($count = floor($since / $seconds)) != 0) {
+            // DEBUG print "<!-- It's $name -->\n";
+            break;
+        }
+    }
+
+    $print = ($count == 1) ? '1 '.$name : "$count {$name}s";
+
+    if ($i + 1 < $j) {
+        // now getting the second item
+        $seconds2 = $chunks[$i + 1][0];
+        $name2 = $chunks[$i + 1][1];
+
+        // add second item if it's greater than 0
+        if (($count2 = floor(($since - ($seconds * $count)) / $seconds2)) != 0) {
+            $print .= ($count2 == 1) ? ', 1 '.$name2 : ", $count2 {$name2}s";
+        }
+    }
+    return $print;
+}
+
+function getLeftTime() {
+	$cdate=date("Y-m-d",mktime(0,0,0,date('m'),date('d')+1,date('Y')));
+	return time_since(strtotime("$cdate 12:00:00 AM"));
+}
+
+function getNextDate($val=7) {
+	return date("l,  F dS",mktime(0,0,0,date('m'),date('d')+$val,date('Y')));
+}
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<?php $_product = $this->getProduct() ?>
+<script type="text/javascript">
+	//window.setTimeout(document.getElementById("category_name_new").innerHTML="<?php echo ($_product->getCategory() ? $_product->getCategory()->getName() : 'Products'); ?>",5000);
+</script>
+<?php $newProduct=$_product->getCategory() ? $_product->getCategory()->getName() : 'Products'; ?>
+<?php $newRelatedProduct=$_product->getCategory() ? $_product->getCategory()->getName() : 'Products'; ?>
+<div class="product-info-box" itemscope itemtype="http://schema.org/Product">
+    <div class="product-essential" id="productInfoContainer">
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form">
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="product-img-box wsm">
+            <?php echo $this->getChildHtml('media') ?>
+            <?php echo $this->getChildHtml('additional'); ?>
+        </div>
+        <div class="product-shop">
+        	<h3 class="product-name" itemprop="name"><?php echo $this->htmlEscape($_product->getName()) ?></h3>
+        	<?php if($_product->isSaleable()): ?>
+        		<?php /* <p class="shipping-line"><?php echo $this->__('Item #%s - In Stock - Free FedEx Shipping',$this->htmlEscape($_product->getSku())) ?></p> */ ?>
+        		<p class="shipping-line"><?php echo $this->__('Item #%s - Free FedEx Shipping',$this->htmlEscape($_product->getSku())) ?></p>
+        	<?php endif; ?>
+        	<div class="divider"></div>
+        	<?php if ($_product->getShortDescription()):?>
+				<div class="short-description" itemprop="description"><?php echo nl2br($_product->getShortDescription()) ?></div>
+				<div class="divider"></div>
+			<?php endif;?>
+			<?php // review of a product at any page
+			/*$_reviews = Mage::getModel('review/review')->getResourceCollection();
+			$_reviews->addStoreFilter( Mage::app()->getStore()->getId() )
+					 ->addEntityFilter('product', $_product->getId())
+					 ->addStatusFilter( Mage_Review_Model_Review::STATUS_APPROVED )
+					 ->setDateOrder()
+					 ->addRateVotes();
+			$avg = 0;
+			$ratings = array();
+			if (count($_reviews) > 0){
+				foreach ($_reviews->getItems() as $_review): ?>
+					<?php foreach( $_review->getRatingVotes() as $_vote ): ?>
+				  		<?php $ratings[] = $_vote->getPercent(); ?>
+					<?php endforeach; ?>
+				<?php endforeach;
+				$avg = array_sum($ratings)/count($ratings);
+			}
+
+			?>
+			<?php if ($avg > 0): ?>
+				<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="font-size: 0.92em; color: #006699;">
+				  <?php echo 'Rating: <span itemprop="ratingValue">' . round((5 / 100 * $avg), 1) . '</span>
+							  out of <span itemprop="bestRating">5</span>, based on <span itemprop="ratingCount">' . count($_reviews->getItems()) . '</span> review(s)'; ?>
+				</span>
+			<? endif;*/ ?>
+            <?php if ($this->canEmailToFriend()): ?>
+                <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a><br />
+            <?php endif; ?>
+            <fieldset class="no-display">
+              <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+              <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </fieldset>
+            <?php echo $this->getChildHtml('alert_urls') ?>
+            
+            <!-- Zero price -->
+            
+            <?php if($_product->getFinalPrice() != 0):?>
+            
+			<?php if ($_product->isSaleable() && $this->hasOptions()):?>
+				<?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+				<div class="divider"></div>
+			<?php endif;?>
+			<?php echo str_replace('<div class="price-box">', '<div class="price-box" itemprop="offers" itemscope itemtype="http://schema.org/Offer">', $this->getPriceHtml($_product)) ?>
+            <?php if (!$this->hasOptions()):?>
+                <?php echo $this->getChildHtml('tierprices') ?>
+                <div class="add-to-holder">
+                    <?php if($_product->isSaleable()): ?>
+                        <?php echo $this->getChildHtml('addtocart') ?>
+                        <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php echo $this->getChildHtml('addto') ?>
+					<div class="divider"></div>
+                </div>
+            <?php else:?>
+                <?php echo $this->getChildHtml('addtocart') ?>
+            <?php endif; ?>
+
+            <?php $shipping_time = (int)$_product->getShippingTime(); ?>
+            <?php if(!empty( $shipping_time )): ?>
+            	<?php $now = Mage::getModel('core/date')->date('Y-m-d'); ?>
+            	<?php if (Mage::getModel('core/date')->date('H')>=15): ?>
+            		<?php $esd = date('l, F j', strtotime($now . '+'.($shipping_time+1).' Weekday'))?>
+            	<?php else: ?>
+            		<?php $esd = date('l, F j', strtotime($now . '+'.($shipping_time).' Weekday'))?>
+            	<?php endif; ?>
+            	<p class="estimated-shipping">Order now and this item will be shipped by <?php echo $esd; ?>.</p>
+            <?php endif; ?>
+
+            <div class="divider"></div>
+            
+            <?php endif; ?>
+            
+            <!-- Zero price -->
+            
+            <div style="padding-top:5px; clear: both; position: relative;" id="prod_social_buttons">
+
+				<i id="counter-overlay"></i>
+				<ul class="product-action">
+	            	<li class="item-print"><a href="javascript:window.print();" ><?php echo $this->__('Print'); ?></a></li>
+	            	<?php if ($this->canEmailToFriend()): ?>
+	            		<li class="item-email"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('E-mail'); ?></a></li>
+	            	<?php endif; ?>
+	            	<?php if ($this->helper('wishlist')->isAllow()): ?>
+	            		<li class="item-wishlist"><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product); ?>"><?php echo $this->__('Add to Wishlist'); ?></a></li>
+	            	<?php endif; ?>
+	            </ul>
+			</div>
+
+
+			<div class="divider"></div>
+			<ul class="product-perks">
+				<li><?php echo $this->__('This item comes with:'); ?></li>
+				<li class="item item-1"><?php echo $this->__('Free Shipping'); ?></li>
+				<li class="item item-2"><?php echo $this->__('Free Appraisal Certificate'); ?></li>
+				<li class="item item-3"><?php echo $this->__('Free Gift Box and Optional Gift Message'); ?></li>
+			</ul>
+			<div style="float: left;" id="LiveChat_1333975658">
+				    <?php /*
+	          */ ?>
+	        	<a href="#dialog" id="quick-contact-link" name="modal">Ask A Question</a>
+	        	<?php /* ?>
+	        	<span>Have a question about this item?<br /><a href="#dialog" name="modal"><b><?php echo $this->__('Contact Us - 888-243-4344') ?></b></a></span>
+	        	<?php */ ?>
+			</div>
+			<script type="text/javascript">
+				var __lc_buttons = __lc_buttons || [];
+				__lc_buttons.push({
+					elementId: 'LiveChat_1333975658',
+					skill: '0'
+				});
+			</script>
+			<?php echo $this->getLayout()->getBlock('product.info.tabs')->toHtml()?>
+		</div>
+  		<div class="clear"></div>
+        <?php echo $this->getChildHtml('other');?>
+        <?php /*?>
+        <div class="share-top black-friday">
+        	<img src="<?php echo $this->getSkinUrl('images/black-friday.jpg') ?>" alt="<?php echo $this->__('Black Friday'); ?>" />
+        </div>
+        <div class="share-top post-black-friday">
+			<?php echo $this->__('Share This Page And Save 5% On Your Purchase'); ?>
+			<div id="top-social-buttons">
+				<i id="counter-overlay"></i>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $_product->getUrl(); ?>" data-text="<?php echo $this->getLayout()->getBlock('head')->getTitle(); ?>" data-count="none">Tweet</a>
+				<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+				<a href="http://pinterest.com/pin/create/button/?url=<?php echo $_product->getUrl(); ?>&media=<?php echo $this->helper('catalog/image')->init($_product, 'image')->directResize(477, 477)->setQuality(90); ?>" alt="<?php echo $this->htmlEscape($_product->getName()); ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+				<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+			</div>
+		</div>
+		<?php */?>
+		<div class="product-info-bottom">
+			<?php echo $this->getChildHtml('related-prods'); ?>
+			<?php $viewed = $this->getChildHtml('recently_viewed');?>
+			<?php if ($viewed == '<!--product_viewed_start--><!--product_viewed_end-->'): ?>
+				<div class="mini-related-items">
+				    <div class="head">
+				        <h4><?php echo $this->__('Recently Viewed Products') ?></h4>
+				    </div>
+				    <div class="content">
+						<table border="0" width="100%" id="recently-viewed-items">
+							<tr>
+								<?php
+								$_addprods_ids = array(); $i=0;
+								$db = Mage::getSingleton('core/resource')->getConnection('core_read');
+								$result = $db->query("SELECT i.product_id, v.value AS product_url
+														FROM sales_flat_order_item i
+														LEFT JOIN catalog_product_entity_varchar v ON i.product_id = v.entity_id
+														WHERE v.attribute_id =570
+														AND v.store_id =0
+														ORDER BY i.created_at DESC
+														LIMIT 0 , 2");
+								while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+									$_addprods_ids[$i]['id'] = $row['product_id'];
+									$_addprods_ids[$i]['url'] = $row['product_url'];
+									$i++;
+								}
+
+								for ($i=0; $i<2; $i++) {
+									$_item = Mage::getModel('catalog/product')->load($_addprods_ids[$i]['id']);
+									$_url = $_addprods_ids[$i]['url'] ? $_addprods_ids[$i]['url'] : $_item->getProductUrl() ?>
+									<td>
+						        		<a href="<?php echo $_url?>"><img src="<?php echo $this->helper('catalog/image')->init($_item,'thumbnail')->resize(170)?>" alt="<?php echo $this->htmlEscape($_item->getName())?>" width="170" height="170" /></a>
+										<p class="name"><a href="<?php echo $_url?>"><?php echo $this->htmlEscape($_item->getName())?></a></p>
+										
+										<!-- Zero price -->
+            							<?php if($_item->getFinalPrice() != 0):?>
+										<p class="price"><?php echo "&#36;" . number_format($_item->getFinalPrice(),2);?></p>
+										<?php endif; ?>
+										<!-- Zero price -->
+									</td><?php
+								}
+								?>
+							</tr>
+						</table>
+					</div>
+				</div>
+			<?php else: ?>
+				<?php echo $viewed; ?>
+			<?php endif; ?>
+			<div class="clear"></div>
+			<div class="callout-box celeb-box">
+				<a href="/blog/celebrity-diamond-jewelry/">
+					<span class="line-1"><?php echo $this->__('Celebrity Jewelry'); ?><br><?php echo $this->__('Collection'); ?></span>
+					<span class="line-2"><?php echo $this->__('View our exclusive celebrity jewelry collection'); ?><br><?php echo $this->__('worn by Nicki Minaj and many more'); ?></span>
+				</a>
+			</div>
+			<div class="callout-box cust-box">
+				<a href="/custom-jewelry">
+					<span class="line-1"><?php echo $this->__('Custom Jewelry'); ?><br><?php echo $this->__('Designer'); ?></span>
+					<span class="line-2"><?php echo $this->__('You draft it, we craft it.'); ?><br><?php echo $this->__('Design your own custom piece now!'); ?></span>
+				</a>
+			</div>
+			<div class="clear"></div>
+			<?php
+			$likes = '<div class="category-static-related">';
+			$closest_cat = array_pop($_product->getCategoryIds());
+			$cat_its = Mage::getModel('catalog/category')->load($closest_cat);
+			$topParentCategory = $cat_its->getParentCategory();
+			if($topParentCategory->hasChildren()) {
+				$child_amount = count(explode(",",$topParentCategory->getChildren()))-1; $i = 0;
+				$likes .= '<p>You May Also Like...</p><ul>';
+				foreach ($topParentCategory->getChildrenCategories() as $cat) {
+					$likes.= '<li><a href="'.$cat->getUrl().'">'.$cat->getName().'</a></li>';
+					$i++;
+					if($i==8) break;
+				}
+			}
+			$likes .= '</ul></div>';
+			$reviews = $this->getLayout()->createBlock('customreviews/list')->setTemplate('reviews/list.phtml')->toHtml();
+			?>
+			<div class="footing category-view sub-categories">
+		    	<div class="box item-1 related-cats">
+					<?php echo $likes; ?>
+				</div>
+				<?php /*?>
+		    	<div class="box item-2 questions-answers">
+		    		<?php echo $this->getChildHtml('productquestions_form') ?>
+		    	</div>
+		    	<?php */?>
+		    	<div class="box item-2 questions-answers">
+				<h3><?php echo $this->__('Questions & Answers'); ?></h3>
+				<p style="text-align:left; margin:20px 0;"><?php echo $this->__('No questions have been posted about this product yet.'); ?></p>
+				<p><a href="#dialog" id="contact-link"><?php echo $this->__('Ask A Question'); ?></a></p>
+				    	</div>
+				<div class="box item-3 reviews-box">
+					<?php echo $reviews; ?>
+				</div>
+		    </div>
+		</div>
+    </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+				if(jQuery("option:contains('-- Select Gold Color --')").length!==0&&jQuery("option:contains('-- Select Gold Color --')").siblings(':selected').length===0) {
+					var gColor = jQuery("#product-attribute-specs-table td:contains('Gold Color')").siblings('td').text();
+
+					jQuery("option:contains('-- Select Gold Color --')").siblings().each(function(item){
+						if(jQuery(this).text().indexOf(gColor)!=-1)
+							jQuery(this).attr('selected','selected');
+					});
+				}
+
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+    //]]>
+    </script>
+	<?php
+		/*********************************************
+		**
+		**
+		**		End Code changes for Quick View 1.1.x
+		**
+		**
+		*********************************************/
+	?>
+</div>
+<?php /* ?>
+<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=jewelrana"></script>
+<?php */ ?>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('#extship').hover(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+		jQuery('#extship').toggle(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+	});
+</script>

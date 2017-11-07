@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<config>
+    <tabs>
+        <productfeed_tab module="productfeed" translate="label">
+            <label>WSM</label>
+            <sort_order>100</sort_order>
+        </productfeed_tab>
+    </tabs>
+    <sections>
+        <productfeed_section module="productfeed" translate="label">
+            <label>Product Feed Settings</label>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <tab>productfeed_tab</tab>
+            <groups>
+                <productfeed_group translate="label">
+                    <label>Featured Products</label>
+                    <comment>Products used for featured items on homepage.</comment>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <productfeed_featured4 translate="label tooltip comment">
+                            <label>Product 4 ID</label>
+                            <comment>Product ID 4 for featured items.</comment>
+                            <tooltip>Product/entity ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_featured4>
+
+
+                        <productfeed_featured3 translate="label tooltip comment">
+                            <label>Product 3 ID</label>
+                            <comment>Product ID 3 for featured items.</comment>
+                            <tooltip>Product/entity ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_featured3>
+
+                        <productfeed_featured2 translate="label tooltip comment">
+                            <label>Product 2 ID</label>
+                            <comment>Product ID 2 for featured items.</comment>
+                            <tooltip>Product/entity ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_featured2>
+
+
+                        <productfeed_featured1 translate="label tooltip comment">
+                            <label>Product 1 ID</label>
+                            <comment>Product ID 1 for featured items.</comment>
+                            <tooltip>Product/entity ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_featured1>
+                    </fields>
+                </productfeed_group>
+
+                <productfeed_category translate="label">
+                    <label>Category Definitions</label>
+                    <comment>Categories that the products will be shown.</comment>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <productfeed_featured translate="label tooltip comment">
+                            <label>Featured Category ID</label>
+                            <comment>Category ID for featured items.</comment>
+                            <tooltip>Category ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_featured>
+
+                        <productfeed_new translate="label tooltip comment">
+                            <label>New Arrivals Category ID</label>
+                            <comment>Category ID for new items.</comment>
+                            <tooltip>Category ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_new>
+
+
+                        <productfeed_bestsell translate="label tooltip comment">
+                            <label>Best Sellers Category ID</label>
+                            <comment>Category ID for best sellers.</comment>
+                            <tooltip>Category ID number only.</tooltip>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                        </productfeed_bestsell>
+                    </fields>
+                </productfeed_category>
+
+            </groups>
+        </productfeed_section>
+    </sections>
+</config>

@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Idev_OneStepCheckout>
+			<version>0.0.2</version>
+		</Idev_OneStepCheckout>
+	</modules>
+	
+	<frontend>
+		
+		
+		<events>
+			<!--
+			<controller_action_predispatch>
+				<observers>
+					<initialize_onestepcheckout>
+						<type>singleton</type>
+						<class>Idev_OneStepCheckout_Model_Observer</class>
+						<method>initialize_checkout</method>
+					</initialize_onestepcheckout>
+				</observers>
+			</controller_action_predispatch>
+			-->
+			
+			<checkout_type_onepage_save_order>
+				<observers>
+					<onestepcheckout_save_customercomment>
+						<type>model</type>
+						<class>Idev_OneStepCheckout_Helper_Data</class>
+						<method>setCustomerComment</method>
+					</onestepcheckout_save_customercomment>
+				</observers>
+      		</checkout_type_onepage_save_order>
+			
+		</events>
+		
+		
+		<routers>
+			<onestepcheckout>
+				<use>standard</use>
+				<args>
+					<module>Idev_OneStepCheckout</module>
+					<frontName>onestepcheckout</frontName>
+				</args>
+			</onestepcheckout>
+		</routers>
+		
+		<layout>
+			<updates>
+				<OneStepCheckout module="Idev_OneStepCheckout">
+					<file>onestepcheckout.xml</file>
+				</OneStepCheckout>
+			</updates>
+    	</layout>
+		
+		<translate>
+			<modules>
+				<Idev_OneStepCheckout>
+					<files>
+						<default>Idev_OneStepCheckout.csv</default>
+					</files>
+				</Idev_OneStepCheckout>
+			</modules>
+        </translate>		
+		
+	</frontend>
+	
+	
+	<adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <onestepcheckout>
+                                            <title>OneStepCheckout section</title>
+                                        </onestepcheckout>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl> 
+	</adminhtml>
+
+
+	<global>
+		
+		<models>
+			<onestepcheckout>
+				<class>Idev_OneStepCheckout_Model</class>
+			</onestepcheckout>
+		</models>		
+		
+		<resources>
+			<onestepcheckout_setup>
+				<setup>
+					<module>Idev_OneStepCheckout</module>
+					<class>Mage_Sales_Model_Mysql4_Setup</class>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</onestepcheckout_setup>
+    	</resources>
+		
+		
+		<blocks>
+			<onestepcheckout><class>Idev_OneStepCheckout_Block</class></onestepcheckout>
+		</blocks>
+
+		<helpers>
+			<onestepcheckout><class>Idev_OneStepCheckout_Helper</class></onestepcheckout>
+		</helpers>
+	</global>
+	
+    <default>
+    	<checkout>
+			<onestepcheckout>
+				<enable_geoip>0</enable_geoip>
+				<enable_newsletter>1</enable_newsletter>
+				<enable_terms>0</enable_terms>
+				<checkout_title>Checkout</checkout_title>
+				<checkout_description>Welcome to the checkout. Fill in the fields below to complete your purchase!</checkout_description>
+				
+				<enable_login_link>0</enable_login_link>
+				<login_link_html>If you already have an account, <a href="/customer/account/login/">click here</a> to login.</login_link_html>
+				
+				<exclude_fax>0</exclude_fax>
+				<exclude_company>0</exclude_company>
+				<enable_comments>0</enable_comments>
+				<enable_different_shipping>0</enable_different_shipping>
+				
+				<enable_ajax_save_billing>0</enable_ajax_save_billing>
+				<enable_update_payment_on_shipping>0</enable_update_payment_on_shipping>
+                
+                <registration_mode>allow_guest</registration_mode>
+                <registration_order_without_password>0</registration_order_without_password>
+				
+			</onestepcheckout>
+		</checkout>	
+	</default>
+
+	<!--
+	<stores>
+		<admin>
+			<design>
+				<package>
+					<name>default</name>
+				</package>
+				<theme>
+					<default>YOUR_INTERFACE</default>
+				</theme>
+			</design>
+		</admin>
+	</stores>
+	-->
+	
+	
+	
+</config>

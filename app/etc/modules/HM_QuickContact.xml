@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <HM_QuickContact>
+            <active>true</active>
+            <codePool>local</codePool>
+        </HM_QuickContact>
+    </modules>
+</config>

@@ -1,0 +1,95 @@
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Mage
+ * @package    Mage_Core
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <global>
+        <install>
+            <date><![CDATA[Thu, 13 Oct 2011 20:18:16 +0000]]></date>
+        </install>
+        <crypt>
+            <key><![CDATA[03a21aa6fcd6f7ea601136e5bf349336]]></key>
+        </crypt>
+        <disable_local_modules>false</disable_local_modules>
+        <resources>
+            <db>
+                <table_prefix><![CDATA[]]></table_prefix>
+            </db>
+            <default_setup>
+                <connection>
+                    <host><![CDATA[aviannea-db01.cdgdjpajbtw8.us-east-1.rds.amazonaws.com]]></host>
+                    <username><![CDATA[aviannea_mage]]></username>
+                    <password><![CDATA[T4rAflZetaB3U]]></password>
+                    <dbname><![CDATA[aviannea_new]]></dbname>
+                    <active>1</active>
+                </connection>
+            </default_setup>
+        </resources>
+        <!-- <session_save>db</session_save> -->
+        <!-- <session_save><![CDATA[files]]></session_save> -->
+        <session_save>db</session_save>
+        <redis_session>                       
+            <host>aviannes-redis.iuefic.0001.use1.cache.amazonaws.com</host>
+            <port>6379</port>
+            <password></password>
+            <timeout>2.5</timeout>
+            <persistent></persistent>
+            <db>0</db>
+            <compression_threshold>2048</compression_threshold>
+            <compression_lib>gzip</compression_lib>
+            <log_level>4</log_level>
+            <max_concurrency>6</max_concurrency>
+            <break_after_frontend>5</break_after_frontend>
+            <break_after_adminhtml>30</break_after_adminhtml>
+            <bot_lifetime>7200</bot_lifetime>
+        </redis_session>
+        <cache>
+            <backend>Mage_Cache_Backend_Redis</backend>
+            <backend_options>
+                <server>aviannes-redis.iuefic.0001.use1.cache.amazonaws.com</server> <!-- or absolute path to unix socket for better performance -->
+                <port>6379</port>
+                <database>1</database>
+                <password></password>
+                <force_standalone>1</force_standalone>  <!-- 0 for phpredis, 1 for standalone PHP -->
+                <connect_retries>1</connect_retries>    <!-- Reduces errors due to random connection failures -->
+                <automatic_cleaning_factor>0</automatic_cleaning_factor> <!-- Disabled by default -->
+                <compress_data>1</compress_data>  <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_tags>1</compress_tags>  <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_threshold>20480</compress_threshold>  <!-- Strings below this size will not be compressed -->
+                <compression_lib>gzip</compression_lib> <!-- Supports gzip, lzf and snappy -->
+                <persistent>1</persistent> <!-- persistence value, 0: not in use, > 0 used as persistence ID -->
+            </backend_options>
+        </cache>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <frontName><![CDATA[av_admin]]></frontName>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

@@ -1,0 +1,27 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+
+<fieldset class="product-options" id="product-options-wrapper">
+<?php echo $this->getChildHtml('', true, true);?>
+<?php if ($this->hasRequiredOptions()):?>
+<p class="required"><?php echo $this->__('* Required Fields') ?></p>
+<?php endif;?>
+</fieldset>
+<script type="text/javascript">
+decorateGeneric($$('#product-options-wrapper dl'), ['last']);
+</script>

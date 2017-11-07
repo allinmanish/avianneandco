@@ -1,0 +1,67 @@
+<?php
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $page = $this->getPage() ?>
+<?php if ($page->getId() == 61): ?>
+	<?php echo $this->getLayout()->createBlock('core/template')->setTemplate('home/celebrity.phtml')->toHtml(); ?>
+<?php else: ?>
+<?php echo file_get_contents('http://www.avianneandco.com/wp/slider.php'); ?>
+<div class="blog-home">
+	<div class="main-content">
+		<h1 class="ribbled"><?php echo $this->__('Latest Celebrity Diamond Jewelry By Avianne & Co'); ?></h1>
+		<?php $post = $this->getPost() ?>
+		<?php if ($post): ?>
+			<?php $helper = $this->helper('wordpress') ?>
+			<?php $author = $post->getAuthor() ?>
+			<div class="page-title post-title">
+				<h1><?php echo $this->escapeHtml($post->getPostTitle()) ?></h1>
+			</div>
+			<div class="post-view">
+				<?php echo $this->getBeforePostContentHtml() ?>
+				<div class="post-entry entry std<?php if ($post->getFeaturedImage()): ?> post-entry-with-image<?php endif; ?>">
+					<?php if ($post->isViewableForVisitor()): ?>
+						<?php echo $post->getPostContent() ?>
+					<?php else: ?>
+						<?php echo $this->getPasswordProtectHtml() ?>
+					<?php endif; ?>
+				</div>
+				<?php echo $this->getAfterPostContentHtml() ?>
+				<?php //echo $this->getCommentsHtml() ?>
+			</div>
+		<?php endif; ?>
+</div>
+	        <div class="sidebar-right">
+                <h1 class="ribbled"><?php echo $this->__('Famous Faces'); ?></h1>
+                <span id="slide-prev"></span>
+                <div class="slider-wrapper sidebar-slider">
+                        <?php $slides = file_get_contents('http://www.avianneandco.com/wp/celebrities_short.php'); ?>
+                        <?php $content = substr($slides, 0, strpos($slides, '<ul class="thumbSlider">')); ?>
+                        <?php $content = strtr($content, array( "</span><img" => "</span><span class='img-wrp'><span><img", "/></p></li>" => "/></span></span></p></li>" )); ?>
+                        <?php echo $content; ?>
+                </div>
+                <span id="slide-next"></span>
+                <p><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('View All Celebrity Jewelry'); ?></a></p>
+        </div>
+<script type="text/javascript">
+        jQuery(document).ready(function(){
+                jQuery('.bxslider').bxSlider({
+                        mode: 'vertical',
+                        pager: false,
+                        nextSelector: '#slide-next',
+                        prevSelector: '#slide-prev',
+                        nextText: '',
+                        prevText: '',
+                        minSlides: 2,
+                        maxSlides: 2,
+                        moveSlides: 2,
+                        auto: true,
+                        speed: 3000
+                });
+        });
+</script>
+<?php endif; ?>

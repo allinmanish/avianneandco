@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Buysafe_Siteseals>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Buysafe_Siteseals>
+    </modules>
+</config>

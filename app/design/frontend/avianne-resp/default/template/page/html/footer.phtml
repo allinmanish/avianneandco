@@ -1,0 +1,246 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *<script type="text/javascript">
+*    $('bug_tracking_link').target = "varien_external";
+*</script>
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<div class="clear"><br></div>
+
+<!-- <?= __FILE__ ?> -->
+
+<script>
+jQuery(document).ready(function() {
+	if (jQuery('body').hasClass('checkout-onepage-index')) {
+		return_popup = '<div class="return-popup" style="display: none;">Are you sure you want to return to your shopping cart?<a href="#" class="stay" onclick="jQuery(\'.return-popup\').toggle(); return false;">Stay in checkout</a><a href="/checkout/cart" class="return">Return to Cart</a></div>';
+		jQuery('.header #logo').append(return_popup);
+		jQuery('.header #logo > a').bind('click', function() {
+			jQuery('.return-popup').toggle();
+			return false;
+		});
+	}
+});
+</script>
+
+
+
+<?php if( (strpos($this->getRequest()->getModuleName(), "gomage_checkout")!==false) ||
+		( (strpos($this->getRequest()->getModuleName(), "ixcba")!==false) && ($this->getRequest()->getControllerName()=="inline") )  ): ?>
+		
+<?php else: ?>
+<div class="footer-top">
+	<div class="social-overlay">
+		<div id="social-content-facebook" class="social-inner-block block-0"></div>
+		<div id="social-content-twitter" class="social-inner-block block-1"><a href="https://twitter.com/AvianneJewelers" class="twitter-follow-button" data-show-count="false">Follow @AvianneJewelers</a></div>
+		<div id="social-content-pinterest" class="social-inner-block block-2"><a data-pin-do="buttonFollow" href="http://www.pinterest.com/source/avianneandco.com/">Avianneandco</a></div>
+		<div id="social-content-tumblr" class="social-inner-block block-3"><iframe class="btn" frameborder="0" border="0" scrolling="no" allowtransparency="true" height="25" width="113" src="https://platform.tumblr.com/v1/follow_button.html?button_type=2&tumblelog=aviannejewelers&color_scheme=dark"></iframe></div>
+		<div id="social-content-youtube" class="social-inner-block block-4"><div class="g-ytsubscribe" data-channel="avianneandco" data-layout="default"></div></div>
+		<div id="social-content-google" class="social-inner-block block-5"><div class="g-plusone" data-size="medium" data-href="http://www.avianneandco.com"></div></div>
+		<div class="social-overlay-arrow"></div>
+	</div>
+	<style>
+		ul.social-list img { border-top: 7px solid #6f8ac3; margin-top: -7px; }
+	</style>
+	<div class="div-item">
+		<ul class="social-list">
+			<li><?php echo $this->__('Connect'); ?><br /><?php echo $this->__('with us:'); ?></li>
+			<li><img id="facebook-img" data-item="0" src="<?php echo $this->getSkinUrl('images/social-facebook.png'); ?>" alt="Facebook" /></li>
+			<li><img id="twitter-img" data-item="1" src="<?php echo $this->getSkinUrl('images/social-twitter.png'); ?>" alt="Twitter" /></li>
+			<li><img id="pinterest-img" data-item="2" src="<?php echo $this->getSkinUrl('images/social-pinterest.png'); ?>" alt="Pinterest" /></li>
+			<li><img id="tumblr-img" data-item="3" src="<?php echo $this->getSkinUrl('images/social-tumblr.png'); ?>" alt="Tumblr" /></li>
+			<li><img id="youtube-img" data-item="4" src="<?php echo $this->getSkinUrl('images/social-youtube.png'); ?>" alt="Youtube" /></li>
+			<li><img id="google-img" data-item="5" src="<?php echo $this->getSkinUrl('images/social-google.png'); ?>" alt="Google Plus" /></li>
+		</ul>
+	</div>
+	<div class="div-item">
+		<form action="<?php echo $this->getUrl("newsletter/subscriber/new", array('_secure' => true))?>"  method="post" id="newsletter-validate-detail" > 
+			<ul class="newsletter-list">
+				<li><?php echo $this->__('Stay up to date on the best'); ?><br /><?php echo $this->__('deals from Avianne & Co.'); ?></li>
+				<li><input type="text" value="Enter your email address" onblur="if (this.value == '') {this.value = 'Enter your email address';this.style.color = '#CDCCCB';} else {this.style.color = '#333333';}" onfocus="if (this.value == 'Enter your email address') {this.value = '';this.style.color = '#333333';}" name="email" id="newsletter" class="input-text required-entry validate-email" /></li>
+				<li><input type="submit" value="Submit" /></li>
+			</ul>
+		</form>
+		<script type="text/javascript">
+			//<![CDATA[
+				var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+			//]]>
+		</script>
+	</div>
+	<div class="div-item last">
+		<ul class="call-us">
+			<li><img src="<?php echo $this->getSkinUrl('images/phone.png'); ?>" alt="Call Us" /></li>
+			<li><?php echo $this->__('888-243-4344 - Toll Free'); ?><br /><?php echo $this->__('+1 347-695-2512 - Outside US'); ?></li>
+		</ul>
+	</div>
+</div>
+<div class="homepage-logos">
+	<ul>
+		<li class="item-1"><img src="<?php echo $this->getSkinUrl('images/payment-amazon.png'); ?>" alt="Payment Amazon" /></li>
+		<?php /* ?>
+		<li class="item-2"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside"><img src="<?php echo $this->getSkinUrl('images/payment-paypal.png'); ?>" alt="Payment Paypal" /></a></li>
+		<?php */ ?>
+		<li class="item-3"><a href="/customer-service/#answer5"><img src="<?php echo $this->getSkinUrl('images/payment-cc.png'); ?>" alt="Payment Credit Card" /></a></li>
+		<li class="item-4"><a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img src="<?php echo $this->getSkinUrl('images/payment-godaddy.png'); ?>" alt="Payment Godaddy" /></a></li>
+	</ul>
+</div>
+<div class="homepage-footer">
+	<table class="homepage-footer-table">
+		<thead>
+			<tr>
+			    <th><?php echo $this->__('Departments'); ?></th>
+			    <th><a href="/"><?php echo $this->__('About Avianne & Co.'); ?></a></th>
+			    <th><a href="/customer-service/"><?php echo $this->__('Customer services'); ?></a></th>
+			    <th><?php echo $this->__('Follow Us'); ?></th>
+			    <th><?php echo $this->__('Contact Us'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="item-1">
+					<ul>
+						<li><a href="/watches"><?php echo $this->__('Watches'); ?></a></li>
+						<li><a href="/mens-diamond-jewelry"><?php echo $this->__('Mens Jewelry'); ?></a></li>
+						<li><a href="/custom-jewelry"><?php echo $this->__('Custom Jewelry'); ?></a></li>
+						<li><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('Celebrity Jewelry'); ?></a></li>
+						<li><a href="/womens-diamond-jewelry"><?php echo $this->__('Womens Jewelry'); ?></a></li>
+						<li><a href="/pre-set-diamond-engagement-rings-1"><?php echo $this->__('Bridal & Anniversary'); ?></a></li>
+					</ul>
+				</td>
+				<td class="item-2">
+					<ul>
+						<li><a href="/avianne-reviews"><?php echo $this->__('Visit Our Store'); ?></a></li>
+						<li><a href="/avianne-reviews"><?php echo $this->__('Avianne & Co Reviews'); ?></a></li>
+						<li><a href="/customer-service/#answer7"><?php echo $this->__('Secure Shopping Online'); ?></a></li>
+						<li><a href="/blog/"><?php echo $this->__('Avianne & Co in the News'); ?></a></li>
+						<li><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('Who\'s Wearing Avianne & Co?'); ?></a></li>
+					</ul>
+				</td>
+				<td class="item-3">
+					<ul>
+						<li class="custom-serv"><a href="/customer-service/#answer13"><?php echo $this->__('Privacy Policy'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer2"><?php echo $this->__('Free Shipping'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer1"><?php echo $this->__('14 Day Returns'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer5"><?php echo $this->__('Payment Methods'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer8"><?php echo $this->__('Layaway Programs'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer4"><?php echo $this->__('Appraisal Certificates'); ?></a></li>
+						<li class="custom-serv"><a href="/customer-service/#answer6"><?php echo $this->__('International Shipping'); ?></a></li>
+						<?php /*?>
+						<li class="custom-serv"><a href="/customer-service/#answer9"><?php echo $this->__('Diamond Jewelry Financing'); ?></a></li>
+						<?php */?>
+						<li class="custom-serv"><a href="/customer-service/#answer14"><?php echo $this->__('Watch Disclaimer'); ?></a></li>
+					</ul>
+				</td>
+				<td class="item-4">
+					<ul>
+						<li><a href="/blog"><?php echo $this->__('Blog'); ?></a></li>
+						<li><a href="https://twitter.com/AvianneJewelers"><?php echo $this->__('Twitter'); ?></a></li>
+						<li><a href="http://aviannejewelers.tumblr.com/"><?php echo $this->__('Tumblr'); ?></a></li>
+						<li><a href="https://plus.google.com/115044509517859284421/about"><?php echo $this->__('Google+'); ?></a></li>
+						<li><a href="http://www.youtube.com/user/avianneandco"><?php echo $this->__('Youtube'); ?></a></li>
+						<li><a href="http://pinterest.com/source/avianneandco.com/"><?php echo $this->__('Pinterest'); ?></a></li>
+						<li><a href="https://www.facebook.com/AvianneJewelers"><?php echo $this->__('Facebook'); ?></a></li>
+					</ul>
+				</td>
+				<td class="item-5 last">
+					<form action="/#" method="post" name="contactform" id="q_contactform"> 
+						<input type="hidden" id="page_title" name="page_title" value="<?php echo $this->getTitle(); ?>"/> 
+						<input type="hidden" id="page_link" name="page_link" value="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>"/>
+						<input type="hidden" id="send_email_to" name="send_email_to" value="">
+						<input type="hidden" name="contact_type_title" id="contact_type_title" value="">
+						<div class="input"> 
+							<input class="input-text textbox" value="Your Name" onblur="if (this.value == '') {this.value = 'Your Name';this.style.color = '#CDCCCB';} else {this.style.color = '#333333';}" onfocus="if (this.value == 'Your Name') {this.value = '';this.style.color = '#333333';}" type="text" name="name" id="name"/> 
+							<input class="input-text textbox" type="text" name="phone" id="phone" value="Your Phone Number" onblur="if (this.value == '') {this.value = 'Your Phone Number';this.style.color = '#CDCCCB';} else {this.style.color = '#333333';}" onfocus="if (this.value == 'Your Phone Number') {this.value = '';this.style.color = '#333333';}" /> 
+							<input class="input-text textbox" value="Your Email" onblur="if (this.value == '') {this.value = 'Your Email';this.style.color = '#CDCCCB';} else {this.style.color = '#333333';}" onfocus="if (this.value == 'Your Email') {this.value = '';this.style.color = '#333333';}" type="text" name="email" id="email"/> 
+							<textarea name="content" id="content" class="input-text" rows="5" cols="64" onblur="if (this.value == '') {this.value = 'Your Message';this.style.color = '#CDCCCB';} else {this.style.color = '#333333';}" onfocus="if (this.value == 'Your Message') {this.value = '';this.style.color = '#333333';}">Your Message</textarea>
+						</div>
+						<div class="submit" id="submit-footer-button"><a href="#">Submit</a></div>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<?php endif; ?>
+<div class="informational">
+<?php if( (strpos($this->getRequest()->getModuleName(), "gomage_checkout")!==false) /*&& ($this->getRequest()->getControllerName()=="onepage")*/ ) { ?>
+	<div>
+		<ul>
+			<li  class="first"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>customer-service/#answer13" title="Privacy Policy" >Privacy Policy</a></li>
+			<li ><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>customer-service/#answer2" title="Free Shipping" >Free Shipping</a></li>
+			<li ><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>customer-service/#answer1" title="14 - Day Returns" >14 - Day Returns</a></li>
+			<li ><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>customer-service/#answer4" title="Appraisal Certificates">Appraisal Certificates</a></li>
+			<li  class="last"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>customer-service/#answer8" title="Layaway Programs" >Layaway Programs</a></li>
+		</ul>
+	</div>
+<?php } else { ?>
+	<?php echo $this->getChildHtml() ?>
+<?php } ?>
+</div>
+<p class="legality"><?php echo $this->getCopyright() ?></p>
+<!-- BEGIN: Google Trusted Store -->
+<script type="text/javascript">
+  var gts = gts || [];
+
+  gts.push(["id", "27609"]);
+  gts.push(["google_base_country", "US"]);
+  gts.push(["google_base_language", "en"]);
+
+  (function() {
+    var scheme = (("https:" == document.location.protocol) ? "https://" : "http://");
+    var gts = document.createElement("script");
+    gts.type = "text/javascript";
+    gts.async = true;
+    gts.src = scheme + "www.googlecommerce.com/trustedstores/gtmp_compiled.js";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(gts, s);
+  })();
+
+  jQuery(function(){
+	/*jQuery('html').hover(function(e) {
+		var overlay = jQuery('.social-overlay');
+		if(overlay.is(":visible")) {
+			overlay.hide();
+		}
+	});*/
+	jQuery('.social-list li img').hover(function(e) {
+		var id = jQuery(this).attr('data-item');
+		var overlay = jQuery('.social-overlay');
+		var leftPos = 11+(id*37);
+		overlay.css({left: '90px', top: '-51px'}).show().find('.social-overlay-arrow').css('left',leftPos+'px').end().find('.social-inner-block').hide().end().find('.block-'+id).show();
+		e.stopPropagation()
+		e.preventDefault();
+	}, function(e) {
+		var overlay = jQuery('.social-overlay');
+		var isHovered = jQuery('.social-overlay:hover').length > 0;
+		if(overlay.is(":visible") && !isHovered) {
+			overlay.hide();
+		}
+	});
+	jQuery('.social-overlay').mouseleave(function() {
+		  jQuery(this).hide();
+	});
+  });
+</script>
+<!-- END: Google Test Trusted Store -->

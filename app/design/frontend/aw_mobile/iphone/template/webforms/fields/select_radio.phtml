@@ -1,0 +1,57 @@
+<ul>
+
+<?php
+$validate = '';
+$options = $this->getFieldOptions();
+foreach($this->getFieldOptions() as $i=>$option){
+	$checked = false;
+	if($option["checked"]){
+		$checked = 'checked';
+	}
+	if($this->getField()->getRequired() && $i==(count($options)-1)){
+		$validate = "validate-one-required-by-name";
+		if($this->getField()->getData('validate_regex')){
+			$validate.= ' validate-field-'.$this->getField()->getId();
+		}
+	}
+	if(!empty($option["value"])){
+		$label = $option["value"];
+		if($option["image_src"]){
+			$label = "<img src='{$option['image_src']}'/>";
+		}
+?>
+
+<li class='control'>
+<?php if ($this->getField()->getId()==19) :?>
+<img src="
+<?php switch ($i) {
+		case 0:
+			echo $this->getSkinUrl('images/custom_diamond_pendants.jpg');
+			$label .= '<br />3D Computerized Design<br />Solid or Semi-Solid Casting<br />7-12 Day Production Time';
+		break;
+		case 1:
+			echo $this->getSkinUrl('images/custom_diamond_chains.jpg');
+			$label .= '<br />3D Computerized Link Design<br />Pave, Bezel, or Prong Setting<br />3-5 Day Production Time';;
+		break;
+		case 2:
+			echo $this->getSkinUrl('images/custom_diamond_rings.jpg');
+			$label .= '<br />3D Computerized Mold Design<br />GAL - EGL - GIA Certification<br />7-10 Day Production Time';
+		break;
+		case 3:
+			echo $this->getSkinUrl('images/custom_diamond_bracelets.jpg');
+			$label .= '<br />3D Computerized Link Design<br />Solid or Semi-Solid Casting<br />10-15 Day Production Time';;
+		break;
+}?>
+" alt="<?php echo htmlspecialchars($option["value"])?>" />
+<?php endif; ?>
+<input style='float:left' type='radio' name='<?php echo $this->getFieldName()?>[]' id='<?php echo $this->getFieldId().$i?>' value="<?php echo htmlspecialchars($option["value"])?>" class='radio <?php echo $validate?>' <?php echo $checked?>/>
+<label for='<?php echo $this->getFieldId().$i?>' class='<?php echo $this->getFieldClass()?>' style='<?php echo $this->getFieldStyle()?>'><?php echo $label?></label>
+</li>
+
+<?php
+	}
+}
+
+?>
+
+</ul>

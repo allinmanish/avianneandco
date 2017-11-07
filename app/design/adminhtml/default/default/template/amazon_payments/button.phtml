@@ -1,0 +1,26 @@
+<?php
+/**
+ * Amazon Diagnostics
+ *
+ * @category    Amazon
+ * @package     Amazon_Diagnostics
+ * @copyright   Copyright (c) 2015 Amazon.com
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/* @var $this Amazon_Payments_Block_Adminhtml_Diagnostics */
+?>
+
+<script type="text/javascript">
+    function diagnose() {
+        new Ajax.Request("<?php echo $this->getDiagnoseUrl() ?>", {
+            method: 'get',
+            onSuccess: function (transport) {
+                if (transport.responseText) {
+                    document.getElementById('amazon_diagnostics_result').value = transport.responseText;
+                }
+            }
+        });
+    }
+</script>
+
+<?php echo $this->getButtonHtml() ?>

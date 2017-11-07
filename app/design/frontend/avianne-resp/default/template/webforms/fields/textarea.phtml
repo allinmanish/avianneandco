@@ -1,0 +1,3 @@
+<textarea name='<?php echo $this->getFieldName()?>' id='<?php echo $this->getFieldId()?>' <?php if ($this->getFieldId()=="field[22]") :?>
+onblur="if (this.value == '') {this.value = 'Please describe your vision for us here...';}" onfocus="if (this.value == 'Please describe your vision for us here...') {this.value = '';}"
+<?php endif; ?> class='<?php echo $this->getFieldClass()?>' style='<?php echo $this->getFieldStyle()?>'><?php echo $this->getFieldValue()?></textarea>

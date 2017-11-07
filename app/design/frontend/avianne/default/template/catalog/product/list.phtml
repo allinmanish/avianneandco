@@ -1,0 +1,268 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<script type="text/javascript">
+function mmhover(lid,dir){
+	if (jQuery("#"+lid).css('display') == "none") {
+		jQuery("#"+lid).show();
+	}
+}
+function mmout(lid){
+	if (jQuery("#"+lid).css('display') == "block" ) {
+		jQuery("#"+lid).hide();
+	}
+}
+</script>
+<?php
+	$currentCategoryId = Mage::getModel('catalog/layer')->getCurrentCategory()->getId();
+	$currentCategoryName = Mage::getModel('catalog/layer')->getCurrentCategory()->getName();
+	$list = (Mage::app()->getFrontController()->getAction()->getFullActionName() == 'catalogsearch_result_index') ? 'Search Results' : 'Category Page';
+	$_productCollection = $this->getLoadedProductCollection();
+	$_helper = $this->helper('catalog/output'); 
+	$ua_code = array();
+?>
+<!-- BEGIN GOOGLE UNIVERSAL ANALYTICS CODE PRODUCT IMPRESIONS -->
+<script type="text/javascript">
+//<![CDATA[
+	ga('require', 'ec');
+	function onProductClick(prod, url) {
+		ga('ec:addProduct', prod);
+		ga('ec:setAction', 'click', {list: '<?php echo $list?>'});
+		ga('send', 'event', 'UX', 'click', 'Results', {
+			hitCallback: function() {
+				document.location = url;
+			}
+		});
+	}
+//]]>
+</script>
+<!-- END GOOGLE UNIVERSAL ANALYTICS CODE PRODUCT IMPRESIONS -->
+<?php if(!$_productCollection->count()): ?>
+	<div class="note-msg">
+	    <?php echo $this->__('There are no products matching the selection') ?>
+	</div>
+<?php else: 
+	if($currentCategoryId != 408) {
+		echo $this->getToolbarHtml();
+	}
+	?>
+	
+	
+	<?php // List mode ?>
+	
+	
+	<?php if($this->getMode()!='grid'): ?>
+		<?php $_iterator = 0; ?>
+		<div class="listing-type-list catalog-listing" style="position: relative;">
+		<?php foreach ($_productCollection as $_product): ?>
+		    <div class="listing-item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+		        <?php // Product Image ?>
+		        <div class="product-image">
+		            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>">
+		                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->directResize(200, 200); ?>"  width="200" height="200" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+		            </a>
+		        </div>
+		        <?php // Product description ?>
+		        <div class="product-shop">
+		            <h5><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><?php echo $this->htmlEscape($_product->getName())?></a></h5>
+		            <?php if($_product->getRatingSummary()): ?>
+		            	<?php echo $this->getReviewsSummaryHtml($_product) ?>
+		            <?php endif; ?>
+		            <?php echo $this->getPriceHtml($_product, true) ?>
+		            <?php if($_product->isSaleable()): ?>
+		            <button class="form-button" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><?php echo $this->__('Add to Cart') ?></span></button>
+		            <?php else: ?>
+		            <div class="out-of-stock"><?php echo $this->__() ?></div> 
+		            <?php endif; ?>
+		            <div class="clear"></div>
+		            <div class="description">
+		                <?php echo nl2br($_product->getShortDescription()) ?>
+		                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>"><small><?php echo $this->__('Learn More') ?></small></a>
+		            </div>
+		            <p class="add-to">
+		                <?php if ($this->helper('wishlist')->isAllow()) : ?>
+		                <a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-cart"><?php echo $this->__('Add to Wishlist') ?></a>
+		                <?php endif; ?>
+		                <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+		                <span class="pipe">|</span>
+		                <a href="<?php echo $_compareUrl ?>"><?php echo $this->__('Add to Compare') ?></a>
+		                <?php endif; ?>
+		            </p>
+		        </div>
+		    </div>
+		<?php endforeach; ?>
+		</div>
+	<?php else: ?>
+	
+	
+	<?php // Grid Mode ?>
+	
+	
+		<div class="listing-type-grid catalog-listing" style="position: relative;">
+		<?php $_collectionSize = $_productCollection->count() ?>
+		    <?php $i=0; foreach ($_productCollection as $_product): ?>
+		    
+		    	<?php 
+		    	$finalPrice = round($_product->getFinalPrice(),2);
+		    	if ($currentCategoryName == 'root') {
+		    		$currentCategoryName = 'Search';
+		    	}
+		    		$ua_code[] = "ga('ec:addImpression', {\n" .
+		    		"'id': '".addslashes($_product->getSku())."',\n" .
+		    		"'name': '".addslashes($_product->getName())."',\n" .
+		    		"'category': '".addslashes($currentCategoryName)."',\n" .
+		    		"'list': '{$list}',\n" .
+		    		"'position': '" . ($i+1) . "',\n" .
+		    		"'price': '". $finalPrice . "',\n" .
+		    		"});\n"; 
+		    	?>
+		    
+		        <?php if($i++%4==0): ?>
+		        <ol class="grid-row">
+		        <?php endif; ?>
+		
+		<li class="item" style="position: relative;">        
+			    <?php if($currentCategoryId == 408): ?>
+					<p class="product-image">					
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" onclick="onProductClick(prod<?php echo $_product->getId()?>, '<?php echo $_product->getProductUrl() ?>'); return !ga.loaded;"> 
+					        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->directResize(186,186,3); ?>"  width="186"  alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+				        </a>        
+					</p>
+					<?php else: ?>
+				    <p class="product-image">					
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" onclick="onProductClick(prod<?php echo $_product->getId()?>, '<?php echo $_product->getProductUrl() ?>'); return !ga.loaded;"> 
+				            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->directResize(186,186,3); ?>"  width="186" height="186" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+				        </a>
+					</p>
+				<?php endif;?>
+				<center>
+					<h5>
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_product->getName()) ?>" onclick="onProductClick(prod<?php echo $_product->getId()?>, '<?php echo $_product->getProductUrl() ?>'); return !ga.loaded;"><?php echo $this->htmlEscape($_product->getName()) ?></a>
+					</h5>
+					<?php if($_product->getRatingSummary()): ?>
+						<?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+					<?php endif; ?>
+					<?php echo $this->getPriceHtml($_product, true) ?>
+				</center>
+<script type="text/javascript">
+//<![CDATA[
+	var prod<?php echo $_product->getId()?> = {'id': '<?php echo addslashes($_product->getSku())?>', 'name': '<?php echo addslashes($_product->getName())?>', 'category': '<?php echo addslashes($currentCategoryName);?>', 'position': '<?php echo $i?>', 'price': '<?php echo $finalPrice?>'}
+//]]>
+</script>
+		
+		</li>
+		<?php if($i%4==0 || $i==$_collectionSize): ?>
+			</ol>
+		<?php endif; ?>
+		<?php endforeach ?>
+		<script type="text/javascript">decorateGeneric($$('.grid-row'), ['last', 'odd', 'even']);</script>
+		<div id="toTop">Back to Top</div>
+		<script type="text/javascript">
+		jQuery(function() {
+			jQuery(window).scroll(function() {
+				if(jQuery(this).scrollTop() != 0) {
+					jQuery('#toTop').fadeIn();	
+				} else {
+					jQuery('#toTop').fadeOut();
+				}
+			});
+		 
+			jQuery('#toTop').live('click',function() {
+				jQuery('body,html').animate({scrollTop:0},800);
+			});	
+		});
+		</script>
+		</div>
+		<?php if(!empty($ua_code)): ?>
+<!-- BEGIN GOOGLE UNIVERSAL ANALYTICS CODE PRODUCT IMPRESIONS -->
+<script type="text/javascript">
+//<![CDATA[
+	<?php echo implode("\n", $ua_code); ?>
+	ga('send', 'event', 'ecommerce', 'impressions', {'nonInteraction': true});
+//]]>
+</script>
+<!-- END GOOGLE UNIVERSAL ANALYTICS CODE PRODUCT IMPRESIONS -->
+        <?php endif; ?>
+	<?php endif; ?>
+<?php 
+$questions = '
+<h3>'.$this->__('Questions & Answers').'</h3>
+<ul>
+	<li>'.$this->__('Q - Does this ring come in 18k gold?').'</li>
+	<li>'.$this->__('A - Yes, this ring is available in 18k gold. However, such an order must be placed by phone. Simply call us at 888-243-4344, and request this item in 18k gold.').'</li>
+</ul>
+<p><a href="#dialog" id="contact-link">'.$this->__('Ask A Question').'</a></p>
+';
+// $reviews = $this->getLayout()->createBlock('customreviews/list')->setTemplate('reviews/list.phtml')->toHtml();
+$_category = Mage::getModel('catalog/layer')->getCurrentCategory();
+if($_category->getId()==3) {
+$root_cats = array('Mens Diamond Jewelry'=>35,'Womens Diamond Jewelry'=>43,'Bridal Jewelry'=>54,'Custom Diamond Jewelry'=>99);
+$likes.= '<div class="category-static-related"><p>You May Also Like...</p><ul>';
+foreach ($root_cats as $name => $cat) {
+        $likes.= '<li><a href="'.Mage::getModel("catalog/category")->load($cat)->getUrl().'">'.$name.'</a></li>';
+}
+$likes.= '</ul></div>';
+} else {
+$parentCategory = $_category->getParentCategory();
+$likes = '<div class="category-static-related">';
+if($_category->getLevel()==2) {
+	$topParentCategory = $parentCategory;
+} else {
+	$topParentCategory = $parentCategory->getParentCategory();
+}
+if($topParentCategory->hasChildren()) {
+	$child_amount = count(explode(",",$topParentCategory->getChildren()))-1; $i = 0;
+	$likes .= '<p>You May Also Like...</p><ul>';
+	foreach ($topParentCategory->getChildrenCategories() as $cat) {
+		$likes.= '<li><a href="'.$cat->getUrl().'">'.$cat->getName().'</a></li>';
+		$i++;
+		if($i==8) break;
+	}
+}
+$likes .= '</ul></div>';
+}
+?>
+	<div class="footing category-view sub-categories">
+    	<div class="box item-1 related-cats">
+			<?php echo $likes; ?>
+		</div>
+    	<div class="box item-2 questions-answers">
+    		<?php echo $questions; ?>
+    	</div>
+    </div>
+<?php if($currentCategoryId == 408): ?>
+<?php else: ?>
+<div class="clear"></div>
+<?php echo $this->getToolbarHtml() ?>
+<?php endif; ?>
+<?php endif; ?>

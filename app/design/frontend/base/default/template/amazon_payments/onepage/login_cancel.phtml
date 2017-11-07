@@ -1,0 +1,37 @@
+<?php
+/**
+ * Amazon Payments
+ *
+ * @category    Amazon
+ * @package     Amazon_Payments
+ * @copyright   Copyright (c) 2014 Amazon.com
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+
+<br />
+<?php echo $this->__('Login and Pay with Amazon uses information from your Amazon account to place your order.'); ?>
+
+<div class="col2-set">
+    <div class="col-1">
+        <div class="buttons-set">
+            <button type="button" class="button" onclick="checkout.gotoSection('widget', false);"><span><span><?php echo $this->__('Continue'); ?></span></span></button>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="buttons-set">
+            <button type="button" class="button" onclick="amazonCheckoutCancel();"><span><span><?php echo $this->__('Change Payment Method'); ?></span></span></button>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    // Cancel and log user out of Amazon
+    function amazonCheckoutCancel() {
+        amazon.Login.logout();
+        window.top.location.href = "<?php echo $this->getUrl('amazon_payments/checkout/clear'); ?>";
+    }
+</script>

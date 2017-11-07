@@ -1,0 +1,43 @@
+<?php
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<div class="blog-home">
+	<div class="main-content">
+		<h1 class="ribbled"><?php echo $this->__('Latest Celebrity Diamond Jewelry By Avianne & Co'); ?></h1>
+		<?php echo $this->getPostListHtml() ?>
+	</div>
+	<div class="sidebar-right">
+		<h1 class="ribbled"><?php echo $this->__('Famous Faces'); ?></h1>
+		<span id="slide-prev"></span>
+		<div class="slider-wrapper sidebar-slider">
+			<?php $slides = file_get_contents('http://www.avianneandco.com/wp/celebrities_short.php'); ?>
+			<?php $content = substr($slides, 0, strpos($slides, '<ul class="thumbSlider">')); ?>
+			<?php $content = strtr($content, array( "</span><img" => "</span><span class='img-wrp'><span><img", "/></p></li>" => "/></span></span></p></li>" )); ?>
+			<?php echo $content; ?>
+		</div>
+		<span id="slide-next"></span>
+		<p><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('View All Celebrity Jewelry'); ?></a></p>
+	</div>
+</div>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.bxslider').bxSlider({
+			mode: 'vertical',
+			pager: false,
+			nextSelector: '#slide-next',
+			prevSelector: '#slide-prev',
+			nextText: '',
+			prevText: '',
+			minSlides: 2,
+			maxSlides: 2,
+			moveSlides: 2,
+			auto: true,
+			speed: 3000
+		});
+	});
+</script>

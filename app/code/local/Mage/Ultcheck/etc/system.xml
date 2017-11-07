@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<ultimento>
+			<label>NOAM DESIGN</label>
+			<sort_order>100</sort_order>
+		</ultimento>
+	</tabs>
+    <sections>
+		<ultcheck translate="label" module="ultcheck">
+			<label>Optimized Checkout</label>
+			<tab>ultimento</tab>
+			<sort_order>300</sort_order>
+			<frontend_type>text</frontend_type>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general_settings translate="label">
+					<label>General Settings</label>
+					<sort_order>1</sort_order>
+					<frontend_type>text</frontend_type>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Optimized Checkout Settings</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <default_method translate="label">
+                            <label>Default Checkout Method</label>
+							<frontend_type>select</frontend_type>
+							<source_model>ultcheck/system_config_source_checkout_method</source_model>
+							<depends><enabled>1</enabled></depends>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </default_method>
+                        <plugandplay translate="label comment">
+                            <label>Plug and Play</label>
+                            <comment>Plug and play mode will auto-replace the billing template. If disabled, you have to update billing.phtml manually.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<depends><enabled>1</enabled></depends>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </plugandplay>
+                        <login_link translate="label comment">
+                            <label>Login Link</label>
+                            <comment>Show a login link at the top of the billing form</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_enabledisable</source_model>
+							<depends><enabled>1</enabled></depends>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </login_link>
+                    </fields>
+		    </general_settings>
+		    </groups>
+                </ultcheck>
+    </sections>
+</config>

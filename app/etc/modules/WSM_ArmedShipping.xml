@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <WSM_ArmedShipping>
+      <active>true</active>
+      <codePool>local</codePool>
+	<depends>
+	<Mage_Shipping />
+	</depends>
+    </WSM_ArmedShipping>
+  </modules>
+</config>

@@ -1,0 +1,55 @@
+<?php
+/**
+ * Amazon Payments
+ *
+ * @category    Amazon
+ * @package     Amazon_Payments
+ * @copyright   Copyright (c) 2014 Amazon.com
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+?>
+
+<?php if ($this->isSuspended()) : ?>
+
+<div class="page-title title-buttons">
+    <h1><?php echo $this->__('Payment Declined By Amazon Payments'); ?></h1>
+</div>
+
+<p><?php echo $this->__('Please update your payment method below:'); ?></p>
+
+
+<div id="amazon-widget-wallet" style="width: 400px; height: 228px;margin:1em 0;"></div>
+
+<div class="actions">
+    <button id="amazon-update-button" onclick="setLocation('<?php echo Mage::getUrl('amazon_payments/order/confirm/order_id/' . $this->getOrder()->getId()); ?>'); this.disabled = true;" class="button" title="<?php echo $this->__('Update Order'); ?>" type="button"><span><span><?php echo $this->__('Update Order'); ?></span></span></button>
+    <div id="amazon-button-wrapper" style="display:none;">
+        <?php echo $this->getBlockHtml('amazon_login.no-or'); ?>
+    </div>
+</div>
+
+<br />
+
+
+<!-- Address Book Widget JS -->
+<script>
+    var amazonWallet = new OffAmazonPayments.Widgets.Wallet({
+        sellerId: '<?php echo $this->getSellerId(); ?>',
+        amazonOrderReferenceId: '<?php echo $this->getAmazonOrderReferenceId(); ?>',
+        design: {
+            designMode: 'responsive',
+        },
+        onPaymentSelect: function(orderReference) {
+
+        },
+        onError: function(error) {
+            console.log(error.getErrorMessage());
+            if (error.getErrorCode() == 'BuyerSessionExpired') {
+                $("amazon-update-button").hide();
+                $("amazon-button-wrapper").show();
+                Mage.Cookies.set("amazonOrderIdRedirect", <?php echo $this->getOrder()->getId(); ?>);
+            }
+        }
+    }).bind("amazon-widget-wallet");
+</script>
+
+<?php endif; ?>

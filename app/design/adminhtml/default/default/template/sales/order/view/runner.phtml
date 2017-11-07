@@ -1,0 +1,145 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $orderIds = explode(',', $this->getRequest()->getParam('runner_list_orders')); ?>
+
+<script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+<script>
+$(document).ready(function() {
+	var elems = $('table.runlist tr[rel]'), count = elems.length;
+	elems.each(function() {
+		r = $(this).attr('rel');
+		if (r > 1) {
+			$clone = $(this).clone();
+			$clone.insertAfter($(this));
+		}
+		if (!--count) {
+			$('table.runlist tr[rel]').each(function( i ) {
+				if (i%6==0 && i!=0) {
+					$('<tr class="spacer"><td colspan="3">&nbsp;</td></tr>').insertBefore($(this));
+				}
+			});
+		}
+	});
+});
+</script>
+
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 680px; /*580px;*/
+    color: black;
+	font-family: Arial;
+}
+table.runlist { border-collapse: collapse; border-color: #dadfe0; }
+table.runlist tr { height: 90px; }
+table.runlist tr td.f { width: 84px; }
+table.runlist tr td.s { width: 140px;/*68px;*/ text-align: right; vertical-align: top; font-size: 12px; }
+table.runlist tr td.s b { font-weight: normal; font-size: 14px; }
+table.runlist tr td.t { /*width: 138px;*/ font-size: 11px; vertical-align: top; }
+</style>
+
+<body>
+
+<div class="wrapper">
+	<br>
+	<div style="text-align: center; height: 40px; line-height: 22px; font-size: 36px;">Run List &ndash; <?php echo date('m/d/Y'); ?></div>
+	
+	<table width="100%" border="1" cellspacing="0" cellpadding="2" class="runlist">
+		<?php $i=1; ?>
+		<?php foreach ($orderIds as $orderId):?>
+			<?php $resItem = array(); ?>
+			<?php $order = Mage::getModel('sales/order')->load($orderId); ?>
+			<?php if ($order->getId()): ?>
+				<?php $items = $order->getAllItems(); ?>
+				<?php foreach ($items as $itemId => $item): ?>
+			<tr rel="<?php echo (int)$item->getQtyOrdered() ?>">
+					<?php $_product = Mage::getModel('catalog/product')->load($item->getProductId()); ?>
+					<?php $resItem['image'][$item->getId()] = $this->helper('catalog/image')->init($_product, 'image')->resize(84, 84)->setQuality(75)->__toString(); ?>
+					<?php $resItem['data'][$item->getId()]['price'] = $item->getBaseRowTotalInclTax(); ?>
+					<?php $resItem['data'][$item->getId()]['sku'] = $item->getSku(); ?>
+					<?php $availableOptions = array("gold color", "ring size", "chain length", "mens ring size", "womens ring size"); ?>
+					<?php $options = $item->getProductOptions(); ?>
+					<?php foreach ($options as $option): ?>
+						<?php foreach ($option as $opt): ?>
+							<?php if (isset($opt['label']) && in_array(strtolower($opt['label']), $availableOptions)): ?>
+								<?php $resItem['data'][$item->getId()][strtolower(str_replace(' ', '_', $opt['label']))] = $opt['print_value'];?>
+							<?php elseif (strtolower($opt['label'])=='engraving'): ?>
+								<?php $resItem['data'][$item->getId()]['engraving'] = $opt['print_value']; ?>
+							<?php elseif (strtolower($opt['label'])=='womens ring engraving'): ?>
+								<?php $resItem['data'][$item->getId()]['womens_engraving'] = $opt['print_value']; ?>
+							<?php elseif (strtolower($opt['label'])=='mens ring engraving'): ?>
+								<?php $resItem['data'][$item->getId()]['mens_engraving'] = $opt['print_value']; ?>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					<?php endforeach; ?>
+					<?php $attributes = $_product->getAttributes(); ?>
+					<?php $availableAttrs = array('metal_type', 'peiceweight', 'carat_weight', 'mold'); ?>
+					<?php foreach ($attributes as $attribute): ?>
+						<?php if (in_array($attribute->getAttributeCode(), $availableAttrs) && ($attribute->getIsVisibleOnFront() || $attribute->getAttributeCode()=='mold') ): ?>
+							<?php $value = $attribute->getFrontend()->getValue($_product); ?>
+							<?php if (!$_product->hasData($attribute->getAttributeCode()) || (string)$value == ''): ?>
+								<?php $value = Mage::helper('catalog')->__('N/A'); ?>
+							<?php endif; ?>
+							<?php $resItem['data'][$item->getId()][$attribute->getAttributeCode()] = trim($value); ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endforeach; ?>
+				<td class="f" valign="top">
+					<?php /*if(count($resItem['image'])==1): ?>
+						<?php $width = 84; ?>
+					<?php elseif(in_array(count($resItem['image']), array(2,3,4))): ?>
+						<?php $width = 42; ?>
+					<?php else: ?>
+						<?php $width = 21; ?>
+					<?php endif;*/ ?>
+					<?php foreach ($resItem['image'] as $id => $img): ?>
+						<img src="<?php echo $img; ?>" alt="<?php echo $resItem['data'][$id]['sku']; ?>" title="<?php echo $resItem['data'][$id]['sku']; ?>">
+					<?php endforeach; ?>
+				</td>
+				<td class="s">
+					<?php foreach ($resItem['data'] as $id => $v): ?>
+						<?php
+							echo '<b>' . ($v['price'] ? Mage::app()->getStore()->convertPrice($v['price'], true) : '') . '</b><br>';
+							echo $v['sku'] ? $v['sku'] . '<br>' : '';
+							echo $v['metal_type'] ? $v['metal_type'] . '<br>' : '';
+							echo $v['gold_color'] ? $v['gold_color'] . '<br>' : '';
+							echo $v['ring_size'] ? $v['ring_size'] . '<br>' : '';
+							echo $v['mens_ring_size'] ? 'Mens Ring Size: ' . $v['mens_ring_size'] . '<br>' : '';
+							echo $v['womens_ring_size'] ? 'Womens Ring Size: ' . $v['womens_ring_size'] . '<br>' : '';
+							echo $v['chain_length'] ? $v['chain_length'] . '<br>' : '';
+							echo $v['peiceweight'] ? $v['peiceweight'] . '<br>' : '';
+							echo $v['carat_weight'] ? $v['carat_weight'] . '<br>' : '';
+							echo $v['mold']!='N/A' ? 'Mold# ' . $v['mold'] . '<br>' : '';
+						?><br>
+					<?php endforeach; ?>
+				</td>
+				<td class="t">
+					<?php foreach ($resItem['data'] as $id => $v): ?>
+						<?php echo $v['engraving'] ? $resItem['data'][$id]['sku'] . ' <b>' . $v['engraving'] . '</b><br>' : ''; ?>
+						<?php echo $v['mens_engraving'] ? $resItem['data'][$id]['sku'] . ' Mens Engraving: <b>' . $v['mens_engraving'] . '</b><br>' : ''; ?>
+						<?php echo $v['womens_engraving'] ? $resItem['data'][$id]['sku'] . ' Womens Engraving: <b>' . $v['womens_engraving'] . '</b><br>' : ''; ?>
+					<?php endforeach; ?>
+					<?php for ($j=1; $j<=5; $j++): ?><input type="text" style="width: 99%;" /><br><?php endfor; ?>
+				</td>
+    			<?php if ($i % 1 == 0): ?>
+    			</tr>
+    			<?php endif; ?>
+    			
+    			<?php $history = Mage::getResourceModel('sales/order_status_history_collection')->addFieldToFilter('is_customer_notified', 1)->setOrderFilter($order)->setOrder('created_at', 'desc')->setOrder('entity_id', 'desc'); ?>
+    			<?php if ($history->count()>0): ?>
+    				<?php foreach ($history as $comment): ?>
+    					<?php if (!empty($comment->getComment())): ?>
+            				<tr style="height: auto !important;">
+            					<td colspan="3"><p style="font-size: 12px;">Comment: <?php echo $comment->getComment(); ?></p></td>
+            				</tr>
+    					<?php endif;?>
+    				<?php endforeach; ?>
+    			<?php endif; ?>
+    			
+				<?php $i++; ?>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		</tr>
+	</table>
+	
+</body>

@@ -1,0 +1,139 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+
+<?php 
+/************************  AJAX FILTERS  **********************************/
+if($this->getRequest()->getParam('ajax')==true){ ?>
+<div class="col-left sidebar"><?php echo $this->getChildHtml('left') ?></div>
+<div class="col-main">
+ <!-- start global messages -->
+<?php echo $this->getChildHtml('global_messages') ?>
+<!-- end global messages -->
+<!-- start content -->
+<?php $content = $this->getChildHtml('content'); ?>
+<?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+<!-- end content -->
+</div>
+
+<?php 
+}else{ 
+/************************  eof AJAX FILTERS  **********************************/
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://opengraphprotocol.org/schema/" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+<body <?php echo $this->getBodyClass()?'class="'.$this->getBodyClass().'"':'' ?>>
+<div class="wrapper">
+<div class="sub-wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+<!-- start header -->
+    <div class="header">
+        <?php echo $this->getChildHtml('header') ?>
+    </div>
+<!-- end header -->
+
+    <!-- start middle -->
+    <div class="middle-container">
+        <div class="middle col-2-left-layout">
+<?php /*if(stripos($this->getBodyClass(), "catalog-product-view")!==false) { ?>
+	<div class="free-shipping">
+		<div style="position:relative;float:left;"><span>Free FedEx Shipping</span></div>
+		<!--a class="black-friday" href="/like-us-and-save">Black Friday <span>1 Day Sale</span> Event</a-->
+		<div class="tweet_block" id="cat_tweet_block">
+			<div class="like_us_for_coupon"><a href="/like-us-and-save"><?php echo 
+$this->__('Like Us and Save 5%') ?></a></div>
+		</div>
+		<div id="top-social-buttons">
+			<i id="counter-overlay"></i>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.avianneandco.com/" data-text="Diamond Jewelry by Avianne &amp;amp; Co" data-count="none">Tweet</a>
+			<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+			<a href="http://pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl('web') ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+			<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+			<?php <a class="tweet_link" href="/social-network-contest" target="_blank">Share this page and enter to win a $1,000 Bracelet</a> ?>
+		</div>
+	</div>
+	
+	<div style="clear:both;height: 0px;line-height: 0px;margin-bottom: -2em;"></div>
+<?php }*/ ?>
+            <?php // echo $this->getChildHtml('breadcrumbs') ?>
+            
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('black_friday_banner')->toHtml() ?>
+            
+            <!-- start left -->
+            <div class="col-left side-col">
+               <?php echo $this->getChildHtml('left') ?>&nbsp;
+            </div>
+            <div id="main" class="col-main">
+            <!-- start global messages -->
+                <?php echo $this->getChildHtml('global_messages') ?>
+            <!-- end global messages -->
+            <!-- start content -->
+            	<?php $content = $this->getChildHtml('content'); ?>
+                <?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+            <!-- end content -->
+            </div>
+
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('new_footer')->toHtml() ?>
+
+    </div>
+        
+            <!-- end center -->
+
+
+    </div>
+
+        <!-- end middle -->
+</div>
+        <!-- start footer -->
+    <div class="footer-container">
+        <div class="footer">
+            <?php echo $this->getChildHtml('footer') ?>
+        </div>
+    </div>
+        <!-- end footer -->
+
+<?php echo $this->getChildHtml('before_body_end') ?>
+
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+<!-- denise chris -->
+</body>
+</html>
+
+<?php 
+/************************  AJAX FILTERS  **********************************/
+}
+/************************  eof AJAX FILTERS  **********************************/
+?>

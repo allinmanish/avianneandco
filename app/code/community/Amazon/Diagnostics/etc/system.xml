@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Amazon Diagnostics
+ *
+ * @category    Amazon
+ * @package     Amazon_Diagnostics
+ * @copyright   Copyright (c) 2015 Amazon.com
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <sections>
+        <payment>
+            <groups>
+                <amazon_payments translate="label">
+                    <fields>
+                        <ap_developer type="group" translate="label">
+                            <fields>
+                                <ap_diagnostics type="group" translate="label">
+                                    <label>Amazon Diagnostics</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>1000</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <comment>
+                                        <![CDATA[
+                                        Amazon Diagnostics can be used to help developers troubleshoot your Amazon Payments integration.
+                                        <br/>
+                                        <div style="clear:both;"></div>
+                                        ]]>
+                                    </comment>
+                                    <fields>
+                                        <check translate="label">
+                                            <frontend_type>button</frontend_type>
+                                            <frontend_model>amazon_diagnostics/adminhtml_system_config_form_button</frontend_model>
+                                            <sort_order>0</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>0</show_in_store>
+                                        </check>
+                                        <results translate='label'>
+                                            <label>Results:</label>
+                                            <comment>
+                                                <![CDATA[
+                                                Copy/paste results to developer support if requested.
+                                                ]]>
+                                            </comment>
+                                            <frontend_type>textarea</frontend_type>
+                                            <frontend_model>amazon_diagnostics/adminhtml_system_config_form_textarea</frontend_model>
+                                            <sort_order>5</sort_order>
+                                            <show_in_default>1</show_in_default>
+                                            <show_in_website>1</show_in_website>
+                                            <show_in_store>0</show_in_store>
+                                        </results>
+                                    </fields>
+                                </ap_diagnostics>
+                            </fields>
+                        </ap_developer>
+                    </fields>
+                </amazon_payments>
+            </groups>
+        </payment>
+    </sections>
+</config>

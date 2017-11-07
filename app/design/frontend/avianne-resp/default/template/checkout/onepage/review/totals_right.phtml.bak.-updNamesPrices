@@ -1,0 +1,33 @@
+<?php if ($this->getTotals()): ?>
+        <?php $_colspan = 1; ?>
+        <?php 
+        	$result = $this->renderTotals(null, $_colspan);
+        	$result = str_replace(array("Shipping & Handling (", ")"), array(""), $result);
+
+            $srch = array("Shipping &amp; Handling", "2 Day Air", "UPS Overnight Delivery", "USPS APO/FPO Priority International", "FedEx Priority International - FedEx International Shipping",
+                          "UPS Shipping - ", "Expedited Shipping - ", "UPS Shipping (", "Shipping &amp; Handling (", "Shipping & Handling (", "$0.00");
+            $repl = array("FEDEX 2 DAY AIR", "FEDEX 2 DAY AIR", "FEDEX PRIORITY OVERNIGHT", "USPS APO/FPO Priority International", "FEDEX PRIORITY INTERNATIONAL",
+                          "", "", "", "", "", "Free");
+            $result = str_replace($srch, $repl, $result);
+
+        	/*
+        	$result = str_replace(array("Shipping & Handling (FedEx - FedEx International Shipping)"), array("FedEx International Shipping"), $result);
+        	$result = str_replace(array("Shipping & Handling (UPS Shipping - 2 Day Air)"), array("UPS 2 Day Air"), $result);
+        	$result = str_replace(array("Shipping & Handling (Expedited Shipping - UPS Overnight Delivery)"), array("UPS Next Day Air"), $result);
+        	$result = str_replace(array("Shipping & Handling (USPS APO/FPO Priority International - USPS APO/FPO Priority International)"), array("USPS APO/FPO Priority International"), $result);
+        	*/
+/*        	
+        	if (strpos($result, 'UPS Shipping')) {
+        		$result = str_replace(array("(UPS Shipping - 2 Day Air)","$0.00"), array("", "Free"), $result);
+        	}
+        	if (strpos($result, 'Shipping & Handling'))
+        		$result = str_replace(array("Shipping & Handling", "(Expedited Shipping - UPS Overnight Delivery)", "$0.00","$35.00" ), array("UPS Shipping", "", "Free", "Free"), $result);
+*/
+
+            $result = str_replace('PRIORITY INTERNATIONAL - USPS APO/FPO Priority International', 'USPS APO/FPO Priority International', $result);
+
+        	echo $result;
+        ?>
+        <tr><td colspan="2"><div class="cart-delimiter"></div></td></tr>
+        <?php echo $this->renderTotals('footer', $_colspan); ?>
+<?php endif?>

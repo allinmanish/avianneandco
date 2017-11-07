@@ -1,0 +1,15 @@
+<?php
+	$url =$this->getUrl("diamondsearch/diamonds/search"); //isset($_REQUEST['url'])?$_REQUEST['url']:'/diamondsearch/diamonds/search';
+	//$url .= strpos($url,/diamondsearch/diamonds/search '?')?'&':'?'.'inframe=1';
+?>
+
+<?php if (!isset($_REQUEST['close'])){?>
+<div class="looseSearchContainer">
+<!--<a href="?close=1">Close Search</a><br/>
+--><iframe src="<?php echo $url?>" id="looseDiamonIframe" frameborder="0">
+	<p> <a href="<?php echo $url?>" target="_blank">Start Search</a> </p>
+</iframe>
+<?php } else { ?>
+	<!--<a href="?">Resume Search</a>-->
+<?php } ?>
+</div>

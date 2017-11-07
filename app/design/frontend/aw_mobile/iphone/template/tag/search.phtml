@@ -1,0 +1,33 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="page-head">
+    <h3><?php echo $this->__("Products tagged with '%s' (<a href='%s'>RSS</a>)", $query, '/tag/index/xml?tag='.$query) ?></h3>
+</div>
+<?php if (!empty($collection)) { ?>
+<ol>
+    <?php foreach ($collection as $item) { ?>
+        <li>
+            <?php echo $item['name']; ?>
+            <strong>Tags:</strong>
+                <?php foreach ($item['tags'] as $tag) { ?>
+                    <A href="/tag/index/search?q=<?php echo $tag['tagname']; ?>"><?php echo $tag['tagname']; ?></a> 
+                <?php } ?>
+        </li>
+    <?php } ?>
+</ol>
+<?php } ?>

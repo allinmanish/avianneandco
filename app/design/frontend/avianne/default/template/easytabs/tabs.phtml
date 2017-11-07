@@ -1,0 +1,169 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ */
+?>
+<?php 
+$product_id = Mage::registry('current_product')->getId();
+$product = Mage::getModel('catalog/product')->load($product_id);
+$m = $this->helper('catalog/output')->productAttribute($product, nl2br($product->getDescription()), 'description');
+?>
+<ul class="tabs">
+    <?php foreach ($this->getTabs() as $_index => $_tab): ?>
+        <?php if($this->getChildHtml($_tab['alias']) && strlen(strip_tags(trim($this->getChildHtml($_tab['alias']))))>0): ?>
+        	<?php
+				$tab_title = $_tab['title'];
+        		$tab_is_custom = strpos($_tab['alias'], 'custom');
+				$tab_is_cms= strpos($_tab['alias'], 'cms');
+				if($tab_is_custom === 0){
+        			$tab_is_tmp_id =  substr($_tab['alias'], 6);
+        			$tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
+					$tab_title = Mage::getStoreConfig('easy_tabs/custom/customtabname'.$tab_is_custom_id);
+        		} elseif($tab_is_cms === 0) {
+					$tab_is_tmp_id =  substr($_tab['alias'], 3);
+        			$tab_is_custom_id = (!empty($tab_is_tmp_id)) ? $tab_is_tmp_id : '';
+					$tab_title = Mage::getStoreConfig('easy_tabs/customcms/tabnamecms'.$tab_is_custom_id);
+        		} 
+        		
+        	?>
+            <?php if (!empty($m)): ?>
+        		<li id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo !$_index ? 'class="active first"' : '' ?>>
+	            	<a href="#">
+	            		<?php if($_tab['alias']!='cms'): ?>
+	            			<?php echo $tab_title; ?>
+	            		<?php else: ?>
+	            			<?php echo $this->__('Video'); ?>
+	            		<?php endif; ?>
+	            	</a>
+	            </li>
+	        <?php else: ?>
+	            <?php if($_tab['alias']!='cms'): ?>
+	            	<li id="product_tabs_<?php echo $_tab['alias'] ?>" <?php echo $_index==1 ? 'class="active first"' : '' ?>>
+		            	<a href="#">
+		            		
+		            			<?php echo $tab_title; ?>
+		            	</a>
+		            </li>
+	            <?php endif; ?>
+        	<?php endif; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</ul>
+<div class="padder">
+    <?php foreach ($this->getTabs() as $_index => $_tab): ?>
+        <?php if($this->getChildHtml($_tab['alias'])): ?>
+            <div style="font-size:11px;" id="product_tabs_<?php echo $_tab['alias'] ?>_contents">
+            	<?php if($_tab['alias']!='cms'): ?>
+            		<?php echo $this->getChildHtml($_tab['alias']); ?>
+            	<?php else: ?>
+            		<div align="center">
+						<?php 
+						if (empty($m)) {
+// 							echo '<div style="text-align:center;">
+// 							<a class="youtube-lazy-link" href="http://www.youtube.com/watch?v=nMj4SpnFY2Y" style="width:440px;height:240px;" title="Click to play!"></a>
+// 						</div>';
+// 							$frame_content = '<iframe width="420" height="230" src="http://www.youtube.com/embed/nMj4SpnFY2Y?autoplay=1" frameborder="0" allowfullscreen></iframe>';
+							$frame_content = '';
+						} else {
+							
+							if (stripos($m, "iframe")!==false) {
+								$frame_content = preg_replace("!src=\"(.*?)\"!si","src=\"\\1?autoplay=1\"",$m);
+								echo '<div style="text-align:center;"><div class="youtube-lazy-link" style="width:440px;height:270px;"></div></div>';
+							} elseif (stripos($m, "embed")!==false) {
+								$frame_content = preg_replace("!src=\"(.*?)\"!si","src=\"\\1&autoplay=1\"",$m);
+								echo '<div style="text-align:center;"><div class="youtube-lazy-link" style="width:440px;height:270px;"></div></div>';
+							} else {
+								echo $m;
+								$frame_content = $m;
+							}
+						}
+						?>	
+					</div>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery(".youtube-lazy-link").each(function(index) {
+	    jQuery(this).html('');    	
+	    jQuery(this).prepend('<div style="height:'+(parseInt(jQuery(this).css("height"))-4)+'px;width:'+(parseInt(jQuery(this).css("width"))-4)+'px;" class="youtube-lazy-link-div"></div>&nbsp;');
+	    jQuery(this).css("background", "#000 url(<?php echo $this->getSkinUrl('images/youtube.jpg') ?>) center center no-repeat");
+	    var videoFrame = '<?php echo $frame_content; ?>';
+	    jQuery(this).click(function(e){
+	    	jQuery('.youtube-lazy-link').replaceWith(videoFrame);
+	    	e.preventDefault();
+		});
+	});
+})
+</script>
+            	<?php endif; ?>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<script type="text/javascript">
+Varien.Tabs = Class.create();
+Varien.Tabs.prototype = {
+  initialize: function(selector) {
+    var self=this;
+    $$(selector+' a').each(this.initTab.bind(this));
+  },
+
+  initTab: function(el) {
+      el.href = 'javascript:void(0)';
+      if ($(el.parentNode).hasClassName('active')) {
+        this.showContent(el);
+      }
+      el.observe('click', this.showContent.bind(this, el));
+  },
+
+  showContent: function(a) {
+    var li = $(a.parentNode), ul = $(li.parentNode);
+    ul.select('li', 'ol').each(function(el){
+      var contents = $(el.id+'_contents');
+      if (el==li) {
+        el.addClassName('active');
+        contents.show();
+      } else {
+        el.removeClassName('active');
+        contents.hide();
+      }
+    });
+  }
+}
+new Varien.Tabs('.tabs');
+
+jQuery(function(){
+	  jQuery('a#trigger').toggle(function(e) {
+		  jQuery('div#pop-up').show();
+	      e.preventDefault();
+	  }, function(e) {
+		  jQuery('div#pop-up').hide();
+		  e.preventDefault();
+	  });
+});
+</script>

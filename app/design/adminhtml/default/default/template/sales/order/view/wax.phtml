@@ -1,0 +1,86 @@
+<?php 
+$order = $this->getOrder();
+
+$_product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('item_id'));
+$_helper = $this->helper('catalog/output');
+$attributes = $_product->getAttributes();
+
+$availableAttrs = array('metal_type', 'length', 'width', 'peiceweight');
+$attrs = array('metal_type'=>'N/A', 'length'=>'N/A', 'width'=>'N/A', 'peiceweight'=>'N/A', 'ringsize'=>'N/A', 'image1'=>false, 'image2'=>false, 'image3'=>false);
+
+foreach ($attributes as $attribute) {
+	if (in_array($attribute->getAttributeCode(), $availableAttrs) && $attribute->getIsVisibleOnFront()) {
+		$value = $attribute->getFrontend()->getValue($_product);
+
+		if (!$_product->hasData($attribute->getAttributeCode()) || (string)$value == '') {
+			$value = Mage::helper('catalog')->__('N/A');
+		} elseif ($attribute->getAttributeCode() == 'metal_type') {
+			if (!strpos($value, 'Gold')) {
+				$value = 'N/A';
+			} else {
+				$value = str_replace('Gold', '', $value);
+			}
+		}
+
+		$attrs[$attribute->getAttributeCode()] = strtoupper(trim($value));
+	}
+}
+
+$items = $order->getAllItems();
+foreach ($items as $itemId => $item) {
+	$opts = $item->getProductOptions();
+	if ($opts["info_buyRequest"]["product"] == $this->getRequest()->getParam('item_id')) {
+		foreach ($opts["options"] as $v) {
+			if ($v["label"] == "Ring Size") {
+				$attrs['ringsize'] = $v["value"];
+				continue 2;
+			}
+		}
+	}
+}
+?>
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 612px;
+    color: black;
+}
+</style>
+
+<body>
+
+<div class="wrapper">
+	<br>
+	<div style="text-align: center; font-size: 19px;">WAX ORDER PRINTOUT</div>
+	<div style="margin-left: 10px; z-index: 1;"><img src="<?php $image1 = $this->helper('catalog/image')->init($_product, 'image')->resize(300, 300)->setQuality(75); echo $image1;
+			$image1_fn = strrchr($image1->__toString(), '/') ?>" style=""></div>
+	<div style="position: absolute; width: 238px; text-align: center; left: 0px; top: 320px;">
+	<?php 
+		$_images = Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages();
+		if ($_images) {			
+			$i = 0;
+			foreach ($_images as $_image) {
+				$imagex = $this->helper('catalog/image')->init($_product, 'image', $_image->getFile())->resize(170)->setQuality(75);
+				if ($image1_fn != strrchr($imagex, '/')) {
+					$i++;
+					echo '<img src="' . $imagex . '"><br>';
+				}
+				if ($i == 2)
+					continue;
+			}
+		}
+	?>
+	</div>
+	<div style="width: 320px; font-size: 30px; margin-top: -51px; z-index: 2; position: absolute; right: 0; top: 347px;">
+		GOLD: <?php echo $attrs['metal_type']?><br><br>
+		LENGTH: <?php echo $attrs['length']?><br><br>
+		WIDTH: <?php echo $attrs['width']?><br><br>
+		WEIGHT: <?php echo $attrs['peiceweight']?><br><br>
+		RING SIZE: <?php echo $attrs['ringsize']?><br><br>
+		DIAMOND SIZE: <br><br>
+		_____________
+	</div>
+</div>
+
+</body>

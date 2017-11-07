@@ -1,0 +1,34 @@
+<?php $id = 0; ?>
+
+<script type="text/javascript">
+	function fold (obj, url) {
+		lis = document.getElementById('aw_menu').getElementsByTagName('LI');
+		if (lis) {
+			var len = lis.length;
+			for (x = 0; x < len; x++) if (lis[x].className != 'level0 nav' && lis[x].className != 'level0 nav active') {
+				if (lis[x].parentNode != obj) lis[x].style.display = 'none';
+			}
+		}
+		lis = obj.getElementsByTagName('LI');
+		if (lis) {
+			var len = lis.length;
+			for (x = 0; x < len; x++) if (lis[x].className != 'level0 nav' && lis[x].className != 'level0 nav active') {
+				if (lis[x].offsetHeight) lis[x].style.display = 'none';
+				else lis[x].style.display = 'block';
+			}
+		}
+		if (lis.length <= 1) window.location = url;
+	}
+</script>
+
+<div class="header-aw-nav-container">
+   <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+   <div id="aw_menu">
+   <?php foreach ($this->getStoreCategories() as $_category): ?>
+		<ul onclick="javascript: fold(this, '<?php if ($_category->getIsActive()) echo $this->getCategoryUrl($_category); ?>');" id="nav">
+			<?php echo $this->drawItem($_category) ?>
+		</ul>            
+		<?php endforeach ?>
+	</div>
+   <?php echo $this->getChildHtml('topLeftLinks') ?>
+</div>

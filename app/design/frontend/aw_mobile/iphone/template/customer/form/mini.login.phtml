@@ -1,0 +1,24 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+    <table width="100%" class="mini-login">
+        <tr><td><?php echo $this->__('Email') ?>:</td><td><input name="login[username]" /></td></tr>
+        <tr><td><?php echo $this->__('Password') ?>:</td><td><input name="login[password]" /></td></tr>
+        <tr><td>&nbsp;</td><td><input type="submit" value="<?php echo $this->__('Login') ?>" /></td></tr>
+    </table>
+</form>

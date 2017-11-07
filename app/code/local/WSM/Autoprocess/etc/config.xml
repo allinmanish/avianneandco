@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WSM_Autoprocess>
+            <version>0.0.1</version>
+        </WSM_Autoprocess>
+    </modules>
+    <global>
+    	<models>
+            <wsm_autoprocess>
+                <class>WSM_Autoprocess_Model</class>
+            </wsm_autoprocess>
+        </models>
+    </global>
+    <crontab>
+        <jobs>
+            <wsm_autoprocess_cron>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>wsm_autoprocess/observer::process</model>
+                </run>
+            </wsm_autoprocess_cron>
+        </jobs>
+    </crontab>
+</config>

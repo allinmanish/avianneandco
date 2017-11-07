@@ -1,0 +1,90 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php if(($this->getRequest()->getModuleName()=='catalog')&&($this->getRequest()->getControllerName()=='product')): ?>
+	<?php $page_title = Mage::registry('current_product')->getMetaTitle(); ?>
+	<?php if(!empty($page_title)): ?>
+		<title><?php echo $page_title ?></title>
+	<?php else:?>
+		<title><?php echo Mage::registry('current_product')->getName() ?></title>
+	<?php endif;?>
+	<?php if (strip_tags(str_replace("<br />",", ",substr(Mage::registry('current_product')->getShortDescription(), 0, strpos(Mage::registry('current_product')->getShortDescription(), '.')+1)))=="") : ?>
+	<?php echo '<meta name="description" content="'.trim(Mage::registry('current_product')->getName()).'. '.htmlspecialchars($this->getShortDescription()).'" />' ?>
+	<?php else: ?>
+	<?php echo '<meta name="description" content="'.trim(Mage::registry('current_product')->getName()).'. '.strip_tags(str_replace("<br />",", ",substr(Mage::registry('current_product')->getShortDescription(), 0, strpos(Mage::registry('current_product')->getShortDescription(), '.')+1))).'" />' ?>
+	<?php endif; ?>
+	<meta name="keywords" content="<?php echo implode(", ",array_filter(explode(" ", str_replace(",", "", $this->getTitle())))); ?>" />
+<?php else:?>
+	<title><?php echo $this->getTitle() ?></title>
+	<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+	<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<?php endif;?>
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+<meta content="telephone=no" name="format-detection" />
+<?php echo $this->getChildHtml('social_data'); ?>
+<link rel="shortcut icon" href="<?php echo $this->getUrl('/', array('_secure'=>true)).'favicon.ico' ?>" type="image/x-icon" />
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+    <?php if( ((strpos($this->getRequest()->getModuleName(), "catalog")!==false) && ($this->getRequest()->getControllerName()=="category" || $this->getRequest()->getControllerName()=="product")) || ($this->getRequest()->getModuleName()=='wordpress') ): ?>
+    var data_href_social = '<?php echo "http://" . $_SERVER['SERVER_NAME'] . str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']) ?>';
+    <?php else: ?>
+    var data_href_social = '<?php echo Mage::getBaseUrl('web') ?>';
+    <?php endif;?>
+//]]>
+</script>
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<script type="text/javascript">
+window.__lc = window.__lc || {};
+window.__lc.license = 1074645;
+(function() {
+  var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+  lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+})();
+</script>
+<!-- End of LiveChat code -->
+
+<!--css_js_start-->
+<?php echo $this->getCssJsHtml() ?>
+<!--css_js_end-->
+<?php echo $this->getChildHtml() ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true); ?>Dialog.js"></script>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('css/default_dialog.css', array('_secure'=>true))?>" media="all" />
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<?php if( (strpos($this->getRequest()->getModuleName(), "catalog")!==false) && ($this->getRequest()->getControllerName()=="product") ): ?>
+	<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true); ?>avianne/js-prod.js"></script>
+<?php else: ?>
+	<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true); ?>avianne/js-all.js"></script>
+<?php endif; ?>
+<?php if(Mage::getBlockSingleton('cms/page')->getPage()->getIdentifier()=='customer-service'): ?>
+	<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS, true); ?>avianne/customer-service.js"></script>
+<?php endif;?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+<?php echo $this->getIncludes() ?>

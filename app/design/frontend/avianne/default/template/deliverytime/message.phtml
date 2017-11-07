@@ -1,0 +1,22 @@
+
+<?php
+	
+	$message = $this->show_warning_message();
+
+if($message)
+{	
+?>
+<script type="text/javascript">
+//<![CDATA[
+	 
+	
+	
+	alert('<?=$message?>');
+	
+
+//]]>
+</script>
+
+<?php
+}
+?>

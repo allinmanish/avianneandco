@@ -1,0 +1,351 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<div class="category-block">
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php /*if($_description=$this->getCurrentCategory()->getDescription()): ?>
+        <div class="category-description"><?php echo $_helper->categoryAttribute($this->getCurrentCategory(), $_description, 'description') ?></div>
+    <?php endif;*/ ?>
+    <?php if( $this->getCurrentCategory()->getId()==211 ): ?>
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('custom-diamond-jewelry-mobile')->toHtml(); ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==35 && !isset($_GET['view-all']) ): ?>
+    	<h1 class="cat-35"><?php echo $this->__('Mens Diamond Jewelry'); ?></h1>
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    	<ul>
+			<li class="item-1-1"><a href="/mens-diamond-rings-1">Diamond Rings</a></li>
+			<li class="item-1-2"><a href="/mens-diamond-bracelets-1">Diamond Bracelets</a></li>
+			<li class="item-1-3"><a href="/mens-diamond-earrings-1">Diamond Earrings</a></li>
+			<li class="item-1-4"><a href="/mens-diamond-pendants-1">Diamond Pendants</a></li>
+			<li class="item-1-5"><a href="/mens-diamond-chains-1">Diamond Chains</a></li>
+			<li class="item-1-6"><a href="/bling-hip-hop-diamond-jewelry">Hip Hop Jewelry</a></li>
+			<li class="item-1-7"><a href="/mens-solid-gold-jewelry">Solid Gold Jewelry</a></li>
+			<li class="item-1-8"><a href="/diamond-cufflinks">Diamond Cufflinks</a></li>
+			<li class="item-1-9 last"><a href="/mens-diamond-jewelry?view-all=1"><?php echo $this->__('View all mens diamond jewelry'); ?></a></li>
+		</ul>
+    <?php elseif( $this->getCurrentCategory()->getId()==43 && !isset($_GET['view-all']) ): ?>
+    	<h1 class="cat-43"><?php echo $this->__('Women Diamond Jewelry'); ?></h1>
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    	<ul>
+			<li class="item-2-1"><a href="/womens-diamond-rings-1">Diamond Rings</a></li>
+			<li class="item-2-2"><a href="/womens-diamond-bracelets-1">Diamond Bracelets</a></li>
+			<li class="item-2-3"><a href="/womens-diamond-earrings-1">Diamond Earrings</a></li>
+			<li class="item-2-4"><a href="/womens-diamond-pendants-1">Diamond Pendants</a></li>
+			<li class="item-2-5"><a href="/womens-diamond-necklaces">Diamond Chains</a></li>
+			<li class="item-2-6"><a href="/diamond-pearl-jewelry">Pearl Jewelry</a></li>
+			<li class="item-2-7"><a href="/womens-silver-jewelry">Silver Jewelry</a></li>
+			<li class="item-2-8"><a href="/high-end-designer-jewelry">High End Jewelry</a></li>
+			<li class="item-2-9"><a href="/gemstone-jewelry">Gemstone Jewelry</a></li>
+			<li class="item-2-10"><a href="/womens-gold-jewelry">Solid Gold Jewelry</a></li>
+			<li class="item-2-11 last"><a href="/womens-diamond-jewelry?view-all=1"><?php echo $this->__('View all women diamond jewelry'); ?></a></li>
+		</ul>
+    <?php elseif( $this->getCurrentCategory()->getId()==54 && !isset($_GET['view-all']) ): ?>
+    	<h1 class="cat-54"><?php echo $this->__('Bridal Jewelry'); ?></h1>
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    	<ul>
+			<li class="item-3-1"><a href="/diamond-wedding-rings">Wedding Rings</a></li>
+			<li class="item-3-2"><a href="/diamond-anniversary-rings">Anniversary Rings</a></li>
+			<li class="item-3-3"><a href="/pre-set-diamond-engagement-rings">Engagement Rings</a></li>
+			<li class="item-3-4 last"><a href="/pre-set-diamond-engagement-rings-1?view-all=1"><?php echo $this->__('View all wedding rings'); ?></a></li>
+		</ul>
+    <?php elseif( $this->getCurrentCategory()->getId()==77 && !isset($_GET['view-all']) ): ?>
+    	<h1 class="cat-77"><?php echo $this->__('Diamond Watches'); ?></h1>
+    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    	<ul>
+			<li class="item-4-1"><a href="/mens-diamond-watches">Mens Diamond Watches</a></li>
+			<li class="item-4-2"><a href="/womens-diamond-watches">Womens Diamond Watches</a></li>
+			<li class="item-4-3"><a href="/mens-luxury-wrist-watches">Mens Luxury Watches</a></li>
+			<li class="item-4-4"><a href="/womens-luxury-watches">Womens Luxury Watches</a></li>
+			<li class="item-4-5"><a href="/watch-accessories">Watch Accessories</a></li>
+			<li class="item-4-6 last"><a href="/watches?view-all=1"><?php echo $this->__('View all diamond watches'); ?></a></li>
+		</ul>
+    <?php elseif( $this->getCurrentCategory()->getId()==233 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-233"><?php echo $this->__('Mens Diamond Rings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-1-1"><a href="/multi-colored-diamond-rings"><span>Colored<br />Diamond Rings</span></a></div>
+			<div class="items item-1-1-2"><a href="/mens-diamond-pinky-rings"><span>Men's Diamond<br />Pinky Rings</span></a></div>
+			<div class="items item-1-1-3"><a href="/mens-diamond-wedding-bands"><span>Diamond<br />Wedding Bands</span></a></div>
+			<div class="items item-1-1-4"><a href="/mens-diamond-rings-1?view-all=1"><span>Men's<br />Diamond Rings</span></a></div>
+			<div class="items item-1-1-5"><a href="/mens-black-diamond-rings"><span>Black<br />Diamond Rings</span></a></div>
+			<div class="items item-1-1-6"><a href="/gold-wedding-bands"><span>Gold<br />Wedding Bands</span></a></div>
+			<div class="items item-1-1-7"><a href="/mens-diamond-rings-1?view-all=1&price=0-500"><span>Diamond Rings<br />Under $500</span></a></div>
+			<div class="items item-1-1-8 last"><a href="/mens-diamond-rings-1?view-all=1"><span><?php echo $this->__('View all Mens Diamond Rings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Mens Diamond Rings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==261 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-261"><?php echo $this->__('Mens Diamond Earrings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-2-1"><a href="/mens-diamond-earrings-1?view-all=1"><span>Diamond<br />Earrings</span></a></div>
+			<div class="items item-1-2-2"><a href="/mens-black-diamond-earrings"><span>Black<br />Diamond Earrings</span></a></div>
+			<div class="items item-1-2-3"><a href="/mens-solitaire-diamond-earrings"><span>Solitaire<br />Diamond Earrings</span></a></div>
+			<div class="items item-1-2-4"><a href="/mens-multi-color-diamond-earrings"><span>Colored<br />Diamond Earrings</span></a></div>
+			<div class="items item-1-2-5"><a href="/mens-diamond-stud-earrings"><span>Diamond<br />Stud Earrings</span></a></div>
+			<div class="items item-1-2-6"><a href="/mens-diamond-earrings-1?view-all=1&price=0-500"><span>Diamond Earrings<br />Under $500</span></a></div>
+			<div class="items item-1-2-7 last"><a href="/mens-diamond-earrings-1?view-all=1"><span><?php echo $this->__('View all Mens Diamond Earrings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Mens Diamond Earrings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==258 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-258"><?php echo $this->__('Mens Diamond Bracelets'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-3-1"><a href="/mens-diamond-bracelets-1?view-all=1"><span>Diamond<br />Bracelets</span></a></div>
+			<div class="items item-1-3-2"><a href="/mens-black-diamond-bracelets"><span>Black<br />Diamond Bracelets</span></a></div>
+			<div class="items item-1-3-3"><a href="/mens-colored-diamond-bracelets"><span>Colored<br />Diamond Bracelets</span></a></div>
+			<div class="items item-1-3-4"><a href="/onyx-ball-bead-bracelet"><span>Ball Bead<br />Bracelets</span></a></div>
+			<div class="items item-1-3-5"><a href="/gold-diamond-bangle-bracelets"><span>Diamond Bangle<br />Bracelets</span></a></div>
+			<div class="items item-1-3-6"><a href="/mens-diamond-bracelets-1?view-all=1&price=0-5000"><span>Diamond Bracelets<br />Under $5000</span></a></div>
+			<div class="items item-1-3-7 last"><a href="/mens-diamond-bracelets-1?view-all=1"><span><?php echo $this->__('View all Mens Diamond Bracelets'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Mens Diamond Bracelets'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==254 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-254"><?php echo $this->__('Mens Diamond Pendants'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-4-1"><a href="/mens-black-diamond-pendants"><span>Black<br />Diamond Pendants</span></a></div>
+			<div class="items item-1-4-2"><a href="/mens-diamond-crosses"><span>Diamond<br />Crosses</span></a></div>
+			<div class="items item-1-4-3"><a href="/diamond-dog-tag-pendants"><span>Diamond<br />Dog Tags</span></a></div>
+			<div class="items item-1-4-4"><a href="/diamond-jesus-pendants"><span>Diamond<br />Jesus Pendants</span></a></div>
+			<div class="items item-1-4-5"><a href="/diamond-initial-pendants"><span>Diamond<br />Initial Pendants</span></a></div>
+			<div class="items item-1-4-6"><a href="/diamond-skull-pendants"><span>Diamond<br />Skull Pendants</span></a></div>
+			<div class="items item-1-4-7"><a href="/mens-custom-diamond-jewelry"><span>Custom<br />Diamond Pendants</span></a></div>
+			<div class="items item-1-4-8 last"><a href="/mens-diamond-pendants-1?view-all=1"><span><?php echo $this->__('View all Mens Diamond Pendants'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Mens Diamond Pendants'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==257 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-257"><?php echo $this->__('Mens Diamond Chains'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-5-1"><a href="/diamond-tennis-chains"><span>Diamond<br />Tennis Chains</span></a></div>
+			<div class="items item-1-5-2"><a href="/colored-diamond-chains"><span>Colored<br />Diamond Chains</span></a></div>
+			<div class="items item-1-5-3"><a href="/black-diamond-chains"><span>Black<br />Diamond Chains</span></a></div>
+			<div class="items item-1-5-4"><a href="/diamond-rosary-chains"><span>Diamond<br />Rosaries</span></a></div>
+			<div class="items item-1-5-5"><a href="/mens-diamond-onyx-chains"><span>Diamond Ball<br />Bead Chains</span></a></div>
+			<div class="items item-1-5-6"><a href="/mens-diamond-chains-1?view-all=1&price=0-5000"><span>Diamond Chains<br />Under $5000</span></a></div>
+			<div class="items item-1-5-7 last"><a href="/mens-diamond-chains-1?view-all=1"><span><?php echo $this->__('View all Mens Diamond Chains'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Mens Diamond Chains'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==134 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-134"><?php echo $this->__('Hip Hop Diamond Jewelry'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-1-6-1"><a href="/diamond-hip-hop-rings"><span>Hip Hop<br />Diamond Rings</span></a></div>
+			<div class="items item-1-6-2"><a href="/diamond-hip-hop-earrings"><span>Hip Hop<br />Diamond Earrings</span></a></div>
+			<div class="items item-1-6-3"><a href="/diamond-hip-hop-bracelets"><span>Hip Hop<br />Diamond Bracelets</span></a></div>
+			<div class="items item-1-6-4"><a href="/diamond-hip-hop-pendants"><span>Hip Hop<br />Diamond Pendants</span></a></div>
+			<div class="items item-1-6-5"><a href="/mens-custom-diamond-jewelry"><span>Custom<br />Diamond Jewelry</span></a></div>
+			<div class="items item-1-6-6 last"><a href="/bling-hip-hop-diamond-jewelry?view-all=1"><span><?php echo $this->__('View all Hip Hop Diamond Jewelry'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Hip Hop Diamond Jewelry'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==123 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-123"><?php echo $this->__('Men\'s Solid Gold Jewelry'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    		<div class="items item-1-7-7"><a href="/solid-gold-cuban-chains"><span>Solid Gold Miami<br />Cuban Chain </span></a></div>
+			<div class="items item-1-7-8"><a href="/solid-gold-franco-chains"><span>Solid Gold<br />Franco Chains</span></a></div>
+			
+			<div class="items item-1-7-1"><a href="/mens-gold-chains"><span>Solid Gold<br />Chains</span></a></div>
+			<div class="items item-1-7-2"><a href="/gold-bracelets"><span>Solid Gold<br />Bracelets</span></a></div>
+			<div class="items item-1-7-3"><a href="/mens-gold-pendants"><span>Solid Gold<br />Pendants</span></a></div>
+			<div class="items item-1-7-4"><a href="/rubber-and-gold-bracelet"><span>Rubber &amp; Gold<br />Bracelets</span></a></div>
+			<div class="items item-1-7-5"><a href="/mens-custom-diamond-jewelry"><span>Custom<br />Diamond Jewelry</span></a></div>
+			<div class="items item-1-7-6 last"><a href="/mens-solid-gold-jewelry?view-all=1"><span><?php echo $this->__('View all Men\'s Solid Gold Jewelry'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Men\'s Solid Gold Jewelry'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==283 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-283"><?php echo $this->__('Womens Diamond Rings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-2-1-1"><a href="/pre-set-diamond-engagement-rings"><span>Diamond<br />Engagement Rings</span></a></div>
+			<div class="items item-2-1-2"><a href="/womens-diamond-wedding-bands"><span>Diamond<br />Wedding Bands</span></a></div>
+			<div class="items item-2-1-3"><a href="/designer-rings"><span>Cocktail<br />Rings</span></a></div>
+			<div class="items item-2-1-4"><a href="/womens-colored-diamond-rings"><span>Colored<br />Diamond Rings</span></a></div>
+			<div class="items item-2-1-5"><a href="/three-stone-diamond-rings"><span>3 Stone<br />Diamond Rings</span></a></div>
+			<div class="items item-2-1-6"><a href="/diamond-eternity-bands"><span>Eternity<br />Rings</span></a></div>
+			<div class="items item-2-1-7"><a href="/gold-wedding-bands"><span>Solid Gold<br />Wedding Bands</span></a></div>
+			<div class="items item-2-1-8"><a href="/five-stone-diamond-rings"><span>5 Stone<br />Diamond Rings</span></a></div>
+			<div class="items item-2-1-9"><a href="/womens-diamond-rings-1?view-all=1&price=0-500"><span>Diamond Rings<br />Under $500</span></a></div>
+			<div class="items item-2-1-10 last"><a href="/womens-diamond-rings-1?view-all=1"><span><?php echo $this->__('View all Womens Diamond Rings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Womens Diamond Rings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==291 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-291"><?php echo $this->__('Womens Diamond Earrings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php /* ?><div class="items item-2-2-1"><a href="/womens-fashion-diamond-earrings"><span>Diamond<br />Heart Earrings</span></a></div><?php */?>
+			<div class="items item-2-2-2"><a href="/womens-colored-diamond-earrings"><span>Colored<br />Diamond Earrings</span></a></div>
+			<div class="items item-2-2-3"><a href="/womens-diamond-stud-earrings"><span>Diamond<br />Stud Earrings</span></a></div>
+			<div class="items item-2-2-4"><a href="/womens-diamond-hoop-earrings"><span>Diamond<br />Hoop Earrings</span></a></div>
+			<div class="items item-2-2-5"><a href="/gemstone-earrings"><span>Gemstone<br />Earrings</span></a></div>
+			<div class="items item-2-2-6"><a href="/custom-jewelry"><span>Build Your<br />Own Earring</span></a></div>
+			<?php /* ?><div class="items item-2-2-7"><a href="/womens-diamond-earrings-1?view-all=1"><span>Diamond<br />Cluster Earrings</span></a></div><?php */?>
+			<div class="items item-2-2-8"><a href="/designer-earrings"><span>Cocktail<br />Earrings</span></a></div>
+			<div class="items item-2-2-9"><a href="/womens-diamond-earrings-1?view-all=1&price=0-500"><span>Diamond Earrings<br />Under $500</span></a></div>
+			<div class="items item-2-2-10 last"><a href="/womens-diamond-earrings-1?view-all=1"><span><?php echo $this->__('View all Womens Diamond Earrings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Womens Diamond Earrings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==309 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-309"><?php echo $this->__('Womens Diamond Bracelets'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-2-3-1"><a href="/womens-diamond-bracelets-1?view-all=1"><span>Diamond<br />Bracelets</span></a></div>
+			<div class="items item-2-3-2"><a href="/colored-diamond-bracelets-1"><span>Colored<br />Diamond Bracelets</span></a></div>
+			<div class="items item-2-3-3"><a href="/gold-diamond-bangle-bracelets"><span>Diamond<br />Bangles</span></a></div>
+			<div class="items item-2-3-4"><a href="/diamond-tennis-bracelets"><span>Diamond<br />Tennis Bracelets</span></a></div>
+			<div class="items item-2-3-5"><a href="/gemstone-bracelets"><span>Gemstone<br />Bracelets</span></a></div>
+			<div class="items item-2-3-6"><a href="/womens-gold-bracelets"><span>Solid Gold<br />Bracelets</span></a></div>
+			<div class="items item-2-3-7"><a href="/womens-onyx-ball-bead-bracelets"><span>Ball Bead<br />Bracelets</span></a></div>
+			<div class="items item-2-3-8"><a href="/womens-rubber-and-gold-bracelets"><span>Rubber &amp; Gold<br />Bracelets</span></a></div>
+			<div class="items item-2-3-9"><a href="/womens-diamond-bracelets-1?view-all=1&price=0-500"><span>Diamond Bracelets<br />Under $500</span></a></div>
+			<div class="items item-2-3-10 last"><a href="/womens-diamond-bracelets-1?view-all=1"><span><?php echo $this->__('View all Womens Diamond Bracelets'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Womens Diamond Bracelets'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==287 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-287"><?php echo $this->__('Womens Diamond Pendants'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-2-4-1"><a href="/womens-diamond-crosses"><span>Diamond<br />Crosses</span></a></div>
+			<div class="items item-2-4-2"><a href="/womens-diamond-heart-pendants"><span>Diamond<br />Heart Pendants</span></a></div>
+			<div class="items item-2-4-3"><a href="/womens-journey-pendants"><span>Diamond<br />Journey Pendants</span></a></div>
+			<div class="items item-2-4-4"><a href="/gold-diamond-circle-pendants"><span>Diamond<br />Circle Pendants</span></a></div>
+			<div class="items item-2-4-5"><a href="/gemstone-pendants"><span>Gemstone<br />Diamond Pendants</span></a></div>
+			<div class="items item-2-4-6"><a href="/womens-diamond-solitaire-pendants"><span>Solitaire<br />Diamond Pendants</span></a></div>
+			<div class="items item-2-4-7"><a href="/womens-diamond-pendants-1?view-all=1&price=0-500"><span>Diamond Pendants<br />Under $500</span></a></div>
+			<div class="items item-2-4-8 last"><a href="/womens-diamond-pendants-1?view-all=1"><span><?php echo $this->__('View all Womens Diamond Pendants'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Womens Diamond Pendants'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==271 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-271"><?php echo $this->__('Womens Gemstone Jewelry'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-2-5-1"><a href="/women-s-gemstone-jewelry"><span>Gemstone<br />Rings</span></a></div>
+			<div class="items item-2-5-2"><a href="/gemstone-bracelets"><span>Gemstone<br />Bracelets</span></a></div>
+			<div class="items item-2-5-3"><a href="/gemstone-pendants"><span>Gemstone<br />Pendants</span></a></div>
+			<div class="items item-2-5-4"><a href="/gemstone-earrings"><span>Gemstone<br />Earrings</span></a></div>
+			<div class="items item-2-5-5 last"><a href="/gemstone-jewelry?view-all=1"><span><?php echo $this->__('View all Womens Gemstone Jewelry'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Womens Gemstone Jewelry'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==328 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-328"><?php echo $this->__('Diamond Wedding Bands'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-3-1-1"><a href="/diamond-eternity-bands"><span>Diamond<br />Eternity Rings</span></a></div>
+			<div class="items item-3-1-2"><a href="/mens-diamond-wedding-bands"><span>Mens<br />Wedding Bands</span></a></div>
+			<div class="items item-3-1-3"><a href="/womens-diamond-wedding-bands"><span>Womens<br />Wedding Bands</span></a></div>
+			<div class="items item-3-1-4"><a href="/diamond-wedding-band-sets"><span>Bridal<br />Ring Sets</span></a></div>
+			<div class="items item-3-1-5"><a href="/gold-wedding-bands"><span>Solid Gold<br />Wedding Bands</span></a></div>
+			<div class="items item-3-1-6"><a href="/diamond-wedding-rings?view-all=1&price=0-500"><span>Wedding Bands<br />Under $500</span></a></div>
+			<div class="items item-3-1-7 last"><a href="/diamond-wedding-rings?view-all=1"><span><?php echo $this->__('View all Diamond Wedding Bands'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Diamond Wedding Bands'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==333 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-333"><?php echo $this->__('Diamond Anniversary Rings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-3-2-1"><a href="/three-stone-diamond-rings"><span>Three Stone<br />Diamond Rings</span></a></div>
+			<div class="items item-3-2-2"><a href="/five-stone-diamond-rings"><span>Five Stone<br />Diamond Rings</span></a></div>
+			<div class="items item-3-2-3"><a href="/diamond-eternity-bands"><span>Diamond<br />Eternity Rings</span></a></div>
+			<div class="items item-3-2-4"><a href="/five-stone-diamond-rings?view-all=1&price=0-500"><span>Rings<br />Under $500</span></a></div>
+			<div class="items item-3-2-5 last"><a href="/diamond-anniversary-rings?view-all=1"><span><?php echo $this->__('View all Diamond Anniversary Rings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Diamond Anniversary Rings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php elseif( $this->getCurrentCategory()->getId()==64 ): ?>
+    	<?php if( !isset($_GET['view-all']) ): ?>
+    		<h1 class="cat-64"><?php echo $this->__('Diamond Engagement Rings'); ?></h1>
+    		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<div class="items item-3-3-1"><a href="/diamond-engagement-rings?view-all=1"><span>Diamond<br />Engagement Rings</span></a></div>
+			<div class="items item-3-3-2"><a href="/solitaire-diamond-engagement-rings"><span>Solitaire<br />Engagement Rings</span></a></div>
+			<div class="items item-3-3-3"><a href="/princess-cut-diamond-engagement-rings"><span>Princess Cut<br />Engagement Rings</span></a></div>
+			<div class="items item-3-3-4"><a href="/diamond-bridal-ring-sets"><span>Bridal<br />Ring Sets</span></a></div>
+			<div class="items item-3-3-5"><a href="/diamond-engagement-rings?view-all=1&price=0-500"><span>Engagement Rings<br />Under $500</span></a></div>
+			<div class="items item-3-3-6 last"><a href="/diamond-engagement-rings?view-all=1"><span><?php echo $this->__('View all Diamond Engagement Rings'); ?></span></a></div>
+			<div class="clear"></div>
+		<?php else: ?>
+			<h2 class="category-list-header"><?php echo $this->__('Diamond Engagement Rings'); ?></h2>
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+			<?php echo $this->getProductListHtml() ?>
+		<?php endif; ?>
+    <?php else: ?>
+    	<h2 class="category-list-header"><?php echo $this->getCurrentCategory()->getName(); ?></h2>
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+    	<?php echo $this->getProductListHtml() ?>
+    <?php endif; ?>
+</div>

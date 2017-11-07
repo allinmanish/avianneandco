@@ -1,0 +1,32 @@
+<?php
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php $currentCategory = Mage::registry("current_category"); ?>
+<?php $cat_replace_arr = array(74,76,149,256,260,285,312); ?>
+<?php if ($currentCategory->getDisplayMode()!=Mage_Catalog_Model_Category::DM_PAGE || isset($_GET['view-all'])): ?>
+	<?php if($this->canShowBlock()): ?>
+				<?php $_filters = $this->getActiveFilters(); ?>
+			    <?php foreach ($_filters as $_filter): ?>
+			    	<?php $activeFilters[trim($_filter->getLabel())] = $this->__($_filter->getName()); ?>
+			    <?php endforeach; ?>
+		        <?php if($this->canShowOptions()): ?>
+					<?php $_filters = $this->getFilters() ?>
+					<?php foreach ($_filters as $_filter): ?>
+						<?php if($_filter->getItemsCount()): ?>
+							<?php if($_filter->getName()=="Price"): ?>
+								<td class="filter-price">
+									<dl class="price-box">
+										<dd class="filter-dropdown"><?php echo $_filter->getHtml() ?></dd>
+										<dt class="filter-label"><?php echo $this->__($_filter->getName()) ?></dt>
+									</dl>
+								</td>       
+							<?php endif; ?>  
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+	<?php endif; ?>
+<?php endif; ?>

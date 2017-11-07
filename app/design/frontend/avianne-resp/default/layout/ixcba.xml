@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageix LLC
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to Mageix LLC's  End User License Agreement
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mageix.com/index.php/license-guide/
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to webmaster@mageix.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+
+ *
+ * @category	Mageix
+ * @package 	Mageix_Ixcba
+ * @copyright   Copyright (c) 2011 Mageix LLC (http://mageix.com)
+ * @license	http://mageix.com/index.php/license-guide/  End User License Agreement
+ */
+
+/*
+ * Magento Mageix IXCBA Module
+ *
+ * @category   Checkout & Payments
+ * @package	Mageix_Ixcba
+ * @copyright  Copyright (c) 2011 Mageix LLC (http://mageix.com)
+ * @designer & author  Brian Graham
+  *@licence 	http://mageix.com/index.php/license-guide/ 
+ */
+-->
+<layout version="0.1.0">
+
+	<checkout_cart_index>
+			<reference name="checkout.cart.top_methods">
+			   <block type="ixcba/inline_link" name="ixcba.inline.top_links" template="ixcba/inline/toplink.phtml" before="-"/>
+			</reference>
+			<reference name="head">
+				<action method="addCss"><stylesheet>ixcba/jquery.lightbox.css</stylesheet></action>
+				<action method="addItem"><type>skin_css</type><name>ixcba/jquery.lightbox.ie6.css</name><params/><if>lt IE 7</if></action>
+				<action method="addItem"><type>skin_js</type><name>ixcba/js/jquery-1.4.3.min.js</name><params/></action>
+				<!-- <action method="addItem"><type>skin_js</type><name>ixcba/js/jquery.lightbox.js</name><params/></action> -->
+				<action method="addItem"><type>skin_js</type><name>ixcba/js/ixcbacheckout.js</name><params/></action>
+				<action method="addItem"><type>skin_js</type><name>ixcba/js/amazon_widgets.js</name></action>
+				<action method="addItem"><type>skin_js</type><name>ixcba/js/inlinecheckout.js</name></action>
+				<block type="ixcba/inline_head" name="ixcba.inline.head" as="head" template="ixcba/inline/head.phtml"/>
+			</reference>
+	</checkout_cart_index>
+	
+	<ixcba_empty_index translate="label">
+		<reference name="head">
+			<action method="addCss"><stylesheet>ixcba/lightface.css</stylesheet></action>
+			<action method="addCss"><stylesheet>ixcba/style.css</stylesheet></action>
+		</reference>
+		<remove name="left"/>
+		<remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/popup.phtml</template></action>
+        </reference>
+		<reference name="content">
+            <block type="ixcba/inline" name="ixcba.empty" template="ixcba/empty.phtml" />
+		</reference>
+	</ixcba_empty_index>
+
+	<ixcba_success_index translate="label">
+		<reference name="head">
+			<action method="addCss"><stylesheet>ixcba/style.css</stylesheet></action>
+			<action method="addCss"><stylesheet>ixcba/lightface.css</stylesheet></action>
+			<action method="addCss"><stylesheet>ixcba/jquery.lightbox.css</stylesheet></action>
+			<action method="addItem"><type>skin_css</type><name>ixcba/jquery.lightbox.ie6.css</name><params/><if>lt IE 7</if></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/jquery-1.4.3.min.js</name><params/></action>
+			<!-- <action method="addItem"><type>skin_js</type><name>ixcba/js/jquery.lightbox.js</name><params/></action> -->
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/ixcbacheckout.js</name><params/></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/amazon_widgets.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/inlinecheckout.js</name></action>
+			<block type="ixcba/inline_head" name="ixcba.inline.head" as="head" template="ixcba/inline/head.phtml"/>
+		</reference>
+		<remove name="left"/>
+		<remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+		<reference name="content">
+            <block type="ixcba/inline" name="ixcba.success" template="ixcba/success.phtml" />
+		</reference>
+	</ixcba_success_index>
+
+	<ixcba_inline_index translate="label">
+        <label>Inline Checkout</label>
+        <!-- Mageix_IXCBA -->
+        <remove name="left"/>
+		<reference name="right">
+            <action method="unsetChildren"></action>
+            <block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon_paypal.phtml"/>
+        </reference>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+		
+		<reference name="head">
+			<action method="addCss"><stylesheet>ixcba/style.css</stylesheet></action>
+			<action method="addCss"><stylesheet>ixcba/lightface.css</stylesheet></action>
+			<action method="addCss"><stylesheet>ixcba/jquery.lightbox.css</stylesheet></action>
+			<action method="addItem"><type>skin_css</type><name>ixcba/jquery.lightbox.ie6.css</name><params/><if>lt IE 7</if></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/jquery-1.4.3.min.js</name><params/></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/jquery.lightbox.js</name><params/></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/ixcbacheckout.js</name><params/></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/amazon_widgets.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/inlinecheckout.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/adjust.js</name></action>
+			<block type="ixcba/inline_head" name="ixcba.inline.head" as="head" template="ixcba/inline/head.phtml"/>
+		</reference>
+		
+        <reference name="content">
+            <block type="ixcba/inline" name="ixcba.inline" template="ixcba/inline.phtml">
+				<block type="ixcba/inline_login" name="ixcba.inline.login" as="login" template="ixcba/inline/login.phtml">
+                    <block type="page/html_wrapper" name="ixcba.inline.login.before" as="login_before" translate="label">
+                        <label>Login/Registration Before</label>
+                        <action method="setMayBeInvisible"><value>1</value></action>
+                    </block>
+                </block>
+				<block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="ixcba/inline/agreements.phtml"/>
+            </block>
+        </reference>
+    </ixcba_inline_index>
+
+	<ixcba_inline_paymentmethod>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="ixcba/inline_payment_methods" name="root" output="toHtml" template="ixcba/inline/payment/methods.phtml">
+            <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+        </block>
+    </ixcba_inline_paymentmethod>
+
+	<ixcba_inline_shippingmethod>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="ixcba/inline_shipping_method_available" name="root" output="toHtml" template="ixcba/inline/shipping_method/available.phtml"/>
+    </ixcba_inline_shippingmethod>
+	
+	<ixcba_inline_totals>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="ixcba/inline_totals" name="root" output="toHtml" template="ixcba/inline/totals.phtml"/>
+    </ixcba_inline_totals>
+	
+	<ixcba_inline_review translate="label">
+        <label>Ixcba Checkout Overview</label>
+        <remove name="right"/>
+        <remove name="left"/>
+        <block type="ixcba/inline_review_info" name="root" output="toHtml" template="ixcba/inline/review/info.phtml">
+            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>ixcba/inline/review/item.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>ixcba/inline/review/item.phtml</template></action>
+            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>ixcba/inline/review/item.phtml</template></action>
+            <block type="checkout/cart_totals" name="ixcba.inline.review.info.totals" as="totals" template="ixcba/inline/review/totals.phtml"/>
+            <block type="core/text_list" name="ixcba.inline.review.info.items.before" as="items_before" translate="label">
+                <label>Items Before</label>
+            </block>
+            <block type="core/text_list" name="ixcba.inline.review.info.items.after" as="items_after" translate="label">
+                <label>Items After</label>
+            </block>
+            <block type="ixcba/agreements" name="ixcba.inline.agreements" as="agreements" template="ixcba/inline/agreements.phtml"/>
+            <block type="core/template" name="ixcba.inline.review.button" as="button" template="ixcba/inline/review/button.phtml"/>
+        </block>
+    </ixcba_inline_review>
+
+	<checkout_onepage_index>
+    	<reference name='head'>
+    		<action method="addCss"><stylesheet>ixcba/jquery.lightbox.css</stylesheet></action>
+			<action method="addItem"><type>skin_css</type><name>ixcba/jquery.lightbox.ie6.css</name><params/><if>lt IE 7</if></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/jquery-1.4.3.min.js</name><params/></action>
+			<!-- <action method="addItem"><type>skin_js</type><name>ixcba/js/jquery.lightbox.js</name><params/></action> -->
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/ixcbacheckout.js</name><params/></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/amazon_widgets.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>ixcba/js/inlinecheckout.js</name></action>			
+			<block type="ixcba/inline_head" name="ixcba.inline.head" as="head" template="ixcba/inline/head.phtml"/>
+    	</reference>
+		<reference name='checkout.onepage.billing'>
+    		<action method='setTemplate'><template>ixcba/checkout/onepage/billing.phtml</template></action>
+    	</reference>
+		<!-- <reference name='checkout.onepage.shipping'>
+    		<action method='setTemplate'><template>ixcba/checkout/onepage/shipping.phtml</template></action>
+    	</reference> -->
+		<reference name='checkout.onepage.payment'>
+    		<action method='setTemplate'><template>ixcba/checkout/onepage/payment.phtml</template></action>
+    	</reference>
+    </checkout_onepage_index>
+
+</layout>

@@ -1,0 +1,37 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php $_product = $this->getProduct() ?>
+<?php if($_product->isSaleable() /*&& !in_array(99, $_product->getCategoryIds())*/): ?>
+<div class="product-action">
+<div class="product-addtocart">
+    <dl class="dl-addtocart">
+        <dt class="middle"><label for="qty"><?php echo $this->__('Quantity') ?>:</label></dt>
+        <dd>
+        <?php if(!$_product->isGrouped()): ?>
+            <input name="qty" type="text" class="input-text qty" id="qty" maxlength="12" value="<?php echo $this->getMinimalQty($_product) ?>" />
+        <?php endif; ?>
+        </dd>
+        <dt class="last">&nbsp;</dt>
+        <dd>
+            <a href="#" class="button-cart" onclick="productAddToCartForm.submit(); return false;" ><?php echo $this->__('Add to Shopping Cart') ?></a>
+        </dd>
+    </dl>
+    <div class="clear"></div>
+</div>
+</div>
+<?php endif; ?>

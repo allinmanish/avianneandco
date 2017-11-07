@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to license that is bundled with
+ * this package in the file LICENSE.txt.
+ *
+ * @category   Phoenix
+ * @package    Ciplex_FlashTool
+ * @copyright  Copyright (c) 2009 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+-->
+<config>
+    <modules>
+        <Mango_AjaxList>
+            <version>0.1.0</version>
+        </Mango_AjaxList>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <ajaxlist>
+                    <file>ajaxlist.xml</file>
+                </ajaxlist>
+            </updates>
+        </layout>
+    </frontend>
+
+    <global>
+        <!--blocks>
+            <catalog>
+                <rewrite>
+                    <product_list>Mango_AjaxList_Block_Catalog_Product_List</product_list>
+                </rewrite>
+            </catalog>
+        </blocks-->
+        <blocks>
+            <catalog>
+                <rewrite>
+                    <layer_filter_price>Mango_AjaxList_Block_Layer_Filter_Price</layer_filter_price>
+                </rewrite>
+            </catalog>
+        </blocks>
+
+        <models>
+            <catalog>
+                <rewrite>
+                    <layer_filter_price>Mango_AjaxList_Model_Layer_Filter_Price</layer_filter_price>
+                </rewrite>
+            </catalog>
+            <catalog_resource_eav_mysql4>
+                <rewrite>
+                    <layer_filter_price>Mango_AjaxList_Model_Resource_Eav_Mysql4_Layer_Filter_Price</layer_filter_price>
+
+                </rewrite>
+            </catalog_resource_eav_mysql4>
+
+        </models>
+
+        <!--routers>
+            <catalog>
+                <rewrite>
+                    <product_compare>
+                        <to>Mango_AjaxList/product_compare</to>
+                    </product_compare>
+                </rewrite>
+            </catalog>
+        </routers-->
+
+        <helpers>
+            <ajaxlist>
+                <class>Mango_AjaxList_Helper</class>
+            </ajaxlist>
+        </helpers>
+
+    </global>
+    <frontend>
+        <!--routers>
+            <ajaxlist>
+                <use>standard</use>
+                <args>
+                    <module>Mango_AjaxList</module>
+                    <frontName>ajaxlist</frontName>
+                </args>
+            </ajaxlist>
+        </routers-->
+
+    </frontend>
+</config>	

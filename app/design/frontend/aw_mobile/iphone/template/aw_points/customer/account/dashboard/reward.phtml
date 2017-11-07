@@ -1,0 +1,28 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div>
+    <div class="dashboard-block">
+        <div class="page-head">
+            <h3><?php echo $this->__('Points & Rewards Information') ?></h3>
+            <a class="edit" href="<?php echo $this->getUrl('points/reward/index') ?>"><img src="<?php echo $this->getSkinUrl('images/edit.gif') ?>" alt="<?php echo $this->__('Edit') ?>" /></a>
+        </div>
+        <div class="content">
+            <?php echo $this->getChildHtml('summary');?>
+        </div>
+    </div>
+</div>

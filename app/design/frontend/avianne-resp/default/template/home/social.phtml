@@ -1,0 +1,30 @@
+<?php if (Mage::registry('current_product')) : ?>
+	<meta property="og:image" content="<?php echo Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'small_image')->resize(400,400);?>" />
+	<meta property="og:description" content="<?php echo strip_tags(Mage::registry('current_product')->getShortDescription());?>" />
+	<meta itemprop="image" content="<?php echo Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'small_image')->resize(400,400);?>" />
+	<link rel="image_src" href="<?php echo Mage::helper('catalog/image')->init(Mage::registry('current_product'), 'small_image')->resize(400,400);?>" />
+<?php elseif((strpos($this->getRequest()->getModuleName(),"catalog")!==false) && ($this->getRequest()->getControllerName()=="category")): ?>	
+	<?php $category = Mage::registry('current_category');  ?>	
+	<?php if(($category->getLevel()==2)||($category->getId()==211)): ?>
+		<?php $img = $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>
+	<?php elseif($category->getLevel()>3):?>
+		<?php $img = $category->getParentCategory()->getImageUrl(); ?>
+	<?php else: ?>
+		<?php $img = $category->getImageUrl(); ?>
+	<?php endif; ?>
+	<meta property="og:image" content="<?php echo $img; ?>" />
+	<meta property="og:description" content="<?php echo strip_tags($category->getDescription()); ?>" />
+	<meta itemprop="image" content="<?php echo $img; ?>" />
+	<link rel="image_src" href="<?php echo $img; ?>" /> 
+<?php elseif($this->getRequest()->getModuleName()=='wordpress'): ?>
+	<meta property="og:image" content="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>" />
+	<meta itemprop="image" content="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>" />
+	<link rel="image_src" href="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>" /> 
+<?php else: ?>
+	<meta property="og:image" content="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg' ?>" />
+	<meta property="og:url" content="<?php echo Mage::getBaseUrl('web') ?>" />
+	<meta property="og:title" content="<?php echo $this->__('Diamond Jewelry by Avianne &amp; Co'); ?>" />
+	<meta property="og:description" content="<?php echo $this->__('Exclusive Diamond Rings, Pendants, Diamond Watches, Bracelets, Earrings, Gold Chains, &amp; Custom Diamond Jewelry by Legendary Avianne &amp; Co.'); ?>" />
+	<meta itemprop="image" content="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg' ?>" />
+	<link rel="image_src" href="<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg' ?>" /> 
+<?php endif;?>

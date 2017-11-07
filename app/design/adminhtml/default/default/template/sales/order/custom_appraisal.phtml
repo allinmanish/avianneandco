@@ -1,0 +1,136 @@
+<div class="content-header">
+    <table cellspacing="0">
+        <tbody><tr>
+            <td style="width:50%;"><h3 class="icon-head head-sales-order">Create Appraisal</h3></td>
+        </tr>
+    </tbody></table>
+</div>
+<?php
+$options_exclude = array('description', 'price', 'meta_title', 'meta_keyword', 'meta_description', 'image', 'default_category_id', 'small_image', 'gallery', 'status', 
+'tax_class_id', 'url_key', 'minimal_price', 'short_description', 'visibility', 'custom_layout_update', 'gift_message_available', 'special_price', 'special_from_date', 
+'special_to_date', 'custom_design', 'custom_design_from', 'custom_design_to', 'media_gallery', 'news_from_date', 'news_to_date', 'options_container', 
+'price_view', 'shipment_type', 'is_recurring', 'recurring_profile', 'mobile_description', 'msrp_enabled', 'msrp_display_actual_price_type', 'msrp', 'thumbnail');
+
+$options_custom = array();
+
+$db = Mage::getSingleton('core/resource')->getConnection('core_read');
+$result = $db->query("SELECT ea.attribute_code, ea.frontend_label 
+						FROM eav_entity_attribute eea 
+						LEFT JOIN eav_attribute ea ON eea.attribute_id=ea.attribute_id
+						WHERE eea.entity_type_id=10 AND ea.frontend_label > ''
+							AND ea.attribute_code NOT IN (\"" . implode('", "', $options_exclude) . "\")
+						GROUP BY eea.attribute_id
+						ORDER BY ea.frontend_label");
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+	$options_custom[$row['attribute_code']] = $row['frontend_label'];
+}
+?>
+
+<script src="/js/jquery/jquery-1.7.1.min.js"></script>
+<script>
+jQuery.noConflict();
+
+jQuery(document).ready(function() {
+	jQuery('.custappr_options.' + jQuery('input[name=appr_type]:checked').val()).show();
+	
+	jQuery('input[name=appr_type]').bind('change', function() {
+		jQuery('.custappr_options').hide();
+		jQuery('.custappr_options.' + jQuery(this).val()).show();
+	});
+
+	jQuery('input[type=text][name^=options\\[custom\\]]').bind('blur', function() {
+	    l = jQuery('input[type=text][name^=options\\[custom\\]]').not('[value=""]').length;    
+	    if (l >= 13) 
+	    {
+		    alert('You have reached the maximum number of options available (13)');
+	    }
+	});  
+});
+</script>
+
+<style>
+table.custappr .form_table { width: 1%; white-space: nowrap; line-height: 2em; }
+</style>
+
+<form action="<?php echo Mage::getUrl('*/*/custapprshow'); ?>" method="POST" id="custappr_form" name="custappr_form" enctype="multipart/form-data">
+<table width="100%" border="0" class="custappr">
+	<tr><td width="1%">
+		<br><br>
+		<table border="0" class="custappr_req form_table">
+			<tr><td><label for="options-first_name">First Name:</label></td>
+				<td><input type="text" name="first_name" id="options-first_name"></td></tr>
+			<tr><td><label for="options-last_name">Last Name:</label></td>
+				<td><input type="text" name="last_name" id="options-last_name"></td></tr>
+			<tr><td><label for="options-address">Address:</label>&nbsp;</td>
+				<td><textarea name="address" id="options-address" style="width: 12em; height: 5em;"></textarea></td></tr>
+
+			<tr><td colspan="2">&nbsp;</td></tr>
+			
+			<tr><td><label for="options-certificate_number">Certificate Number:</label>&nbsp;</td>
+				<td><input type="text" name="certificate_number" id="options-certificate_number"></td></tr>
+			<tr><td><label for="options-product_title">Product Title:</label></td>
+				<td><input type="text" name="product_title" id="options-product_title"></td></tr>
+			<tr><td><label for="options-appraised_value">Appraised Value:</label>&nbsp;</td>
+				<td><input type="text" name="appraised_value" id="options-appraised_value"></td></tr>
+								
+			<tr><td colspan="2">&nbsp;</td></tr>
+			
+			<tr><td colspan="2">
+					<label><input type="radio" name="appr_type" value="standard" checked> Standard Appraisal</label>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label><input type="radio" name="appr_type" value="custom"> Custom Appraisal</label>
+					<input type="hidden" id="appr_size" name="appr_size" value="">
+			</td></tr>
+
+		</table>
+		
+	</td><td style="padding-left: 4em;">
+		
+		<table border="0" class="custappr_options standard" style="display: none">
+			<tr>
+				<td>
+					<b>STANDARD APPRAISAL</b><br><br>
+					<table border="0" class="form_table options_standard">
+						<tr>
+							<td><label for="options-standard-item_sku">ITEM SKU:</label>&nbsp;</td>
+							<td><input type="text" name="options[standard][item_sku]" id="options-standard-item_sku" value=""></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<table border="0" class="custappr_options custom" style="display: none">
+			<tr>
+				<td>
+					<b>CUSTOM APPRAISAL</b><br><br>
+					<table border="0" class="form_table options_custom">
+					<?php
+						foreach ($options_custom as $k=>$v)
+						{
+							echo ' 
+						<tr>
+							<td><label for="options-custom-' . $v . '">' . $v . ':</label>&nbsp;</td>
+							<td><input type="text" name="options[custom][' . $v . ']" id="options-custom-' . $v . '" value=""></td>
+						</tr>
+							';
+						}
+					?>
+						<tr>
+							<td><label for="options-custom-product_image">Product Image:</label>&nbsp;</td>
+							<td><input type="file" name="product_image" id="options-custom-product_image"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		<br>
+		<button class="" onclick="$(appr_size).value = ''; $(custappr_form).submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Print Appraisal'); ?></span></span></span></button>
+		<button class="" onclick="$(appr_size).value = 'mini'; $(custappr_form).submit()" type="button" style="margin-left: 4em" ><span><span><span><?php echo Mage::helper('adminhtml')->__('Print Mini Appraisal'); ?></span></span></span></button>
+		<br><br><br><br><br>
+		<button class="" onclick="document.forms.custappr_form.reset()" type="button" style="margin-left: 19em"><span><span><span><?php echo Mage::helper('adminhtml')->__('Reset'); ?></span></span></span></button>
+		
+	</td></tr>
+</table>
+</form>

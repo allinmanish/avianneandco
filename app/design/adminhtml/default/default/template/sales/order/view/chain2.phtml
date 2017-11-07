@@ -1,0 +1,37 @@
+<body>
+	<div class="wrapper">
+		<div style="text-align: center; font-size: 19px;">Gold Chain Order Printout Second Page</div>
+		
+		<?php 
+		$orderId = $this->getRequest()->getParam('order_id');
+		
+		$order = Mage::getModel('sales/order')->load($orderId);
+		
+		$tnsId = '';
+		
+		$payment = $order->getPayment()->getAdditionalInformation();
+
+
+          
+
+		
+		foreach($payment['authorize_cards'] as $auth)
+		{
+			$tnsId = $auth['last_trans_id'];
+			$last4 =  'xxxx-'.$auth['cc_last4'];		
+		} 
+		
+		$payment_method = $order->getPayment()->getMethodInstance()->getTitle();
+		
+		
+		$amount = Mage::helper('core')->currency($order->getGrandTotal(), true, false);
+		
+
+		?>
+<br>
+		<h3>Credit Card: <?php echo $last4 ?> amount <?php echo $amount ?> authorize - successful. <?php echo $payment_method ?> Transaction ID <?php echo $tnsId ?></h3>
+		
+		
+	</div> 
+</body>
+

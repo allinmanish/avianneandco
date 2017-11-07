@@ -1,0 +1,235 @@
+<?php 
+$order = $this->getOrder();
+$customer = array(
+		'fn' => $order->getBillingAddress()->getFirstname(),
+		'ln' => $order->getBillingAddress()->getLastname(),
+		'mn' => $order->getBillingAddress()->getMiddlename()
+		);
+$address = Mage::getModel('sales/order_address')->load($order->getBillingAddress()->getId());
+
+$order_product = $order->getItemById($this->getRequest()->getParam('item_id'));
+$_product = Mage::getModel('catalog/product')->load($order_product->getProductId());
+$_helper = $this->helper('catalog/output');
+$attributes = $_product->getAttributes();
+?>
+<style>
+body { margin: 0px; }
+
+.wrapper { width: 940px; }
+
+.logo { width: 100%; margin: 38px auto 0px; text-align: center; line-height: 25px; font-size: 19px; }
+
+.table1 { 
+	width: 95%;
+	margin-right: 14px;
+	float: right;
+	clear: both;
+}
+.table1 td { vertical-align: top; }
+
+table.billto {
+	border-collapse: collapse;
+	width: 242px;
+	height: 140px;
+}
+
+.specs-table {
+	width: 370px;
+    border-collapse: collapse;
+}
+.specs-table tr {
+    border: 1px solid #c4c1bc;
+}
+.specs-table tr:nth-child(even) {
+	background: #eeeded;
+}
+.specs-table tr:nth-child(odd) {
+	background: #ffffff;
+}
+.specs-table tr th {
+    font-weight: bold !important;
+	font: 10px Verdana;
+	text-align: left;
+	padding-left: 6px;
+	line-height: 15px;
+	width: 160px;
+}
+.specs-table tr td {
+    padding: 2px 0px 1px 6px;
+    font: 10px Verdana;
+    color: #666;
+    border: 1px solid #c4c1bc;
+	line-height: 15px;
+}
+.specs-table tr td:n-thchild(odd) {
+	border-right: 0;
+}
+
+.table2 {
+	width: 97%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.table2 thead tr {
+	line-height: 1.7em;
+}
+
+.table3 {
+	width: 98%;
+	margin: 0 auto;
+}
+.table3 td { vertical-align: top; }
+.table3 .notes {
+	border: 1px solid black;
+	text-align: center;
+	vertical-align: top;
+	padding-top: 6px;
+	width: 270px;
+	height: 318px;
+	font: 16px Verdana;
+}
+.table3 .options {
+	margin: 0 auto;
+	width: 187px;
+	border: 1px solid black;
+	padding-top: 2px;
+	padding-left: 14px;
+	font: 16px Verdana;
+	line-height: 1.95em;
+}
+.table3 .checkbox {
+	border: 1px solid grey;
+	width: 26px;
+	height: 26px;
+	margin-top: 1px;
+}
+.table3 .total {
+	border: 2px solid black;
+	margin-top: 12px;
+	font: 24px Verdana;
+	width: 250px;
+	height: 56px;
+	line-height: 56px;
+	padding-left: 17px;
+}
+.table3 .total > b {
+	float: right;
+	margin-right: 23px;
+	font-size: 21px;
+	font-weight: normal;
+}
+</style>
+
+<body>
+
+<div class="wrapper">
+
+<div class="logo">
+	<img src="<?php echo $this->getSkinUrl('images/logo-330.png') ?>"><br>
+	28 West 47th st - New York, NY - 100036<br>
+	888-243-4344
+</div>
+<br>
+<table border="0" class="table1" cellspacing="0" cellpadding="0"><tr>
+		<td style="width: 242px;">
+			<table border="1" class="billto">
+				<tr style="height: 2em; line-height: 2em;"><td>&nbsp;&nbsp;&nbsp;&nbsp;Bill To</td></tr>
+				<tr><td style="padding: 2px 6px;"><?php
+						echo $order->getBillingAddress()->getFormated(true);
+//					echo implode(" ", $customer) . "<br>"
+//						. $address['street'] . "<br>"
+//						. $address['city'] . ", " . $address['region'] . " " . $address['zip'] . "<br>"
+//						. $address['country'];
+					?><br>&nbsp;
+				</td></tr>
+			</table>
+		</td>
+		<td style="text-align: center;">
+			<img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(220, 220)->setQuality(76); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>"
+					style="" />
+		</td>
+		<td style="width: 370px;">
+			<table cellspacing="0" class="specs-table"><tbody>
+			<?php 
+			foreach ($attributes as $attribute) {
+				if ($attribute->getIsVisibleOnFront() && !in_array($attribute->getAttributeCode())) {
+					$value = $attribute->getFrontend()->getValue($_product);
+			
+					if (!$_product->hasData($attribute->getAttributeCode())) {
+						$value = Mage::helper('catalog')->__('N/A');
+					} elseif ((string)$value == '') {
+						$value = Mage::helper('catalog')->__('No');
+					} elseif ($attribute->getFrontendInput() == 'price' && is_string($value)) {
+						$value = Mage::app()->getStore()->convertPrice($value, true);
+					}
+			
+					if (is_string($value) && strlen($value) && $value!='No') {
+				?>
+				<tr>
+					<th><?php echo $this->htmlEscape($this->__($attribute->getStoreLabel())) ?></th>
+					<td><?php echo $_helper->productAttribute($_product, $value, $attribute->getAttributeCode()) ?></td>
+				</tr>
+				<?php 
+					}
+				}
+			}
+			?>
+			</tbody></table>
+		</td>
+</tr></table>
+<br clear="all"><br>
+<table border="2" class="table2">
+	<thead>
+		<tr><th style="width:12%">Quantity</th><th>Item Code</th><th style="width:46%">Description</th><th style="width:14%">Price Each</th><th style="width:14%">Amount</th></tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: right;"><?php echo (int)$order_product->getQtyOrdered(); ?>&nbsp;</td>
+			<td><?php echo $_product->getSku(); ?></td>
+			<td>
+				<?php echo $_product->getName(); ?>
+				<?php $options = $order_product->getProductOptions(); ?>
+				<?php if(count($options["options"])>0):?>
+					<dl class="item-options">
+					<?php foreach ($options["options"] as $option): ?>
+						<dt><?php echo $option["label"];?></dt>
+						<dd><?php echo $option["print_value"];?></dd>
+					<?php endforeach;?>
+					</dl>
+				<?php endif;?>
+			</td>
+			<td style="text-align: right;"><?php echo $this->helper('checkout')->formatPrice($order_product->getPrice()) ?>&nbsp;</td>
+			<td style="text-align: right;"><?php echo $this->helper('checkout')->formatPrice($order_product->getRowTotal()) ?>&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+<br><br>
+<table border="0" class="table3"><tr>
+		<td class="notes">
+			Assigned To:
+			<br><br><br><br><br>
+			Notes:
+		</td>
+		<td style="width: 364px;">
+			<div class="options">
+				<table border="0">
+					<tr><td>Gold Color</td><td width="1%"><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Gold Stamp</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Gold Karat</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Ring Size</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Mechanics</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Stone Integrity</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Polish Quality</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Length/Width</td><td><div class="checkbox">&nbsp;</div></td></tr>
+					<tr><td>Weight</td><td><div class="checkbox">&nbsp;</div></td></tr>
+				</table>
+			</div>
+		</td>
+		<td>
+			<div class="total">Total <b><?php echo $this->helper('checkout')->formatPrice($order_product->getRowTotalInclTax()) ?></b></div>
+		</td>
+</tr></table>
+
+</div>
+
+</body>

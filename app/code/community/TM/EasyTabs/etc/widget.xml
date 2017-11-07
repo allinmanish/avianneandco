@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<widgets>
+    <easytabs type="easytabs/tabs">
+        <name>Easy Tabs </name>
+        <description type="desc">Easy Tabs</description>
+        <parameters>
+            <filter_tabs>
+                <label>Tabs</label>
+                <type>multiselect</type>
+                <source_model>easytabs/config_tabs</source_model>
+                <visible>1</visible>
+                <required>1</required>
+                <value>10</value>
+            </filter_tabs>
+        </parameters>
+    </easytabs>
+</widgets>

@@ -1,0 +1,38 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="page-head">
+    <h3><?php echo $this->__('My Tags') ?></h3>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php if($this->getTags()): ?>
+    <p><?php echo $this->__('Click on a tag to view your corresponding products.') ?></p>
+    <div class="box base-mini mini-product-tags">
+        <div class="content">
+            <ul>
+                <?php foreach ($this->getTags() as $_tag): ?>
+                    <li><a href="<?php echo $this->getUrl('tag/customer/view', array('tagId' => $_tag->getTagId())) ?>" style="font-size:<?php echo $_tag->getRatio()*70+75 ?>%;"><?php echo $this->htmlEscape($_tag->getName()) ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php else: ?>
+    <p><?php echo $this->__('You have not tagged any products yet.') ?></p>
+<?php endif; ?>
+<div class="button-set">
+    <a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>" class="left">&laquo; <?php echo $this->__('Back') ?></a>
+</div>

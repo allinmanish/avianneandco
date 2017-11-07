@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+		<extras>
+			<children>
+            	<wsm_salesreporting module="wsm_salesreporting" translate="title">
+                	<title>Best Seller Report</title>
+                	<action>adminhtml/bestsellers/index</action>
+            	</wsm_salesreporting>
+			</children>
+		</extras>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>                
+                    <wsm_salesreporting translate="title" module="wsm_salesreporting">
+                        <title>Best Seller Report</title>
+                        <sort_order>1</sort_order>
+                    </wsm_salesreporting>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

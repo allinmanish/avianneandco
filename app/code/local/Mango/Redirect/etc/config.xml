@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to license that is bundled with
+ * this package in the file LICENSE.txt.
+ *
+ * @category   Phoenix
+ * @package    Ciplex_FlashTool
+ * @copyright  Copyright (c) 2009 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+-->
+<config>
+    <modules>
+        <Mango_Redirect>
+            <version>0.1.0</version>
+        </Mango_Redirect>
+    </modules>
+    <global>
+        <routers>
+            <catalog>
+                <rewrite>
+                    <product_compare>
+                        <to>redirect/product_compare</to>
+                    </product_compare>
+                </rewrite>
+            </catalog>
+        </routers>
+    </global>
+     <frontend>
+        <routers>
+            <redirect>
+                <use>standard</use>
+                <args>
+                    <module>Mango_Redirect</module>
+                    <frontName>redirect</frontName>
+                </args>
+            </redirect>
+        </routers>
+        
+    </frontend>
+
+</config>	

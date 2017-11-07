@@ -1,0 +1,30 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+SUMMARY SHORT
+<?php if($this->getProduct()->getRatingSummary()->getReviewsCount()): ?>
+    <div class="ratings">
+        <div class="rating-box">
+            <div class="rating" style="width:<?php echo $this->getProduct()->getRatingSummary()->getRatingSummary() ?>%;"></div>
+        </div>
+        ( <?php echo sprintf('%d', $this->getProduct()->getRatingSummary()->getReviewsCount()) ?> )
+    </div>
+<?php endif; ?>
+
+<?php if( !$this->getProduct()->getRatingSummary()->getReviewsCount() && $this->getDisplayBlock() ): ?>
+    <p><a href="<?php echo $this->getAddLink() ?>#review-form"><?php echo $this->__('Be the first to review this product') ?></a></p>
+<?php endif; ?>

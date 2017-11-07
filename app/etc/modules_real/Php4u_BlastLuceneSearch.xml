@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Php4u
+ * @package    Php4u_BlastLuceneSearch
+ * @author     Marcin Szterling <marcin@php4u.co.uk>
+ * @copyright  Php4u Marcin Szterling (c) 2012
+ * @license
+ */
+ -->
+<config>
+    <modules>
+        <Php4u_BlastLuceneSearch>
+            <active>false</active>
+            <codePool>community</codePool>
+            <depends>
+               <Mage_Api />
+            </depends>
+        </Php4u_BlastLuceneSearch>
+        <Php4u_CatalogSearch>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Php4u_CatalogSearch>
+        <Php4u_Adminhtml>
+            <active>false</active>
+            <codePool>community</codePool>
+        </Php4u_Adminhtml>
+    </modules>
+</config>

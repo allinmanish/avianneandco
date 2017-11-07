@@ -1,0 +1,30 @@
+<div id="AmazonInlineWidgetDiv">
+	<?php echo $this->__('Checkout with Amazon'); ?>
+</div>
+<p id="AmazonInlineWidgetBottom" style="display: none;"></p>
+<script type="text/javascript">
+	<!--
+	function showWaitingIxcbaBottom() {
+		$jQueryconflict('.message_inline').show();
+		if(document.getElementById('AmazonInlineWidgetBottom')) { document.getElementById('AmazonInlineWidgetBottom').style.display = 'none'; }
+	}
+	function hideWaitingIxcbaBottom() {
+		$jQueryconflict('.message_inline').hide();
+		if(document.getElementById('AmazonInlineWidgetBottom')) { document.getElementById('AmazonInlineWidgetBottom').style.display = 'inline-block'; }
+	}
+			if (window['amazon_widget_top'] == undefined){
+					function inlinecallback(){
+						window.location = 'http://www.avianneandco.com/ixcba/inline/';
+					}
+					
+					amazon_widget_bottom = new AmazonWidgets ('A1J6QQN1L19KP3');
+					amazon_widget_bottom.createInlineWidget('http://www.avianneandco.com/ixcba/inline/session/', inlinecallback);
+					amazon_widget_bottom.renderWidget(amazon_widget_bottom.inlineWidget,'AmazonInlineWidgetBottom');
+			}
+	jQuery(function(){
+		jQuery('#AmazonInlineWidgetDiv').live("click", function() {
+			jQuery('#AmazonInlineWidgetBottom img').trigger('click');
+		});
+	});	
+	//-->
+</script>

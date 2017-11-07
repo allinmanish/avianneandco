@@ -1,0 +1,149 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /** @var $this Mage_Checkout_Block_Onepage_Shipping_Method_Available */ ?>
+<?php $_shippingRateGroups = $this->getShippingRates(); ?>
+<?php if (!$_shippingRateGroups): ?>
+    <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
+<?php else: ?>
+    <ul class="sp-methods">
+    <?php $shippingCodePrice = array(); ?>
+    <?php $_sole = count($_shippingRateGroups) == 1; foreach ($_shippingRateGroups as $code => $_rates): ?>
+        
+
+            <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
+                <?php $shippingCodePrice[] = "'".$_rate->getCode()."':".(float)$_rate->getPrice(); ?>
+                   <?php if ($_rate->getErrorMessage()): ?>
+                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                   <?php else: ?>
+                   
+                   <?php // $carrier = $this->escapeHtml($this->getCarrierName($code)); ?>
+                   <?php $carrier = $this->escapeHtml($_rate->getMethodTitle()); ?>
+                   <?php 
+/*
+                   switch ($carrier) {
+                   	case "Free Shipping":
+                   		$carrier = "FedEx 2 Day Air";
+                   		if($this->getAddressShippingMethod()=="")
+                   			$_sole = 1;
+                   	break;
+                   	case "Expedited Shipping":
+                   		$carrier = "UPS Next Day Air";
+                   		if($this->getAddressShippingMethod()=="")
+                   			$_sole = 0;
+                   	break;
+                    case "2 Day Air":
+                        $carrier = "FEDEX 2 DAY AIR";
+                        if($this->getAddressShippingMethod()=="")
+                            $_sole = 0;
+                    break;
+                    case "UPS Overnight Delivery":
+                        $carrier = "FEDEX PRIORITY OVERNIGHT";
+                        if($this->getAddressShippingMethod()=="")
+                            $_sole = 0;
+                    break;
+                    case "USPS APO/FPO Priority International":
+                        $carrier = "USPS APO/FPO Priority International";
+                        if($this->getAddressShippingMethod()=="")
+                            $_sole = 0;
+                    break;
+                    case "FedEx":
+                        $carrier = "FEDEX PRIORITY INTERNATIONAL";
+                    break;
+                   }
+*/
+                   ?>
+                   
+                   		<li><label><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod() || $_sole) echo ' checked="checked"' ?> class="radio"/>
+                   		<?php echo $carrier ?> - 
+                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                        <?php 
+                        	if ($_excl=='<span class="price">$0.00</span>') {
+                        		$_excl = '<span class="price">Free</span>';
+                        	}
+                        ?>
+                        <?php echo $_excl; ?>
+                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                        <?php endif; ?>
+                        </label>
+                        <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                                lastPrice = <?php echo (float)$_rate->getPrice(); ?>;
+                            //]]>
+                        </script>
+                        <?php endif; ?>
+        				</li>
+                   
+                  
+                   <?php endif ?>
+            <?php endforeach; ?>
+    <?php endforeach; ?>
+    </ul>
+<script type="text/javascript">
+//<![CDATA[
+    <?php if (!empty($shippingCodePrice)): ?>
+        var shippingCodePrice = {<?php echo implode(',',$shippingCodePrice); ?>};
+    <?php endif; ?>
+
+	if(jQuery('input[type="radio"][name="shipping_method"]:checked').val()!='undefined') {
+		var getShippingCode = jQuery('input[type="radio"][name="shipping_method"]:checked').val();
+        document.getElementById("confirmMessagePayment").style.display = 'block';
+		document.getElementById("confirmAction").style.display = 'none';
+
+		$jQueryconflict(".totals-board").html('<div class="before_selection_message_loading height_big"><div class="loading_next_step small_center" />Cart Total Loading. Please Wait</div>');
+
+		$jQueryconflict.post("https://www.avianneandco.com/ixcba/inline/saveShippingMethod/",{"shipping_method":getShippingCode}, function(data){
+			data = $jQueryconflict.parseJSON(data);
+			//alert(data);		
+			$jQueryconflict(".totals-board").html(data.update_section.html);
+			setTimeout("render_wallet()", 1000);
+		});
+	}
+    
+    $$('input[type="radio"][name="shipping_method"]').each(function(el){
+        Event.observe(el, 'click', function(){
+            if (el.checked == true) {
+                var getShippingCode = el.getValue();
+                document.getElementById("confirmMessagePayment").style.display = 'block';
+				document.getElementById("confirmAction").style.display = 'none';
+
+				$jQueryconflict(".totals-board").html('<div class="before_selection_message_loading height_big"><div class="loading_next_step small_center" />Cart Total Loading. Please Wait</div>');
+		
+				$jQueryconflict.post("https://www.avianneandco.com/ixcba/inline/saveShippingMethod/",{"shipping_method":getShippingCode}, function(data){
+					data = $jQueryconflict.parseJSON(data);
+					//alert(data);		
+					$jQueryconflict(".totals-board").html(data.update_section.html);
+					setTimeout("render_wallet()", 1000);
+				});
+            }
+       });
+    });
+//]]>
+</script>
+<?php endif; ?>

@@ -1,0 +1,35 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<table id="details-table" class="shopping-cart">
+    <?php if ($this->helper('tax')->displayCartBothPrices()): $colspan = $rowspan = 2; else: $colspan = $rowspan = 1; endif; ?>
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+    <col width="1" />
+    <col width="1" />
+    <?php endif; ?>
+<?php echo $this->getChildHtml('totals'); ?>
+    <tbody>
+        <?php foreach($this->getItems() as $_item): ?>
+            <?php echo $this->getItemHtml($_item) ?>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('details-table');</script>

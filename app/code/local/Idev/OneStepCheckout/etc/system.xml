@@ -1,0 +1,397 @@
+<?xml version="1.0"?>
+<config>    
+	<sections>
+		<onestepcheckout>
+
+            <label>OneStepCheckout</label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>306</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>			
+
+			<groups>
+
+				<general translate="label comment">
+					<comment><![CDATA[<br />
+						<div class="box">
+							<p>See documentation and support for <a href="http://www.onestepcheckout.com">One Step Checkout</a></p>
+						</div>
+						]]>
+					</comment>
+					<label>General</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+
+					<fields>
+						<serial translate="label">
+							<label>Serial</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</serial>
+						
+						<default_country translate="label">
+							<label>Default country</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_country</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</default_country>
+						
+						<default_shipping_method translate="label">
+							<label>Default shipping method</label>
+							<frontend_type>select</frontend_type>
+							<!--<source_model>adminhtml/system_config_source_shipping_allowedmethods</source_model>-->
+							<source_model>adminhtml/system_config_source_shipping_allmethods</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</default_shipping_method>					
+						
+						
+						<default_payment_method translate="label">
+							<label>Default payment method</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</default_payment_method>
+
+						<checkout_title translate="label">
+							<label>Checkout title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</checkout_title>
+						
+						<checkout_description translate="label">
+							<label>Checkout description</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</checkout_description>
+  
+						<enable_different_shipping translate="label">
+							<label>Enable different shipping address</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>8</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_different_shipping>		
+
+
+
+						<enable_gift_messages translate="label">
+							<label>Enable gift messages</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>9</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_gift_messages>
+
+
+						<enable_geoip translate="label">
+							<label>Enable GeoIP</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_geoip>
+						
+						<geoip_database translate="label">
+							<label>GeoIP database</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</geoip_database>
+
+
+					</fields>
+
+				</general>
+				
+				<exclude_fields translate="label comment">
+					<comment><![CDATA[<br />
+						<div class="box">
+							<p>
+								Here you can make changes to which fields the user is presented with in OneStepCheckout.
+							</p>
+						</div>
+						]]>
+					</comment>
+					<label>Exclude/include fields</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<exclude_city translate="label">
+							<label>Exclude City field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_city>		
+						
+						<exclude_telephone translate="label">
+							<label>Exclude Telephone field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_telephone>
+						
+						<exclude_company translate="label">
+							<label>Exclude Company field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>8</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_company>
+						
+						<exclude_fax translate="label">
+							<label>Exclude Fax field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>9</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_fax>
+						
+						<exclude_region translate="label">
+							<label>Exclude Region field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_region>
+						
+						<exclude_zip translate="label">
+							<label>Exclude Zip/Postcode field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</exclude_zip>
+						
+						
+						<enable_comments translate="label">
+							<label>Enable comments field</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_comments>
+
+						<enable_newsletter translate="label">
+							<label>Show newsletter checkbox</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>13</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_newsletter>
+
+
+					</fields>
+				</exclude_fields>
+
+				<registration translate="label comment">
+					<comment><![CDATA[<br />
+						<div class="box">
+							<p>Different setups for requiring registration/login. Please see user manual for further details.</p>
+						</div>
+						]]>
+					</comment>
+					<label>Registration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+                        <registration_mode translate="label">
+                            <label>Registration mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>onestepcheckout/source_registration</source_model>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                        
+                        </registration_mode>
+                        
+                        <registration_order_without_password>
+                            <label>Register on account without password</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                         
+                        </registration_order_without_password>
+					</fields>
+				</registration>
+
+				<ajax_update translate="label comment">
+					<comment><![CDATA[<br />
+						<!--<div class="box">
+							<p>Different setups for requiring registration/login. Please see user manual for further details.</p>
+						</div>-->
+						]]>
+					</comment>
+					<label>AJAX update shipping/payment methods</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<enable_ajax_save_billing translate="label">
+							<label>Enable AJAX save billing</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>24</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_ajax_save_billing>
+
+						<ajax_save_billing_fields translate="label">
+							<label>AJAX save billing fields</label>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>onestepcheckout/source_ajaxbilling</source_model>
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</ajax_save_billing_fields>						
+						
+						
+						<enable_update_payment_on_shipping translate="label">
+							<label>Update payment methods when chosen shipping method</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>26</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_update_payment_on_shipping>
+
+					</fields>
+				</ajax_update>
+				
+
+				<terms translate="label comment">
+					<comment><![CDATA[<br />
+						<!--<div class="box">
+							<p>Different setups for requiring registration/login. Please see user manual for further details.</p>
+						</div>-->
+						]]>
+					</comment>
+					<label>Terms and conditions</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						<enable_terms translate="label">
+							<label>Show terms checkbox</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>19</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</enable_terms>
+						
+						<terms_title translate="label">
+							<label>Terms and conditions title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</terms_title>
+						
+						<terms_contents translate="label">
+							<label>Terms and conditions contents (HTML)</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>21</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</terms_contents>	
+					</fields>
+				</terms>
+       
+
+				<!--
+				<onestepcheckout translate="label comment">
+					<comment><![CDATA[<br />
+						<div class="box">
+							<p>See documentation and support for <a href="http://www.onestepcheckout.com">One Step Checkout</a></p>
+						</div>
+						]]>
+					</comment>
+					<label>One Step Checkout</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					
+					<fields>
+						
+						
+					</fields>
+				</onestepcheckout>
+				-->
+				
+			</groups>
+		</onestepcheckout>
+	</sections>
+</config>

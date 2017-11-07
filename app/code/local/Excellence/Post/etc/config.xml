@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Excellence_Post>
+            <version>0.0.1</version>
+        </Excellence_Post>
+    </modules>
+    <global>
+    	<models>
+            <post>
+                <class>Excellence_Post_Model</class>
+            </post>
+        </models>
+        <events>
+            <sales_order_save_commit_after>
+                <observers>
+                    <excellence_post_model_observer>
+                        <type>singleton</type>
+                        <class>Excellence_Post_Model_Observer</class>
+                        <method>postSomething</method>
+                    </excellence_post_model_observer>
+                </observers>
+            </sales_order_save_commit_after> 
+            <sales_order_place_before>
+                <observers>
+                    <excellence_post_model_observer>
+                        <type>singleton</type>
+                        <class>Excellence_Post_Model_Observer</class>
+                        <method>postSomething2</method>
+                    </excellence_post_model_observer>
+                </observers>
+            </sales_order_place_before> 
+        </events>
+    </global>
+    <crontab>
+        <jobs>
+            <post_cron>
+                <schedule>
+                    <cron_expr>*/30 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>post/observer::fetchFraudStatus</model>
+                </run>
+            </post_cron>
+        </jobs>
+    </crontab>
+</config>

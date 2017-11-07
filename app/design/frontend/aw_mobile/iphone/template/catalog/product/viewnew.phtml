@@ -1,0 +1,231 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ */
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<?php $_product=$this->getProduct() ?>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+<form action="" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+	<div class="product-info-box">
+        <div class="product-shop">
+        	<?php echo $this->getChildHtml('media');?>
+        	<div class="clear"></div>
+        	<div class="product-inner">
+	        	<div class="product-name"><?php echo $this->helper('awmobile')->escapeHtml($_product->getName()) ?></div>
+	        	<?php echo $this->getChildHtml('description') ?>
+	        	<?php echo $this->getChildHtml('product_type_data') ?>
+	        	<div class="item-code"><?php echo $this->__('Item code: %s',$_product->getSku()); ?></div>
+        	</div>
+        	<div class="clear"></div>
+        </div>
+	</div>
+	<div class="product-action-box">
+        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+			<?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+		<?php endif;?>
+		<?php if (!$this->hasOptions()):?>
+            <?php if($_product->isSaleable()): ?>
+                <?php echo $this->getChildHtml('addtocart') ?>
+            <?php endif; ?>
+        <?php endif; ?>
+		<?php echo $this->getChildHtml('extrahint') ?>
+		
+			<?php $shipping_time = (int)$_product->getShippingTime(); ?>
+            <?php if(!empty( $shipping_time )): ?>
+            	<?php $now = Mage::getModel('core/date')->date('Y-m-d'); ?>
+            	<?php if (Mage::getModel('core/date')->date('H')>=15): ?>
+            		<?php $esd = date('l, F j', strtotime($now . '+'.($shipping_time+1).' Weekday'))?>
+            	<?php else: ?>
+            		<?php $esd = date('l, F j', strtotime($now . '+'.($shipping_time).' Weekday'))?>
+            	<?php endif; ?>
+            	<p class="estimated-shipping">Order now and this item will be shipped by <?php echo $esd; ?>.</p>
+            <?php endif; ?>
+            
+	</div>
+	<div class="product-buttons-box product-list-toolbar">
+		<ul class="pager">
+			<?php if ($this->canEmailToFriend()): ?>
+				<li class="first">
+					<a class="button pager left" href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email') ?></a>
+				</li>
+	        <?php endif; ?> 
+	        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+	        	<li class="middle">
+	        		<a class="button pager" href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"><?php echo $this->__('Add to Wishlist') ?></a>
+	        	</li>
+			<?php endif; ?>
+			<li class="last">
+				<a onclick="showShare();return false;" id="share-it" class="button pager right" href="#"><span><?php echo $this->__('Share'); ?></span></a>
+			</li>
+		</ul>
+		<div class="clear"></div>
+		<ul class="share-buttons">
+			<?php $currentUrl = $this->helper('core/url')->getCurrentUrl(); ?>
+			<li class="item-1"><a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($currentUrl); ?>" target="_blank"><span><?php echo $this->__('Share on Facebook'); ?></span></a></li>
+			<li class="item-2"><a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($this->helper('awmobile')->escapeHtml($_product->getName())) ?>&url=<?php echo urlencode($currentUrl); ?>" target="_blank"><span><?php echo $this->__('Share on Twitter'); ?></span></a></li>
+			<li class="item-3"><a href="https://plus.google.com/share?url=<?php echo urlencode($currentUrl); ?>" target="_blank"><span><?php echo $this->__('Share on Google+'); ?></span></a></li>
+			<li class="item-4"><a href="http://pinterest.com/pin/create/button/?url=<?php echo urlencode($currentUrl); ?>&media=<?php echo urlencode($_product->getImageUrl()); ?>&description=<?php echo urlencode($this->helper('awmobile')->escapeHtml($_product->getName())) ?>" target="_blank"><span><?php echo $this->__('Share on Pinterest'); ?></span></a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	
+	<div class="product-video-box">
+	<?php 
+	$m = $this->helper('catalog/output')->productAttribute($_product, nl2br($_product->getDescription()), 'description');
+    if (empty($m)) {
+        $frame_content = '';
+    } else {
+        if (stripos($m, "iframe")!==false) {
+            $frame_content = preg_replace("!src=\"(.*?)\"!si","src=\"\\1?autoplay=1\"",$m);
+            echo '<div style="text-align:center;"><div class="youtube-lazy-link" style="width:440px;height:270px;"></div></div>';
+        } elseif (stripos($m, "embed")!==false) {
+            $frame_content = preg_replace("!src=\"(.*?)\"!si","src=\"\\1&autoplay=1\"",$m);
+            echo '<div style="text-align:center;"><div class="youtube-lazy-link" style="width:440px;height:270px;"></div></div>';
+        } else {
+            echo $m;
+            $frame_content = $m;
+        }
+    }
+	?>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery(".youtube-lazy-link").each(function(index) {
+	    jQuery(this).html('');    	
+	    jQuery(this).prepend('<div style="height:'+(parseInt(jQuery(this).css("height"))-4)+'px;width:'+(parseInt(jQuery(this).css("width"))-4)+'px;" class="youtube-lazy-link-div"></div>&nbsp;');
+	    jQuery(this).css("background", "#000 url(<?php echo $this->getSkinUrl('images/youtube.jpg') ?>) center center no-repeat");
+	    var videoFrame = '<?php echo $frame_content; ?>';
+	    jQuery(this).click(function(e){
+	    	jQuery('.youtube-lazy-link').replaceWith(videoFrame);
+	    	e.preventDefault();
+		});
+	});
+})
+</script>
+	</div>
+	<div class="clear"></div>
+	
+    
+    <div class="product-tabs-box">
+    	<ul class="mobile-drop-down">
+	    	<li class="parent-item parent-item-1 active">
+				<a href="#"><span class="item-1"><?php echo $this->__('Additional Information'); ?></span></a>
+			</li>
+			<li class="child-item child-item-1" style="display: list-item;">
+				<div class="product-specs">
+					<?php echo $this->getChildHtml('product_attributes_data') ?>
+					<p class="head-line"><?php echo $this->__('This item comes with:'); ?></p>
+					<ul class="item-bonus">
+						<li class="item-1"><?php echo $this->__('Free Shipping'); ?></li>
+						<li class="item-2"><?php echo $this->__('Free Appraisal Certificate'); ?></li>
+						<li class="item-3"><?php echo $this->__('Free Gift Box and Optional Gift Message'); ?></li>
+					</ul>
+				</div>
+			</li>
+			<li class="parent-item parent-item-2 inactive">
+				<a href="#"><span class="item-2"><?php echo $this->__('Payment Methods'); ?></span></a>
+			</li>
+			<li class="child-item child-item-2">
+				<div class="product-specs">
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><strong>Preffered Payment Methods </strong><br><br>At Avianne &amp; Co we accept a variety of payment methods including all major Credit/Debit Cards, PayPal, Google Wallet, Amazon Checkout, Checks and Money Orders. Regardless of your payment method, all orders take generally 1-2 business day to process and ship. In an effort to maintain 100% secure transactions while verifying legitimacy of all orders, all credit cards transactions are subject to a extensive review.</p>
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><br><a href="/customer-service/#answer5">To learn more about our accepted payment methods, click here.</a> &nbsp;</p>
+					<div class="easy-payments"><img src="http://d3p1jc4qwvxcf2.cloudfront.net/media/wysiwyg/amazon.png" alt=""> <img src="http://d3p1jc4qwvxcf2.cloudfront.net/media/wysiwyg/paypal.png" alt=""> <img title="Google Checkout is a fast, secure way to buy from stores across the web. Use it once and stop creating new accounts every time you buy." src="http://d3p1jc4qwvxcf2.cloudfront.net/media/wysiwyg/google.png" alt=""></div>
+					<div id="pop-up" style="display: none;">Checkout by Amazon lets you pay easily with the secure shipping and payment information in your Amazon account. You don't have to re-enter credit cards or addresses, and your payment information is protected.</div>
+				</div>
+			</li>
+			<li class="parent-item parent-item-3 inactive">
+				<a href="#"><span class="item-3"><?php echo $this->__('Shipping Policy'); ?></span></a>
+			</li>
+			<li class="child-item child-item-3">
+				<div class="product-specs">
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><strong>Free Shipping - Safe &amp; Insured</strong></p>
+					<p style="text-align: center;"><br><img src="http://d3p1jc4qwvxcf2.cloudfront.net/skin/frontend/base/default/images/fedex-logo.png" alt="">&nbsp;</p>
+					<p style="text-align: center; margin: 0px;">&nbsp;</p>
+					<p style="text-align: center;">All orders within the US are shipped fully insured via FedEx 2nd Day Air. Order processing varies based on the item ordered. If your item is in stock and does not require resizing, it is generally shipped within 1 business day of your order. Back ordered items take 2-3 weeks to ship. Made to order items take between 5-10 business days. Please refer to the item page for expected shipping times, or contact us.<a href="http://www.avianneandco.com/customer-service/#answer6" target="_self">we ship internationally</a>.</p>
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><br><a href="/customer-service/#answer2"><strong>To learn more about our shipping guidelines, click here.</strong></a></p>
+				</div>
+			</li>
+			<li class="parent-item parent-item-4 inactive">
+				<a href="#"><span class="item-4"><?php echo $this->__('Security Policy'); ?></span></a>
+			</li>
+			<li class="child-item child-item-4">
+				<div class="product-specs">
+					<p style="margin: 0px; text-align: center;"><strong>Secure Online Shopping </strong><br> <br> At Avianne &amp; Co, we strive to ensure customer security and safety while maintaining a comfortable ordering process. As such, we have procedures in place that ensure your personal information and all order information is 100% secure. We use state-of-the-art security technology to ensure your credit card information is safe while maintaining a swift processing timeframe of 24 hours. Once an order is shipped, it is shipped with full insurance from our store location, directly to you. <br> <br> <span id="siteseal"> <a href="https://seal.godaddy.com/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="_blank"><img src="http://d3p1jc4qwvxcf2.cloudfront.net/skin/frontend/avianne/default/images/siteseal_gd_3_h_l_m.gif" alt="" width="132" height="31"></a> <br><a style="font-family: arial; font-size: 9px;" href="http://www.godaddymobile.com" target="_blank">Go Daddy</a></span> <br> <br> <strong>Safe Online Transactions</strong><br><br> When a credit card is used through our Shopping Basket, the information provided is transferred and protected by Secure Sockets Layer (SSL) encryption technology. This technology ensures that your personal information is protected from outside parties when transmitted from your computer to our server. SSL Encryption is the leading form of security among online transactions.</p>
+					<p style="margin: 0px; text-align: center;">&nbsp;</p>
+					<p style="margin: 0px; text-align: center;"><strong><a href="/customer-service/#answer7">Learn More about Secure Shopping Online</a></strong><br><br></p>
+				</div>
+			</li>
+			<li class="parent-item parent-item-5 inactive">
+				<a href="#"><span class="item-5"><?php echo $this->__('14 Day Return'); ?></span></a>
+			</li>
+			<li class="child-item child-item-5">
+				<div class="product-specs">
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><strong>The Avianne &amp; Co 100% Satisfaction Guarantee</strong> <br><br> Our 14-day return policy allows you plenty of time to consider your purchase. With such a time frame in place, you can rest assured knowing you have made the right choice. If for whatever reason you are not satisfied with your purchase, within 14 days of receiving your item, you may return your item to Avianne &amp; Co. for an exchange or a refund. Unlike most competitors, we do not charge a restocking fee and provide a full refund.</p>
+					<p style="min-height: 13px; text-align: center; margin: 0px;"><br><a href="/customer-service/#answer1"><strong>Learn More About Our Return Policy Here</strong></a></p>
+					<p style="text-align: center;">&nbsp;</p>
+				</div>
+			</li>
+			<li class="parent-item parent-item-6 inactive">
+				<a href="#"><span class="item-6"><?php echo $this->__('Layaway Plans'); ?></span></a>
+			</li>
+			<li class="child-item child-item-6">
+				<div class="product-specs">
+					<p style="text-align: center; margin: 0px;"> <br> In an effort to meet the needs of our many customers, we have a layaway program 
+available. In order to begin a layaway plan, you must reach out to us at 888-243-4344. One of our trained diamond jewelry consultants will be able to assist you in 
+setting up a payment plan. Layaway programs require a 25% down payment, of the total selling price. Following the initial payment, customers have 90 days to complete 
+payments in a comfortable, interest-free, pay-as-you-go program. As we said, we are flexible. Term extensions are never an issue.&nbsp;<br><br> <a 
+href="/customer-service/#answer9"><strong>Learn More about our Diamond Jewelry Layaway Plan.</strong></a><br><br></p>
+				</div>
+			</li>
+		</ul>
+    </div>
+	<fieldset class="no-display">
+		<input type="hidden" name="product" value="<?php echo $_product->getId() ?>" class="prodcut"/>
+		<input type="hidden" name="related_product" id="related-products-field" value="" class="prodcut"/>
+	</fieldset>
+</form>
+					<script type="text/javascript">
+                        var productAddToCartForm = new VarienForm('product_addtocart_form');
+                        productAddToCartForm.submit = function(){
+                                if (this.validator.validate()) {
+                                     mobileCart.postProductForm('product_addtocart_form', '<?php echo $this->getAddToCartUrl($_product) ?>');
+                                }
+                        }.bind(productAddToCartForm);
+                        $j(document).ready(function(e){
+                            $j('#product_addtocart_form').submit(function(event){
+                                $j(':focus').blur();
+                                productAddToCartForm.submit();
+                                return false;
+                            });
+                        });
+                        function showShare() {
+                            var btn = jQuery('#share-it');
+							if(btn.hasClass('active')) {
+								btn.removeClass('active');
+								jQuery('.share-buttons').hide();
+							} else {
+								btn.addClass('active');
+								jQuery('.share-buttons').show();
+							}
+                        }
+                    </script>

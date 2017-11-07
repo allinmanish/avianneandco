@@ -1,0 +1,109 @@
+<?php 
+/************************  AJAX PAGER  **********************************/
+//echo ;
+if($this->getRequest()->getParam('ajax')==true) { ?>
+	<div class="col-right sidebar"><?php echo $this->getChildHtml('right') ?></div>
+	<div class="col-main">
+	 <!-- start global messages -->
+	<?php echo $this->getChildHtml('global_messages') ?>
+	<!-- end global messages -->
+	<!-- start content -->
+	<?php $content = $this->getChildHtml('content'); ?>
+	<?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+	<!-- end content -->
+	</div>
+<?php 
+} else { 
+/************************ eof AJAX PAGER  **********************************/
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+<body <?php echo $this->getBodyClass()?'class="'.$this->getBodyClass().'"':'' ?>>
+	<div class="wrapper">
+		<div class="sub-wrapper">
+	    	<?php echo $this->getChildHtml('global_notices') ?>
+	        <!-- start header -->
+	        <div class="header">
+	            <?php echo $this->getChildHtml('header') ?>
+	        </div>
+	        <!-- end header -->
+	
+	        <!-- start middle -->
+	        <div class="middle-container">
+	            <div class="middle col-2-right-layout">
+					<?php echo $this->getChildHtml('breadcrumbs') ?>
+					
+					<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('black_friday_banner')->toHtml() ?>
+					
+		            <!-- start center -->
+		                <div id="main" class="col-main">
+			                <!-- start global messages -->
+			                    <?php echo $this->getChildHtml('global_messages') ?>
+			                <!-- end global messages -->
+							<?php 
+							if ( substr(trim($this->getBodyClass()), 0, 18) == 'ixcba-inline-index' ) 
+							{
+							    echo '<div class="page-head-alt button-level" style="margin: 0 0 12px 16px; background: white url(/images/amazon.gif) no-repeat 380px 13px; height: 50px;"><h3 style="font-size:26px; margin-top:5px;">Avianne &amp; Co Secure Checkout</h3></div>';
+							}
+							?>
+			                <!-- start content -->
+			                <?php $content = $this->getChildHtml('content'); ?>
+			                <?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+			                <?php //echo $this->getChildHtml('content') ?>&nbsp;
+							<?php 
+							if ( substr(trim($this->getBodyClass()), 0, 18) == 'ixcba-inline-index' ): ?>
+							    <div class="chekout-footer" style="width: 685px;">
+								<table cellpadding="0" cellspacing="0">
+								    <tbody><tr>
+									<td colspan="3">
+									    <p class="verified-by-godaddy"><img border="0" src="https://www.avianneandco.com/skin/frontend/avianne/default/images/godaddy.png" alt="">The security of this site has been <a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank" rel="nofollow">verified by GoDaddy</a></p>
+									</td>
+								    </tr>
+								    <tr>
+									<td><a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img src="https://www.avianneandco.com/skin/frontend/avianne/default/homeimg/footerlogo4.jpg" alt="" border="0"></a></td>
+								    </tr>
+								</tbody></table>
+							    </div>
+							<?php endif; ?>
+			                <!-- end content -->
+		                </div>
+		            <!-- end center -->
+		            <!-- start right -->
+		            <div class="col-right side-col">
+		                <?php echo $this->getChildHtml('right') ?>&nbsp;
+		            </div>
+		            <!-- end right -->
+					<?php /* ?>
+					<div style="clear:both;"></div>
+					<div class="homepage-call-us">
+						<div class="homepage-call-us-sub">
+							<div class="homepage-call-us-sub-sub">
+								Call us toll free - <b>(888) 243 4344</b>
+							</div>
+						</div>
+					</div>
+					<?php */ ?>
+				</div>
+			</div>
+	        <!-- end middle -->
+	        <!-- start footer -->
+			<div class="footer-container">
+				<div class="footer">
+					<?php echo $this->getChildHtml('footer') ?>
+		        </div>
+			</div>
+			<!-- end footer -->
+		</div>
+		<?php echo $this->getChildHtml('before_body_end') ?>
+	</div>
+	<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>
+<?php 
+/************************  AJAX PAGER  **********************************/
+}
+/************************ eof AJAX PAGER  **********************************/					 
+?>

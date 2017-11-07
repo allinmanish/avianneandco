@@ -1,0 +1,43 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/search.js') ?>"></script>
+<?php echo $this->getChildHtml('topSearch') ?>
+<div class="header-top">
+    <div class="col2-alt-set">
+        <div class="col-1">
+            <h1 id="logo"><a href="<?php echo $this->getUrl('') ?>">
+                    <img src="<?php echo Mage::getStoreConfig('awmobile/design/logo_src') ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'awmobile/'.Mage::getStoreConfig('awmobile/design/logo_src') : $this->getSkinUrl(Mage::getStoreConfig('awmobile/design/default_logo')); ?>" alt="<?php echo Mage::getStoreConfig('awmobile/design/logo_alt') ? $this->htmlEscape(Mage::getStoreConfig('awmobile/design/logo_alt')) : $this->getLogoAlt(); ?>" /></a></h1>
+        </div>
+        <div class="col-2">
+            <ul class="user-links">
+            	<li class="call-us"><a href="tel:888-243-4344"></a></li>
+            	<li class="email-us"><a href="mailto:service@avianneandco.com"></a></li>
+            	<li class="top-cart-button last"><a href="#" onclick="goToCart(); return false;">
+            		<?php if($this->helper('checkout/cart')->getSummaryCount()>0): ?>
+            		<span class="head-cart-num"><?php echo $this->helper('checkout/cart')->getSummaryCount(); ?></span></a>
+            		<?php endif; ?>
+            	</li>
+                <?php //echo $this->getChildHtml('user_links') ?>
+            </ul>
+        </div>
+    </div>
+</div>
+

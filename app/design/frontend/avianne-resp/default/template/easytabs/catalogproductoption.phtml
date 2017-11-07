@@ -1,0 +1,9 @@
+<?php
+    $_product = $this->getProduct();
+?>
+<div class="product-specs">
+<?php 
+    echo $this->getLayout()->getBlock('product.info.options.wrapper')->toHtml();
+    echo $this->getLayout()->getBlock('product.info.options.wrapper.bottom')->toHtml();
+?>
+</div>

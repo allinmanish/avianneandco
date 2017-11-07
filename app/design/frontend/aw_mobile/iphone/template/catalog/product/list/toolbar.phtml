@@ -1,0 +1,101 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ * @see AW_Mobile_Block_Catalog_Product_List_Toolbar
+ */
+?>
+
+<?php if($this->getCollection()->getSize()): ?>
+<div class="nav-button-filter button-filter"><a id="layer-filter" href="#">Filter</a></div>
+<div class="sort-by-dd">
+	<?php /* ?>
+	<?php echo $this->__('Sort By Price') ?><br />
+	<select style="width:94px" onchange="setLocation(this.value)">
+		<option value="" <?php if(empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> > Select </option>
+		<option value="<?php echo $this->getOrderUrl('price', 'asc') ?>" <?php if($this->getCurrentDirection() == 'asc'&&!empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> >Low to High</option>
+		<option value="<?php echo $this->getOrderUrl('price', 'desc') ?>" <?php if($this->getCurrentDirection() == 'desc'&&!empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> >High to Low</option>
+	</select>
+	<?php */ ?>
+	<?php if($this->getCollection()->getSize() && ($this->getCollection()->getSize() > $this->getLimit()) ): ?>
+	<div class="parent-filter">
+		<div class="nav-button-pager button-filter"><a id="layer-page" href="#">Page</a></div>
+		<div class="nav-content-pager">
+			<?php echo $this->getPagerHtml() ?>
+		</div>
+	</div>
+	<?php endif ?>
+	<?php if( $this->isEnabledViewSwitcher() ): ?>
+    	<?php $_modes = $this->getModes(); ?>
+    	<?php if($_modes && count($_modes)>1): ?>
+    		<div class="parent-filter">
+	    		<div class="nav-button-view button-filter"><a id="layer-view" href="#">View</a></div>
+	    		<div class="nav-content-view">
+					<ul>
+	            <?php foreach ($this->getModes() as $_code=>$_label): ?>
+	            	<?php if($this->isModeActive($_code)): ?>
+	            		<li class="active"><a href="#" onclick="return false;" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></a></li>
+	            	<?php else: ?>
+	            		<li><a href="<?php echo $this->getModeUrl($_code) ?>" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></a></li>
+	            	<?php endif; ?>
+	            <?php endforeach; ?>
+	            	</ul>
+	            </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+    <div class="parent-filter">
+		<div class="nav-button-sort button-filter"><a id="layer-sort" href="#">Price</a></div>
+		<div class="nav-content-sort">
+			<ul>
+				<li <?php if($this->getCurrentDirection() == 'asc'&&!empty($_GET["dir"])): ?> class="active" <?php endif; ?>><a href="<?php echo $this->getOrderUrl('price', 'asc') ?>" class="sort-option"><?php echo $this->__('Low to High'); ?></a></li>
+				<li <?php if($this->getCurrentDirection() == 'desc'&&!empty($_GET["dir"])): ?> class="active" <?php endif; ?>><a href="<?php echo $this->getOrderUrl('price', 'desc') ?>" class="sort-option"><?php echo $this->__('High to Low'); ?></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<?php endif ?>
+<?php echo $this->getChildHtml('layered'); ?>
+
+<div class="product-list-toolbar">
+	<?php if($this->getLastPageNum()>1): ?>
+    	<div class="nav-totals"><?php echo $this->__('%s item(s)', $this->getTotalNum()) ?></div>
+	<?php else: ?>
+		<div class="nav-totals"><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></div>
+	<?php endif; ?>
+    <ul class="pager">
+    	<?php if($this->getCollection()->getSize() && ($this->getCollection()->getSize() > $this->getLimit()) ): ?>
+        <li class="first">
+            <?php if (!$this->isFirst()): ?>
+            <a class="button pager left" href="<?php echo $this->getPreviousPageUrl(); ?>"><?php echo $this->__('Prev'); ?></a>
+            <?php endif; ?>
+        </li>
+        <li class="middle">
+        	<?php if (!$this->isLast()): ?>
+            <a class="button pager " href="<?php echo $this->getNextPageUrl(); ?>"><?php echo $this->__('Next'); ?></a>
+            <?php endif; ?>
+        </li>
+        <?php endif ?>
+        <li class="last">
+            <a onclick="backToTop();return false;" class="button pager right" href="<?php echo $this->getNextPageUrl(); ?>"><?php echo $this->__('Back to top'); ?></a>
+        </li>
+    </ul>
+</div>
+<div class="clear"></div>
+

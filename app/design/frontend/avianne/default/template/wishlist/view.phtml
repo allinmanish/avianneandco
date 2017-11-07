@@ -1,0 +1,97 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="account">
+<div class="logout cf"><a class="btn btn-logout" href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Log Out'); ?></a></div>
+<div class="wishlist-box cf">
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<?php echo $this->getChildHtml('hello') ?>
+
+<?php if($this->getWishlist()->getSize()): ?>
+<form action="<?php echo $this->getUrl('*/*/update') ?>" method="post">
+    <div class="product-box-list" id="wishlist-table">
+    	<?php $i = 0; ?>
+    	<div class="grid-row cl">
+        <?php foreach($this->getWishlist() as $item): ?>
+        	<?php $_item = $item->getProduct(); ?>
+        	<?php if($i%4==0&&$i!=0):?></div><div class="grid-row cl"><?php endif; ?>
+	        	<div class="item">
+					<p class="product-image">					
+						<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"> 
+							<img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(186); ?>"  width="186" height="186" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+						</a>
+					</p>
+					<div align="center">
+						<h5>
+							<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a>
+						</h5>
+						<?php echo Mage_Catalog_Block_Product::getPriceHtml($_item, true);  ?>
+						<div class="actions">
+							 <?php if($_item->isSaleable() && $_item->isVisibleInSiteVisibility()): ?>
+			                    <p><a href="<?php echo $this->getItemAddToCartUrl($item) ?>" class="link-cart btn-large"><?php echo $this->__('Add to Shopping Cart') ?></a></p>
+			                <?php endif; ?>
+		                    <p><a href="<?php echo $this->getItemRemoveUrl($item) ?>" onclick="return confirmRemoveWishlistItem();" class="link-remove" ><?php echo $this->__('Remove Item') ?></a></p>
+						</div>
+					</div>
+				</div>
+			<?php $i++; ?>
+        <?php endforeach ?>
+        </div>
+    </div>
+<script type="text/javascript">decorateTable('wishlist-table')</script>
+</form>
+<?php else: ?>
+<div class="product-box-list" id="wishlist-table">
+    <p style="margin: 20px 10px 0;"><?php echo $this->__('You have no items in your wishlist') ?></p>
+</div>
+<?php endif ?>
+<script type="text/javascript">
+//<![CDATA[
+function confirmRemoveWishlistItem() {
+    return confirm('<?php echo $this->__('Are you sure you want to remove this product from your wishlist?') ?>');
+}
+
+function focusComment(obj) {
+    if( obj.value == '<?php echo $this->__('Please, enter your comments...') ?>' ) {
+        obj.value = '';
+    } else if( obj.value == '' ) {
+        obj.value = '<?php echo $this->__('Please, enter your comments...') ?>';
+    }
+}
+//]]>
+</script>
+<script type="text/javascript">
+jQuery(window).load(function(){
+	jQuery('.grid-row').each(function(e){
+		if(jQuery(this).find('.grid-item:eq(0)').outerHeight()!=jQuery(this).find('.grid-item:eq(1)').outerHeight()) {
+			var highestCol = Math.max(jQuery(this).find('.grid-item:eq(0)').outerHeight(),jQuery(this).find('.grid-item:eq(1)').outerHeight());
+			jQuery(this).find('.grid-item').height(highestCol);
+		}	
+	});
+});
+</script>
+</div>
+</div>

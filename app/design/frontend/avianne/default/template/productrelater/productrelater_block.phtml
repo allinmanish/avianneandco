@@ -1,0 +1,52 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Productrelater
+ * @copyright  Copyright (c) 2003-2009 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+ 
+$_product = $this->getProduct() ;
+$cat2 = $cat = $_product->getCategoryIds();
+$catName2 = Mage::getModel('catalog/category')->load($cat[1])->getName();
+?>
+<div class="box base-mini2 mini-related-items2">
+    <div class="headz">
+        <h4><?php echo $this->__('Latest Jewelry'); ?></h4>
+    </div>
+    <div class="content">
+		<?php if($this->getCount()>0) { ?>
+		<table border="0" width="100%">
+			<tr>
+			<?php
+			$i = 0; 
+			foreach ($this->getItems() as $item)	{
+
+				if (2 > $i++) :?>
+				<td style="width:<?php echo ceil(100/$this->getCount())-1?>%;float:middle;text-align:center;">
+	        		<a href="/<?php echo $item->getUrlPath(); ?>">
+        				<center><img src="<?php echo $this->helper('catalog/image')->init($item,'thumbnail')->resize(115)?>" alt="<?php echo $this->htmlEscape($item->getName())?>" width="115" height="115" /></center>
+	        		</a>
+					<a href="/<?php echo $item->getUrlPath(); ?>"><?php echo $this->htmlEscape($item->getName())?> </a>
+					  <center><b><?php echo str_replace(array('itemprop="price"','itemprop="offers" itemscope itemtype="http://schema.org/Offer"') 
+					                                                          , '', $this->getPriceHtml($item,true))?></b><br></center>
+				</td>
+			<?php
+				endif; 
+			}?>
+			</tr>
+		</table>
+		<?php }	else {?>
+			<div align="center"><b>No New Products</b></div>
+		<?php }?>
+    </div>
+</div>

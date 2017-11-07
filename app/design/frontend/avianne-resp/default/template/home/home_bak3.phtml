@@ -1,0 +1,264 @@
+<div class="homepage-categories primary desktop-only" style="width: 96%">
+	<ul>
+		<li class="cat cat-1">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature1-left')->toHtml();?>
+		</li>
+		<li class="cat cat-2">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature1-right')->toHtml();?>
+		</li>
+	</ul>
+</div>
+
+<div class="clear"><br><br></div>
+
+<div class="homepage-categories secondary">
+	<ul>
+		<li class="cat cat-1">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature2-left')->toHtml();?>
+		</li>
+		<li class="cat cat-2">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature2-middle')->toHtml();?>
+		</li>
+		<li class="cat cat-3">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature2-right')->toHtml();?>
+		</li>
+	</ul>
+</div>
+
+<div class="clear"></div>
+
+<div class="homepage-categories primary mobile-only">
+	<ul>
+		<li class="cat cat-1">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature1-left')->toHtml();?>
+		</li>
+		<li class="cat cat-2">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature1-right')->toHtml();?>
+		</li>
+	</ul>
+</div>
+
+<div class="clear"></div>
+
+<div class="homepage-fullwidth">
+	<div class="block block-1">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature3-full')->toHtml();?>
+	</div>
+	<div class="block block-2">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature4-full')->toHtml();?>
+	</div>
+</div>
+
+<div class="clear"><br><br><br><br></div>
+
+<div class="homepage-categories secondary">
+	<ul>
+		<li class="cat cat-1">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature5-left')->toHtml();?>
+		</li>
+		<li class="cat cat-2">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature5-right')->toHtml();?>
+		</li>
+	</ul>
+</div>
+
+<div class="clear"></div>
+
+<?php /*
+<div class="homepage-fullwidth">
+	<div class="block block-3">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature6-full')->toHtml();?>
+	</div>
+</div>
+*/ ?>
+
+<div class="clear"><br><br></div>
+
+<div class="homepage-categories secondary">
+	<ul>
+		<li class="cat cat-1">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature7-left')->toHtml();?>
+		</li>
+		<li class="cat cat-2">
+			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('homepage-feature7-right')->toHtml();?>
+		</li>
+	</ul>
+</div>
+
+<div class="clear"><br><br></div>
+
+<div class="homepage-bestsellers homepage-products-block">
+    <h2>BEST SELLERS</h2>
+    <br><br>
+    <ul>
+        <?php $counter=1; $totalPerPage=4; foreach (Mage::helper('productfeed')->getBest() as $product): ?>
+            <?php if($counter <= $totalPerPage): ?>
+                <li class="product">
+                    <a class="product-wrap" href="<?php echo str_replace('admin.avianne', 'www.avianne', $product->getUrlPath()) ?>">
+                        <div class="product-image"><img src="<?php echo str_replace('admin.avianne', 'www.avianne', $this->helper('catalog/image')->init($product, 'small_image')->resize(170)); ?>"></div>
+                        <div class="product-name"><?php echo $product->getName();?></div>
+                        <div class="old-price"><span class="price">$<?php echo number_format($product->getPrice(),2); ?></span></div>
+                        <div class="special-price"><span class="price"><?php echo "&#36;" . number_format($product->getFinalPrice(),2);?></span></div>
+                    </a>
+                </li>
+            <?php endif; $counter++; ?>
+        <?php endforeach; ?>
+    </ul>
+    <a class="browse-all" href="/best-sellers">BROWSE ALL BEST SELLERS</a>
+</div>
+
+<div class="clear"></div>
+
+<div class="homepage-text homepage-orderscomewith">
+	<h2>ORDERS COME WITH</h2>
+	<br>
+	<ul>
+		<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-ship.png" />Free Shipping</li>
+		<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-appraisal.png" />Free Appraisal Certificate</li>
+		<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-gift-box.png" />Free Gift Box</li>
+		<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-returns.png" />14 Days Returns</li>
+	</ul>
+</div>
+
+<div class="clear"><br><br><br></div>
+
+<div class="homepage-newarrivals homepage-products-block">
+	<h2>NEW ARRIVALS</h2>
+	<br><br>
+	<ul>
+        <?php $counter=1; $totalPerPage=4; foreach (Mage::helper('productfeed')->getNew() as $product): ?>
+            <?php if($counter <= $totalPerPage): ?>
+                <li class="product">
+                    <a class="product-wrap" href="<?php echo str_replace('admin.avianne', 'www.avianne', $product->getUrlPath()) ?>">
+                        <div class="product-image"><img src="<?php echo str_replace('admin.avianne', 'www.avianne', $this->helper('catalog/image')->init($product, 'small_image')->resize(170)); ?>"></div>
+                        <div class="product-name"><?php echo $product->getName();?></div>
+                        <div class="old-price"><span class="price">$<?php echo number_format($product->getPrice(),2); ?></span></div>
+                        <div class="special-price"><span class="price"><?php echo "&#36;" . number_format($product->getFinalPrice(),2);?></span></div>
+                    </a>
+                </li>
+            <?php endif; $counter++; ?>
+        <?php endforeach; ?>
+	</ul>
+	<a class="browse-all" href="/new-arrivals">BROWSE ALL NEW ARRIVALS</a>
+</div>
+
+<div class="clear"></div>
+
+<div class="homepage-featureditems homepage-products-block">
+	<h2>FEATURED ITEMS</h2>
+	<br><br>
+	<ul>
+        <?php $featuredcounter=1; $totalFPerPage=4; foreach (Mage::helper('productfeed')->getFeaturedProducts() as $product): ?>
+            <?php if($featuredcounter <= $totalFPerPage): ?>
+                <li class="product">
+                    <a class="product-wrap" href="<?php echo str_replace('admin.avianne', 'www.avianne', $product->getUrlPath()) ?>">
+                        <div class="product-image"><img src="<?php echo str_replace('admin.avianne', 'www.avianne', $this->helper('catalog/image')->init($product, 'small_image')->resize(170)); ?>"></div>
+                        <div class="product-name"><?php echo $product->getName();?></div>
+                        <div class="old-price"><span class="price">$<?php echo number_format($product->getPrice(),2); ?></span></div>
+                        <div class="special-price"><span class="price"><?php echo "&#36;" . number_format($product->getFinalPrice(),2);?></span></div>
+                    </a>
+                </li>
+            <?php endif; $featuredcounter++; ?>
+        <?php endforeach; ?>
+	</ul>
+	<a class="browse-all" href="/featured-items">BROWSE FEATURED ITEMS</a>
+</div>
+
+<div class="clear"><br></div>
+
+<div class="homepage-text homepage-callus">
+	<h2>CALL US</h2>
+	<br>
+	<ul>
+		<li>Toll Free<a href="tel:888-243-4344">888-243-4344</a></li>
+		<li>Outside US<a href="tel:+1 347-695-2512">+1 347-695-2512</a></li>
+	</ul>
+</div>
+
+<div class="clear"><br><br></div>
+
+<div class="homepage-text homepage-about">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('about-avianne')->toHtml();?>
+</div>
+
+<div class="clear"><br><br></div>
+
+<div class="social-icons">
+	<a href="https://www.facebook.com/AvianneJewelers" target="_blank" class="facebook"><img src="/skin/frontend/avianne-resp/default/images/facebook-logo.png"></a>
+	<a href="https://www.instagram.com/aviannejewelers/?hl=en" target="_blank" class="instagram"><img src="/skin/frontend/avianne-resp/default/images/ig-logo.png"></a>
+	<a href="http://www.youtube.com/user/avianneandco" target="_blank" class="youtube"><img src="/skin/frontend/avianne-resp/default/images/icon-youtube.png"></a>
+</div>
+
+<div class="clear"><br><br></div>
+
+<div class="homepage-text homepage-signup">
+	<h2>STAY UP TO DATE</h2>
+	<br>
+	<div>Want to get exclusive deals<br>before they are published?</div>
+	<br>
+	<form action="/newsletter/subscriber/new/" method="post" id="newsletter-validate-detail">
+		<input type="text" placeholder="Email address" name="email" id="newsletter" class="input-text required-entry validate-email"><br>
+		<input type="submit" value="JOIN US">
+	</form>
+</div>
+
+<?php /*
+<div class="homepage-categories">
+	<ul>
+		<li class="cat-1"><a href="/mens-diamond-jewelry"><span><?php echo $this->__('Mens Jewelry'); ?></span></a></li>
+		<li class="cat-2"><a href="/womens-diamond-jewelry"><span><?php echo $this->__('Womens Jewelry'); ?></span></a></li>
+		<li class="cat-3"><a href="/pre-set-diamond-engagement-rings-1"><span><?php echo $this->__('Bridal Rings'); ?></span></a></li>
+		<li class="cat-4"><a href="/mens-apparel"><span><?php echo $this->__('Apparel'); ?></span></a></li>
+	</ul>
+</div>
+*/ ?>
+
+<div class="clear"></div>
+<br><br><br><br><br>
+
+<?php /*
+<div class="homepage-callouts">
+	<div class="callout-box celeb-box">
+		<a href="/blog/celebrity-diamond-jewelry/">
+			<span class="line-1"><?php echo $this->__('Celebrity Jewelry'); ?><br><?php echo $this->__('Collection'); ?></span>
+			<span class="line-2"><?php echo $this->__('View our exclusive celebrity jewelry collection'); ?><br><?php echo $this->__('worn by Nicki Minaj and many more'); ?></span>
+		</a>
+	</div>
+	<div class="callout-box cust-box">
+		<a href="/custom-jewelry">
+			<span class="line-1"><?php echo $this->__('Custom Jewelry'); ?><br><?php echo $this->__('Designer'); ?></span>
+			<span class="line-2"><?php echo $this->__('You draft it, we craft it.'); ?><br><?php echo $this->__('Design your own custom piece now!'); ?></span>
+		</a>
+	</div>
+</div>
+*/ ?>
+
+<?php /*
+<!-- BEGIN: buySAFE Seal -->
+<script src="https://seal.buysafe.com/private/rollover/rollover.js"></script>
+<span id="BuySafeSealSpan"></span>
+<script type="text/javascript">
+  buySAFE.Hash = "8q7tsSQNpWW0V%2FRRsPCnQKXlWkIkRup8w1Fbdda3Rbq7LrqILX7py3qOYALlLxk4t4rO7QtsHL3LPdn2iINXRQ%3D%3D";
+  WriteBuySafeSeal("BuySafeSealSpan", "GuaranteedSeal");
+</script>
+<!-- END: buySAFE Seal -->
+*/ ?>
+
+<?php /*
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.bxslider').bxSlider({
+			pager: false,
+			controls: false,
+			auto: true,
+			mode: 'fade',
+			speed: 2000
+		});
+		jQuery('#extship').toggle(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+	});
+</script>
+*/ ?>

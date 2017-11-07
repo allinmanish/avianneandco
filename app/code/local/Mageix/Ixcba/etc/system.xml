@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+   <tabs>
+        <mageix translate="label" module="ixcba">
+            <label>Mageix&#8482; Extensions</label>
+            <sort_order>100</sort_order>
+        </mageix>
+    </tabs>
+    <sections>
+        <ixcba translate="label" module="ixcba">
+            <label>Inline IXCBA&#8482; Settings</label>
+            <tab>mageix</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <mageix_group translate="label" module="ixcba">
+                    <label>Inline IXCBA&#8482; Cart Link Status</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>
+						<![CDATA[<br />
+						<div class="custom-options">
+							<div class="box">
+								<p class="grand-total"><br /><b>Cart Link Status</b></p>
+								<p>You may use this enable or disable the Checkout By Amazon button on the cart page to force all customers go through your one page ckeckout. Please note Checkout By Amazon will still be active and available at payment methods step. Use the Enabled switch in the General block to completely disable this payment method.</p>
+							</div>
+						</div>
+						]]>
+					</comment>
+                    <fields>
+                        <inline_ixcba_enabled translate="label">
+                            <label>Enable Cart Button</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>You may use this enable or disable the Checkout By Amazon button on the cart page to require all customers go through your checkout flow.</comment>
+                        </inline_ixcba_enabled>
+                    </fields>
+                </mageix_group>
+				<mageix_payment translate="label" module="ixcba">
+                    <label>Inline IXCBA&#8482; Amazon Details</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1050</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<comment>
+						<![CDATA[<br />
+						<div class="custom-options">
+							<div class="box">
+								<p class="grand-total"><br /><b>Configuring IXCBA for Checkout by Amazon</b></p>
+								<p>To configure Checkout by Amazon&trade; you will need to enter your Checkout by Amazon&trade; Merchant ID, AWS Access Key ID, and AWS Secret Access Key</p>
+								<p>If you do not already have a Checkout by Amazon&trade; account, click here to create one now. <a href="https://sellercentral.amazon.com/gp/on-board/workflow/Registration/login.html/902-0586098-4611057?passthrough%2Fsource=AmazonCheckout&passthrough%2Fld=RPVARIENA2ZZYWSJ0WMID8&passthrough%2Faccount=cba&passthrough%2FsuperSource=OAR&passthrough%2FmarketplaceID=AZ4B0ZS3LGLX" target="_blank">Sign-Up</a></p>
+								<p>To locate your Merchant ID, sign in to your Seller Central Checkout by Amazon&trade; account and click <b>Settings > Checkout Pipeline Settings.</b></p>
+								<p>To locate your AWS Access Key ID and AWS Secret Access Key, sign in to your Seller Central Checkout by Amazon&trade; account and click <b>Integration > AWS Key.</b> Click the link to read the Amazon Web Services Customer Agreement, and then click the check box, if you are setting up a new AWS Access Key ID.</p>
+								<p>To enable XML Order Reports click <b>Settings > Checkout Pipeline Settings</b>, and then clicking Edit under the Order Report Settings section. Select <u>Order Report Type</u> as XML to get XML Order Reports using SOAP APIs. Configure your downloads for <u>hourly.</u></p>
+								<p>For additional information on setting up your Checkout by Amazon account, <a href="https://payments.amazon.com/sdui/sdui/business?sn=cba/faq" target="_blank">Click Here - FAQ.</a></p>
+								<p><br /><a href="https://sellercentral.amazon.com/gp/on-board/workflow/Registration/login.html/902-0586098-4611057?passthrough%2Fsource=AmazonCheckout&passthrough%2Fld=RPVARIENA2ZZYWSJ0WMID8&passthrough%2Faccount=cba&passthrough%2FsuperSource=OAR&passthrough%2FmarketplaceID=AZ4B0ZS3LGLX" target="_blank">Signup for Checkout by Amazon</a><br /><br /></p>
+							</div>
+						</div>
+						]]>
+					</comment>
+                    <fields>
+						<active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/active</config_path>
+							<comment>Use this to turn IXCBA module to completely ON/OFF.</comment>
+                        </active>
+						<title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/title</config_path>
+                        </title>
+                        <country translate="label">
+                            <label>Country</label>
+                            <frontend_type>select</frontend_type>
+   							<source_model>Mageix_Ixcba_Model_Adminhtml_Source_Country</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/country</config_path>
+                        </country>
+                        <merchantid translate="label">
+						  <label>Merchant ID</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>7</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/merchantid</config_path>
+						  <comment>Seller Central -> Settings -> Checkout Pipeline Settings</comment>
+						</merchantid>
+						<sandbox_mode translate="label">
+                            <label>Sandbox Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/sandbox_mode</config_path>
+							<comment>Make sure this is set to "No" for Production mode.</comment>
+                        </sandbox_mode>
+						<merchantname translate="label">
+						  <label>Merchant Name</label>
+						  <frontend_type>text</frontend_type>
+						  <sort_order>5</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/merchantname</config_path>
+						</merchantname>
+						<secretkeyid translate="label">
+						  <label>AWS Secret Key ID</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>11</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/secretkeyid</config_path>
+						  <comment>Seller Central -> Integration -> Secret Key</comment>
+						</secretkeyid>
+						<accesskeyid translate="label">
+						  <label>AWS Access Key ID</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>10</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/accesskeyid</config_path>
+						  <comment>Seller Central -> Integration -> Access Key</comment>
+						</accesskeyid>
+						<enable_comments translate="label">
+							<label>Enable Gift Information</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>90</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<config_path>payment/ixcba/enable_comments</config_path>
+							<comment>Enables or Disables gift section from frontend.</comment>
+						</enable_comments>
+						<sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/sort_order</config_path>
+							<comment>The sort order of the Checkout By Amazon button on cart page.</comment>
+                        </sort_order>
+						<weight_unit translate="label">
+                            <label>Catalog Weight Unit</label>
+                            <frontend_type>select</frontend_type>
+   							<source_model>Mageix_Ixcba_Model_Adminhtml_Source_Unit</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/weight_unit</config_path>
+							<comment>Select the weight unit of products in cart sent to Amazon. This should be same unit used by your system catalog.</comment>
+                        </weight_unit>
+                        <enable_ga translate="label">
+							<label>Sync Orders with Google Analytics</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>120</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/enable_ga</config_path>
+							<comment>Enable Google Analytics from Google API first before enabling this switch.</comment>
+						</enable_ga>
+						<enable_save_xmls translate="label">
+							<label>Save Debug XML</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>130</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/enable_save_xmls</config_path>
+							<comment>Enable saving order XMLs for debugging purposes.</comment>
+						</enable_save_xmls>
+						<delete_xml_period translate="label">
+                            <label>Delete Debug XML Every</label>
+                            <frontend_type>select</frontend_type>
+   							<source_model>Mageix_Ixcba_Model_Adminhtml_Source_Deletexml</source_model>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/delete_xml_period</config_path>
+							<comment>Select period for debugging XMLs to be deleted.</comment>
+                        </delete_xml_period>
+                    </fields>
+                </mageix_payment>
+				<mageix_mws translate="label" module="ixcba">
+                    <label>Inline IXCBA&#8482; Marketplace Web Services (MWS)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1080</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<comment>
+						<![CDATA[<br />
+						<div class="custom-options">
+							<div class="box">
+								<p class="grand-total"><br /><b>Order Management with Marketplace Web Services (MWS)</b></p>
+								<p>MWS is integrated into IXCBA to enable synchronous order management between Magento and Amazon. Order Management actions such as Ship, Cancel, Credit Memo (Refund)are synced with Amazon when MWS is activated here. </p>
+								<p><br /><a href="https://sellercentral.amazon.com/gp/mws/registration/register.html" target="_blank">Signup for Marketplace Web Services (MWS)</a><br /></p>
+								<p>Check "I want to use an application to access my Amazon seller account with MWS." option</b> Enter <b> "Inline IXCBA by Mageix"</b> in Application Name:.</p>
+								<p>Check "I want to use an application to access my Amazon seller account with MWS." option</b> Enter <b>"4018-0840-0978"</b> Application's Developer Account Number:</p>
+								</br>								
+								<p>To locate your MWS Access Key ID and MWS Secret Access Key, sign in to your Seller Central Checkout by Amazon&trade; account and click <b>Integration > MWS Access Key.</b></p>
+							</div>
+						</div>
+						]]>
+					</comment>
+                    <fields>
+						<mwssecretkeyid translate="label">
+						  <label>MWS Secret Key ID</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>80</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/mwssecretkeyid</config_path>
+						  <comment>Seller Central -> Integration -> MWS Secret Key</comment>
+						</mwssecretkeyid>
+						<mwsaccesskeyid translate="label">
+						  <label>MWS Access Key ID</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>70</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/mwsaccesskeyid</config_path>
+						  <comment>Seller Central -> Integration -> MWS Access Key</comment>
+						</mwsaccesskeyid>
+						<merchant_token translate="label">
+						  <label>Merchant Token</label>
+						  <frontend_type>obscure</frontend_type>
+						  <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+						  <sort_order>85</sort_order>
+						  <show_in_default>1</show_in_default>
+						  <show_in_website>1</show_in_website>
+						  <show_in_store>0</show_in_store>
+						  <config_path>payment/ixcba/merchant_token</config_path>
+						  <comment>Seller Central -> Settings -> Account Info</comment>
+						</merchant_token>
+						<email_for_failure_msg_amazon translate="label">
+                            <label>Email for Amazon Feed Failure</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<config_path>payment/ixcba/email_for_failure_msg_amazon</config_path>
+							<comment>Email address where notifications about Amazon MWS Feed failure will be sent to. If none is entered here, the admin default will be used.</comment>
+                        </email_for_failure_msg_amazon>
+                    </fields>
+                </mageix_mws>
+				<mageix_themes translate="label" module="ixcba">
+                    <label>Inline IXCBA&#8482; Theme</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<comment>
+						<![CDATA[<br />
+						<div class="custom-options">
+						<div class="box">
+						<p class="grand-total"><br /><b>Frontend Customization</b></p>
+						<p>You may use this section to customize the style and colors of the paymnent page as to suit your theme.</p>
+						
+						</div>
+						</div>
+						]]>
+					</comment>
+                    <fields>
+						<css_theme_ixcba_section_inline translate="label">
+                            <label>Inline Section Header</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>125</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                        </css_theme_ixcba_section_inline>
+						<inline_bg_color translate="label">
+							<label>Background Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>126</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #E6E0C5</comment>
+						</inline_bg_color>
+						<inline_font_style translate="label">
+							<label>Font Style</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>127</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: Georgia, "Times New Roman", Times, serif</comment>
+						</inline_font_style>
+						<inline_font_color translate="label">
+							<label>Font Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>128</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #000000</comment>
+						</inline_font_color>
+						<css_theme_ixcba_section_inline_message translate="label">
+                            <label>Inline Section Messages</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>135</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                        </css_theme_ixcba_section_inline_message>
+						<inline_message_bg_color translate="label">
+							<label>Background Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>136</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #F7EBBE</comment>
+						</inline_message_bg_color>
+						<inline_message_font_style translate="label">
+							<label>Font Style</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>137</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: Georgia, "Times New Roman", Times, serif</comment>
+						</inline_message_font_style>
+						<inline_message_font_color translate="label">
+							<label>Font Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>138</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #66666E</comment>
+						</inline_message_font_color>
+						<inline_message_border_color translate="label">
+							<label>Border Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>139</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #F0C36D</comment>
+						</inline_message_border_color>
+						<css_theme_ixcba_section_buttons translate="label">
+                            <label>Inline Section Buttons</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                        </css_theme_ixcba_section_buttons>
+						<buttons_bg_color translate="label">
+							<label>Background Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>175</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #0088ff</comment>
+						</buttons_bg_color>
+						<buttons_font_style translate="label">
+							<label>Font Style</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>176</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: Georgia, "Times New Roman", Times, serif</comment>
+						</buttons_font_style>
+						<buttons_font_color translate="label">
+							<label>Font Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>177</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #FFFFFF</comment>
+						</buttons_font_color>
+						<buttons_border_color translate="label">
+							<label>Border Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>178</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #3B5998</comment>
+						</buttons_border_color>
+						<css_theme_ixcba_section_header translate="label">
+                            <label>Ajax Header</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                        </css_theme_ixcba_section_header>
+						<header_bg_color translate="label">
+							<label>Background Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>205</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #E6E0C5</comment>
+						</header_bg_color>
+						<header_font_style translate="label">
+							<label>Font Style</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>206</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: Georgia</comment>
+						</header_font_style>
+						<header_font_color translate="label">
+							<label>Font Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>207</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #000000</comment>
+						</header_font_color>
+						<header_border_color translate="label">
+							<label>Border Color</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>208</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Default: #3B5998</comment>
+						</header_border_color>
+						<css_theme_ixcba_agreement_popup translate="label">
+                            <label>Agreement Lightbox Width</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+                        </css_theme_ixcba_agreement_popup>
+						<agreement_width translate="label">
+							<label>Width of Agreements Lightbox</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>251</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Enter in pixels. Minimum 500</comment>
+						</agreement_width>
+                    </fields>
+                </mageix_themes>
+            </groups>
+        </ixcba>
+    </sections>
+</config>

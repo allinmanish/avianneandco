@@ -1,0 +1,55 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php if($this->canShowBlock()): ?>
+	<div class="parent-filter">
+	    <div class="box layered-nav">       
+	        <?php if($this->canShowOptions()): ?>
+	            <div class="narrow-by">
+		            <dl id="narrow-by-list">
+		                <?php $_filters = $this->getFilters() ?>
+		                <?php foreach ($_filters as $_filter): ?>
+		                <?php if($_filter->getName()=="Price"): continue; endif; ?>
+		                <?php if($_filter->getItemsCount()): ?>
+		                <dt><?php echo $this->__($_filter->getName()) ?></dt>
+		                <dd>
+		                <?php echo $_filter->getHtml() ?>
+		                </dd>
+		                <?php endif; ?>
+		                <?php endforeach; ?>
+		            </dl>
+		            <script type="text/javascript">decorateDataList('narrow-by-list')</script>
+	            </div>
+	            <?php endif; ?>
+	    </div>
+    </div>
+    <div class="currently-shopping-by">
+    	<?php echo $this->getStateHtml() ?>
+    </div>
+<?php else: ?>    
+<style type="text/css">
+	.nav-button-filter { display: none }    
+</style>
+<?php endif; ?>
+<!-- [ends] .browse-by // -->

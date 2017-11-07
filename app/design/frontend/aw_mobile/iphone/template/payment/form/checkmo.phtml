@@ -1,0 +1,32 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<fieldset class="form-list">
+    <ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none">
+        <li>
+                <?php if ($this->getMethod()->getPayableTo()): ?>
+                    <?php echo $this->__('<label>Make Check payable to</label>: %s', $this->getMethod()->getPayableTo()) ?><br />
+                <?php endif; ?>
+                <?php if ($this->getMethod()->getMailingAddress()): ?>
+                    <div><label><?php echo Mage::helper('payment')->__('Send Check to:') ?></label></div>
+                    <div class="checkmo-mailing-address">
+                        <?php echo nl2br($this->getMethod()->getMailingAddress()) ?>
+                    </div>
+                <?php endif; ?>
+        </li>
+    </ul>
+</fieldset>

@@ -1,0 +1,27 @@
+<?php
+ /**
+ * GoMage.com
+ *
+ * GoMage Feed Pro
+ *
+ * @category     Extension
+ * @copyright    Copyright (c) 2010-2012 GoMage.com (http://www.gomage.com)
+ * @author       GoMage.com
+ * @license      http://www.gomage.com/licensing  Single domain license
+ * @terms of use http://www.gomage.com/terms-of-use
+ * @version      Release: 3.0
+ * @since        Class available since Release 3.0
+ */
+?>
+
+<div id="gfeed-loader" style="display:none;">
+    <div class="loader">
+    	<img src="<?php echo $this->getSkinUrl('images/ajax-loader-tr.gif') ?>" alt="<?php echo Mage::helper('adminhtml')->__('Loading...') ?>"/>
+    	<br/>
+    	<?php echo $this->__('Please wait...'); ?>
+    	<br/>
+    	<span id="gfeed-loader-percent">0</span><?php echo $this->__('% complete') ?>
+    	<br/>
+    	<?php echo $this->__('Time spent'); ?> <span id="gfeed-loader-time"><?php echo $this->__('%smin %ssec', 0, 0); ?></span>
+    </div>
+</div> 

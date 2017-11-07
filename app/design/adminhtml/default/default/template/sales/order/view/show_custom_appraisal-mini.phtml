@@ -1,0 +1,241 @@
+<script src="/js/jquery/jquery-1.7.1.min.js"></script>
+<script src="/js/html2canvas.js"></script>
+
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 900px;
+	height: 1120px;
+    color: #15256c;
+}
+.background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.logo {
+	position: absolute;
+	top: 97px;
+	left: 110px;
+}
+.text-address {
+	position: absolute;
+	right: 27px;
+	top: 132px;
+	text-align: right;
+	font-size: 24px;
+	line-height: 23px;
+}
+.text-order {
+	position: absolute;
+	top: 186px;
+	left: 83px;
+	text-align: left;
+	width: 817px;
+	font-size: 26px;
+	line-height: 22px;
+}
+.photo {
+	width: 300px;
+	font-size: 13px;
+	text-align: center;
+	height: 301px;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+}
+.photo > img {
+	background-color: white;
+	border-right: 1px solid #C0C0C0;
+	border-top: 1px solid #C0C0C0;
+	width: 299px;
+}
+.customer {
+	font-size: 29px;
+	line-height: 42px;
+	width: 492px;
+	margin-left: 25px;
+	margin-top: -7px;
+}
+.product {
+	position: absolute;
+	top: 487px;
+	left: 83px;
+	width: 817px;
+	height: 710px;
+}
+.specs {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	border: 0px none;
+	width: 817px;
+}
+.specs-table {
+	width: 818px;
+	border-collapse: collapse;
+	margin-left: 82px;
+}
+.specs-table tr {
+    border-bottom: 1px solid #c4c1bc;
+}
+.specs-table tr:nth-child(even) {
+	background: #eeeded;
+}
+.specs-table tr:nth-child(odd) {
+	background: #ffffff;
+}
+.specs-table tr th {
+    font-weight: bold;
+    font: 8px Verdana;
+    text-align: left;
+    padding-left: 6px;
+}
+.specs-table tr td {
+	padding: 2px 0px 1px 6px;
+	font: 25px Verdana;
+	color: #666;
+	border-left: 1px solid #c4c1bc;
+	height: 38px;
+	padding-left: 16px;
+	width: 50%;
+}
+.specs-table tr td:n-thchild(odd) {
+	border-right: 0;
+}
+.prodname {
+	height: 166px;
+	padding-left: 14px;
+	font-size: 33px;
+	line-height: 1.3em;
+	overflow: hidden;
+}
+.sign {
+	text-align: center;
+	width: 462px;
+	margin-left: 32px;
+	margin-top: 5px;
+}
+.sign .susan {
+	margin-top: 14px;
+	font-size: 26px;
+}
+.sign .replvalue {
+	color: #a80007;
+	font-size: 33px;
+	margin-top: 12px;
+}
+</style>
+
+<body>
+
+<img src="<?php echo $this->getSkinUrl('images/miniappr_bg.jpg') ?>" class="background">
+
+<div class="wrapper">
+	
+	<table cellspacing="0" cellpadding="0" border="0" style="margin-left: 82px;margin-top: 96px;width: 818px;"><tbody>
+		<tr>
+			<td style="width: 433px; text-align: center;">
+				<img src="<?php echo $this->getSkinUrl('images/miniappr_logo.png') ?>" style="margin-left: 6px">
+			</td>
+			<td style="vertical-align: bottom; font-size: 24px;">
+				28w 47th st - New York, NY 100036
+			</td>
+		</tr>
+	</tbody></table>
+	
+	<table cellspacing="0" cellpadding="0" border="0" style="margin-left: 82px;margin-top: 29px;width: 818px;"><tbody>
+		<tr>
+			<td style="width: 301px;">
+				<div class="photo">
+					<img src="<?php 
+						echo $appr_type == 'standard' 
+							? $_product->getSmallImage() != null && $_product->getSmallImage() != "no_selection"
+								? $this->helper('catalog/image')->init($_product, 'image')->resize(300, 300)->setQuality(85)
+								: ''
+							: $attributes['Thumbnail']['value'];	?>" />
+				</div>
+			</td>
+			<td style="vertical-align: top;">
+				<div class="customer">
+					Certificate #<?php echo $certificate_number ?><br>
+					<?php echo implode(" ", $customer) ?><br>
+					<?php echo nl2br($address) ?><br>
+				</div>
+			</td>
+		</tr>
+	</tbody></table>
+
+	<div style="height: 464px; overflow: hidden;">
+		<table cellspacing="0" class="specs-table"><tbody>
+		<?php 
+		$i = 0;
+		foreach ($attributes as $attribute) {
+			if ($attribute->getIsVisibleOnFront() && !in_array($attribute->getAttributeCode())) {
+				$value = $attribute->getFrontend()->getValue($_product);
+		
+				if (!$_product->hasData($attribute->getAttributeCode())) {
+					$value = Mage::helper('catalog')->__('N/A');
+				} elseif ((string)$value == '') {
+					$value = Mage::helper('catalog')->__('No');
+				} elseif ($attribute->getFrontendInput() == 'price' && is_string($value)) {
+					$value = Mage::app()->getStore()->convertPrice($value, true);
+				}
+		
+				if (is_string($value) && strlen($value) && $value!='No' && $i<=10) {
+				$i++;
+		?>
+		<tr <?php if ($i == 1)	echo 'style="border-top: 1px solid #c4c1bc;"'?>>
+			<td style="border-left: 0 none;"><b><?php echo $this->htmlEscape($this->__($attribute->getStoreLabel())) ?></b></td>
+			<td><?php echo $_helper->productAttribute($_product, $value, $attribute->getAttributeCode()) ?></td>
+		</tr>
+		<?php 
+				}
+			}
+		}
+		?>
+		</tbody></table>
+	</div>
+
+	<table cellspacing="0" cellpadding="0" border="0" style="margin-left: 82px; width: 818px; height: 234px;"><tbody>
+		<tr>
+			<td style="width: 324px;">
+				<div class="prodname">
+		            <?php echo $appr_type == 'standard' 
+							? $this->htmlEscape($_product->getName()) 
+							: $product_title	?>
+				</div>
+			</td>
+			<td>
+				<div class="sign">
+					<img src="<?php echo $this->getSkinUrl('images/miniappr_sign.png') ?>">
+					<div class="susan">Susan H. Arnold &ndash; Certified Gemologist</div>
+					<div class="replvalue">Replacement Value : 
+					<?php
+						echo $appr_value != ''  
+							? $appr_value
+							: ($appr_type == 'standard' 
+								? Mage::helper('core')->currency($_product->getPrice(),true,false)
+								: '');
+					?></div>
+				</div>
+			</td>
+		</tr>
+	</tbody></table>
+    
+</div>
+
+<img id="canvasImg" />
+
+<script>
+html2canvas(document.body, {
+	width: 900,
+	height: 1200,
+	onrendered: function(canvas) {
+		var dataURL = canvas.toDataURL();
+		document.getElementById('canvasImg').src = dataURL;
+		$('.wrapper, .background').hide();
+	}
+});
+</script>
+</body>

@@ -1,0 +1,78 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<!--<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like-box href="http://www.facebook.com/AvianneJewelers" width="237" show_faces="true" border_color="#C4C1BC" stream="false" header="true"></fb:like-box>-->
+
+
+
+
+
+
+<div class="box base-mini mini-cartz">
+    <div class="head">
+        <h4><?php echo $this->__('Whos Wearing Avianne & Co?') ?></h4>
+        </div>
+    
+ <a href="http://www.avianneandco.com/blog/celebrity-diamond-jewelry/">    <img src="<?php echo $this->getSkinUrl('images/Left_Callout.jpg')?>" width="233" alt="<?php echo __('Celebrity Diamond Jewelry is our Specialty!') ?>" style="display:block;" /></a>
+<center>Jamie Presley <br>See more  <a href="http://www.avianneandco.com/blog/celebrity-diamond-jewelry/">Celebrity Diamond Jewelry</a></center>	
+
+
+
+</div>
+
+<div class="box base-mini mini-cartz">
+    <div class="head">
+        <h4><?php echo $this->__('Design Your Own Custom Jewelry') ?></h4>
+    </div>
+    <div style="position:relative;">
+		<img alt="" src="<?php echo $this->getSkinUrl('images/callout1.jpg')?>" id="left_callout_1">
+		<img alt="" src="<?php echo $this->getSkinUrl('images/callout2.png')?>" id="left_callout_2">
+		<p id="left_callout_p">You dream it,<br />We produce it.<br />Shop <a href="/mens-custom-diamond-jewelry">Custom Jewelry</a>.</p>
+	</div>
+</div>
+
+
+<?php /*
+<?php $productId =trim(Mage::getStoreConfig('catalog/summersale/productId')); ?>
+<?php if (isset($productId)):?>
+
+<div class="box base-mini mini-cartz">
+    <div class="head">
+        <h4 style="color:#15256c; text-align:left; font-weight:normal;"> <?php echo $this->__('Summer Sale') ?> </h4>
+    </div>
+	<fieldset class="content" style="color:#000; text-align:center; background:transparent; padding:0 0 0 0;">
+		<?php  
+
+		$product=Mage::getModel("catalog/product")->load($productId); ?>
+		
+		<a href="http://www.avianneandco.com/onyx-ball-bead-bracelet"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>catalog/product<?php echo $product->getImage()?>" alt="<?php echo $product->getName() ?>" width="150" padding-top:"5px" /></a>
+ <br />		
+		<span style="color:#d30000;">Save 50% </span> on <b> <?php echo $product->getName()?> </b> Starting at <?php echo  trim($this->helper('checkout')->formatPrice($product->getFinalPrice())); ?>
+	</fieldset>
+</div>
+<?php endif; ?>
+*/

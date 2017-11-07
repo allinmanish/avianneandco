@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+  	<modules>
+    	<WSM_Rank>
+      		<active>true</active>
+      		<codePool>local</codePool>
+    	</WSM_Rank>
+  	</modules>
+</config>

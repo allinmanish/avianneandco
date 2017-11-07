@@ -1,0 +1,80 @@
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $orderIds = explode(',', $this->getRequest()->getParam('return_list_orders')); ?>
+
+<? /*
+<script src="//code.jquery.com/jquery-1.8.1.min.js"></script>
+<script>
+$(document).ready(function() {
+	var elems = $('table.retlist tr[rel]'), count = elems.length;
+	elems.each(function() {
+		r = $(this).attr('rel');
+		if (r > 1) {
+			$clone = $(this).clone();
+			$clone.insertAfter($(this));
+		}
+		if (!--count) {
+			$('table.retlist tr[rel]').each(function( i ) {
+				if (i%6==0 && i!=0) {
+					$('<tr class="spacer"><td colspan="3">&nbsp;</td></tr>').insertBefore($(this));
+				}
+			});
+		}
+	});
+});
+</script>
+*/ ?>
+
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 680px;
+    color: black;
+	font-family: Arial;
+	line-height: 1.5em;
+}
+.p_image { border: 1px solid #dadfe0; margin-left: 4px; }
+</style>
+
+<body>
+
+<div class="wrapper">
+	<br>
+	<div style="text-align: center; height: 40px; line-height: 22px; font-size: 36px;">Return List &ndash; <?php echo date('m/d/Y'); ?></div>
+	
+		<?php foreach ($orderIds as $orderId): ?>
+		<hr><?php
+			$resItem = array();
+			$order = Mage::getModel('sales/order')->load($orderId);
+			if ($order->getId()) {
+				// $_totalData = $order->getData();
+				echo 'Customer Name: <b>' . $order->getCustomerName() . '</b><br>';
+
+				$i = 1;
+				$_history = $order->getAllStatusHistory(); 
+				foreach ($_history as $_historyItem) {
+					$comment = $_historyItem->getData('comment');
+				    if ( $i == 1 && substr($comment, 0, 15) == 'Return Received' ) {
+				        echo $comment . '<br>';
+				        $i++;
+				    }
+				}
+				echo '<br>';
+
+				$items = $order->getAllItems();
+				foreach ($items as $itemId => $item) {
+					$_product = Mage::getModel('catalog/product')->load($item->getProductId());
+					$resItem['image'][$item->getId()] = $this->helper('catalog/image')->init($_product, 'image')->resize(160, 160)->setQuality(75)->__toString();
+					$j = 1;
+					foreach ($resItem['image'] as $id => $img) {
+						if ( ($j > 1 && count($resItem['image']) > 1) || (count($resItem['image']) == 1) ) {
+							?><img src="<?php echo $img; ?>" class="p_image"><?php
+						} else {
+							$j++;
+						}
+					}
+				}
+			} ?>
+		<?php endforeach; ?>
+
+</body>

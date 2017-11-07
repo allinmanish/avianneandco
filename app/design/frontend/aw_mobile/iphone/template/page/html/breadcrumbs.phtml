@@ -1,0 +1,51 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */ 
+?>
+<?php if($crumbs && is_array($crumbs)):
+    unset($crumbs['home']);
+    if (Mage::registry('current_product')){
+        $lastK = null;
+        foreach ($crumbs as $k => $val){
+            if (!$val['link']){
+                unset($crumbs[$k]);
+            } else {
+                $lastK = $k;
+            }
+        }
+        $crumbs[$lastK]['last'] = true;
+    }
+    if (count($crumbs)):
+?>
+<h4 class="no-display"><?php echo $this->__("You are currently on:") ?></h4>
+<ul class="breadcrumbs" <?php if( (strpos($this->getRequest()->getModuleName(), "catalog")!==false) && ($this->getRequest()->getControllerName()=="category") ) { echo 'style="width: 200px;"'; } ?>>
+    <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
+        <li class="<?php echo $_crumbName ?>">
+        <?php if(@$_crumbInfo['link']): ?>
+            <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->htmlEscape(@$_crumbInfo['title']) ?>"><?php echo $this->htmlEscape(@$_crumbInfo['label']) ?></a>
+        <?php elseif(@$_crumbInfo['last']): ?>
+            <strong><?php echo $this->htmlEscape(@$_crumbInfo['label']) ?></strong>
+        <?php else: ?>
+            <?php echo $this->htmlEscape(@$_crumbInfo['label']) ?>
+        <?php endif; ?>
+        </li>
+        <?php if(!@$_crumbInfo['last']): ?>
+        <li> / </li>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</ul>
+  <?php endif; ?>
+<?php endif; ?>

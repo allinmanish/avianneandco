@@ -1,0 +1,47 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php $_product = $this->getProduct(); ?>
+<?php if (count($this->getGalleryImages()) > 0): ?>
+<div class="rslides_container">
+	<div class="rslides_inner_container">
+	    <ul class="rslides" id="slider1">
+	    <li>
+	        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_product->getImage())->resize(600, 600)->setQuality(75); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" title="" />
+	    </li>
+	    <?php foreach ($this->getGalleryImages() as $_image):	?>
+	    	<?php if($_image->getFile() == $_product->getImage()) continue; ?>
+	        <li>
+	        	<img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(600, 600)->setQuality(75); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" title="" />
+	        </li>
+	    <?php endforeach; ?>
+	    </ul>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+jQuery(function () {
+	jQuery("#slider1").responsiveSlides({
+		auto: false,
+		pager: true,
+		nav: true,
+		speed: 500,
+		maxwidth: 600,
+		namespace: "transparent-btns"
+	});
+});
+</script>

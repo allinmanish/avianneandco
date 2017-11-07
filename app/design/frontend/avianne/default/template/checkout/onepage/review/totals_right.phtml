@@ -1,0 +1,14 @@
+<?php if ($this->getTotals()): ?>
+        <?php $_colspan = 1; ?>
+        <?php 
+        	$result = $this->renderTotals(null, $_colspan);
+
+			$result = preg_replace('/Discount \((.*)?\)/', 'Coupons', $result);
+        	
+			$result = str_replace(array("Shipping & Handling (", "Federal Express - ", ")", "USPS APO/FPO Priority International - "), "", $result);
+  			
+        	echo $result;
+        ?>
+        <tr><td colspan="2"><div class="cart-delimiter"></div></td></tr>
+        <?php echo $this->renderTotals('footer', $_colspan); ?>
+<?php endif?>

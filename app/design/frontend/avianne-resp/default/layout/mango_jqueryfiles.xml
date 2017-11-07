@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>jqueryfiles/js/jquery-1.7.2.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>jqueryfiles/js/jquery-ui-1.8.21.custom.min.js</name>
+            </action>
+            
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>jqueryfiles/jQuery-noconflict.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>jqueryfiles/css/smoothness/jquery-ui-1.8.21.custom.css</name>
+            </action>
+        </reference>
+    </default>
+    
+    <catalog_product_view>
+            <reference name="head">
+    			<action method="removeItem">
+                	<type>skin_js</type>
+                	<name>jqueryfiles/js/jquery-ui-1.8.21.custom.min.js</name>
+        		</action>
+        		<action method="removeItem">
+                <type>skin_js</type>
+	                <name>jqueryfiles/js/jquery-1.7.2.min.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_js</type>
+	                <name>jqueryfiles/jQuery-noconflict.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_css</type>
+	                <name>jqueryfiles/css/smoothness/jquery-ui-1.8.21.custom.css</name>
+	            </action>
+        	</reference>
+    </catalog_product_view>
+    
+    <cms_page>
+        <reference name="head">
+    			<action method="removeItem">
+                	<type>skin_js</type>
+                	<name>jqueryfiles/js/jquery-ui-1.8.21.custom.min.js</name>
+        		</action>
+        		<action method="removeItem">
+                <type>skin_js</type>
+	                <name>jqueryfiles/js/jquery-1.7.2.min.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_js</type>
+	                <name>jqueryfiles/jQuery-noconflict.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_css</type>
+	                <name>jqueryfiles/css/smoothness/jquery-ui-1.8.21.custom.css</name>
+	            </action>
+        	</reference>
+    </cms_page>
+    
+    <checkout_cart_index>
+        <reference name="head">
+    			<action method="removeItem">
+                	<type>skin_js</type>
+                	<name>jqueryfiles/js/jquery-ui-1.8.21.custom.min.js</name>
+        		</action>
+        		<action method="removeItem">
+                <type>skin_js</type>
+	                <name>jqueryfiles/js/jquery-1.7.2.min.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_js</type>
+	                <name>jqueryfiles/jQuery-noconflict.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_css</type>
+	                <name>jqueryfiles/css/smoothness/jquery-ui-1.8.21.custom.css</name>
+	            </action>
+        	</reference>
+    </checkout_cart_index>
+    
+    <checkout_onepage_index>
+        <reference name="head">
+    			<action method="removeItem">
+                	<type>skin_js</type>
+                	<name>jqueryfiles/js/jquery-ui-1.8.21.custom.min.js</name>
+        		</action>
+        		<action method="removeItem">
+                <type>skin_js</type>
+	                <name>jqueryfiles/js/jquery-1.7.2.min.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_js</type>
+	                <name>jqueryfiles/jQuery-noconflict.js</name>
+	            </action>
+	            <action method="removeItem">
+	                <type>skin_css</type>
+	                <name>jqueryfiles/css/smoothness/jquery-ui-1.8.21.custom.css</name>
+	            </action>
+        	</reference>
+    </checkout_onepage_index>
+    
+</layout>

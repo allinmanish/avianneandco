@@ -1,0 +1,61 @@
+<?php 
+$data = $this->getRequest()->getPost();
+$appr_type = $data['appr_type']; 
+$customer = array(
+		'first_name' => $data["first_name"],
+		'last_name' => $data["last_name"],
+		);
+$address = $data["address"];
+$certificate_number = $data['certificate_number'];
+$product_title = $data["product_title"];
+$appr_value = $data["appraised_value"];
+
+if($appr_type == 'standard' && !empty($data["options"]["standard"]["item_sku"])) 
+{
+	$sku = $data["options"]["standard"]["item_sku"];
+	$_product = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
+	$_helper = $this->helper('catalog/output');
+	$attributes = $_product->getAttributes();
+} 
+elseif ($appr_type == 'custom') 
+{
+	$attributes = array();
+	foreach ($data['options']['custom'] as $k=>$v)
+		if ($v)
+			$attributes[$k] = array('label' => $k, 'value' => $v);
+			
+	if(isset($_FILES['product_image']['name']) && $_FILES['product_image']['name'] != '')
+	{
+	    try
+	    {       
+	        $path = Mage::getBaseDir().DS.'media'.DS.'appraisals'.DS;  //desitnation directory     
+	        $fname = $_FILES['product_image']['name']; //file name                        
+	        $uploader = new Varien_File_Uploader('product_image'); //load class
+	        $uploader->setAllowedExtensions(array('jpg','jpeg','png','gif', 'bmp', 'tiff')); //Allowed extension for file
+	        $uploader->setAllowCreateFolders(true); //for creating the directory if not exists
+	        $uploader->setAllowRenameFiles(false); //if true, uploaded file's name will be changed, if file with the same name already exists directory.
+	        $uploader->setFilesDispersion(false);
+	        $uploader->save($path,$fname); //save the file on the specified path
+	        
+	        $attributes['Thumbnail'] = array('label'=>'Thumbnail', 'value'=>DS.'media'.DS.'appraisals'.DS.$fname);
+	    }
+	    catch (Exception $e)
+	    {
+	        echo '<hr>Error Message: '.$e->getMessage().'<hr>';
+	    }
+	}
+
+} 
+else {
+	die('Either Appraisal Type or SKU are not set. <br>Please <a href="/index.php/admin/sales_order/custappr/">go back</a> and try again.');
+}
+?>
+
+<?php 
+	if ($data['appr_size'] == 'mini')
+	{
+		include ('show_custom_appraisal-mini.phtml'); 
+	} else {
+		include ('show_custom_appraisal-full.phtml'); 
+	}
+?>

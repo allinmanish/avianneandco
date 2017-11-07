@@ -1,0 +1,142 @@
+<?php
+
+class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Action
+{
+    public function indexAction()
+    {
+        die('ajaxcontroller!');
+        
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+	
+	public function save_billingAction()
+	{
+		$billing_data = $this->getRequest()->getPost('billing');
+		$shipping_data = $this->getRequest()->getPost('shipping');
+		
+		$helper = Mage::helper('onestepcheckout/checkout');
+		
+		$helper->load_exclude_data($billing_data);
+		$helper->load_exclude_data($shipping_data);
+		
+		if(isset($billing_data['use_for_shipping']) && $billing_data['use_for_shipping'] == '1')	{
+			$country_id = $billing_data['country_id'];
+			$city = $billing_data['city'];
+			$postcode = $billing_data['postcode'];
+			$region_id = $billing_data['region_id'];
+			$region = $billing_data['region'];
+		}
+		else	{
+			$country_id = $shipping_data['country_id'];
+			$city = $shipping_data['city'];
+			$postcode = $shipping_data['postcode'];
+			$region_id = $shipping_data['region_id'];
+			$region = $shipping_data['region'];
+		}
+		
+		$this->_getOnepage()->getQuote()->getShippingAddress()
+			->setCountryId($country_id)
+			->setCity($city)
+			->setPostcode($postcode)
+			->setRegionId($region_id)
+			->setRegion($region)
+			->setCollectShippingRates(true);		
+		
+		
+		$customerAddressId = $billing_data['address_id'];		
+		$result = $this->_getOnepage()->saveBilling($billing_data, $customerAddressId);
+
+		if($helper->differentShippingAvailable())	{
+			if(!isset($billing_data['use_for_shipping']) || $billing_data['use_for_shipping'] != '1')	{
+				$shipping_address_id = $shipping_data['address_id'];
+				$shipping_result = $this->_getOnepage()->saveShipping($shipping_data, $shipping_address_id);
+			}
+		}
+
+				
+		//echo '<pre>' . print_r($billing,1) . '</pre>';
+		$this->loadLayout(false);
+		$this->renderLayout();			
+		
+	}
+	
+	public function set_methods_separateAction()
+	{
+		$shipping_method = $this->getRequest()->getPost('shipping_method');
+		
+		if($shipping_method != '')	{
+			$result = $this->_getOnepage()->saveShippingMethod($shipping_method);			
+		}
+		
+		$payment_method = $this->getRequest()->getPost('payment_method');
+		
+		if($payment_method != '')	{		
+			try	{
+				$payment = $this->getRequest()->getPost('payment', array());
+				$payment['method'] = $payment_method;
+				$payment_result = $this->_getOnepage()->savePayment($payment);			
+			}
+			catch(Exception $e)	{
+				//die('Error: ' . $e->getMessage());
+				// Silently fail for now
+			}
+		}
+		
+		$this->loadLayout(false);
+		$this->renderLayout();	
+	}	
+	
+	public function set_methodsAction()
+	{
+		$shipping_method = $this->getRequest()->getPost('shipping_method');
+		
+		if($shipping_method != '')	{
+			$result = $this->_getOnepage()->saveShippingMethod($shipping_method);			
+		}
+		
+		$payment_method = $this->getRequest()->getPost('payment_method');
+		
+		if($payment_method != '')	{		
+			try	{
+				$payment = $this->getRequest()->getPost('payment', array());
+				$payment['method'] = $payment_method;
+				$payment_result = $this->_getOnepage()->savePayment($payment);			
+			}
+			catch(Exception $e)	{
+				//die('Error: ' . $e->getMessage());
+				// Silently fail for now
+			}
+		}
+		
+		$this->loadLayout(false);
+		$this->renderLayout();	
+	}
+	
+	public function set_payment_methodAction()
+	{
+		$payment_method = $this->getRequest()->getPost('payment_method');
+		$payment = array('method' => $payment_method);
+		$result = $this->_getOnepage()->savePayment($payment);
+			
+		$this->loadLayout(false);
+		$this->renderLayout();	
+	}	
+
+	public function set_shipping_methodAction()
+	{
+		$shipping_method = $this->getRequest()->getPost('shipping_method');
+		$result = $this->_getOnepage()->saveShippingMethod($shipping_method);
+				
+		$this->loadLayout(false);
+		$this->renderLayout();	
+	}
+	
+	
+	private function _getOnepage()
+	{
+		return Mage::getSingleton('checkout/type_onepage');
+	}
+}
+
+?>

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+  * @category   Mango
+ * @package    Mango_Redirect
+ * @copyright  Copyright (c) 2010 Mango Extensions
+ */
+-->
+<config>
+    <modules>
+        <Mango_Layered>
+            <version>0.1.0</version>
+        </Mango_Layered>
+    </modules>
+    <global>
+        <models>
+            <catalog>
+                <rewrite>
+                    <layer_filter_item>Mango_Layered_Model_Layer_Filter_Item</layer_filter_item>
+                </rewrite>
+                <rewrite>
+                    <layer_filter_category>Mango_Layered_Model_Layer_Filter_Category</layer_filter_category>
+                </rewrite>
+                <rewrite>
+                    <layer_filter_attribute>Mango_Layered_Model_Layer_Filter_Attribute</layer_filter_attribute>
+                </rewrite>
+            </catalog>
+
+             <catalog_resource_eav_mysql4>
+                <rewrite>
+                    <layer_filter_attribute>Mango_Layered_Model_Resource_Eav_Mysql4_Layer_Filter_Attribute</layer_filter_attribute>
+                </rewrite>
+                <!--rewrite>
+                    <product_collection>Mango_Layered_Model_Resource_Eav_Mysql4_Product_Collection</product_collection>
+                </rewrite-->
+            </catalog_resource_eav_mysql4>
+
+
+            <catalogsearch>
+                <rewrite>
+                    <layer_filter_attribute>Mango_Layered_Model_Catalogsearch_Layer_Filter_Attribute</layer_filter_attribute>
+                </rewrite>
+            </catalogsearch>
+
+
+        </models>
+
+        
+
+
+        <!--routers>
+            <catalog>
+                <rewrite>
+                    <product_compare>
+                        <to>Mango_Redirect/product_compare</to>
+                    </product_compare>
+                </rewrite>
+            </catalog>
+        </routers>
+        <blocks>
+            <checkout>
+                <rewrite>
+                    <cart>Mango_Redirect_Block_Cart</cart>
+                </rewrite>
+            </checkout>
+        </blocks-->
+
+    </global>
+     <!--frontend>
+        <routers>
+            <redirect>
+                <use>standard</use>
+                <args>
+                    <module>Mango_Redirect</module>
+                    <frontName>redirect</frontName>
+                </args>
+            </redirect>
+        </routers>
+        
+    </frontend-->
+</config>	

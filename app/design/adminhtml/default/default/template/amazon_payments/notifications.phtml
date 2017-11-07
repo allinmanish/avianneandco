@@ -1,0 +1,35 @@
+<?php
+/**
+ * Amazon Payments
+ *
+ * @category    Amazon
+ * @package     Amazon_Payments
+ * @copyright   Copyright (c) 2014 Amazon.com
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/* @var $this Amazon_Payments_Block_Adminhtml_Notifications */
+?>
+
+<?php if ($this->isMissingPaymentConfig()) : ?>
+
+<div class="notification-global">
+    <strong>
+        <?php echo $this->__('To complete your Amazon Payments configuration, please set up <a href="https://sellercentral.amazon.com/" taget="_blank">your account</a> and add the API credentials <a href="%s">here</a>.', $this->getManageUrl()); ?>
+    </strong>
+    <span class="f-right"></span>
+</div>
+
+<?php endif; ?>
+
+
+<?php if ($this->isPaymentPatchRequired()) : ?>
+
+<div class="notification-global">
+    <strong>
+        <?php echo $this->__('Amazon Payments requires a <a href="https://github.com/amzn/amazon-payments-magento-plugin/wiki/Magento-1.5-Compatibility" target="_blank">patched Payments.php</a> file for Magento 1.5 compatibility.'); ?>
+    </strong>
+    <span class="f-right"></span>
+</div>
+
+<?php endif; ?>

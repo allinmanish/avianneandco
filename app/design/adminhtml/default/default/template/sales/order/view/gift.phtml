@@ -1,0 +1,99 @@
+<?php 
+$message = Mage::getModel('giftmessage/message');
+
+$gift_message_id = $this->getOrder()->getGiftMessageId();
+if(!is_null($gift_message_id)) {
+	$message->load((int)$gift_message_id);
+	$gift_sender = $message->getData('sender');
+	$gift_recipient = $message->getData('recipient');
+	$gift_message = $message->getData('message');
+}
+?>
+<script src="/js/jquery/jquery-1.7.1.min.js"></script>
+<script src="/js/html2canvas.js"></script>
+
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 538px;
+	height: 792px;
+}
+.background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.logo {
+	position: absolute;
+	top: 46px;
+	left: 144px;
+}
+.gifts {
+	position: absolute;
+	top: 502px;
+	left: 129px;
+}
+.text1 {
+	position: absolute;
+	top: 140px;
+	left: 60px;
+	width: 418px;
+	color: #15256c;
+	text-align: center;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	font-size: 23px;
+	line-height: 1.6em;
+}
+.text2 {
+	position: absolute;
+	top: 301px;
+	left: 65px;
+	width: 408px;
+	height: 154px;
+	overflow: hidden;
+	color: #15256c;
+	text-align: center;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	font-size: 22px;
+	line-height: 1.1em;
+}
+.text2 .says {
+	display: block;
+	margin-bottom: 0.5em;
+}
+</style>
+
+<body>
+
+<div class="wrapper">
+	<img src="<?php echo $this->getSkinUrl('images/background.jpg') ?>" class="background">
+	<img src="<?php echo $this->getSkinUrl('images/logo.png') ?>" class="logo">
+	<img src="<?php echo $this->getSkinUrl('images/gifts.jpg') ?>" class="gifts">
+	<div class="text1">
+		<?php echo $gift_recipient; ?>,<br>
+		You've received a gift from<br>
+		<?php echo $gift_sender; ?>!
+	</div>
+	<div class="text2">
+		<span class="says"><?php echo $gift_sender; ?> Says:</span>
+		&quot;&nbsp;<?php echo $gift_message; ?>&nbsp;&quot;
+	</div>
+</div>
+
+<img id="canvasImg" />
+
+<script>
+html2canvas(document.body, {
+	width: 538,
+	height: 792,
+	onrendered: function(canvas) {
+		var dataURL = canvas.toDataURL();
+		document.getElementById('canvasImg').src = dataURL;
+		$('.wrapper, .background').hide();
+	}
+});
+</script>
+</body>

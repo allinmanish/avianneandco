@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Override_Sales>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Override_Sales>
+    </modules>
+</config> 

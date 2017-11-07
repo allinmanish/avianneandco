@@ -1,0 +1,182 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Edit customer address template
+ *
+ * @see Mage_Customer_Block_Address_Edit
+ */
+?>
+<div class="account">
+<div class="logout cf"><a class="btn btn-logout" href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"><?php echo $this->__('Log Out'); ?></a></div>
+<div class="my-account-box cf">
+	<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+	<?php echo $this->getChildHtml('hello') ?>
+	<div class="account-box ad-account-info">
+	<form action="<?php echo $this->getSaveUrl() ?>" method="post" id="form-validate">
+	    <?php echo $this->getBlockHtml('formkey')?>
+	    <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+	    <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+	        <ul class="form-list floated">
+	            <li>
+	                <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getAddress()->getFirstname() ? $this->getAddress() : $this->getCustomer())->toHtml() ?>
+	            </li>
+	            <li>
+	            	<div class="input-box">
+		                <label for="company"><?php echo $this->__('Company') ?></label><br />
+		                <input type="text" name="company" id="company" title="<?php echo $this->__('Company') ?>" value="<?php echo $this->htmlEscape($this->getAddress()->getCompany()) ?>" class="input-text" />
+	                </div>
+	            </li>
+	            <li>
+	                <div class="field small-field">
+	                    <label for="telephone"><?php echo $this->__('Telephone') ?> <span class="required">*</span></label><br />
+	                    <input type="text" name="telephone" value="<?php echo $this->htmlEscape($this->getAddress()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="required-entry input-text" id="telephone" />
+	                </div>
+	                <div class="field small-field">
+	                    <label for="fax"><?php echo $this->__('Fax') ?></label><br />
+	                    <input type="text" name="fax" id="fax" title="<?php echo $this->__('Fax') ?>" value="<?php echo $this->htmlEscape($this->getAddress()->getFax()) ?>" class="input-text" />
+	                </div>
+	            </li>
+	        </ul>
+	        <ul class="form-list floated">
+	            <li>
+	            	<div class="input-box">
+	                <label for="street_1"><?php echo $this->__('Address Line 1') ?> <span class="required">*</span></label><br />
+	                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="required-entry input-text" />
+	                </div>
+	            </li>
+	<?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+	            <li>
+	            	<div class="input-box">
+	            	<label for="street_<?php echo $_i?>"><?php echo $this->__('Address Line %d',$_i) ?> </label><br />
+	                <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getAddress()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address '.$_i) ?>" id="street_<?php echo $_i?>" class="input-text" />
+	                </div>
+	            </li>
+	<?php endfor ?>
+	            <li>
+	                <div class="field small-field">
+	                    <label for="city"><?php echo $this->__('City') ?> <span class="required">*</span></label><br />
+	                    <input type="text" name="city" value="<?php echo $this->htmlEscape($this->getAddress()->getCity()) ?>"  title="<?php echo $this->__('City') ?>" class="required-entry input-text" id="city" />
+	                </div>
+	                <div class="field small-field">
+	                    <label for="region_id" class="region-label"><?php echo $this->__('State/Province') ?> <span class="required">*</span></label><br />
+	                    <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none">
+	                       <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+	                    </select>
+	                    <script type="text/javascript">
+	                        $('region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
+	                    </script>
+	                    <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getAddress()->getRegion()) ?>"  title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none" />
+	                </div>
+	            </li>
+	            <li>
+	                <div class="field small-field">
+	                    <label for="zip"><?php echo $this->__('Zip/Postal Code') ?> <span class="required">*</span></label><br />
+	                    <input type="text" name="postcode" value="<?php echo $this->htmlEscape($this->getAddress()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="validate-zip-international required-entry input-text" />
+	                </div>
+	                <div class="field small-field">
+	                    <label for="country"><?php echo $this->__('Country') ?> <span class="required">*</span></label><br />
+	                    <?php echo $this->getCountryHtmlSelect() ?>
+	                </div>
+	            </li>
+	            <li>
+	                <?php if($this->isDefaultBilling()): ?>
+	                    <strong><?php echo $this->__('Default Billing Address') ?></strong>
+	                <?php elseif($this->canSetAsDefaultBilling()): ?>
+	                    <input type="checkbox" id="primary_billing" name="default_billing" value="1" />&nbsp;
+	                    <label for="primary_billing"><?php echo $this->__('Use as my default billing address') ?></label>
+	                <?php else: ?>
+	                    <input type="hidden" name="default_billing" value="1" />
+	                <?php endif; ?>
+	            </li>
+	            <li>
+	                <?php if($this->isDefaultShipping()): ?>
+	                    <strong><?php echo $this->__('Default Shipping Address') ?></strong>
+	                <?php elseif($this->canSetAsDefaultShipping()): ?>
+	                    <input type="checkbox" id="primary_shipping" name="default_shipping" value="1" />&nbsp;
+	                    <label for="primary_shipping"><?php echo $this->__('Use as my default shipping address') ?></label>
+	                <?php else: ?>
+	                    <input type="hidden" name="default_shipping" value="1" />
+	                <?php endif; ?>
+	            </li>
+	        </ul>
+	    <div class="button-set">
+	        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+	        <button class="form-button" type="submit"><span><?php echo $this->__('Save Address') ?></span></button>
+	    </div>
+	</form>
+	</div>
+<script type="text/javascript">
+    var dataForm = new VarienForm('form-validate', true);
+    new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>);
+</script>
+</div>
+<?php $viewed = $this->getChildHtml('recently_viewed');?>
+<?php if ($viewed == '<!--product_viewed_start--><!--product_viewed_end-->'): ?>
+<div class="account-viewed product-box-list">
+			<?php 
+				$_addprods_ids = array(); $i=0;
+				$db = Mage::getSingleton('core/resource')->getConnection('core_read');
+				$result = $db->query("SELECT i.product_id, v.value AS product_url
+										FROM sales_flat_order_item i
+										LEFT JOIN catalog_product_entity_varchar v ON i.product_id = v.entity_id
+										WHERE v.attribute_id =570
+										AND v.store_id =0
+										ORDER BY i.created_at DESC 
+										LIMIT 0 , 2");
+				while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+					$_addprods_ids[$i]['id'] = $row['product_id'];
+					$_addprods_ids[$i]['url'] = $row['product_url'];
+					$i++;
+				}
+
+				for ($i=0; $i<(2-count($_products)); $i++) {
+					$_item = Mage::getModel('catalog/product')->load($_addprods_ids[$i]['id']);
+					$_url = $_addprods_ids[$i]['url'] ? $_addprods_ids[$i]['url'] : $_item->getProductUrl(); ?>
+					<ul class="account-navigation">
+						<li><?php echo $this->__('Recently Viewed'); ?></li>
+					</ul>
+					<div class="item">
+						<p class="product-image">					
+							<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"> 
+					            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(186); ?>"  width="186" height="186" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+					        </a>
+						</p>
+						<center>
+							<h5>
+								<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a>
+							</h5>
+							<?php echo Mage_Catalog_Block_Product::getPriceHtml($_item, true);  ?>
+						</center>
+					</div>
+					<?php 
+				} ?>
+</div>
+<?php else: ?>
+	<?php echo $viewed; ?>
+<?php endif; ?>
+</div>

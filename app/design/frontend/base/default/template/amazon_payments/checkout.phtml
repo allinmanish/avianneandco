@@ -1,0 +1,577 @@
+<?php
+/**
+ * Amazon Payments
+ *
+ * @category    Amazon
+ * @package     Amazon_Payments
+ * @copyright   Copyright (c) 2014 Amazon.com
+ * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
+ */
+
+?>
+
+<div id="amazon-checkout">
+
+    <div class="page-title">
+        <h1><?php echo $this->__('Checkout') ?></h1>
+    </div>
+
+    <?php echo $this->__('Amazon Payments uses information from your Amazon account to place your order.'); ?>
+    <?php echo $this->__('Click <a href="#" id="amazon-cancel">here</a> to change your payment method.'); ?>
+
+    <div id="checkout-amazon-payments">
+        <div id="checkout-amazon-columns">
+
+            <div id="col-1-amz" class="col-amz">
+
+                <div id="amazon-widget-address-wrapper" class="amazon-widget-wrapper">
+                    <h2><?php echo $this->__('Shipping Address'); ?></h2>
+                    <div class="amz-widget-loader" style="display:none;"></div>
+                    <div id="amazon-widget-address"></div>
+                </div>
+
+                <?php if ($this->getChild('shipping_method')->isShow()) : ?>
+                    <div id="shipping-method-wrapper">
+                        <div id="shipping-method-disable" style="display:none;"></div>
+                        <?php echo $this->getChildHtml('shipping_method') ?>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+
+            <div id="col-2-amz" class="col-amz">
+
+                <div id="amazon-widget-wrapper" class="amazon-widget-wrapper">
+                    <h2><?php echo $this->__('Payment'); ?></h2>
+                    <div class="amz-widget-loader" style="display:none;"></div>
+                    <div id="amazon-widget-wallet"></div>
+                </div>
+
+                <?php if ($this->isTokenEnabled()) : ?>
+                    <div id="amazon-widget-consent"></div>
+                <?php endif; ?>
+
+                <?php if ($this->isShowCoupon()) : ?>
+                    <?php echo $this->getChildHtml('coupon') ?>
+                <?php endif; ?>
+
+            </div>
+
+
+            <div id="col-3-amz" class="col-amz">
+                <h2><?php echo $this->__('Order Summary'); ?></h2>
+
+                <div id="amz-review-loader" style="display:none;"></div>
+
+                <?php echo $this->getChildHtml('review') ?>
+
+                <?php if ($this->helper('amazon_payments')->isAmazonSandbox()) : ?>
+                <br />
+                <h3><?php echo $this->__('Authorization Sandbox Simulation:'); ?></h3>
+                <textarea id="sandbox"></textarea>
+                <?php echo $this->__('Example:') ?>
+                <small>
+                 	{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod"}}
+                  <br />
+                  (<a href="https://payments.amazon.com/documentation/lpwa/201749840#201750790" target="_blank"><?php echo $this->__('More Info') ?></a>)<br />
+                </small>
+
+
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+// Cancel and log user out of Amazon
+$('amazon-cancel').observe("click", function() {
+  amazon.Login.logout();
+  window.top.location.href = "<?php echo $this->getUrl('amazon_payments/checkout/clear'); ?>";
+});
+
+
+var AmazonPaymentsMageCheckout = Class.create();
+AmazonPaymentsMageCheckout.prototype = {
+    initialize: function(opts){
+        this.opts = opts;
+        this.amazonBillingAgreementId = null;
+        this.amazonBillingAgreementConsent = false;
+        this.hasPayment = false;
+        this.hasReviewLoader = false;
+        this.hasHiddenShippingMethod = false;
+    },
+
+    // Dynamically load shipping method and review HTML
+    // (Widget callback)
+    setAddress: function() {
+        if (this.opts.shippingMethod) {
+            this.restrictPlaceOrder(true);
+
+            var request = new Ajax.Request(this.opts.addressSelect.url, {
+                method: 'post',
+                parameters: { "amazon_order_reference_id": this.amazonOrderReferenceId, "amazon_billing_agreement_id": this.amazonBillingAgreementId },
+                onSuccess: this.onSaveAddress.bindAsEventListener(this)
+            });
+        }
+        else {
+            this.setReview();
+        }
+    },
+
+    // Render shipping method and review at same time
+    onSaveAddress: function(transport) {
+        try{
+            response = eval('(' + transport.responseText + ')');
+        }
+        catch (e) {
+            response = {};
+        }
+
+        if (response.review) {
+            transport.hasReview = true;
+            transport.responseText = response.shipping_method;
+            this.renderShippingMethod(transport, this.opts.shippingMethod.id);
+
+            transport.responseText = response.review;
+            this.renderReview(transport, this.opts.review.id);
+        }
+    },
+
+    // Set additional options (e.g. gift message or EE gift wrapping)
+    setAdditional: function(parameters) {
+        this.restrictPlaceOrder(true);
+
+        var request = new Ajax.Request(this.opts.additional.url, {
+            method: 'post',
+            parameters: parameters,
+            onSuccess: this.renderReview.bindAsEventListener(this, this.opts.review.id)
+        });
+    },
+
+    // Dynamically load review HTML
+    setReview: function() {
+        var shippingMethod = $$('input:checked[type=radio][name=shipping_method]')[0];
+
+        if (shippingMethod != undefined) {
+            shippingMethod = shippingMethod.value;
+        }
+        else {
+            var firstMethodRadio = $$('input[type=radio][name=shipping_method]').first();
+            if (firstMethodRadio != undefined) {
+                firstMethodRadio.checked = "checked";
+                shippingMethod = firstMethodRadio.value;
+            }
+        }
+
+        this.restrictPlaceOrder(true);
+
+        var request = new Ajax.Request(this.opts.review.url, {
+            method: 'post',
+            parameters: { "shipping_method": shippingMethod, "amazon_order_reference_id": this.amazonOrderReferenceId },
+            onSuccess: this.renderReview.bindAsEventListener(this, this.opts.review.id)
+        });
+    },
+
+    // Render shipping method, then load Review
+    renderShippingMethod: function(transport, id) {
+        $(id).update(transport.responseText);
+
+        var elShippingMethods = $$('input[type="radio"][name="shipping_method"]');
+
+        elShippingMethods.each(function(el){
+            Event.observe(el, 'change', this.setReview.bindAsEventListener(this));
+        }, this);
+
+
+        // Set shipping method if only one available and hidden
+        if (elShippingMethods.length == 1 && !this.hasHiddenShippingMethod) {
+            this.hasHiddenShippingMethod = true;
+            this.setReview();
+        }
+
+        if (!transport.hasReview) {
+            this.setReview();
+        }
+
+    },
+
+    renderReview: function(transport, id) {
+        $(id).update(transport.responseText);
+
+        var btnSubmit = $$(".button.btn-checkout");
+
+        if (!btnSubmit.length) {
+            btnSubmit = $$('button[onclick*="review.save()"]');
+        }
+
+        btnSubmit.invoke('writeAttribute','onclick', 'amazonPaymentsMageCheckout.saveOrder()');
+        this.agreementsForm = $('checkout-agreements')
+        $("amz-review-loader").hide();
+        this.restrictPlaceOrder(false);
+    },
+
+    saveOrder: function() {
+
+      <?php if ($this->isTokenRequired()) : ?>
+      if (!this.amazonBillingAgreementConsent) {
+          alert("Please check 'Use my selected payment method for future purchases and payments to this merchant' to complete this purchase.");
+          return;
+      }
+      <?php endif; ?>
+
+      var params = {};
+
+      if (this.agreementsForm) {
+          params = this.agreementsForm.serialize(true);
+      }
+
+      params.save = true;
+
+      params.amazon_order_reference_id        = this.amazonOrderReferenceId;
+      params.amazon_billing_agreement_id      = this.amazonBillingAgreementId;
+      params.amazon_billing_agreement_consent = this.amazonBillingAgreementConsent;
+
+
+        var sandbox = $('sandbox');
+        if (sandbox) {
+            params.sandbox = sandbox.getValue();
+        }
+
+        this.restrictPlaceOrder(true);
+        this.restrictWidgets(true);
+
+        var request = new Ajax.Request(this.opts.save.url, {
+            method: 'post',
+            parameters: params,
+            onSuccess: this.onSaveOrder.bindAsEventListener(this)
+        });
+    },
+
+    onSaveOrder: function(transport) {
+        try{
+            response = eval('(' + transport.responseText + ')');
+        }
+        catch (e) {
+            response = {};
+        }
+
+        if (response.redirect) {
+            this.isSuccess = true;
+            window.top.location.href = response.redirect;
+            return;
+        }
+        if (response.success) {
+            this.isSuccess = true;
+            window.top.location.href = this.successUrl;
+        }
+        else{
+
+            this.restrictPlaceOrder(false);
+            this.restrictWidgets(false);
+
+            var msg = response.error_messages;
+            if (typeof(msg)=='object') {
+                msg = msg.join("\n");
+            }
+
+            // Clean BillingAgreement error message
+            if (msg.indexOf("BillingAgreement") != -1 && msg.indexOf("total authorization amount cannot exceed") != -1) {
+                msg = "You have exceeded your total authorization amount for this billing agreement period. Please contact the store manager."
+            }
+
+            if (msg) {
+                alert(msg);
+            }
+
+            // Widget reload requried
+            if (msg.indexOf("TransactionTimedOut") != -1) {
+                location.reload();
+            }
+            else if (msg.indexOf("terms and conditions") == -1) {
+                setTimeout(loadAmazonWallet, 2000); // Refresh Wallet
+            }
+
+            // InvalidPaymentMethod?
+            if (msg.indexOf("Amazon Wallet") != -1) {
+                this.restrictShipping();
+            }
+
+        }
+
+    },
+
+    restrictPlaceOrder: function(isDisabled, hideLoader) {
+        var btn = $$(".button.btn-checkout");
+        var review = $("checkout-review-table-wrapper");
+        var loader = $("amz-review-loader");
+
+        if (isDisabled) {
+            if (review) {
+                review.setOpacity(0.5);
+                if (!hideLoader) {
+                    loader.show();
+                    this.hasReviewLoader = true;
+                }
+            }
+            btn.each(function(el, i) { el.disable(); });
+        } else {
+            if (review) {
+                review.setOpacity(1);
+                loader.hide();
+                this.hasReviewLoader = false;
+            }
+            btn.each(function(el, i) { el.enable(); });
+        }
+    },
+
+    restrictWidgets: function(isDisabled) {
+        var widget    = $$(".amazon-widget-wrapper .widget-container, #shipping-method-wrapper");
+        var loader    = $$(".amz-widget-loader");
+        var smdisable = $("shipping-method-disable");
+
+        if (isDisabled) {
+            widget.each(function(el, i) {
+                el.setOpacity(0.5);
+                el.setStyle({"pointer-events" : "none"});
+            });
+            loader.each(function(el, i) {
+                el.show();
+            });
+            if (smdisable) {
+                smdisable.show();
+            }
+        } else {
+            widget.each(function(el, i) {
+                el.setOpacity(1);
+                el.setStyle({"pointer-events" : "auto"});
+            });
+            loader.each(function(el, i) {
+                el.hide();
+            });
+            if (smdisable) {
+                smdisable.hide();
+            }
+        }
+    },
+
+    restrictShipping: function() {
+        clearInterval(restrictInterval);
+
+        $$("#shipping-method-wrapper, #amazon-widget-address-wrapper").each(function(el, i) {
+            el.setOpacity(0.5);
+            //el.setStyle({"pointer-events" : "none"});
+        });
+        $$("#amazon-widget-address-wrapper .amz-widget-loader").each(function(el, i) {
+            el.show();
+            el.setStyle({"background" : "none"});
+        });
+        $("shipping-method-disable").show();
+    }
+};
+
+var opts = {
+  <?php if ($this->getChild('shipping_method')->isShow()) : ?>
+  shippingMethod : {
+      id: "checkout-shipping-method-load",
+      url: "<?php echo $this->getUrl('checkout/amazon_payments/shippingMethod') ?>"
+  },
+  <?php endif; ?>
+  additional : {
+      url: "<?php echo $this->getUrl('checkout/amazon_payments/additional') ?>"
+  },
+  review : {
+      id: "checkout-review-load",
+      url: "<?php echo $this->getUrl('checkout/amazon_payments/review') ?>"
+  },
+  addressSelect : {
+      url: "<?php echo $this->getUrl('checkout/amazon_payments/addressSelect') ?>"
+  },
+  save : {
+      url: "<?php echo $this->getUrl('checkout/amazon_payments/saveOrder') ?>"
+  }
+}
+
+
+var amazonPaymentsMageCheckout = new AmazonPaymentsMageCheckout(opts);
+
+
+// Variables/objects for Mage Onepage
+var quoteBaseGrandTotal = <?php echo (float)$this->getQuoteBaseGrandTotal(); ?>;
+var checkQuoteBaseGrandTotal = quoteBaseGrandTotal;
+var lastPrice;
+
+var ShippingMethod = Class.create();
+var Review = Class.create();
+
+// Poll if payment method is set ("Place Order" is loaded via ajax and can't depend on widget events)
+var restrictInterval = setInterval(function() {
+    if (!amazonPaymentsMageCheckout.hasReviewLoader) {
+        if (amazonPaymentsMageCheckout.hasPayment) {
+            amazonPaymentsMageCheckout.restrictPlaceOrder(false);
+        } else {
+            amazonPaymentsMageCheckout.restrictPlaceOrder(true, true);
+        }
+    }
+}, 100);
+
+// Additional form elements such as Gift Options
+document.observe('dom:loaded', function(){
+    var addEls = $('checkout-shipping-method-additional-load').select('input', 'select', 'textarea');
+
+    addEls.each(function(elChange) {
+      //console.log(el);
+
+        Event.observe(elChange, 'change', function() {
+            var params = {};
+
+            addEls.each(function(el) {
+                if (el.type == "checkbox") {
+                    if (el.checked) {
+                        params[el.name] = el.value;
+                    }
+                }
+                else if (el.options && (typeof params[el.name] == "undefined" || !params[el.name])) {
+
+                    params[el.name] = el.options[el.selectedIndex].value;
+
+                }
+                else if (!params[el.name]) {
+                    params[el.name] = el.value;
+                }
+            });
+            console.log(params);
+
+            //var value = el.value;
+
+            amazonPaymentsMageCheckout.setAdditional(params)
+
+        });
+    });
+});
+
+</script>
+
+
+<!-- Address Book Widget JS -->
+<script>
+
+var amazonBillingAgreementId;
+
+var addressBookOpts = {
+    sellerId: '<?php echo $this->getSellerId(); ?>',
+    onOrderReferenceCreate: function(orderReference) {
+        amazonPaymentsMageCheckout.amazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
+    },
+    onAddressSelect: function(orderReference) {
+        amazonPaymentsMageCheckout.setAddress();
+        amazonPaymentsMageCheckout.hasPayment = false;
+    },
+    design: {
+        designMode: 'responsive'
+    },
+    onError: function(error) {
+        if (error.getErrorCode() == "BuyerSessionExpired") {
+             window.top.location.href = '<?php echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
+        }
+        console.log(error.getErrorMessage());
+    }
+};
+
+
+<?php if ($this->isTokenEnabled()) : ?>
+amazonBillingAgreementId = Mage.Cookies.get("amazonBillingAgreementId");
+
+if (amazonBillingAgreementId) {
+    addressBookOpts.agreementType = "BillingAgreement";
+    addressBookOpts.amazonBillingAgreementId = amazonBillingAgreementId;
+}
+
+addressBookOpts.onReady = function(billingAgreement) {
+    if (!amazonBillingAgreementId) {
+        amazonBillingAgreementId = billingAgreement.getAmazonBillingAgreementId();
+    }
+
+    amazonPaymentsMageCheckout.amazonBillingAgreementId = amazonBillingAgreementId;
+    loadAmazonWallet();
+};
+<?php endif; ?>
+
+
+AmazonPaymentsCallbacks["widgets_address"] = function() {
+    new OffAmazonPayments.Widgets.AddressBook(addressBookOpts).bind("amazon-widget-address");
+}
+
+</script>
+
+
+<!-- Wallet Widget JS -->
+<script>
+function loadAmazonWallet() {
+    new OffAmazonPayments.Widgets.Wallet({
+        <?php if ($this->isTokenEnabled()) : ?>
+        amazonBillingAgreementId: amazonBillingAgreementId,
+        <?php endif; ?>
+        sellerId: '<?php echo $this->getSellerId(); ?>',
+        design: {
+            designMode: 'responsive',
+        },
+        onPaymentSelect: function(orderReference) {
+            <?php if ($this->isTokenEnabled()) : ?>
+            loadAmazonConsent();
+            <?php endif; ?>
+            amazonPaymentsMageCheckout.hasPayment = true;
+        },
+        onError: function(error) {
+            console.log(error.getErrorMessage());
+        }
+    }).bind("amazon-widget-wallet");
+}
+
+<?php if (!$this->isTokenEnabled()) : ?>
+AmazonPaymentsCallbacks["widgets_wallet"] = function() {
+    loadAmazonWallet();
+}
+<?php endif; ?>
+
+</script>
+
+<?php if ($this->isTokenEnabled()) : ?>
+<!-- Consent Widget JS -->
+<script>
+function loadAmazonConsent() {
+
+    new OffAmazonPayments.Widgets.Consent({
+      sellerId: '<?php echo $this->getSellerId(); ?>',
+      // amazonBillingAgreementId obtained from the Amazon Address Book widget.
+      amazonBillingAgreementId: amazonBillingAgreementId,
+      design: {
+          designMode: 'responsive'
+      },
+      onReady: function(billingAgreementConsentStatus){
+          // Called after widget renders
+          if (typeof billingAgreementConsentStatus != "undefined") {
+              amazonPaymentsMageCheckout.amazonBillingAgreementConsent = billingAgreementConsentStatus.getConsentStatus() == "true" ? true : false;
+          }
+      },
+      onConsent: function(billingAgreementConsentStatus) {
+          if (typeof billingAgreementConsentStatus != "undefined") {
+              amazonPaymentsMageCheckout.amazonBillingAgreementConsent = billingAgreementConsentStatus.getConsentStatus() == "true" ? true : false;
+          }
+      },
+      onPaymentSelect: function(orderReference) {
+          amazonPaymentsMageCheckout.hasPayment = true;
+      },
+      onError: function(error) {
+          console.log(error.getErrorMessage());
+      }
+    }).bind("amazon-widget-consent");
+}
+
+</script>
+
+<?php endif; ?>
+

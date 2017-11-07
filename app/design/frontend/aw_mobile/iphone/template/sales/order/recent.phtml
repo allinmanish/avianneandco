@@ -1,0 +1,60 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="account-box ad-orders">
+<?php $_orders = $this->getOrders(); ?>
+    <div class="top-grey">
+        <p><strong><?php echo $this->__('All of your orders within the past 6 month are listed here.'); ?></strong></p>
+        <p><?php echo $this->__('If you have any questions,'); ?><br /><?php echo $this->__('please contact us at 888-243-4344'); ?><br /><?php echo $this->__('or email Sales@AvianneAndCo.com'); ?></p>
+    </div>
+    <?php if( sizeof($_orders->getItems()) > 0 ): ?>
+    	<div class="my-account-orders">
+    		<ul>
+    		<?php foreach ($_orders as $_order): ?>
+    			<li>
+    				<div class="order-details">
+    			<p><strong><?php echo $this->__('Order Date:'); ?></strong> <?php echo date("d F, Y",strtotime(($_order->getCreatedAtStoreDate()))) ?></p>
+    			<p><strong><?php echo $this->__('Product Details:'); ?></strong></p>
+    			<?php foreach ($_order->getItemsCollection() as $item): ?>
+    				<?php $oProduct = Mage::getModel('catalog/product')->load($item->product_id); ?>
+	    			<div class="product-details">
+	    				<p><a href="<?php echo $oProduct->getProductUrl() ?>"><?php echo $item->getName(); ?></a></p>
+	    				<p><?php echo $this->__('Stock #:'); ?> <?php echo $item->sku; ?></p>
+	    				<?php $optionsArr = $item->getProductOptions(); ?>
+	    				<?php if(count($optionsArr['options']) > 0): ?>
+	    					<table class="product-options-table">
+	    					<?php foreach ($optionsArr['options'] as $option): ?>
+	    						<tr>
+		    						<td class="first"><?php echo $option['label']; ?></td>
+		    						<td><?php echo $option['value']; ?></td>
+	    						</tr>
+	    					<?php endforeach; ?>
+	    					</table>
+	    				<?php endif; ?>
+	    			</div>
+    			<?php endforeach; ?>
+    			<p><strong><?php echo $this->__('Status:'); ?></strong> <?php echo $_order->getStatusLabel() ?></p>
+    			<p><strong><?php echo $this->__('Total Price:'); ?></strong> <?php echo $_order->formatPrice($_order->getGrandTotal()) ?></p>
+    				</div>
+    			</li>
+            <?php endforeach; ?>
+            </ul>
+    	</div>
+    <?php else: ?>
+        <p><?php echo $this->__('You have placed no orders.'); ?></p>
+    <?php endif; ?>
+</div>

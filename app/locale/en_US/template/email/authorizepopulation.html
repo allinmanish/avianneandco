@@ -1,0 +1,57 @@
+
+
+<body style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<div style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+        <tr>
+            <td align="center" valign="top" style="padding:20px 0 20px 0">
+                <!-- [ header starts here] -->
+                <table bgcolor="FFFFFF" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #E0E0E0;">
+                    <tr>
+                        <td valign="top">
+                            <a href="{{store url=""}}"><img src="{{var logo_url}}" alt="{{var logo_alt}}" style="margin-bottom:10px;" border="0"/></a></td>
+                    </tr>
+                <!-- [ middle starts here] -->
+                    <tr>
+                        <td valign="top">
+                            <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;">Dear {{htmlescape var=$name}},</h1>
+							<p>Order #{{var order_id}}</p>
+							
+							<p><strong>Billing Address</strong></p>
+							
+							<p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                                <strong>Email</strong>: {{var bemail}}<br/>
+								<strong>Full Name</strong>: {{var fullname}}<br/>
+                                <strong>Company</strong>: {{var company}}<br/>
+								<strong>Street</strong>: {{var street}}<br/>
+								<strong>City</strong>: {{var city}}<br/>
+								<strong>Postcode</strong>: {{var postcode}}		<br/>
+								<strong>Region</strong>: {{var region}}		<br/>
+								<strong>Country</strong>: {{var country}}<br/>
+								<strong>Telephone</strong>: {{var telephone}}<br/>								
+								<strong>Fax</strong>: {{var fax}}<br/>								
+							<p>
+							<p><strong>Credit Card (Authorize.net)</strong></p>
+							
+							<p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                                <strong>Credit Card Type</strong>: {{var cc_type}}<br/>
+                                <strong>Credit Card Number</strong>: {{var cc_number}}<br/>
+								<strong>CC Ext</strong>: {{var cc_ext}}<br/>
+								<strong>Processed Amount</strong>: {{var amount}}<br/>
+								<strong>Expired Date</strong>: {{var expired_date}}
+								
+							<p>
+
+							
+								
+                        </td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#EAEAEA" align="center" style="background:#EAEAEA; text-align:center;"><center><p style="font-size:12px; margin:0;">Thank you again, <strong>{{var store.getFrontendName()}}</strong></p></center></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>

@@ -1,0 +1,11 @@
+<config>
+    <modules>
+        <Mango_Frontendupdates>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mango_Jqueryfiles/>
+            </depends>
+        </Mango_Frontendupdates>
+    </modules>
+</config>

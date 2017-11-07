@@ -1,0 +1,75 @@
+<body>
+	<div class="wrapper">
+		<div style="text-align: center; font-size: 19px;">Gold Chain Order Printout</div>
+			<table border="1">
+				<tr>
+					<th>Order #</th>
+					<th>Date of order</th>
+					<th>Product Name</th>
+					<th>Item Code</th>
+					<th>Metal Type</th>
+					<th>Weight</th>
+					<th>Length</th>
+					<th>Width</th>
+					<th>Color Option</th>
+					<th>Product Image</th>
+				</tr>
+		<?php 
+		$order = $this->getOrder();
+		
+		$items = $order->getAllItems();
+				
+		foreach ($items as $itemId => $item) {
+
+			
+			
+			$_product = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect(array('metal_type', 'image', 'weight','width'))->addAttributeToFilter('entity_id', $item->getProductId());
+			
+			$imageHelper = Mage::helper('catalog/image');
+
+			foreach ($_product as $product) {
+				$prdImg = $imageHelper->init($product, 'image')->resize(220,220);;
+				$prdMetalType = $product['metal_type'];
+				$prdWeight = $product['weight'];
+				$prdWidth = $product['width'];
+
+			}
+			
+			$opts = $item->getProductOptions();
+			foreach ($opts["options"] as $v) {
+				if ($v["label"] == "Chain length") {
+					$attrs['length'] = $v["value"];
+				}
+				if ($v["label"] == "Gold Color") {
+					$attrs['color_option'] = $v["value"];
+				}
+			}
+			 
+			?>
+			
+			<tr>
+				<td><?php echo $item->getOrderId() ?></td>
+				<td><?php echo date('d/m/Y', strtotime( $item->getCreatedAt() )); ?></td>
+				<td><?php echo $item->getName() ?></td>
+				<td><?php echo $item->getSku() ?></td>
+				<td><?php echo $prdMetalType ?></td>
+				<td><?php echo $prdWeight ?> gm</td>
+				<td><?php echo $attrs['length'] ?></td>
+				<td><?php echo $prdWidth ?></td>
+				<td><?php echo $attrs['color_option'] ?></td>
+				<td><img src="<?php echo $prdImg; ?>"></td>
+			</tr>
+			
+		<?php }	?>
+		</table>
+	</div>
+</body>
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 90%;
+    color: black;
+}
+</style>
+

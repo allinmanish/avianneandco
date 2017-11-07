@@ -1,0 +1,46 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<html>
+<head>
+<script type="text/javascript">
+//<![CDATA[
+<?php if ($this->getGotoSection()): ?>
+    for (var s = 0; s < window.top.checkout.steps.length; s++) {
+        if (window.top.checkout.steps[s] == '<?php echo $this->getGotoSection() ?>') {
+            break;
+        }
+        if (window.top.document.getElementById('opc-' + window.top.checkout.steps[s])) {
+            window.top.document.getElementById('opc-' + window.top.checkout.steps[s]).addClassName('allow');
+        }
+    }
+    window.top.checkout.gotoSection("<?php echo $this->getGotoSection() ?>");
+    window.top.document.getElementById('checkout-review-submit').show();
+    window.top.document.getElementById('iframe-warning').hide();
+    <?php if ($this->getErrorMsg()): ?>
+        alert('<?php echo $this->getErrorMsg() ?>');
+    <?php endif; ?>
+<?php elseif ($this->getGotoSuccessPage()) : ?>
+    window.top.location="<?php echo $this->getUrl('checkout/onepage/success') ?>";
+<?php else : ?>
+    window.top.location="<?php echo $this->getUrl('checkout/cart') ?>";
+<?php endif; ?>
+//]]>
+</script>
+</head>
+<body></body>
+</html>

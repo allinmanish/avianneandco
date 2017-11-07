@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <templates_master>
+            <title>Templates Master</title>
+            <sort_order>71</sort_order>
+            <children>
+                <easytabs translate="title" module="easytabs">
+                    <title>Easy Tabs</title>
+                    <sort_order>540</sort_order>
+                    <action>adminhtml/easytabs_index/index</action>
+                </easytabs>
+            </children>
+        </templates_master>
+    </menu>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <tm_easytabs translate="title" module="easytabs">
+                                        <title>Easy Tabs Section</title>
+                                    </tm_easytabs>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <templates_master>
+                        <children>
+                            <easytabs module="easytabs">
+                                <title>Easy Tabs</title>
+                                <sort_order>540</sort_order>
+                                <action>adminhtml/easytabs_index/index</action>
+                            </easytabs>
+                        </children>
+                    </templates_master>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+ </config>

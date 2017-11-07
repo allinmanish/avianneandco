@@ -1,0 +1,9 @@
+<?php
+	$url =$this->getUrl("diamondsearch/jewelry/build_diamond_pendant"); //isset($_REQUEST['url'])?$_REQUEST['url']:'/diamondsearch/diamonds/search';
+	
+?>
+<div class="looseSearchContainer">
+<iframe src="<?php echo $url?>" id="looseDiamonIframe" frameborder="0" style="width:950px; height:726px;overflow-x:hidden;">
+	<p> <a href="<?php echo $url?>" target="_blank">Start Search</a> </p>
+</iframe>
+</div>

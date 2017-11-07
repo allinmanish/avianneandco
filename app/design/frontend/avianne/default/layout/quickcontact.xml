@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+	
+		<reference name="head">
+			<action method="addCss"><stylesheet>quickcontact/css/form-contact.css</stylesheet></action>
+			<action method="addJs"><script>mw_js/jquery.js</script></action>
+			<action method="addJs"><script>mw_js/jquery_noconflict.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>quickcontact/js/quickContact.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>quickcontact/js/modalwindow.js</name></action>
+		</reference>
+		<reference name="before_body_end">			
+				<block type="core/template" name="quickcontact" template="quickcontact/form.phtml"/>			
+		</reference>
+
+<reference name="footer_links">
+              <action method="removeLinkByUrl"><url>contacts</url></action>
+              <action method="addLink" translate="label title" module="contacts" ifconfig="contacts/contacts/enabled"><label>Contact Us</label><url>www.avianneandco.com/store/contacts</url><title>Contact Us</title><prepare>true</prepare><urlParams/><position/><liParams/><aParams>id="contact-link"</aParams></action>
+</reference>
+
+
+	</default>
+</layout>

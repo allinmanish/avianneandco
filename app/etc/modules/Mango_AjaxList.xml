@@ -1,0 +1,21 @@
+
+<config>
+    <modules>
+        <Mango_Layered>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Mango_Layered>
+        
+        
+        <Mango_AjaxList>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mango_Jqueryfiles/>
+                <Mango_Frontendupdates/>
+            </depends>
+
+        </Mango_AjaxList>
+        
+    </modules>
+</config>

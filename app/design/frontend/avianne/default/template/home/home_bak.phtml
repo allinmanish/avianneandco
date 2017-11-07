@@ -1,0 +1,87 @@
+<div class="homepage-slider">
+	<ul class="bxslider">
+		<li class="slide-1">
+			<div>
+				<p class="line-1"><?php echo $this->__('Avianne&Co.'); ?></p>
+				<p class="line-2"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Diamond Jewelry'); ?></p>
+				<p class="line-3"><?php echo $this->__('Your imagination - flooded in diamonds'); ?></p>
+				<p class="line-4"><?php echo $this->__('Custom Jewelry'); ?><br /><?php echo $this->__('starting at $499'); ?></p>
+				<p class="line-5"><a href="/custom-jewelry"><?php echo $this->__('Shop Now'); ?></a></p>
+			</div>
+		</li>
+		<li class="slide-2">
+			<div>
+				<p class="line-1"><?php echo $this->__('Avianne&Co.'); ?></p>
+				<p class="line-2"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Diamond Jewelry'); ?></p>
+				<p class="line-3"><?php echo $this->__('Your imagination - flooded in diamonds'); ?></p>
+				<p class="line-4"><?php echo $this->__('Custom Jewelry'); ?><br /><?php echo $this->__('starting at $499'); ?></p>
+				<p class="line-5"><a href="/custom-jewelry"><?php echo $this->__('Shop Now'); ?></a></p>
+			</div>
+		</li>
+		<li class="slide-3">
+			<div>
+				<p class="line-1"><?php echo $this->__('Avianne&Co.'); ?></p>
+				<p class="line-2"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Diamond Jewelry'); ?></p>
+				<p class="line-3"><?php echo $this->__('Your imagination - flooded in diamonds'); ?></p>
+				<p class="line-4"><?php echo $this->__('Custom Jewelry'); ?><br /><?php echo $this->__('starting at $499'); ?></p>
+				<p class="line-5"><a href="/custom-jewelry"><?php echo $this->__('Shop Now'); ?></a></p>
+			</div>
+		</li>
+		<li class="slide-4">
+			<div>
+				<p class="line-1"><?php echo $this->__('Avianne&Co.'); ?></p>
+				<p class="line-2"><?php echo $this->__('Custom'); ?><br /><?php echo $this->__('Diamond Jewelry'); ?></p>
+				<p class="line-3"><?php echo $this->__('Your imagination - flooded in diamonds'); ?></p>
+				<p class="line-4"><?php echo $this->__('Custom Jewelry'); ?><br /><?php echo $this->__('starting at $499'); ?></p>
+				<p class="line-5"><a href="/custom-jewelry"><?php echo $this->__('Shop Now'); ?></a></p>
+			</div>
+		</li>
+	</ul>
+</div>
+<div class="homepage-categories">
+	<ul>
+		<li class="cat-1"><a href="/mens-diamond-jewelry"><span><?php echo $this->__('Mens Jewelry'); ?></span></a></li>
+		<li class="cat-2"><a href="/womens-diamond-jewelry"><span><?php echo $this->__('Womens Jewelry'); ?></span></a></li>
+		<li class="cat-3"><a href="/pre-set-diamond-engagement-rings-1"><span><?php echo $this->__('Bridal Rings'); ?></span></a></li>
+		<li class="cat-4"><a href="/watches"><span><?php echo $this->__('Watches'); ?></span></a></li>
+	</ul>
+</div>
+<div class="clear"></div>
+<div class="homepage-callouts">
+	<div class="callout-box celeb-box">
+		<a href="/blog/celebrity-diamond-jewelry/">
+			<span class="line-1"><?php echo $this->__('Celebrity Jewelry'); ?><br><?php echo $this->__('Collection'); ?></span>
+			<span class="line-2"><?php echo $this->__('View our exclusive celebrity jewelry collection'); ?><br><?php echo $this->__('worn by Nicki Minaj and many more'); ?></span>
+		</a>
+	</div>
+	<div class="callout-box cust-box">
+		<a href="/custom-jewelry">
+			<span class="line-1"><?php echo $this->__('Custom Jewelry'); ?><br><?php echo $this->__('Designer'); ?></span>
+			<span class="line-2"><?php echo $this->__('You draft it, we craft it.'); ?><br><?php echo $this->__('Design your own custom piece now!'); ?></span>
+		</a>
+	</div>
+</div>
+<!-- BEGIN: buySAFE Seal -->
+<script src="https://seal.buysafe.com/private/rollover/rollover.js"></script>
+<span id="BuySafeSealSpan"></span>
+<script type="text/javascript">
+  buySAFE.Hash = "8q7tsSQNpWW0V%2FRRsPCnQKXlWkIkRup8w1Fbdda3Rbq7LrqILX7py3qOYALlLxk4t4rO7QtsHL3LPdn2iINXRQ%3D%3D";
+  WriteBuySafeSeal("BuySafeSealSpan", "GuaranteedSeal");
+</script>
+<!-- END: buySAFE Seal -->
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.bxslider').bxSlider({
+			pager: false,
+			controls: false,
+			auto: true,
+			mode: 'fade',
+			speed: 2000
+		});
+		jQuery('#extship').toggle(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+	});
+</script>

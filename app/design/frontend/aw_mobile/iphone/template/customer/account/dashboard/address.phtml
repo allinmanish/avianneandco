@@ -1,0 +1,50 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="dashboard-block">
+    <?php /*
+    <div class="page-head">
+        <h3><?php echo $this->__('Address Book') ?></h3>
+        <a class="edit" href="<?php echo $this->getAddressBookUrl() ?>"><img src="<?php echo $this->getSkinUrl('images/edit.gif') ?>" alt="<?php echo $this->__('Manage Addresses') ?>" /></a>
+        <div class="clear"></div>
+    </div>
+     *
+     */ ?>
+	<h2><?php echo $this->__('Address Information') ?></h2>
+    <h3><?php echo $this->__('Primary Billing Address') ?></h3>
+    <div class=" bottom-space">
+        <address>
+            <?php echo $this->getPrimaryBillingAddressHtml() ?><br />
+        </address>
+    </div>
+    <div class="a-right">
+    	<a class="edit" href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>"><?php echo $this->__('Edit'); ?></a>
+    </div>
+    <h3><?php echo $this->__('Primary Shipping Address') ?></h3>
+    <div class=" bottom-space">
+        <address>
+            <?php echo $this->getPrimaryShippingAddressHtml() ?><br />
+        </address>
+    </div>
+    <div class="a-right">
+    	<a class="edit" href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>"><?php echo $this->__('Edit'); ?></a>
+    </div>
+    <?php /* ?>
+    <div class="a-center bottom-space"><button type="button" class="form-button" onclick="window.location='<?php echo $this->getUrl('customer/address/form') ?>';"><span><?php echo $this->__('Add New Address') ?></span></button></div>
+    <?php */ ?>
+</div>
+

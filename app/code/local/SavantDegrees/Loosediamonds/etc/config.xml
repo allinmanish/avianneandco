@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+
+    <modules>
+        <SavantDegrees_Loosediamonds>
+            <version>0.1.0</version>
+        </SavantDegrees_Loosediamonds>
+    </modules>
+
+    <global>
+        <blocks>
+            <checkout>
+                <rewrite>
+                    <cart_item_renderer>SavantDegrees_Loosediamonds_Block_Cart_Item_Renderer</cart_item_renderer>
+                </rewrite>
+            </checkout>
+        </blocks>    
+        
+        <models>
+          <!-- may not need this here since the only model class is a rewrite --> 
+            <Loosediamonds>
+                <class>SavantDegrees_Loosediamonds_Model</class>
+            </Loosediamonds>
+          <!-- definately need this! -->
+            <sales>
+                <rewrite>
+                    <quote_item>SavantDegrees_Loosediamonds_Model_Quote_Item</quote_item>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+
+</config>

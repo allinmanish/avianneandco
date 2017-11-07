@@ -1,0 +1,127 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *   <p><strong><?php echo $this->__('Check items to add to the cart or ') ?><a href="#" onclick="selectAllRelated(this);return false;"><?php echo $this->__('select all') ?></a></strong></p>
+ * DISCLAIMER
+ *                    <input type="checkbox" class="related-checkbox left" id="related-checkbox<?php echo $_item->getId() ?>" name="related_products[]" value="<?php echo $_item->getId() ?>" />
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+$show_num_items = 2; //fixed number of items to show
+$show_index_array = array();
+$index_iterator = 0;
+$_product = $this->getProduct() ;
+/*$cat = array_pop($_product->getCategoryIds());
+$nc = (empty($cat[1]))?$cat[0]:$cat[1];
+$search_arr = array(36 =>233,40=>257,42=>261,38=>254,41=>258,48=>283,49=>291,52=>309,50=>287,55=>64);
+if(in_array($nc,array_keys($search_arr))){
+	$nc = $search_arr[$nc];
+}*/
+$category = Mage::getModel('catalog/category')->load(array_pop($_product->getCategoryIds()));
+$catName = $category->getName(); 
+$catUrl = $category->getURL();
+?>
+
+
+<div class="mini-related-items">
+    <div class="head"><h4>Similar <?php echo $catName; ?></h4></div>
+    <div class="content">
+        <table border="0" width="100%" id="similar-items">
+			<tr>
+	        <?php if($this->getItems()->getSize()): ?>
+		        <?php $show_index_array = range(0,($this->getItems()->getSize()-1)); ?>
+		        <?php shuffle($show_index_array); ?>
+		        <?php $show_index_array = array_slice($show_index_array, 0, $show_num_items); ?>
+		        <?php foreach($this->getItems() as $_item): ?>
+		        <?php if(in_array($index_iterator, $show_index_array)): ?>
+		        <td<?php if($_item->isComposite() || !$_item->isSaleable()): ?> class="super-products"<?php endif; ?>>
+		            <div class="product-images">
+		                <a href="<?php echo $_item->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(170) ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" width="170" /></a>               
+						<?php $string = $_item->getName() ?>
+						<p class="name"><a  href="<?php echo $_item->getProductUrl() ?>"><?php echo $string ?></a></p>
+						<p class="price"><?php echo "\$" . number_format($_item->getFinalPrice(),2);?></p>
+					</div>
+		        </td>
+		        <?php endif ?>
+		        <?php $index_iterator++; ?>
+		        <?php endforeach ?>
+		    <?php endif ?>
+		    <?php if($this->getItems()->getSize()<2): ?>
+		    	<?php $collection = $category->getProductCollection(); ?>
+				<?php Mage::getModel('catalog/layer')->prepareProductCollection($collection); ?>
+				<?php $collection->getSelect()->order('rand()'); ?>
+				<?php $collection->addStoreFilter(); ?>
+				<?php $numProducts = 3; ?>
+				<?php $collection->setPage(1, $numProducts)->load(); ?>
+				<?php $cc = $this->getItems()->getSize(); ?>
+				<?php foreach($collection as $rel_prod): ?>
+					<?php if($rel_prod->getId()!=$_product->getId() && $cc<2): ?>
+						<?php $rel_prod = Mage::getModel('catalog/product')->load($rel_prod->getId()); ?> 
+						<td<?php if($rel_prod->isComposite() || !$rel_prod->isSaleable()): ?> class="super-products"<?php endif; ?>>
+				            <div class="product-images">
+				                <a href="<?php echo $rel_prod->getProductUrl() ?>"><img src="<?php echo $this->helper('catalog/image')->init($rel_prod, 'thumbnail')->resize(170) ?>" alt="<?php echo $this->htmlEscape($rel_prod->getName()) ?>" width="170" /></a>               
+								<?php $string = $rel_prod->getName() ?>
+								<p class="name"><a  href="<?php echo $rel_prod->getProductUrl() ?>"><?php echo $string ?></a></p>
+								<p class="price"><?php echo "\$" . number_format($rel_prod->getFinalPrice(),2);?></p>
+							</div>
+				        </td>
+						<?php $cc++; ?>
+					<?php endif;?>
+				<?php endforeach; ?>
+		    <?php endif ?>
+        	</tr>
+       	</table>
+    </div>
+</div>
+<script type="text/javascript">
+<!--
+$$('.related-checkbox').each(function(elem){
+    Event.observe(elem, 'click', addRelatedToProduct)
+});
+
+var relatedProductsCheckFlag = false;
+function selectAllRelated(txt){
+    if (relatedProductsCheckFlag == false) {
+        $$('.related-checkbox').each(function(elem){
+            elem.checked = true;
+        });
+        relatedProductsCheckFlag = true;
+        txt.innerHTML="<?php echo $this->__('unselect all') ?>";
+    } else {
+        $$('.related-checkbox').each(function(elem){
+            elem.checked = false;
+        });
+        relatedProductsCheckFlag = false;
+        txt.innerHTML="<?php echo $this->__('select all') ?>";
+    }
+    addRelatedToProduct();
+}
+
+function addRelatedToProduct(){
+    var checkboxes = $$('.related-checkbox');
+    var values = [];
+    for(var i=0;i<checkboxes.length;i++){
+        if(checkboxes[i].checked) values.push(checkboxes[i].value);
+    }
+    if($('related-products-field')){
+        $('related-products-field').value = values.join(',');
+    }
+}
+//-->
+</script>

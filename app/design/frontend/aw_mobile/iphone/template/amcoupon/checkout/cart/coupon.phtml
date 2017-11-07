@@ -1,0 +1,46 @@
+<?php 
+$current_url = (strpos(Mage::helper('core/url')->getCurrentUrl(),"checkout/onepage")===false)?$this->getUrl('checkout/cart')."#cart":Mage::helper('checkout/url')->getCheckoutUrl();
+?>
+<div class="block-progress discount-codes box">
+	<div class="block-content">
+		<div class="discount">
+			<form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost') ?>" method="post">
+			    <div class="discount-form">
+			        <input type="hidden" name="remove" id="remove-coupone" value="0" />
+			        <input type="hidden" name="return_url" id="return_url" value="<?php echo $current_url; ?>"/>
+			        <div class="input-box">
+			        	<ul>
+			        		<li class="left">
+			        			<input class="input-text" id="coupon_code" placeholder="<?php echo $this->__('Type in Coupon Code...'); ?>" name="coupon_code" value="" />
+			        		</li>
+			        		<li class="right">
+			        			<button type="button" title="<?php echo $this->__('Apply') ?>" class="button form-button-alt form-button" onclick="document.getElementById('discount-coupon-form').submit()" value="<?php echo $this->__('Apply') ?>"><span><?php echo $this->__('Apply') ?></span></button>
+			        		</li>
+			        	</ul>
+			        </div>
+			    </div>
+		    </form>
+			<?php // Hide Applied Coupons ?>    
+		    <?php if ($this->getAppliedCoupons() && false): ?>
+			    <br />
+	        	<h2><?php echo $this->__('Applied Coupons'); ?></h2>
+		        <table border="0" width="100%" cellpadding="4" cellspacing="0" style="padding-top: 3px;">
+		        <?php $couponCnt = 0; ?>
+		        <?php foreach ($this->getAppliedCoupons() as $coupon): ?>
+		            <tr style="padding-bottom: 3px;">
+		                <td><?php echo $coupon; ?></td>
+		                <td style="text-align: right;">
+		                    <form id="discount-coupon-cancel-form-<?php echo $couponCnt; ?>" action="<?php echo $this->getUrl('amcoupons/checkout/cancelCoupon') ?>" method="post">
+		                    	<input type="hidden" name="return_url" id="return_url_cancel" value="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>"/>
+		                        <input type="hidden" name="amcoupon_code_cancel" value="<?php echo $coupon; ?>" />
+		                        <a href="#" onclick="javascript: $('discount-coupon-cancel-form-<?php echo $couponCnt; ?>').submit(); return false;"><?php echo $this->__('Cancel'); ?></a>
+		                    </form>
+		                </td>
+		            </tr>
+		            <?php $couponCnt++; ?>
+		        <?php endforeach; ?>
+		        </table>
+    		<?php endif; ?>
+		</div>
+	</div>
+</div>

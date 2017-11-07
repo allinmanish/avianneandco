@@ -1,0 +1,118 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+?>
+<?php $cmsPageUrlKey = Mage::getSingleton('cms/page')->getIdentifier(); ?>
+<script type="text/javascript">
+	function __doPostBack(elm) {
+		var val = elm.options[elm.selectedIndex].value;
+		if(val.indexOf("ajax=1")>=0){
+			val=val.replace("ajax=1&","");
+			val=val.replace("&ajax=1","");
+			val=val.replace("ajax=1","")
+		}
+		location.replace(val);
+	}
+</script>
+
+<?php if($this->getCollection()->getSize()) { ?>
+<div style="text-align: center;">
+
+    <?php /* 
+    <div class="block-layered-nav" style="outline: 1px solid red;">
+		<?php echo $this->getChildHtml('layered_nav') ?>
+    </div>
+    */ ?>
+
+    <?php /*
+    <div class="" style="outline: 1px solid green;">
+    </div>
+    */ ?>
+
+
+    <div class="block-layered-nav">
+
+        <div class="nav-col-1">
+            <?php echo $this->getChildHtml('layered_nav') ?>
+            <script>
+                jQuery('.nav-col-1 .filter-price').remove();
+            </script>
+        </div>
+
+        <div class="nav-col-2 narrow-by">
+            <select onchange="__doPostBack(this)" style="margin-right: 18px;" class="sort-by-price">
+                <option value="<?php echo $this->getOrderUrl('rank', 'desc') ?>" <?php if(empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> > <?php echo $this->__('Sort By Price') ?> </option>
+                <option value="<?php echo $this->getOrderUrl('price', 'asc') ?>" <?php if($this->getCurrentDirection() == 'asc'&&!empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> >Low to High</option>
+                <option value="<?php echo $this->getOrderUrl('price', 'desc') ?>" <?php if($this->getCurrentDirection() == 'desc'&&!empty($_GET["dir"])): ?> selected="selected" <?php endif; ?> >High to Low</option>
+                <option value="<?php echo $this->getOrderUrl('bestsellers', 'desc') ?>" <?php if($this->isOrderCurrent('bestsellers')): ?> selected="selected"<?php endif; ?> >Best Sellers</option>
+                <option value="<?php echo $this->getOrderUrl('created_at', 'desc') ?>" <?php if($this->isOrderCurrent('created_at')): ?> selected="selected"<?php endif; ?> >New Arrivals</option>
+                <option value="<?php echo $this->getOrderUrl('rank', 'desc') ?>" <?php if($this->isOrderCurrent('rank')): ?> selected="selected"<?php endif; ?> >Featured Items</option>
+            </select>
+
+            <?php /*
+            <select onchange="__doPostBack(this)" style="margin-right: 0;" class="items-per-page">
+                <option value="<?php echo $this->getLimitUrl(24) ?>" <?php if(empty($_GET['limit'])): ?>selected="selected"<?php endif;?>><?php echo $this->__('Items per page') ?></option>
+                <?php foreach ($this->getAvailableLimit() as  $_key=>$_limit): ?>
+                    <option value="<?php echo $this->getLimitUrl($_key) ?>"<?php if($this->isLimitCurrent($_key) && !empty($_GET['limit'])): ?> selected="selected"<?php endif ?>>
+                        <?php echo $_limit ?>
+                    </option>
+                <?php endforeach; ?>
+            </select> 
+            */ ?>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="nav-col-3">
+            <?php echo $this->getChildHtml('layered_nav') ?>
+            <script>
+                jQuery('.nav-col-3 .narrow-by.gold-color, .nav-col-3 .narrow-by.metal_type').remove();
+                //jQuery('.nav-col-3 #price-filter-button').text('SHOW ITEMS (' + <?php echo $this->getTotalNum(); ?> + ')');
+            </script>
+        </div>
+
+        <div class="clear"></div>
+
+        <?php /* if($cmsPageUrlKey != 'new') { ?>
+        <div class="a-right items-num" style="outline: 1px solid orange;">
+            <?php if($this->getLastPageNum()>1) { ?>
+                <?php echo $this->__('%s item(s)', $this->getTotalNum()) ?>
+            <?php } else { ?>
+                <strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
+            <?php } ?>
+        </div>
+        <?php } */ ?>
+
+    </div>
+
+</div>
+<?php } ?>

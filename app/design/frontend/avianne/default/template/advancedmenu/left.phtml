@@ -1,0 +1,14 @@
+<?
+if(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'l_plain'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/l_plain.css" media="all" />
+<?
+elseif(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'l_dropdown'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/l_dropdown.css" media="all" />
+<?
+elseif(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'l_folding'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/l_folding.css" media="all" />
+<?endif;?>
+

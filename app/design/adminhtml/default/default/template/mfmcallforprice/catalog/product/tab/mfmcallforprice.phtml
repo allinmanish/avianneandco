@@ -1,0 +1,53 @@
+<?php
+    $data = $this->loadCallForPriceData();
+    if(!$data->getMessage()) {
+        $data->setMessage(Mage::helper('mfmcallforprice')->__('Please Call For Price'));
+    }
+?>
+<script type="text/javascript">
+function mfmToggleValueElements(checkbox, container){
+    if(container && checkbox){
+        //var elems = container.select('select', 'input');
+        var elems = Element.select(container, ['select', 'input', 'textarea', 'button', 'img']);
+        elems.each(function (elem) {
+            if(elem!=checkbox) {
+                elem.disabled=!checkbox.checked;
+                if (checkbox.checked) {
+                    //elem.addClassName('disabled');
+                    elem.removeClassName('disabled');
+                } else {
+                    elem.addClassName('disabled');
+                    //elem.removeClassName('disabled');
+                }
+                if(elem.tagName == 'IMG') {
+                    checkbox.checked ? elem.hide() : elem.show();
+                }
+            };
+        })
+    }
+}
+</script>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('mfmcallforprice')->__('Call For Price') ?></h4>
+    </div>
+    <fieldset>
+
+        <legend><?php echo Mage::helper('mfmcallforprice')->__('Call For Price') ?></legend>
+        <table cellspacing="0" class="form-list" id="table_mfmcallforprice">
+
+        <tr>
+            <td class="label"><label for="mfmcallforprice_message"><?php echo Mage::helper('mfmcallforprice')->__('Replace Price Message') ?></label></td>
+            <td class="value"><input type="text" class="input-text" id="mfmcallforprice_message" name="<?php echo $this->getFieldSuffix() ?>[mfmcallforprice][message]" value="<?php echo $data->getMessage() ?>"/>
+
+            <?php $_checked = ($data->getHidePrice()) ? 'checked="checked"' : '' ?>
+            <input type="checkbox" id="mfmcallforprice_hide_price" name="<?php echo $this->getFieldSuffix() ?>[mfmcallforprice][hide_price]" value="1" <?php echo $_checked ?> onclick="mfmToggleValueElements(this, this.parentNode);" class="checkbox" />
+            <label for="mfmcallforprice_hide_price" class="normal"><?php echo Mage::helper('mfmcallforprice')->__('Hide price and cart button') ?></label>
+            <script type="text/javascript">mfmToggleValueElements($('mfmcallforprice_hide_price'), $('mfmcallforprice_hide_price').parentNode);</script></td>
+
+            <?php /* ?><td class="value scope-label"><?php echo Mage::helper('catalog')->__('[GLOBAL]') ?></td><?php */ ?>
+        </tr>
+        </table>
+    </fieldset>
+</div> 

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WSM_Orderstatus>
+            <version>0.0.1</version>
+        </WSM_Orderstatus>
+    </modules>
+    <global>
+    	<models>
+            <wsm_orderstatus>
+                <class>WSM_Orderstatus_Model</class>
+            </wsm_orderstatus>
+        </models>
+    </global>
+    <crontab>
+        <jobs>
+            <wsm_orderstatus_cron>
+                <schedule>
+                    <cron_expr>0 5 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>wsm_orderstatus/observer::process</model>
+                </run>
+            </wsm_orderstatus_cron>
+        </jobs>
+    </crontab>
+</config>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Eye4fraud Connector Magento Module
+ *
+ * @category    Eye4fraud
+ * @package     Eye4fraud_Connector
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <eye4fraud_connector translate="title">
+                                        <title>Eye4Fraud Connector</title>
+                                    </eye4fraud_connector>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

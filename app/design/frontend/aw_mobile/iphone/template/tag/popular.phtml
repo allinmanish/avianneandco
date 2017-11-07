@@ -1,0 +1,32 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="box base-mini mini-product-tags">
+    <div class="head">
+        <h4><?php echo $this->__('Popular Tags'); ?></h4>
+    </div>
+    <div class="content">
+    <ul>
+        <?php foreach ($this->getTags() as $_tag): ?>
+            <li><a href="<?php echo $_tag->getTaggedProductsUrl() ?>" style="font-size:<?php echo $_tag->getRatio()*70+75 ?>%;"><?php echo $this->htmlEscape($_tag->getName()) ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+    </div>
+    <div class="actions">
+        <a href="<?php echo $this->getUrl('tag/list') ?>"><small><?php echo $this->__('View All Tags') ?></small></a>
+    </div>
+</div>

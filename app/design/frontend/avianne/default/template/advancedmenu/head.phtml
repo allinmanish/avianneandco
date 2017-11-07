@@ -1,0 +1,19 @@
+<?
+if(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'plain'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/plain.css" media="all" />
+<?
+elseif(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'advplain'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/advanced.css" media="all" />
+<?
+elseif(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'static'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/static.css" media="all" />
+<?
+elseif(Mage::getStoreConfig('advancedmenu/displayoptions/mode') == 'dropdown'):
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('') ?>aw_advancedmenu/dropdown.css" media="all" />
+
+<?endif;?>
+

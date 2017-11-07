@@ -1,0 +1,100 @@
+<?php 
+/************************  AJAX PAGER  **********************************/
+if($this->getRequest()->getParam('ajax')==true) { ?>
+	<div class="col-main">
+	 <!-- start global messages -->
+	<?php echo $this->getChildHtml('global_messages') ?>
+	<!-- end global messages -->
+	<!-- start content -->
+	<?php $content = $this->getChildHtml('content'); ?>
+	<?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+	<!-- end content -->
+	</div>
+<?php 
+} else { 
+/************************  eof AJAX PAGER  **********************************/
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://opengraphprotocol.org/schema/" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+<body <?php echo $this->getBodyClass()?'class="'.$this->getBodyClass().'"':'' ?> <?php if(stripos($this->getBodyClass(), "cms-avianne-reviews")!==false) { echo ' onload="initialize()"'; } ?>>
+	<?php echo $this->getChildHtml('after_body_start') ?>
+	<div class="wrapper">
+		<div class="sub-wrapper">
+    		<?php echo $this->getChildHtml('global_notices') ?>
+	        <!-- start header -->
+	        <div class="header">
+	            <?php echo $this->getChildHtml('header') ?>
+	        </div>
+        	<!-- end header -->
+        	<!-- start middle -->
+        	<div class="middle-container">
+        		<?php /*if(stripos($this->getBodyClass(), "cms-custom-diamond-jewelry-gallery")===false && stripos($this->getBodyClass(), "wordpress")===false && stripos($this->getBodyClass(), "cms-home")===false && (strpos($this->getRequest()->getModuleName(), "catalog")===false) && !((strpos($this->getRequest()->getModuleName(), "checkout")!==false) && ($this->getRequest()->getControllerName()=="cart"))): ?>
+	            	<div class="share-top black-friday">
+						<img src="<?php echo $this->getSkinUrl('images/black-friday.jpg') ?>" alt="<?php echo $this->__('Black Friday'); ?>" />
+					</div>
+					<div class="share-top post-black-friday">
+	            		<?php echo $this->__('Share This Page And Save 5% On Your Purchase'); ?>
+	            		<?php if( (strpos($this->getRequest()->getModuleName(), "catalog")!==false) && ($this->getRequest()->getControllerName()=="category") ): ?>
+							<div id="top-social-buttons">
+								<i id="counter-overlay"></i>
+								<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo urlencode($this->helper('core/url')->getCurrentUrl()); ?>" data-text="Diamond Jewelry by Avianne &amp; Co" data-count="none">Tweet</a>
+								<g:plusone annotation="none" href="<?php echo urlencode($this->helper('core/url')->getCurrentUrl()); ?>" callback="googleClick" size="medium"></g:plusone>
+								<a href="http://pinterest.com/pin/create/button/?url=<?php echo urlencode($this->helper('core/url')->getCurrentUrl()); ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+								<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+							</div>
+						<?php else: ?>
+							<div id="top-social-buttons">
+								<i id="counter-overlay"></i>
+								<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.avianneandco.com/" data-text="Diamond Jewelry by Avianne &amp; Co" data-count="none">Tweet</a>
+								<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+								<a href="http://pinterest.com/pin/create/button/?url=<?php echo Mage::getBaseUrl('web') ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+								<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+							</div>
+						<?php endif; ?>
+	            	</div>
+				<?php endif;*/ ?>
+				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('black_friday_banner')->toHtml() ?>
+            	<div class="middle col-1-layout">
+					<?php 
+						global $breadcrumbs;
+						$breadcrumbs = $this->getChildHtml('breadcrumbs');
+						// var_dump($breadcrumbs);
+					?>
+					<?php echo $this->getChildHtml('name') ?> 
+	            	<!-- start center -->
+	                <div id="main" class="col-main">
+	                	<!-- start content -->
+	                    <div class="content-block">
+	                    	<?php $content = $this->getChildHtml('content'); ?>
+	                    	<?php echo preg_replace('/([^(<a.*>)])(contact us)([^(<\/a>)])/mi', '$1<a href="#dialog" id="contact-link">$2</a>$3', $content) ?>
+						</div>
+						<!-- end content -->
+					</div>
+					<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('new_footer')->toHtml() ?>
+	            	<!-- end center -->
+            	</div>
+        	</div>
+	        <!-- end middle -->
+	        <!-- start footer -->
+	        <?php /* 
+	        <div class="footer-container">
+	            <div class="footer">
+	                <?php echo $this->getChildHtml('footer') ?>
+	            </div>
+	        </div>
+	        */ ?>
+	        <!-- end footer -->
+		</div>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+	</div>
+	<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>
+<?php 
+/************************  AJAX PAGER  **********************************/
+}
+/************************  eof AJAX PAGER  **********************************/
+?>

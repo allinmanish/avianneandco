@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_bestsellers_index>
+        <reference name="content">
+            <block type="wsm_salesreporting/adminhtml_bestsellers" template="report/grid/container.phtml" name="sales.report.grid.container">
+                <!-- block type="adminhtml/store_switcher" template="report/store/switcher/enhanced.phtml" name="store.switcher">
+                    <action method="setStoreVarName"><var_name>store_ids</var_name></action>
+                </block-->
+                <block type="sales/adminhtml_report_filter_form" name="grid.filter.form">
+                    <action method="setFieldVisibility">
+                        <field>report_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>show_order_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>order_statuses</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>period_type</field>
+                        <visibility>0</visibility>
+                    </action>
+                    <action method="setFieldVisibility">
+                        <field>show_empty_rows</field>
+                        <visibility>0</visibility>
+                    </action>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_bestsellers_index>
+</layout>

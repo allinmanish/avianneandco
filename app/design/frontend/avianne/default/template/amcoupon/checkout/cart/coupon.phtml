@@ -1,0 +1,80 @@
+<?php 
+$current_url = (strpos(Mage::helper('core/url')->getCurrentUrl(),"checkout/onepage")===false)?Mage::helper('core/url')->getCurrentUrl():Mage::helper('checkout/url')->getCheckoutUrl();
+?>
+
+<div class="block-progress discount-codes box">
+	<div class="head">
+        <span><?php echo $this->__('Coupon Code') ?></span>
+    </div>
+    <div class="block-content">
+
+<div class="discount">
+    
+    <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost', array('_secure' => true)) ?>" method="post">
+    <div class="discount-form">
+        <input type="hidden" name="remove" id="remove-coupone" value="0" />
+        <input type="hidden" name="return_url" id="return_url" value="<?php echo $current_url; ?>"/>
+        <div class="input-box">
+            <input class="input-text" id="coupon_code" name="coupon_code" value="" />
+        </div>
+        <div class="buttons-set">
+            <button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button massive-btn" onclick="document.getElementById('discount-coupon-form').submit()" value="<?php echo $this->__('Apply Coupon') ?>"><?php echo $this->__('Apply Coupon') ?></button>
+        </div>
+    </div>
+    </form>
+    
+	<?php // Hide Applied Coupons ?>    
+    <?php if ($this->getAppliedCoupons() && false): ?>
+    <br />
+        <h2><?php echo $this->__('Applied Coupons'); ?></h2>
+        
+        <table border="0" width="100%" cellpadding="4" cellspacing="0" style="padding-top: 3px;">
+        
+        <?php $couponCnt = 0; ?>
+        <?php foreach ($this->getAppliedCoupons() as $coupon): ?>
+            <tr style="padding-bottom: 3px;">
+                <td><?php echo $coupon; ?></td>
+                <td style="text-align: right;">
+                    <form id="discount-coupon-cancel-form-<?php echo $couponCnt; ?>" action="<?php echo $this->getUrl('amcoupons/checkout/cancelCoupon') ?>" method="post">
+                    	<input type="hidden" name="return_url" id="return_url_cancel" value="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>"/>
+                        <input type="hidden" name="amcoupon_code_cancel" value="<?php echo $coupon; ?>" />
+                        <a href="#" onclick="javascript: $('discount-coupon-cancel-form-<?php echo $couponCnt; ?>').submit(); return false;"><?php echo $this->__('Cancel'); ?></a>
+                    </form>
+                </td>
+            </tr>
+            <?php $couponCnt++; ?>
+        <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
+    
+    
+</div>
+
+<script type="text/javascript">
+/*
+//<![CDATA[
+var discountForm = new VarienForm('discount-coupon-form');
+discountForm.submit = function (isRemove) {
+    if (isRemove) {
+        $('coupon_code').removeClassName('required-entry');
+        $('remove-coupone').value = "1";
+    } else {
+        $('coupon_code').addClassName('required-entry');
+        $('remove-coupone').value = "0";
+    }
+    return VarienForm.prototype.submit.bind(discountForm)();
+}
+//]]>
+*/
+</script>
+	</div>
+</div>
+<div class="shopping-cart-totals" style="margin-top:10px; margin-left: 10px;">
+ 	<div class="order-ups">
+ 		<img src="<?php echo $this->getSkinUrl('images/fedex-logo-90.png'); ?>" alt="<?php echo $this->__('FedEx'); ?>" 
+ 				style="float: none; display: block; margin: 0 auto 6px;" />
+ 	</div>
+ 	<div class="saturday-delivery">
+ 		Contact Us for Saturday Delivery<br /><span>888-243-4344<br />Sales@AvianneAndCo.com</span> 		
+ 	</div>
+</div>

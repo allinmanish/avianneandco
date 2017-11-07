@@ -1,0 +1,106 @@
+<?php
+		$_helper = $this->helper('catalog/output');
+
+        $orderIds = explode(',', $this->getRequest()->getParam('runner_list_orders'));
+        if (!empty($orderIds)) {
+        	
+        	$resItems = array();
+        	$i = 0;
+        	
+            foreach ($orderIds as $orderId) {
+            	
+            	
+		        $order = Mage::getModel('sales/order')->load($orderId);
+		        if ($order->getId()) {
+		        	
+					$items = $order->getAllItems();
+					
+					foreach ($items as $itemId => $item)
+					{
+						$i++;
+						$resItems[$i]['price'] = $item->getBaseRowTotalInclTax();
+						$resItems[$i]['sku'] = $item->getSku();
+						
+						$availableOptions = array("gold color", "ring size", "chain length");
+						$options = $item->getProductOptions();
+						foreach ($options as $option) {
+							foreach ($option as $opt) {
+								if (isset($opt['label']) && in_array(strtolower($opt['label']), $availableOptions)) {
+									$resItems[$i][strtolower(str_replace(' ', '_', $opt['label']))] = $opt['print_value'];
+								} elseif (strpos(strtolower($opt['label']), 'engraving') !== false) {
+									$resItems[$i]['engraving'] = $opt['print_value'];
+								}
+							}
+						}
+						
+						$_product = Mage::getModel('catalog/product')->load($item->getProductId());
+					
+						$resItems[$i]['image'] = $this->helper('catalog/image')->init($_product, 'image')->resize(84, 84)->setQuality(75)->__toString();
+					
+						$attributes = $_product->getAttributes();
+						
+						$availableAttrs = array('metal_type', 'peiceweight', 'carat_weight');
+						
+						foreach ($attributes as $attribute) {
+					
+							if (in_array($attribute->getAttributeCode(), $availableAttrs) && $attribute->getIsVisibleOnFront()) {
+								$value = $attribute->getFrontend()->getValue($_product);
+								if (!$_product->hasData($attribute->getAttributeCode()) || (string)$value == '') {
+									$value = Mage::helper('catalog')->__('N/A');
+								}
+								
+								$resItems[$i][$attribute->getAttributeCode()] = trim($value);
+							}
+						}
+					}
+		        }
+            }
+        }
+?>
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 580px;
+    color: black;
+	font-family: Arial;
+}
+table.runlist { border-collapse: collapse; border-color: #dadfe0; }
+table.runlist tr { height: 90px; }
+table.runlist tr td.f { width: 84px; }
+table.runlist tr td.s { width: 68px; text-align: right; vertical-align: top; font-size: 12px; }
+table.runlist tr td.s b { font-weight: normal; font-size: 14px; }
+table.runlist tr td.t { width: 138px; font-size: 10px; vertical-align: top; }
+</style>
+
+<body>
+
+<div class="wrapper">
+	<br>
+	<div style="text-align: center; height: 40px; line-height: 22px; font-size: 36px;">Run List &ndash; <?php echo date('m/d/Y'); ?></div>
+	
+	<table width="100%" border="1" cellspacing="0" cellpadding="2" class="runlist">
+		<tr>
+		<?php for ($i=1; $i<=10; $i++) : ?>
+			<td class="f"><img src="<?php echo $resItems[$i]['image']; ?>"></td>
+			<td class="s"><?php
+				echo '<b>' . ($resItems[$i]['price'] ? Mage::app()->getStore()->convertPrice($resItems[$i]['price'], true) : '') . '</b><br>';
+				echo $resItems[$i]['sku'] ? $resItems[$i]['sku'] . '<br>' : '';
+				echo $resItems[$i]['metal_type'] ? $resItems[$i]['metal_type'] . '<br>' : '';
+				echo $resItems[$i]['gold_color'] ? $resItems[$i]['gold_color'] . '<br>' : '';
+				echo $resItems[$i]['ring_size'] ? $resItems[$i]['ring_size'] . '<br>' : '';
+				echo $resItems[$i]['chain_length'] ? $resItems[$i]['chain_length'] . '<br>' : '';
+				echo $resItems[$i]['peiceweight'] ? $resItems[$i]['peiceweight'] . '<br>' : '';
+				echo $resItems[$i]['carat_weight'] ? $resItems[$i]['carat_weight'] . '<br>' : '';
+			?></td>
+			<td class="t"><?php 
+				echo $resItems[$i]['engraving'] ? $resItems[$i]['engraving'] : '&nbsp;';
+			?></td>
+			<?php if ($i % 2 == 0): ?>
+		</tr><tr>
+			<?php endif; ?>
+		<?php endfor; ?>
+		</tr>
+	</table>
+	
+</body>

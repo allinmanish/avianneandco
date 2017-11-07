@@ -1,0 +1,34 @@
+
+<?php 
+/**
+ * ECSSO
+ * 
+ * @Cmstree   	design_default
+ * @package    	Local
+ * @copyright  	Copyright © 2011 - eCommerce Software Solutions Online - Magento Commerce Specialists 
+ * (http://www.ecommercesoftwaresolutionsonline.com) 
+ */
+
+	
+	$pages = Mage::getModel('cmstree/cmstree')->getSubpages(0);               
+	//$pages->addPageFilter(0);  
+	
+?>	
+ <div class="cmsfolding">   
+        <h4 class="no-display"><?php echo $this->__('CMS Navigation:') ?></h4>
+ <ul id="cms-left">
+	<?php foreach ($pages as $page): ?>
+	
+		<li> <a href="<?php echo $this->getBaseUrl() . $page->getIdentifier() ?>"><?php echo $page->getItem_title() ?></a>
+				<?php  $htmlPages = $this->drawPage($page->getCmstree_id(),0); ?>
+			<?php  if (!empty($htmlPages)) { ?>	
+			<ul>
+				<?php echo $htmlPages; ?>	
+			</ul>
+			<?php  } ?>	
+		</li> 	
+	<?php endforeach ?>	
+	
+</ul>	
+ </div>	
+	

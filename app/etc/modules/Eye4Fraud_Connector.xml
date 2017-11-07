@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Eye4Fraud_Connector>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Eye4Fraud_Connector>
+	</modules>
+</config>

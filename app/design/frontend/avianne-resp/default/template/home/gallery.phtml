@@ -1,0 +1,125 @@
+<div class="gallery-head">
+	<div>
+		<h1><?php echo $this->__('Custom Jewelry Gallery'); ?></h1>
+		<p class="line-1"><?php echo $this->__('Presenting our exclusive and vast collection of'); ?><br /><?php echo $this->__('celebrity jewelry worn by notable celebrities such'); ?><br /><?php echo $this->__('as Ciara, Jamie Presley, Nicki Minaj, and many more!'); ?></p>
+		<p class="line-2"><?php echo $this->__('Design Your Own Custom Piece'); ?><br /><?php echo $this->__('in 4 easy steps:'); ?></p>
+		<p class="line-3">
+			<img src="<?php echo $this->getSkinUrl('images/gallery/step-1.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/step-2.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/step-3.png') ?>" />
+			<img src="<?php echo $this->getSkinUrl('images/gallery/step-4.png') ?>" />
+		</p>
+		<p class="line-4"><a href="/custom-jewelry"><?php echo $this->__('Click to Get Started!'); ?></a></p>
+	</div>
+</div>
+<div class="gallery-likebox">
+	<div class="share-top black-friday">
+		<img src="<?php echo $this->getSkinUrl('images/black-friday.jpg') ?>" alt="<?php echo $this->__('Black Friday'); ?>" />
+	</div>
+	<div class="share-top post-black-friday">
+		<div id="top-social-buttons">
+			<i id="counter-overlay"></i>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" data-text="<?php echo $this->__('Custom Jewelry Gallery'); ?>" data-count="none">Tweet</a>
+			<g:plusone annotation="none" callback="googleClick" size="medium"></g:plusone>
+			<a href="http://pinterest.com/pin/create/button/?url=<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>&media=<?php echo $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg'; ?>" class="pin-it-button"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+			<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+		</div>
+		<span><?php echo $this->__('Famous Custom Pieces'); ?></span>
+	</div>
+</div>
+<div class="gallery-bottom-box">
+	<div>
+		<div class="gallery-sidebar">
+			<div class="item-1"><a href="/blog/an-exclusive-look-at-ciaras-15-carat-diamond-ring-by-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-3.jpg') ?>" /></a><p><a href="/blog/an-exclusive-look-at-ciaras-15-carat-diamond-ring-by-avianne-co/"><?php echo $this->__('Read About our $500,000 Diamond Engagement Ring produced for Ciara'); ?></a></p></div>
+			<div class="item-2"><a href="/blog/juelz-santana-re-ups-on-diamond-jewelry-at-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-2.jpg') ?>" /></a><p><a href="/blog/juelz-santana-re-ups-on-diamond-jewelry-at-avianne-co/"><?php echo $this->__('Check out Juelz Santana\'s Half Kilo Solid Cuban Link Chains'); ?></a></p></div>
+			<div class="item-3"><a href="/blog/the-monarch-diamond-ring-by-avianne-co/"><img src="<?php echo $this->getSkinUrl('images/gallery/blog-1.jpg') ?>" /></a><p><a href="/blog/the-monarch-diamond-ring-by-avianne-co/"><?php echo $this->__('Arcangel\'s Million Dollar Jewelry Collection By Avianne &amp; Co'); ?></a></p></div>
+		</div>
+		<div class="gallery-slider">
+			<?php $_category = Mage::getModel("catalog/category")->load(211); ?>
+			<?php $collection = $_category->getProductCollection()->addAttributeToSort('position'); ?>
+			<?php $collection->getSelect()->limit( 60 ); ?>
+			<?php Mage::getModel('catalog/layer')->prepareProductCollection($collection); ?>
+			<span id="slider-prev"></span>
+			<div class="slider-wrapper">
+				<ul class="bxslider">
+				<?php foreach($collection as $_item): ?>
+					<li>
+						<a href="<?php echo $_item->getProductUrl(); ?>">
+							<span><?php echo $this->htmlEscape($_item->getName()) ?></span>
+							<img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(350, 350); ?>"  width="350" height="350" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+						</a>
+					</li>
+				<?php endforeach; ?>
+				</ul>
+				<ul class="thumbSlider">
+				<?php $i = 0; ?>
+				<?php foreach($collection as $_item): ?>
+					<li slideindex="<?php echo $i; ?>">
+						<img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(60, 60); ?>"  width="60" height="60" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+					</li>
+					<?php $i++;?>
+				<?php endforeach; ?>
+				</ul>
+			</div>
+			<span id="slider-next"></span>
+			<div class="underslider">
+				<p class="line-2"><?php echo $this->__('Design Your Own Custom Piece'); ?><br /><?php echo $this->__('in 4 easy steps:'); ?></p>
+				<p class="line-3">
+					<img src="<?php echo $this->getSkinUrl('images/gallery/step-1.png') ?>" />
+					<img src="<?php echo $this->getSkinUrl('images/gallery/step-2.png') ?>" />
+					<img src="<?php echo $this->getSkinUrl('images/gallery/step-3.png') ?>" />
+					<img src="<?php echo $this->getSkinUrl('images/gallery/step-4.png') ?>" />
+				</p>
+				<p class="line-4"><a href="/custom-jewelry"><?php echo $this->__('Click to Get Started!'); ?></a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var $j = jQuery.noConflict();
+var realSlider= $j(".bxslider").bxSlider({
+	speed:1000,
+	pager:false,
+	nextSelector: '#slider-next',
+	prevSelector: '#slider-prev',
+	nextText: '',
+	prevText: '',
+	infiniteLoop:false,
+	hideControlOnEnd:true,
+	onSlideBefore:function($slideElement, oldIndex, newIndex){
+		changeRealThumb(realThumbSlider,newIndex);
+	}
+});
+var realThumbSlider=$j(".thumbSlider").bxSlider({
+  	minSlides: 6,
+  	maxSlides: 6,
+  	slideWidth: 60,
+  	slideMargin: 12,
+  	moveSlides: 1,
+  	pager:false,
+  	speed:1000,
+  	infiniteLoop:false,
+  	hideControlOnEnd:true,
+  	nextText:'<span></span>',
+	prevText:'<span></span>',
+	onSlideBefore:function($slideElement, oldIndex, newIndex){
+		
+	}
+});
+function linkRealSliders(bigS,thumbS){
+	$j(".thumbSlider img").click(function(event){
+		event.preventDefault();
+		var newIndex=$j(this).parent().attr("slideIndex");
+        bigS.goToSlide(newIndex);
+	});
+}
+function changeRealThumb(slider,newIndex){
+	var $thumbS=$j(".thumbSlider");
+	$thumbS.find('.active').removeClass("active");
+	$thumbS.find('li[slideIndex="'+newIndex+'"]').addClass("active");
+	if(slider.getSlideCount()-newIndex>=4)slider.goToSlide(newIndex);
+	else slider.goToSlide(slider.getSlideCount()-4);
+
+}
+linkRealSliders(realSlider,realThumbSlider);
+</script>

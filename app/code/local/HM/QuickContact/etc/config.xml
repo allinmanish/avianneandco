@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <HM_QuickContact>
+            <version>0.8.0</version>
+        </HM_QuickContact>
+    </modules>
+    <frontend>
+        <routers>
+            <quickcontact>
+                <use>standard</use>
+                <args>
+                    <module>HM_QuickContact</module>
+                    <frontName>quickcontact</frontName>
+                </args>
+            </quickcontact>
+        </routers>       
+        <layout>
+            <updates>
+                <quickcontact>
+                    <file>quickcontact.xml</file>
+                </quickcontact>
+            </updates>
+        </layout>
+		<translate>
+			<modules>
+				<HM_QuickContact>
+					<files>
+						<default>HM_QuickContact.csv</default>
+					</files>
+				</HM_QuickContact>
+			</modules>
+		</translate>
+    </frontend>
+    <global>
+		<blocks>
+			<quickcontact>
+				<class>HM_QuickContact_Block</class>
+			</quickcontact>
+		</blocks>
+		<models>
+			<quickcontact>
+				<class>HM_QuickContact_Model</class>
+			</quickcontact>
+		</models>
+		<helpers>
+			<quickcontact>
+				<class>HM_QuickContact_Helper</class>
+			</quickcontact>
+		</helpers>
+        <resources>
+            <quickcontact_setup>
+                <setup>
+                    <module>HM_QuickContact</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </quickcontact_setup>
+        </resources>
+        <template>
+            <email>
+                <quickcontact_email_email_template translate="label" module="quickcontact">
+                    <label>Contact Form</label>
+                    <file>quickcontact_form.html</file>
+                    <type>text</type>
+                </quickcontact_email_email_template>
+				<quickcontact_auto_reply_email_template translate="label" module="quickcontact">
+                    <label>Contact Form</label>
+                    <file>quickcontact_replyform.html</file>
+                    <type>text</type>
+                </quickcontact_auto_reply_email_template>
+            </email>
+        </template>
+    </global>
+
+    <adminhtml>        
+		<translate>
+			<modules>
+				<HM_QuickContact>
+					<files>
+						<default>HM_QuickContact.csv</default>
+					</files>
+				</HM_QuickContact>
+			</modules>
+		</translate>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <quickcontact translate="title" module="quickcontact">
+                                            <title>Quick Contacts Section</title>
+                                        </quickcontact>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <default>
+        <quickcontact>            
+            <email>
+				<default_title>Contact Us</default_title>
+				<default_subject>Contact Us</default_subject>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>custom2</sender_email_identity>
+                <email_template>quickcontact_email_email_template</email_template>
+				<dock_link>1</dock_link>
+            </email>
+			<auto_reply>
+				<enable>1</enable>
+				<append>1</append>
+				<content>Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</content>
+				<email_template>quickcontact_auto_reply_email_template</email_template>
+			</auto_reply>
+			<recaptcha>
+				<enabled>1</enabled>
+				<public_key>6Lfi57oSAAAAAK_dJq22uGciBldY2iai_-plNtuQ </public_key>
+				<private_key>6Lfi57oSAAAAAPr453uNMehy61XijMOJwo_JZ1N0</private_key>
+			</recaptcha>
+        </quickcontact>
+    </default>
+</config>

@@ -1,0 +1,11 @@
+<config>
+	<global>
+		<helpers>
+			<catalog>
+				<rewrite>
+					<image>NetAmbition_DirectResize_Helper_Image</image>
+				</rewrite>
+			</catalog>
+		</helpers>
+	</global>
+</config>

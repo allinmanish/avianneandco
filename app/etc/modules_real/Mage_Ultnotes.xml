@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mage_Ultnotes>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Mage_Ultnotes>
+    </modules>
+</config>
+
+<!--
+/**
+ * Noam Design Group
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA available 
+ * through the world-wide-web at this URL:
+ * http://ultimento.com/legal/license.txt
+ * 
+ * MAGENTO EDITION USAGE NOTICE
+ * 
+ * This package is designed for Magento COMMUNITY edition. 
+ * =================================================================
+ *
+ * @package    Ultimento
+ * @copyright  Copyright (c) 2006-2011 Noam Design Group. (http://www.noamdesign.com)
+ * @license    http://ultimento.com/legal/license.txt
+ * @terms    http://ultimento.com/legal/terms
+ */
+-->

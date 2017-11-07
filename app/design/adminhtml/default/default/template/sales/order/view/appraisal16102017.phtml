@@ -1,0 +1,278 @@
+<?php 
+$order = $this->getOrder();
+$customer = array(
+		'fn' => $order->getBillingAddress()->getFirstname(),
+		'ln' => $order->getBillingAddress()->getLastname(),
+		'mn' => $order->getBillingAddress()->getMiddlename()
+		);
+$address = Mage::getModel('sales/order_address')->load($order->getShippingAddress()->getId());
+$_product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('item_id'));
+$_helper = $this->helper('catalog/output');
+$attributes = $_product->getAttributes();
+$_items = $order->getAllItems();
+$_item = null; 
+foreach ($_items as $item) {
+	if ($_product->getId() == $item->getProductId()) {
+		$_item = $item;
+	}
+}
+$options = $_item->getProductOptions();
+if (!empty($options['options'])) {
+	foreach ($options['options'] as $option) {
+		if ($option['label'] == 'Chain length') {
+			$length = $option['value'];
+			$default_length = floatval(Mage::getResourceModel('catalog/product')->getAttributeRawValue($_product->getId(), 'chainlength', 1));
+			if (!$default_length) {
+				$default_length = floatval(Mage::getResourceModel('catalog/product')->getAttributeRawValue($_product->getId(), 'length', 1));
+			}
+			$default_weight = floatval(Mage::getResourceModel('catalog/product')->getAttributeRawValue($_product->getId(), 'peiceweight', 1));
+		};
+	};
+}
+?>
+<script src="/js/jquery/jquery-1.7.1.min.js"></script>
+<script src="/js/html2canvas.js"></script>
+
+<style>
+body { margin: 0px; }
+.wrapper {
+	position: relative;
+	width: 690px;
+	height: 1016px;
+    color: #15256px;
+	margin: 0 auto;
+}
+.background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	/* min-height: 1045px; */
+}
+.logo {
+	position: absolute;
+	top: 60px;
+    left: 80px;
+}
+.appcertificate {
+    position: absolute;
+    left: 90px;
+    top: 110px;
+}
+.text {
+	position: absolute;
+	top: 336px;
+	left: 65px;
+	width: 408px;
+	height: 154px;
+	overflow: hidden;
+	text-align: center;
+	text-transform: capitalize;
+	font-variant: small-caps;
+	font-size: 22px;
+	line-height: 1.1em;
+	outline: 1px solid green;
+}
+.text-cert {
+	position: absolute;
+	top: 135px;
+    left: 85px;
+	width: 232px;
+	height: 77px;
+	overflow: hidden;
+	font-size: 11px;
+	border: 3px double #C0C0C0;
+	line-height: 1em;
+	padding: 3px 4px;
+}
+
+.text-address {
+    position: absolute;
+    right: 113px;
+    top: 105px;
+    text-align: right;
+    font-size: 14px;
+    line-height: 23px;
+}
+.text-order {
+    position: absolute;
+    top: 230px;
+    left: 50px;
+    text-align: center;
+    width: 587px;
+    font-size: 13px;
+    line-height: 22px;
+	padding:0px 5px;
+}
+.product {
+    position: absolute;
+    top: 300px;
+    left: 50px;
+    width: 587px;
+    height: 285px;
+    padding: 0 5px;
+}
+.product .photo {
+    width: 172px;
+    font-size: 13px;
+    text-align: center;
+    float: left;
+    margin-left: 30px;
+    /* margin-top: 35px; */	
+}
+.product .photo > img {
+    background-color: white;
+    border: 3px double #C0C0C0;
+    width: 166px;
+    margin-bottom: 8px;
+}
+.product .specs {
+    position: absolute;
+    top: 0px;
+    right: 40px;
+    border: 3px double #c0c0c0;
+    width: 239px;
+}
+.product .specs .specs-table {
+	width: 100%;
+    border-collapse: collapse;
+}
+.product .specs .specs-table tr {
+    border-bottom: 1px solid #c4c1bc;
+}
+.product .specs .specs-table tr:nth-child(even) {
+	background: #eeeded;
+}
+.product .specs .specs-table tr:nth-child(odd) {
+	background: #ffffff;
+}
+.product .specs .specs-table tr th {
+    font-weight: bold;
+    font: 8px Verdana;
+    text-align: left;
+    padding-left: 6px;
+}
+.product .specs .specs-table tr td {
+    padding: 2px 0px 1px 6px;
+    font: 8px Verdana;
+    color: #666;
+    border-left: 1px solid #c4c1bc;
+}
+.product .specs .specs-table tr td:n-thchild(odd) {
+	border-right: 0;
+}
+.product .specs .total {
+    font-size: 13px;
+    text-align: left;
+    line-height: 22px;
+    margin-left: 50px;
+    margin-bottom: 2px;
+}
+.chart {
+    position: absolute;
+    bottom: 55px;
+    left: 160px;
+    text-align: center;
+}
+.chart > img {
+    margin-top: 9px;
+	width: 100%;
+    max-width: 375px;
+}
+</style>
+
+<body>
+
+<div class="wrapper">
+	<img src="<?php echo $this->getSkinUrl('images/background.jpg') ?>" class="background">
+	<img src="<?php echo $this->getSkinUrl('images/logo.png') ?>" class="logo">
+    <img src="<?php echo $this->getSkinUrl('images/appcertificate.png') ?>" class="appcertificate">
+	<div class="text-cert">
+		The purpose of this appraisal report is for the buyer to
+		verify that the description pertinent to this jewelry item
+		has been verified and approved by a GIA graduate 
+		geologist. This appraisal certificate may be used for
+		insurance purposes and is accepted by most insurance
+		providers both in the US and Internationally.
+	</div>
+	<div class="text-address">
+		28w 47th st<br>
+		New York, NY<br>
+		100036<br>
+		888-243-4344<br>
+		<?php echo date('n/d/Y'); ?>
+	</div>
+	<div class="text-order">
+		<?php echo implode(" ", $customer) ?><br>
+		<?php echo $address['street']." - ".$address['city'].", ".$address['region']?><br>
+		Certificate Number: <?php echo $order->getIncrementId();?>
+	</div>
+	<div class="product">
+		<div class="photo">
+			<img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(170, 170)->setQuality(75); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+			<?php echo $this->htmlEscape($_product->getName()) ?>
+		</div>
+		<div class="specs">
+			<table cellspacing="0" class="specs-table"><tbody>
+			<?php 
+			foreach ($attributes as $attribute) {
+				if ($attribute->getIsVisibleOnFront() && !in_array($attribute->getAttributeCode())) {
+					$value = $attribute->getFrontend()->getValue($_product);
+			
+					if (!$_product->hasData($attribute->getAttributeCode())) {
+						$value = Mage::helper('catalog')->__('N/A');
+					} elseif ((string)$value == '') {
+						$value = Mage::helper('catalog')->__('No');
+					} elseif ($attribute->getFrontendInput() == 'price' && is_string($value)) {
+						$value = Mage::app()->getStore()->convertPrice($value, true);
+					}
+			
+					if (is_string($value) && strlen($value) && $value!='No') {
+			?>
+			<tr>
+				<td><?php echo $this->htmlEscape($this->__($attribute->getStoreLabel())) ?></td>
+				<td>
+					<?php if(!empty($length) && $this->htmlEscape($this->__($attribute->getStoreLabel())) == 'Chain Length'): ?>
+						<?php echo $length . ' inches' ?>
+					<?php elseif(!empty($length) && $this->htmlEscape($this->__($attribute->getStoreLabel())) == 'Item Weight'): ?>
+						<?php // Math.round(( (dto / dfrom) * sV) * 10 )/10; ?>
+						<?php echo round( ($default_weight / $default_length * $length), 1) . ' grams'; ?>
+					<?php else: ?>
+						<?php echo $_helper->productAttribute($_product, $value, $attribute->getAttributeCode()); ?>
+					<?php endif; ?>
+				</td>
+			</tr>
+			<?php 
+					}
+				}
+			}
+			?>
+			</tbody></table>
+            <div class="total">
+                Appraised Value: <?php echo Mage::helper('core')->currency($_product->getPrice(),true,false);?><br>
+                Signed: ___________________
+            </div>
+		</div>
+	</div>
+    
+    <div class="chart">
+        DIAMOND QUALITY CHART<br>
+        <img src="<?php echo $this->getSkinUrl('images/2179-diamonds.png') ?>">
+    </div>
+
+</div>
+
+<img id="canvasImg" />
+
+<script>
+//html2canvas(document.body, {
+//width: 538,
+//height: 792,
+//onrendered: function(canvas) {
+//var dataURL = canvas.toDataURL();
+//document.getElementById('canvasImg').src = dataURL;
+//$('.wrapper, .background').hide();
+//}
+//});
+</script>
+</body>

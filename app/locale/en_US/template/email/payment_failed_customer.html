@@ -1,0 +1,47 @@
+<!--@subject New password for {{var customer.name}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"store url=\"customer/account/\"":"Customer Account Url",
+"htmlescape var=$customer.name":"Customer Name",
+"htmlescape var=$customer.password":"Customer New Password"}
+@-->
+<!--@styles
+body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+
+<body style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<div style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+    <tr>
+        <td align="center" valign="top" style="padding:20px 0 20px 0">
+            <!-- [ header starts here] -->
+            <table bgcolor="FFFFFF" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #E0E0E0;">
+                <tr>
+                    <td valign="top">
+                        <a href="{{store url=""}}" style="color:#1E7EC8;"><img src="{{var logo_url}}" alt="{{var logo_alt}}" border="0"/></a>
+                    </td>
+                </tr>
+                <!-- [ middle starts here] -->
+                <tr>
+                    <td valign="top">
+                        <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;">Thank you for your business, <strong>{{var customer.name}}</strong>,</h1>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">The order you just tried to place with our website could not be processed. It seems that your credit card was declined by the card issuing bank.</p>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">There may be a couple of reasons for why this happened:</p>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">1. Your card may not have sufficient funds available for this purchase.</p>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">2.Your card may have a security feature enabled which prevents online purchases from being approved without your authorization. To fix this, simply call the customer service number on the back of your card and authorize the transaction over the phone.</p>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">3. If you are located outside the US, your card may have a similar security feature preventing international transactions without your verbal authorization.</p>
+                        <p style="font-size:12px; line-height:16px; margin:0 0 8px 0;">Once you've resolved the issue preventing your card from being approved, simply re-order the item online, or call us at 888-243-4344 to place the order with a live representative.</p>
+                        <p style="font-size:12px; line-height:16px; margin:0;">If you would like further assistance from a live representative, please feel free to call us directly at 888-243-4344.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#EAEAEA" align="center" style="background:#EAEAEA;"><p style="font-size:12px; margin:0;">Regards,<br/>Service &amp; Support<br/>Avianne &amp; Co Jewelers<br/>888-243-4344</p></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</body>

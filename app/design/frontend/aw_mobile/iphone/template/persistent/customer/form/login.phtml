@@ -1,0 +1,71 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * Customer login form template
+ *
+ * @see Mage_Customer_Block_Form_Login
+ */
+?>
+<div class="page-head"><h1><?php echo $this->__('Sign Up or Log In.') ?></h1></div>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="login-box">
+<form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
+	<?php echo $this->getBlockHtml('formkey'); ?>
+	<div class="new-users">
+        <div class="content">
+            <h4><?php echo $this->__('New Customers') ?></h4>
+            <p><?php echo $this->__('By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.') ?></p>
+            <p><?php echo $this->__('Sign up and join the Avianne &amp; Co family.') ?></p>
+        </div>
+        <div class="a-right">
+            <button class="form-button" onclick="window.location='<?php echo $this->getCreateAccountUrl() ?>';" type="button"><span><?php echo $this->__('Sign up') ?></span></button>
+        </div>
+    </div>
+    <div class="registered-users">
+        <div class="content">
+            <h4><?php echo $this->__('Registered Customers') ?></h4>
+            <p><?php echo $this->__('Please log in to access your account') ?></p>
+            <ul class="form-list">
+                <li class="email-input-data">
+                    <div class="innerbox"><label for="email"><?php echo $this->__('Email Address') ?><span class="required">*</span></label></div>
+                    <div class="input-box"><input name="login[username]" value="<?php echo $this->htmlEscape($this->getUsername()) ?>" title="<?php echo $this->__('Email Address') ?>" id="email" type="text" class="input-text required-entry validate-email" /></div>
+                </li>
+                <li class="last">
+                	<div class="col2-alt-set">
+						<div class="col-1"><label for="pass"><?php echo $this->__('Password') ?><span class="required">*</span></label></div>
+						<div class="clear"></div>
+                    </div>
+                    <div class="input-box"><input name="login[password]" type="password" class="input-text required-entry validate-password" id="pass" /></div>
+                </li>
+            </ul>
+        </div>
+                <p class="a-right required"><?php echo $this->__('* Required Fields') ?></p>
+                <div class="a-right">
+                    <button class="form-button" type="submit" name="send" id="send2"><span><?php echo $this->__('Log in') ?></span></button><br />
+                    <a href="<?php echo $this->getForgotPasswordUrl() ?>" class="recover grey-button"><?php echo $this->__('Forgot Your Password?') ?></a>
+                </div>
+		<div class="clear"></div>
+    </div>
+</form>
+
+</div>
+<script type="text/javascript">
+    var dataForm = new VarienForm('login-form', true);
+</script>

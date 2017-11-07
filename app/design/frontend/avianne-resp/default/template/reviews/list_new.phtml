@@ -1,0 +1,86 @@
+<h2><?php echo $this->__('WHAT OUR CUSTOMERS<br>ARE SAYING') ?></h2>
+<br>
+<?php $cat_id = (int)Mage::getModel('catalog/layer')->getCurrentCategory()->getId(); ?>
+<?php $num = (int)(round((1/substr($cat_id,-1))*15)+25); ?>
+<?php $collection = Mage::getModel('customreviews/review')->getCollection(); ?>
+<?php $collection->getSelect()->Limit($num)->order('rand()'); $total = 0; $i = 0; ?> 
+<ul class="bxslider">
+	<?php foreach ($collection as $review) { ?>
+		<?php $product = Mage::getModel('catalog/product')->loadByAttribute('sku',$review->getSku()); ?>
+		<?php if(!is_object($product)) continue;?>
+		<li>
+			<?php /*
+			<p class="pull-left"><img src="<?php echo (string)$this->helper('catalog/image')->init($product, 'thumbnail')->resize(50); ?>" alt="<?php echo $this->htmlEscape($product->getName())?>" /></p>
+			*/ ?>
+			<div class="stars">
+				<?php 
+					$starNumber = ceil($review->getStars()*2)/2;
+					for($x=1;$x<=$starNumber;$x++) {
+			        	echo '<img src="'.$this->getSkinUrl('images/star23x23.png').'" />';
+				    }
+				    if (strpos($starNumber,'.')) {
+				        echo '<img src="'.$this->getSkinUrl('images/half-star23x23.png').'" />';
+				        $x++;
+				    }
+				    while ($x<=5) {
+				        echo '<img src="'.$this->getSkinUrl('images/blank-star23x23.png').'" />';
+				        $x++;
+				    }	
+				?>
+			</div>
+			<div class="content">
+				<?php echo $review->getContent(); ?>
+			</div>
+			<div class="name">
+				<?php echo $review->getName(); ?> <?php // echo $review->getLocation(); ?> <?php // echo $review->getDate(); ?>
+				<?php if($i==0 && !Mage::registry('current_product')) { ?>
+					<?php $snippet = '<span class="product-name" itemprop="name">'.$this->htmlEscape($product->getName()).'</span>
+					<span class="short-description" itemprop="description">'.nl2br($product->getShortDescription()).'</span>';
+					?>
+				<?php } ?>
+			</div>
+		</li>
+		<?php $i++; $total += $review->getStars(); ?>
+	<?php } ?>
+</ul>
+<?php /* $avg = round(($total/$i), 1); ?>
+<?php if (($avg > 0) && Mage::registry('current_product')) { ?>
+	<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="font-size:0.92em;color:#ccc;float:right;padding-top:7px;">
+		<?php echo 'Rating: <span itemprop="ratingValue">' . $avg . '</span> out of <span itemprop="bestRating">5</span> based on <span itemprop="ratingCount">' . $i . '</span> review(s)'; ?>
+	</span>
+<?php } elseif (($avg > 0) && !Mage::registry('current_product')) { ?>
+		<span style="display: none;" itemscope="" itemtype="http://schema.org/Product">
+			<?php echo $snippet; ?>
+			<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" style="font-size:0.92em;color:#ccc;float:right;padding-top:7px;">
+				<?php echo 'Rating: <span itemprop="ratingValue">' . $avg . '</span> out of <span itemprop="bestRating">5</span> based on <span itemprop="ratingCount">' . $i . '</span> review(s)'; ?>
+			</span>			
+		</span>
+<?php } */ ?>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+/*
+		jQuery('.bxslider').bxSlider({
+			  mode: 'vertical',
+			  pager: false,
+			  controls: false,
+			  minSlides: 2,
+			  maxSlides: 2,
+			  moveSlides: 2,
+			  auto: true,
+			  speed: 3000
+			});
+*/
+		jQuery('.bxslider').bxSlider({
+			  mode: 'horizontal',
+			  pager: false,
+			  controls: false,
+			  minSlides: 1,
+			  maxSlides: 1,
+			  moveSlides: 1,
+			  auto: true,
+			  speed: 2000,
+			  pause: 3000,
+			  randomStart: false
+			});
+	});
+</script>

@@ -1,0 +1,153 @@
+<script type="text/javascript">
+jQuery(function(){
+	jQuery("a[rel='photo']").colorbox({
+		slideshow:true,
+		slideshowSpeed:<?php echo $this->getSlideShowSpeed();?>
+	});
+	jQuery(".slide-show").click(function(){
+		jQuery("a[rel='photo']:first").click();
+	});
+});
+</script>
+<?php $currentAlbum = Mage::registry('current_album');?>
+<?php $mode = $this->getRequest()->getParam('mode');?>
+<?php $mode=($mode==""||$mode=="detail")?"detail":"simple";?>
+<?php $backgroundColor= $this->getStoreBackgroundColor($mode)?>
+<?php $defaultBackgroundColor = $this->getDefaultBackgroundColor();?>
+<?php $photoThumbnailSize = $this->getPhotoThumbnailSize($currentAlbum);?>
+<?php $albumThumbnailSize = $this->getAlbumThumbnailSize();?>
+<?php $slideshowSize = $this->getSlideshowSize($currentAlbum);?>
+<?php $collection = $this->getPhotos();?>
+<?php $this->getToolbar()->setCollection($collection);?>
+
+<div id="mw_gallery">
+	<div class="head_title">
+		<h2><?php echo $currentAlbum->getTitle()?></h2>
+		<label><?php if($this->showAlbumUpdateDate()):?><?php echo date('M d, Y',strtotime($currentAlbum->getUpdateTime()));?><?php endif;?></label>
+		<p class="teaser"><?php echo $currentAlbum->getContent() ?></p>
+	</div>
+	<!-- Subalbum list -->
+	<?php if (false):?>
+	<div class="gallery-container album">		
+		<ul>
+			<?php $i=0;
+				$collection1 = $this->getSubAlbums();
+				foreach ($collection1 as $item) { ?>
+				<?php if (++$i%5 ==0): ?>
+				<li class="item last"  >
+				<?php else:?>
+				<li class="item" style="width:<?php echo $albumThumbnailSize['width']+'20'.'px'; ?>">
+				<?php endif;?>
+					<p  style="background-color:rgb(<?php echo $defaultBackgroundColor[0].",".$defaultBackgroundColor[1].",".$defaultBackgroundColor[2]?>);" class="width_img">	
+						<a href="<?php echo $this->getUrl($this->getUrlRewrite($item)); if($this->_getStore()->getCode()!="default") echo '?___store='.$this->_getStore()->getCode() ?>" alt="<?php echo $item->getTitle() ?>" >
+						<?php if(file_exists(Mage::getBaseDir('media').DS.$item->getFilename())):?>
+							<?php $src = Mage::getBaseDir('media').DS.$item->getFilename(); //$this->helper('gallery/image')->init($item->getFilename())->resize($albumThumbnailSize['width'], $albumThumbnailSize['height']) ?>
+						<?php else:?>
+							<?php $src=$this->getSkinUrl("images/catalog/product/placeholder/small_image.jpg")?>
+						<?php endif;?>
+							<img class="bg_img_allbum" src="<?php echo $src;?>" alt="magento gallery" width="<?php echo $albumThumbnailSize['width'] ?>" height="<?php echo $albumThumbnailSize['height']?>" />
+						</a>
+					</p>
+					<h5><a href="<?php echo $this->getUrl($this->getUrlRewrite($item)); if($this->_getStore()->getCode()!="default") echo '?___store='.$this->_getStore()->getCode() ?>" alt="View Project"><?php echo $item->getTitle() ?></a></h5>
+					<label><?php if($this->showAlbumUpdateDate()):?> <?php echo date('M d, Y',strtotime($item->getUpdateTime()));?><?php endif;?></label>
+					<p class="disp_none"><?php if($this->showTotalPhotos()):?><?php echo $this->__('Total photos:') ?><?php echo $this->getPhotosOfAlbum($item)->getSize();?> <?php endif;?></p>
+					<p class="desc_album"><?php echo $item->getDescription() ?></p>
+				</li>
+			<?php } ?>
+			
+			
+		</ul>
+		<div class="clear_both"><span> &nbsp; </span></div>
+	</div>
+	<?php endif; ?>
+	
+	<?php echo $this->getToolbar()->toHtml();?>
+	
+	<!-- Photos list -->
+	<?php 
+	$className=($mode=="simple")?"simple_photo":"photo";
+	?>
+	<div class="gallery-container album <?php echo $className;?>">
+		<ul>
+			<?php $i=0; $collection = $this->getToolbar()->getCollection();?>
+				<?php foreach ($collection as $item) { ?>
+				<?php if (++$i%4 ==0): ?>
+				<li class="item last"  >
+				<?php else:?>
+				<li class="item">
+				<?php endif;?>
+					<p class="width_img" style="background-color:rgb(<?php echo $backgroundColor[0].",".$backgroundColor[1].",".$backgroundColor[2]?>);">	
+						<a href="<?php echo trim(Mage::getUrl('gallery/p'),'/')."#".$this->getUrlRewrite($item); if($this->_getStore()->getCode()!="default") echo '?___store='.$this->_getStore()->getCode()?>" title="<?php $item->getTitle()?>">
+						<?php if(file_exists(Mage::getBaseDir('media').DS.$item->getFilename())):?>
+							<?php $src = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$item->getFilename(); //$this->helper('gallery/image')->init($item->getFilename(),$mode); ?>
+						<?php else:?>
+							<?php $src=$this->getSkinUrl()."images/catalog/product/placeholder/small_image.jpg"?>
+						<?php endif;?>
+						<img src="<?php echo $src;?>" style="width:<?php echo $photoThumbnailSize['width'].'px'; ?>; height:<?php echo $photoThumbnailSize['height'].'px'; ?>" alt="magento gallery"  /></a>
+					</p>
+					<?php if($this->getSlideShowPhotosAs() == AsiaConnect_Gallery_Block_Gallery::$PHOTOS_OF_CURRENT_PAGE):?>
+					<h5>
+						<?php if(file_exists(Mage::getBaseDir('media').DS.$item->getFilename())):?>
+							<?php $slideSrc =Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$item->getFilename();// $this->helper('gallery/image')->init($item->getFilename())->resize($slideshowSize['width'], $slideshowSize['height'],false) ?>
+						<?php else:?>
+							<?php $slideSrc = $this->getSkinUrl("images/catalog/product/placeholder/image.jpg")?>
+						<?php endif;?>
+						<a style="display:none;" href="<?php echo $slideSrc;?>" rel="photo" title="<?php echo $item->getTitle()?>"></a>
+					</h5>
+					<?php endif;?>
+					<?php if($this->getToolbar()->getCurrentMode()=='detail'):?>
+					<div class="photo_info">
+						<?php if($this->showPhotoTitle($currentAlbum)):?>
+							<h5><a href="<?php echo trim(Mage::getUrl('gallery/p'),'/')."#".$this->getUrlRewrite($item); if($this->_getStore()->getCode()!="default") echo '?___store='.$this->_getStore()->getCode()?>"><?php echo $item->getTitle()?></a></h5>
+						<?php endif;?>
+						<?php if($this->showPhotoUpdateDate($currentAlbum)):?> <label><?php echo date('M d, Y',strtotime($item->getUpdateTime()));?></label><?php endif;?>
+						<?php if($this->showPhotoDescription($currentAlbum)):?>
+							<p class="disp_none"><?php echo $item->getContent()?></p>
+						<?php endif;?>
+						<?php if($this->isEnableReview()):?>
+								<div class="star_1" style="background:transparent; padding-top: 10px; margin: 0px;">
+									 <ul class="star" title="Rate This!">
+									  	<li class="curr" title="<?php echo ((int)$item->getRate()) ?>" style="width: <?php echo ((int)$item->getRate()/100 * 84) ?>px;"></li>
+									 </ul>
+								</div>
+						<?php endif;?>
+					</div>
+					<?php endif;?>
+				</li>
+			<?php } ?>
+			<?php if($this->getSlideShowPhotosAs() == AsiaConnect_Gallery_Block_Gallery::$ALL_PHOTOS_OF_CATEGORY):?>
+			<?php $collection = $this->getPhotos()?>
+			<?php $collection->setOrder($this->getToolbar()->getCurrentOrder(),$this->getToolbar()->getCurrentDirection())?>
+			<?php foreach( $collection as $_photo):?>
+			<?php if(file_exists(Mage::getBaseDir('media').DS.$_photo->getFilename())):?>
+				<?php $slideSrc =Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_photo->getFilename();;// $this->helper('gallery/image')->init($_photo->getFilename())->resize($slideshowSize['width'], $slideshowSize['height'],false) ?>
+			<?php else:?>
+				<?php $slideSrc = $this->getSkinUrl("images/catalog/product/placeholder/image.jpg")?>
+			<?php endif;?>
+			<h5>
+				<a style="display:none;" href="<?php echo $slideSrc ?>" rel="photo" title="<?php echo $_photo->getTitle()?>"></a>
+			</h5>
+			<?php endforeach;?>
+			<?php endif;?>
+		<?php $i++;	?>		
+		</ul>
+		<div class="clear_both"><span> &nbsp; </span></div>
+		<div >
+			<?php //echo $currentAlbum->getBottomDescription() ?>
+		</div>
+	</div>
+	<div class="toolbar_bottom">
+	<?php echo $this->getToolbar()->toHtml();?>
+	</div>
+	<div class="gallery_footer">
+	<?php if($this->canUploadPhotos()):?>
+		<div class="upload_photos">
+			<button style="height:30px" onclick="setLocation('<?php echo Mage::getUrl('gallery/upload',array('album'=>$currentAlbum->getId()))?>')" class="scalable add" type="button"><span><?php echo $this->__("Upload Photo To This Album")?></span></button>
+		</div>
+	<?php endif;?>
+		<div class="back_gallery">
+			<a href="<?php echo $this->getUrl('gallery') ?>"><img src="<?php echo $this->getSkinUrl('gallery/images/back_gallery.gif') ?>" alt="<?php echo $this->__('Back to') ?>" /></a>
+			<a href="<?php if($parentAlbum = $currentAlbum->getParentAlbum()) echo $parentAlbum->getUrlRewrite(); else echo Mage::getUrl();?>" class="link_backgallery"><?php if($parentAlbum = $currentAlbum->getParentAlbum()) echo $this->__('Back to')." ".$parentAlbum->getTitle(); else echo $this->__('Back to Home')?></a>
+		</div>
+	</div>
+</div>

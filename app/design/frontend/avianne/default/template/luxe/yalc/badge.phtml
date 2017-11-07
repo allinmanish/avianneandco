@@ -1,0 +1,25 @@
+<!--
+<iframe id="aaaaa" src="http://www.google.com/talk/service/badge/Show?tk=z01q6amlq219538t0nh5rga5hcba61he4ivk032dsn85gfgquiot04ubuvcrq6qs030p7mb8rappmj4mragd4p3en44octm62473bn2bcu7etct6ejc8mkk5cv70lm7ecacg3i56rucmg2td124q9lb1lfa8ufeqa7pn68qkippqjnqve6s7udnqc7ap141gk0u7e2hqjj0sa4642qi7ptoho9r70&amp;w=200&amp;h=60&amp;fontfamily=&amp;textcolor=&amp;linkcolor=" allowtransparency="true" frameborder="0" height="60" width="200"></iframe>
+-->
+
+<?php
+$m = Mage::getModel('yalc/yalc');
+if ($m->getTitle()) {
+    $title = $m->getTitle(true);
+} else {
+    $title = 'Click here to chat with '.$m->getNickname(true);
+}
+?>
+
+<?php if ($m->getStyle() == Luxe_Yalc_Model_Yalc::STYLE_HYPERLINK_STATUS) {?>
+<img style="border: medium none ; margin: 0pt; padding: 0pt 2px 0pt 0pt;" src="http://www.google.com/talk/service/resources/chaticon.gif" alt="" height="14" width="16">
+<?php if ($m->getSowMsg()) {?>
+<img style="border: medium none ; margin: 0pt; padding: 0pt 2px 0pt 0pt;" src="http://www.google.com/talk/service/badge/Show?tk=<?php echo $m->getToken(); ?>&amp;w=<?php echo $m->getWidth(); ?>&amp;h=<?php echo $m->getHeight(); ?>" alt="" height="<?php echo $m->getHeight(); ?>" width="<?php echo $m->getWidth(); ?>">
+<?php } ?>
+<a href="http://www.google.com/talk/service/badge/Start?tk=<?php echo $m->getToken(); ?>" target="_blank" title="<?php echo $title; ?>"><?php echo $title; ?></a>
+<?php } else if ($m->getStyle() == Luxe_Yalc_Model_Yalc::STYLE_HYPERLINK) {?>
+<a href="http://www.google.com/talk/service/badge/Start?tk=<?php echo $m->getToken(); ?>" target="_blank" title="<?php echo $title; ?>"><?php echo $title; ?></a>
+<?php } else { ?>
+<iframe id="luxe_yalc_badge" src="http://www.google.com/talk/service/badge/Show?tk=<?php echo $m->getToken(); ?>&amp;w=<?php echo $m->getWidth(); ?>&amp;h=<?php echo $m->getHeight(); ?>&amp;fontfamily=<?php echo $m->getFontfamily(); ?><?php if ($m->getFontsize())  echo '&amp;fontsize='.$m->getFontsize(); ?>&amp;textcolor=<?php echo $m->getTextColor(); ?>&amp;linkcolor=<?php echo $m->getLinkColor(); ?>" allowtransparency="true" frameborder="0" height="<?php echo $m->getHeight(); ?>" width="<?php echo $m->getWidth(); ?>"></iframe>
+
+<?php } ?>

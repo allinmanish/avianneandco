@@ -1,0 +1,1175 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Adminhtml_Block_Widget_Grid
+ *
+ *  getId()
+ *  getCollection()
+ *  getColumns()
+ *  getPagerVisibility()
+ *  getVarNamePage()
+ */
+$controller = $this->getRequest()->getControllerName();
+$action = $this->getRequest()->getActionName();
+
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+
+$numColumns = sizeof($this->getColumns());
+?>
+<?php if($this->getCollection()): ?>
+    <?php if($this->canDisplayContainer()): ?>
+        <?php if($this->getGridHeader()): ?>
+        <div class="content-header">
+            <table cellspacing="0">
+                <tr>
+                    <td style="width:50%;"><h2><?php echo $this->getGridHeader(); ?></h2></td>
+                </tr>
+            </table>
+        </div>
+        <?php endif ?>
+
+        <div id="<?php echo $this->getId() ?>">
+    <?php else: ?>
+        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <?php endif; ?>
+<?php if($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility()): ?>
+<?php /* Fix added by @wsm */ ?>
+	<?php   $controller = $this->getRequest()->getControllerName();
+			$action = $this->getRequest()->getActionName();		
+		?>
+		<?php if( ($controller == 'sales_order' &&  ($action == 'index' || $action == 'grid' ) ) ): ?>
+		
+		<div class="jqmWindow" id="CMdialog" style="display: none">
+			Custom Message<hr style="margin: 6px auto;">
+			To<br>
+			<input type="text" name="CMto" class="CMto" style="width:100%" /><br>
+			Subject<br>
+			<input type="text" name="CMsubject" class="CMsubject" style="width:100%" value="Custom Message" /><br>
+			Message<br>
+<textarea name="CMmessage" class="CMmessage" style="width: 99%; height: 10em;">
+
+
+
+Regards
+Customer Service
+Avianne & Co Jewelers
+888-243-4344</textarea><br>
+		<img src="https://www.avianneandco.com/images/email-logo.jpg" alt="www.AvianneAndCo.com">
+			<br>
+			<div style="text-align: right;"><button id="custom_message_send" rel="" title="Send Custom Message" type="button" class="scalable " 
+					onclick="clicked('custom_message_' + jQuery(this).attr('rel'), 'send_custom_message', jQuery(this).attr('rel'), '<?php echo $this->getUrl('*/*/clicked')?>order_id/'+jQuery(this).attr('rel')+'/button_id/custom_message')" 
+					style=""><span><span><span>SEND</span></span></span></button></div>
+		</div>
+
+		<div class="jqmWindow" id="RSdialog" style="display: none">
+			Return Shipped<hr style="margin: 6px auto;">
+			To<br>
+			<input type="text" name="RSto" class="RSto" style="width:100%" /><br>
+			Subject<br>
+			<input type="text" name="RSsubject" class="RSsubject" style="width:100%" value="Return Shipped" /><br>
+			Tracking #<br>
+			<input type="text" name="RStracking" class="RStracking" style="width:100%" /><br>
+			<?php /*
+			Message<br>
+<textarea name="RSmessage" class="RSmessage" style="width: 99%; height: 10em;">
+
+
+
+Regards
+Customer Service
+Avianne & Co Jewelers
+888-243-4344</textarea><br>
+		<img src="https://www.avianneandco.com/images/email-logo.jpg" alt="www.AvianneAndCo.com">
+			<br>
+			*/ ?><br>
+			<div style="text-align: right;"><button id="return_shipped_send" rel="" title="Send the Message" type="button" class="scalable " 
+					onclick="if (valid_tracking_num(jQuery('#RSdialog .RStracking').val())) { clicked('return_shipped_' + jQuery(this).attr('rel'), 'send_return_shipped', jQuery(this).attr('rel'), '<?php echo $this->getUrl('*/*/clicked')?>order_id/'+jQuery(this).attr('rel')+'/button_id/return_shipped') } else { alert('The Tracking # is invalid'); return false; }" 
+					style=""><span><span><span>SEND</span></span></span></button></div>
+		</div>
+
+		<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('#CMdialog').jqm({trigger: '.CMmodal'});
+			jQuery('#CMdialog .CMmessage').focus();
+			jQuery('#RSdialog').jqm({trigger: '.RSmodal'});
+			jQuery('#RSdialog .RStracking').focus();
+		});
+		function send_custom_message(order_id) {
+			new Ajax.Request('<?php echo $this->getUrl('*/*/sendcustommessage')?>order_id/'+order_id+'/back/index', {
+				method: 'post',
+				asynchronous: true,
+				parameters: {
+					'CMto': $$('#CMdialog .CMto')[0].value, 
+					'CMmessage': $$('#CMdialog .CMmessage')[0].value,
+					'CMsubject': $$('#CMdialog .CMsubject')[0].value
+				},
+				onComplete: function(transport) {
+					if(transport.responseText.length>0) {
+						alert(transport.responseText);
+					}
+					document.location.reload();
+				}
+			});
+		}
+		function send_return_shipped(order_id, trackingnumber) {
+			new Ajax.Request('<?php echo $this->getUrl('*/*/sendreturnshipped')?>order_id/'+order_id+'/back/index', {
+				method: 'post',
+				asynchronous: true,
+				parameters: {
+					'RSto': $$('#RSdialog .RSto')[0].value, 
+					'RStracking' : $$('#RSdialog .RStracking')[0].value
+					// 'RSmessage': $$('#RSdialog .RSmessage')[0].value,
+					// 'RSsubject': $$('#RSdialog .RSsubject')[0].value
+				},
+				onComplete: function(transport) {
+					if(transport.responseText.length>0) {
+						alert(transport.responseText);
+					}
+					document.location.reload();
+				}
+			});
+		}
+		function valid_tracking_num(num) {
+			if (num.match(/^[0-9]+$/)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		</script>
+		
+		<div align="center" class="pager" style="margin-bottom:15px;">
+			<?php echo $this->__('Page') ?>
+
+            <?php $_curPage  = $this->getCollection()->getCurPage() ?>
+            <?php $_lastPage = $this->getCollection()->getLastPageNumber() ?>
+            <?php if($_curPage>1): ?>
+                <a href="#" title="<?php echo $this->__('Previous page') ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage-1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_left.gif') ?>" alt="Go to Previous page" class="arrow"/></a>
+            <?php else: ?>
+                <img src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>" alt="Go to Previous page" class="arrow"/>
+            <?php endif; ?>
+
+            <input type="text" name="<?php echo $this->getVarNamePage() ?>" value="<?php echo $_curPage ?>" class="input-text page" onkeypress="<?php echo $this->getJsObjectName() ?>.inputPage(event, '<?php echo $_lastPage ?>')"/>
+
+            <?php if($_curPage < $_lastPage): ?>
+                <a href="#" title="<?php echo $this->__('Next page') ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage+1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_right.gif') ?>" alt="Go to Next page" class="arrow"/></a>
+            <?php else: ?>
+                <img src="<?php echo $this->getSkinUrl('images/pager_arrow_right_off.gif') ?>" alt="Go to Previous page" class="arrow"/>
+            <?php endif; ?>
+
+            <?php echo $this->__('of %s pages', $this->getCollection()->getLastPageNumber()) ?>
+            <span class="separator">|</span>
+            <?php echo $this->__('View') ?>
+            <select name="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
+                <option value="20"<?php if($this->getCollection()->getPageSize()==20): ?> selected="selected"<?php endif; ?>>20</option>
+                <option value="30"<?php if($this->getCollection()->getPageSize()==30): ?> selected="selected"<?php endif; ?>>30</option>
+                <option value="50"<?php if($this->getCollection()->getPageSize()==50): ?> selected="selected"<?php endif; ?>>50</option>
+                <option value="100"<?php if($this->getCollection()->getPageSize()==100): ?> selected="selected"<?php endif; ?>>100</option>
+                <option value="200"<?php if($this->getCollection()->getPageSize()==200): ?> selected="selected"<?php endif; ?>>200</option>
+            </select>
+            <?php echo $this->__('per page') ?><span class="separator">|</span>
+            <?php echo $this->__('Total %d records found', $this->getCollection()->getSize()) ?>
+            <span id="<?php echo $this->getHtmlId() ?>-total-count" class="no-display"><?php echo $this->getCollection()->getSize() ?></span>
+		</div>
+		<div align="center" class="filter-actions" style="margin-bottom:15px;">
+			<select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="display:none;">
+            <?php foreach ($this->getExportTypes() as $_type): ?>
+                <option value="<?php echo $_type->getUrl() ?>"><?php echo $_type->getLabel() ?></option>
+            <?php endforeach; ?>
+            </select>
+            <?php echo $this->getMainButtonsHtml() ?>
+            <?php echo $this->getExportButtonHtml() ?>
+            <?php 
+			      $key = Mage::getSingleton('adminhtml/url')
+			             ->getSecretKey("sales_order_create","index"); 
+			 ?> 
+            <button id="new_custom_order" title="New Custom Order" type="button" class="scalable " onclick="setLocation('<?php echo $this->getUrl('*/sales_order_create/index/key/'.$key); ?>')" style=""><span><span><span>New Custom Order</span></span></span></button>
+            
+            <button id="runner_list_printout" title="Runner List Printout" type="button" class="scalable " onclick="runner_list_printout();" style=""><span><span><span>Print</span></span></span></button>
+
+            <button id="return_list_printout" title="Return List Printout" type="button" class="scalable " onclick="return_list_printout();" style=""><span><span><span>Return List</span></span></span></button>
+            
+            <button id="save_all_grid" title="Save All Orders" type="button" class="red-button scalable " onclick="mass_save_order_status();" style=""><span><span><span>Save All</span></span></span></button>
+            </div>
+
+			<?php             
+				$table = $resource->getTableName('todolists');
+				$result = $readConnection->fetchAll('SELECT * FROM ' . $table);
+				foreach ($result as $v) {
+					$todos[$v['name']][$v['id']] = $v;
+				}
+			?>
+
+<style>
+.todolist.wrap {
+	width: 280px;
+	margin-bottom: 1em;
+}
+.todolist tr.todo.name {
+	background-color: #6f8992;
+	height: 23px;
+	color: white;
+}
+.todolist.list {
+	max-height: 149px;
+	overflow: hidden;
+	overflow-y: scroll;
+	width: 295px;	
+}
+.todolist tr.todo.name th {
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+}
+.todolist tr.todo.name th.pluswrap, 
+.todolist tr.todo.name th.status {
+	width: 44px;
+}
+.todolist tr.todo.name th.pluswrap {
+	text-align: right
+}
+.todolist tr.todo.name th.pluswrap img.plus {
+	margin: 2px 2px -2px 0px;
+}
+.todolist tr.todo.name th.pluswrap img.plus:hover {
+	cursor: pointer;
+	outline: 1px solid white;
+}
+.todolist table.data {
+	border-width: 0px;
+}
+.todolist table.data td.descr {
+	border-left-width: 1px;
+	padding: 2px 2px 0;
+	line-height: 14px;
+	text-align: left;
+	vertical-align: middle;
+}
+.todolist table.data td.status {
+	vertical-align: middle;
+	text-align: center;
+	padding: 2px;
+	width: 39px;
+}
+.todolist table.data td.status img {
+	margin: 2px auto -4px;
+}
+.todolist table.data td.status img:hover {
+	cursor: pointer;
+}
+.todolist tr .remove {
+	visibility: hidden;
+}
+.todolist tr .remove {
+	width: 12px;
+	vertical-align: middle;
+	border-width: 1px 0px 1px 1px;
+}
+.todolist.list table tr:hover .remove, 
+.todolist.list table tr .remove.checked {
+	visibility: visible;
+}
+.todolist.list table tr .remove.checked + .descr {
+	text-decoration: line-through;
+}
+.todolist.list .statusicon {
+	width: 19px;
+	height: 19px;
+	margin: 0 auto;
+	background-image: url(/images/todo/icons.png);
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+.todolist.list .statusicon.icon1 {
+	background-position: 1px 0px;	
+}
+.todolist.list .statusicon.icon2 {
+	background-position: 0px -19px;	
+}
+.todolist.list .statusicon.icon3 {
+	background-position: 0px -38px;	
+}
+.todolist.list tr.todonew td.remove {
+	border-width: 0;
+}
+.todolist.list tr.todonew td.descr textarea {
+	width: 97%;
+	height: 2em;
+}
+</style>
+            
+            <table cellspacing="0" cellpadding="0" border="0" style="width:100%; margin: 0 auto;">
+            	<tr>
+            		<td style="width: 25%; text-align: center;">
+            
+			            <form name="todoSimon" method="post" action="<?php echo $this->getUrl('*/*/savetodos')?>name/Simon">
+			            <input type="hidden" name="form_key" value="<? echo $this->getFormKey(); ?>" />
+			            <div class="todolist wrap grid Simon">
+			            	<table cellspacing="0" class="data ">
+								<thead>
+								<tr class="todo name">
+									<th class="remove hidden">&nbsp;</th>
+									<th class="name">&nbsp;&nbsp;<b>Simon To Do</b>
+										<input type="hidden" name="todoname" value="Simon" />
+									</th>
+									<th class="pluswrap"><img src="/images/todo/plus.png" class="plus" alt="+" title="Add Item" /></th>
+								</tr>
+								<tr class="headings">
+									<th class="no-link remove">&nbsp;</th>
+									<th class="no-link descr"><span class="nobr">Description</span></th>
+									<th class="no-link status"><span class="nobr">Status</span></th>
+								</tr>
+								</thead>
+							</table>
+							<div class="todolist list"> 
+							<table cellspacing="0" class="data ">
+								<tbody>
+								<?php foreach ($todos['Simon'] as $v) : ?>
+								<tr>
+									<td class="remove"><input type="checkbox" name="removetodo[<?php echo $v['id']?>]" value="<?php echo $v['id']?>" /></td>
+									<td class="descr"><?php echo $v['description']?></td>
+									<td class="status">
+										<div class="statusicon icon<?php echo $v['status']?>"></div>
+										<input type="hidden" name="status[<?php echo $v['id']?>]" value="<?php echo $v['status']?>" />
+									</td>
+								</tr>
+								<?php endforeach; ?>
+								</tbody>
+							</table>
+							</div>
+							<div class="save">
+								<br><button title="Save" type="submit" class="scalable " style=""><span><span><span>Save</span></span></span></button>
+							</div>
+			            </div>
+			            </form>
+			            
+					</td>
+					<td style="width: 25%; text-align: center;">
+            
+			            <form name="todoGeorge" method="post" action="<?php echo $this->getUrl('*/*/savetodos')?>name/George">
+			            <input type="hidden" name="form_key" value="<? echo $this->getFormKey(); ?>" />
+			            <div class="todolist wrap grid George">
+			            	<table cellspacing="0" class="data ">
+								<thead>
+								<tr class="todo name">
+									<th class="remove hidden">&nbsp;</th>
+									<th class="name">&nbsp;&nbsp;<b>George To Do</b>
+										<input type="hidden" name="todoname" value="George" />
+									</th>
+									<th class="pluswrap"><img src="/images/todo/plus.png" class="plus" alt="+" title="Add Item" /></th>
+								</tr>
+								<tr class="headings">
+									<th class="no-link remove">&nbsp;</th>
+									<th class="no-link descr"><span class="nobr">Description</span></th>
+									<th class="no-link status"><span class="nobr">Status</span></th>
+								</tr>
+								</thead>
+							</table>
+							<div class="todolist list"> 
+							<table cellspacing="0" class="data ">
+								<tbody>
+								<?php foreach ($todos['George'] as $v) : ?>
+								<tr>
+									<td class="remove"><input type="checkbox" name="removetodo[<?php echo $v['id']?>]" value="<?php echo $v['id']?>" /></td>
+									<td class="descr"><?php echo $v['description']?></td>
+									<td class="status">
+										<div class="statusicon icon<?php echo $v['status']?>"></div>
+										<input type="hidden" name="status[<?php echo $v['id']?>]" value="<?php echo $v['status']?>" />
+									</td>
+								</tr>
+								<?php endforeach; ?>
+								</tbody>
+							</table>
+							</div>
+							<div class="save">
+								<br><button title="Save" type="submit" class="scalable " style=""><span><span><span>Save</span></span></span></button>
+							</div>
+			            </div>
+			            </form>
+			            
+					</td>
+					<td style="width: 25%; text-align: center;">
+            
+			            <form name="todoDima" method="post" action="<?php echo $this->getUrl('*/*/savetodos')?>name/Dima">
+			            <input type="hidden" name="form_key" value="<? echo $this->getFormKey(); ?>" />
+			            <div class="todolist wrap grid Dima">
+			            	<table cellspacing="0" class="data ">
+								<thead>
+								<tr class="todo name">
+									<th class="remove hidden">&nbsp;</th>
+									<th class="name">&nbsp;&nbsp;<b>Dima To Do</b>
+										<input type="hidden" name="todoname" value="Dima" />
+									</th>
+									<th class="pluswrap"><img src="/images/todo/plus.png" class="plus" alt="+" title="Add Item" /></th>
+								</tr>
+								<tr class="headings">
+									<th class="no-link remove">&nbsp;</th>
+									<th class="no-link descr"><span class="nobr">Description</span></th>
+									<th class="no-link status"><span class="nobr">Status</span></th>
+								</tr>
+								</thead>
+							</table>
+							<div class="todolist list"> 
+							<table cellspacing="0" class="data ">
+								<tbody>
+								<?php foreach ($todos['Dima'] as $v) : ?>
+								<tr>
+									<td class="remove"><input type="checkbox" name="removetodo[<?php echo $v['id']?>]" value="<?php echo $v['id']?>" /></td>
+									<td class="descr"><?php echo $v['description']?></td>
+									<td class="status">
+										<div class="statusicon icon<?php echo $v['status']?>"></div>
+										<input type="hidden" name="status[<?php echo $v['id']?>]" value="<?php echo $v['status']?>" />
+									</td>
+								</tr>
+								<?php endforeach; ?>
+								</tbody>
+							</table>
+							</div>
+							<div class="save">
+								<br><button title="Save" type="submit" class="scalable " style=""><span><span><span>Save</span></span></span></button>
+							</div>
+			            </div>
+			            </form>
+
+					</td>
+					<td style="width: 25%; text-align: center;">
+            
+			            <form name="todoCustom" method="post" action="<?php echo $this->getUrl('*/*/savetodos')?>name/Custom">
+			            <input type="hidden" name="form_key" value="<? echo $this->getFormKey(); ?>" />
+			            <div class="todolist wrap grid Custom">
+			            	<table cellspacing="0" class="data ">
+								<thead>
+								<tr class="todo name">
+									<th class="remove hidden">&nbsp;</th>
+									<th class="name">&nbsp;&nbsp;<b>Custom To Do</b>
+										<input type="hidden" name="todoname" value="Custom" />
+									</th>
+									<th class="pluswrap"><img src="/images/todo/plus.png" class="plus" alt="+" title="Add Item" /></th>
+								</tr>
+								<tr class="headings">
+									<th class="no-link remove">&nbsp;</th>
+									<th class="no-link descr"><span class="nobr">Description</span></th>
+									<th class="no-link status"><span class="nobr">Status</span></th>
+								</tr>
+								</thead>
+							</table>
+							<div class="todolist list"> 
+							<table cellspacing="0" class="data ">
+								<tbody>
+								<?php foreach ($todos['Custom'] as $v) : ?>
+								<tr>
+									<td class="remove"><input type="checkbox" name="removetodo[<?php echo $v['id']?>]" value="<?php echo $v['id']?>" /></td>
+									<td class="descr"><?php echo $v['description']?></td>
+									<td class="status">
+										<div class="statusicon icon<?php echo $v['status']?>"></div>
+										<input type="hidden" name="status[<?php echo $v['id']?>]" value="<?php echo $v['status']?>" />
+									</td>
+								</tr>
+								<?php endforeach; ?>
+								</tbody>
+							</table>
+							</div>
+							<div class="save">
+								<br><button title="Save" type="submit" class="scalable " style=""><span><span><span>Save</span></span></span></button>
+							</div>
+			            </div>
+			            </form>
+
+					</td>
+				</tr>
+			</table>
+            
+<script>
+jQuery(document).ready(function() {
+	var plusindex = 1;
+	
+	jQuery('.todolist.list table.data td.remove > input').bind('change', function() {
+		if (jQuery(this).attr('checked') == true) {
+			jQuery(this).parent().addClass('checked');
+		} else {
+			jQuery(this).parent().removeClass('checked');
+		}
+	});
+	jQuery('.todolist.list table.data td.status > .statusicon').live('click', function() {
+		st = jQuery(this).siblings('input[type=hidden]').val();
+		st++;
+		if (st > 3) {  st = 1;  }
+		jQuery(this).removeClass('icon1 icon2 icon3').addClass('icon' + st);
+		jQuery(this).siblings('input[type=hidden]').val(st)
+	});
+	jQuery('.todolist.wrap table.data th.pluswrap > .plus').bind('click', function() {
+		row = jQuery('\
+			<tr class="todonew"> \
+				<td class="remove">&nbsp;</td> \
+				<td class="descr"><textarea name="todonew[' + (plusindex * -1) + ']"></textarea></td> \
+				<td class="status"> \
+					<div class="statusicon icon1"></div> \
+					<input type="hidden" name="status[' + (plusindex * -1) + ']" value="1" /> \
+				</td> \
+			</tr>');
+		jQuery(this).parents('table.data').siblings('.todolist.list').find('table.data tbody').prepend(row);
+
+		plusindex++;
+	});
+});
+</script>
+        
+            
+            
+            
+            <div id="sales_order_grid_massaction"><table cellspacing="0" cellpadding="0" class="massaction"><tbody><tr></tr></tbody></table></div>
+            
+		<?php else: ?>
+<?php /* Fix added by @wsm */ ?>
+    <table cellspacing="0" class="actions">
+        <tr>
+        <?php if($this->getPagerVisibility()): ?>
+            <td class="pager">
+            <?php echo $this->__('Page') ?>
+
+            <?php $_curPage  = $this->getCollection()->getCurPage() ?>
+            <?php $_lastPage = $this->getCollection()->getLastPageNumber() ?>
+            <?php if($_curPage>1): ?>
+                <a href="#" title="<?php echo $this->__('Previous page') ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage-1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_left.gif') ?>" alt="Go to Previous page" class="arrow"/></a>
+            <?php else: ?>
+                <img src="<?php echo $this->getSkinUrl('images/pager_arrow_left_off.gif') ?>" alt="Go to Previous page" class="arrow"/>
+            <?php endif; ?>
+
+            <input type="text" name="<?php echo $this->getVarNamePage() ?>" value="<?php echo $_curPage ?>" class="input-text page" onkeypress="<?php echo $this->getJsObjectName() ?>.inputPage(event, '<?php echo $_lastPage ?>')"/>
+
+            <?php if($_curPage < $_lastPage): ?>
+                <a href="#" title="<?php echo $this->__('Next page') ?>" onclick="<?php echo $this->getJsObjectName() ?>.setPage('<?php echo ($_curPage+1) ?>');return false;"><img src="<?php echo $this->getSkinUrl('images/pager_arrow_right.gif') ?>" alt="Go to Next page" class="arrow"/></a>
+            <?php else: ?>
+                <img src="<?php echo $this->getSkinUrl('images/pager_arrow_right_off.gif') ?>" alt="Go to Previous page" class="arrow"/>
+            <?php endif; ?>
+
+            <?php echo $this->__('of %s pages', $this->getCollection()->getLastPageNumber()) ?>
+            <span class="separator">|</span>
+            <?php echo $this->__('View') ?>
+            <select name="<?php echo $this->getVarNameLimit() ?>" onchange="<?php echo $this->getJsObjectName() ?>.loadByElement(this)">
+                <option value="20"<?php if($this->getCollection()->getPageSize()==20): ?> selected="selected"<?php endif; ?>>20</option>
+                <option value="30"<?php if($this->getCollection()->getPageSize()==30): ?> selected="selected"<?php endif; ?>>30</option>
+                <option value="50"<?php if($this->getCollection()->getPageSize()==50): ?> selected="selected"<?php endif; ?>>50</option>
+                <option value="100"<?php if($this->getCollection()->getPageSize()==100): ?> selected="selected"<?php endif; ?>>100</option>
+                <option value="200"<?php if($this->getCollection()->getPageSize()==200): ?> selected="selected"<?php endif; ?>>200</option>
+            </select>
+            <?php echo $this->__('per page') ?><span class="separator">|</span>
+            <?php echo $this->__('Total %d records found', $this->getCollection()->getSize()) ?>
+            <span id="<?php echo $this->getHtmlId() ?>-total-count" class="no-display"><?php echo $this->getCollection()->getSize() ?></span>
+            <?php if($this->getRssLists()): ?>
+                <?php foreach ($this->getRssLists() as $_rss): ?>
+                <span class="separator">|</span><a href="<?php echo $_rss->getUrl() ?>" class="link-feed"><?php echo $_rss->getLabel() ?></a>
+                <?php endforeach ?>
+            <?php endif; ?>
+        </td>
+    <?php endif ?>
+    <?php if($this->getExportTypes()): ?>
+        <td class="export a-right">
+            <img src="<?php echo $this->getSkinUrl('images/icon_export.gif') ?>" alt="" class="v-middle"/>&nbsp; <?php echo $this->__('Export to:') ?>
+            <select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
+            <?php foreach ($this->getExportTypes() as $_type): ?>
+                <option value="<?php echo $_type->getUrl() ?>"><?php echo $_type->getLabel() ?></option>
+            <?php endforeach; ?>
+            </select>
+            <?php echo $this->getExportButtonHtml() ?>
+        </td>
+    <?php endif; ?>
+        <td class="filter-actions a-right">
+            <?php echo $this->getMainButtonsHtml() ?>
+        </td>
+        </tr>
+    </table>
+    <?php /* Fix added by @wsm */ ?>
+    <?php endif; ?>
+    <?php /* Fix added by @wsm */ ?>
+<?php endif; ?>
+<?php if($this->getMassactionBlock()->isAvailable()): ?>
+<?php /* Fix added by @wsm */ ?>
+<?php if( !($controller == 'sales_order' &&  ($action == 'index' || $action == 'grid' ) ) ): ?>
+	<?php echo $this->getMassactionBlockHtml() ?>
+<?php endif; ?>
+<?php /* Fix added by @wsm */ ?>
+<?php endif ?>
+<?php if( !($controller == 'sales_order' &&  ($action == 'index' || $action == 'grid' ) ) ): ?>
+<div class="grid">
+    <div class="hor-scroll">
+    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+        <?php foreach ($this->getColumns() as $_column): ?>
+        <col <?php echo $_column->getHtmlProperty() ?> />
+        <?php endforeach; ?>
+        <?php if ($this->getHeadersVisibility() || $this->getFilterVisibility()): ?>
+            <thead>
+                <?php if ($this->getHeadersVisibility()): ?>
+                    <tr class="headings">
+                    <?php foreach ($this->getColumns() as $_column): ?>
+                        <th<?php echo $_column->getHeaderHtmlProperty() ?>><span class="nobr"><?php echo $_column->getHeaderHtml() ?></span></th>
+                    <?php endforeach; ?>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($this->getFilterVisibility()): ?>
+                    <tr class="filter">
+                    <?php $i=0;foreach ($this->getColumns() as $_column): ?>
+                        <th<?php echo $_column->getHeaderHtmlProperty() ?>><?php echo $_column->getFilterHtml() ?><?php if($i==0):?><a href="#" onclick="uncheckall();return false;" id="uncheckall">Uncheck all</a><?php endif; ?></th>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                    </tr>
+                <?php endif ?>
+            </thead>
+        <?php endif; ?>
+        <?php if ($this->getCountTotals()): ?>
+            <tfoot>
+                <tr class="totals">
+                <?php foreach ($this->getColumns() as $_column): ?>
+                    <th class="<?php echo $_column->getCssProperty() ?>"><?php echo ($_column->hasTotalsLabel()) ? $_column->getTotalsLabel() : $_column->getRowField($_column->getGrid()->getTotals()) ?>&nbsp;</th>
+                <?php endforeach; ?>
+                </tr>
+            </tfoot>
+        <?php endif; ?>
+
+        <tbody>
+        <?php if (($this->getCollection()->getSize()>0) && (!$this->getIsCollapsed())): ?>
+        <?php foreach ($this->getCollection() as $_index=>$_item): ?>
+
+            <tr title="<?php echo $this->getRowUrl($_item) ?>"<?php if ($_class = $this->getRowClass($_item)):?> class="<?php echo $_class; ?>"<?php endif;?> >
+            <?php $i=0;foreach ($this->getColumns() as $_column): ?>
+                <?php if ($this->shouldRenderCell($_item, $_column)):?>
+                    <?php $_rowspan = $this->getRowspan($_item, $_column);?>
+                    <td <?php echo ($_rowspan ? 'rowspan="' . $_rowspan . '" ' : '') ?>class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i==$numColumns?'last':'' ?>">
+                        <?php echo (($_html = $_column->getRowField($_item)) != '' ? $_html : '') ?>
+                    </td>
+                    <?php if ($this->shouldRenderEmptyCell($_item, $_column)):?>
+                        <td colspan="<?php echo $this->getEmptyCellColspan($_item)?>" class="last"><?php echo $this->getEmptyCellLabel()?></td>
+                    <?php endif;?>
+                <?php endif;?>
+
+            <?php endforeach; ?>
+            </tr>
+            <?php if ($_multipleRows = $this->getMultipleRows($_item)):?>
+                <?php foreach ($_multipleRows as $_i):?>
+                <tr>
+                    <?php $i=0;foreach ($this->getMultipleRowColumns($_i) as $_column): ?>
+                        <td class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i==$numColumns-1?'last':'' ?>">
+                            <?php echo (($_html = $_column->getRowField($_i)) != '' ? $_html : '&nbsp;') ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <?php endforeach;?>
+            <?php endif;?>
+
+            <?php if ($this->shouldRenderSubTotal($_item)): ?>
+                <tr class="subtotals">
+                    <?php $i = 0; foreach ($this->getSubTotalColumns() as $_column): ?>
+                        <td class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i == $numColumns ? 'last' : '' ?>">
+                            <?php echo ($_column->hasSubtotalsLabel() ? $_column->getSubtotalsLabel() :
+                                $_column->getRowField($this->getSubTotalItem($_item))
+                            );
+                            ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <?php elseif ($this->getEmptyText()): ?>
+            <tr>
+                <td class="empty-text <?php echo $this->getEmptyTextClass() ?>" colspan="<?php echo $numColumns ?>"><?php echo $this->getEmptyText() ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+
+    </table>
+    </div>
+</div>
+<?php else: ?>
+<?php /* Fix added by @wsm */ ?>
+<style type="text/css">
+	.func-rows { margin: 3px; }
+	.func-rows button { margin-right: 2px; padding: 1px 4px 2px 4px; }   
+	.func-rows button span span span { line-height: 1; font-size: 11px; }   
+	.proc-functions .func-rows { width: 240px; }                         
+	.customer-comment { font-size: 10px; } 
+	.item-opts { font-size: 10px; margin-top:4px; }
+	.item-opts p { margin:0 0 3px 0; }
+	.grid tr td { font-size: 10px; }
+</style>
+<div class="grid">
+    <div class="hor-scroll">
+    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+        <?php foreach ($this->getColumns() as $_column): ?>
+        	<?php if($_column->getHeaderHtml() == "Color"): ?>
+				<?php continue; ?>
+			<?php endif; ?>
+        <col <?php echo $_column->getHtmlProperty() ?> />
+        <?php endforeach; ?>
+        <?php if ($this->getHeadersVisibility() || $this->getFilterVisibility()): ?>
+            <thead>
+                <?php if ($this->getHeadersVisibility()): ?>
+                    <tr class="headings">
+                    <?php foreach ($this->getColumns() as $_column): ?>
+                    	<?php if($_column->getHeaderHtml() == "Color"/* || $_column->getHeaderHtml() == "Fraud"*/): ?>
+							<?php continue; ?>
+						<?php endif; ?>
+                        <th<?php echo $_column->getHeaderHtmlProperty() ?>><span class="nobr"><?php echo $_column->getHeaderHtml() ?></span></th>
+                    <?php endforeach; ?>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($this->getFilterVisibility()): ?>
+                    <tr class="filter">
+                    <?php $i=0;foreach ($this->getColumns() as $_column): ?>
+                    	<?php if($_column->getHeaderHtml() == "Color"/* || $_column->getHeaderHtml() == "Fraud"*/): ?>
+							<?php continue; ?>
+						<?php endif; ?>
+                        <th<?php echo $_column->getHeaderHtmlProperty() ?>><?php echo $_column->getFilterHtml() ?><?php if($i==0):?><a href="#" onclick="uncheckall();return false;" id="uncheckall">Uncheck all</a><?php endif; ?></th>
+                        <?php $i++; ?>
+                    <?php endforeach; ?>
+                    </tr>
+                <?php endif ?>
+            </thead>
+        <?php endif; ?>
+        <?php if ($this->getCountTotals()): ?>
+            <tfoot>
+                <tr class="totals">
+                <?php foreach ($this->getColumns() as $_column): ?>
+                    <th class="<?php echo $_column->getCssProperty() ?>"><?php echo ($_column->hasTotalsLabel()) ? $_column->getTotalsLabel() : $_column->getRowField($_column->getGrid()->getTotals()) ?>&nbsp;</th>
+                <?php endforeach; ?>
+                </tr>
+            </tfoot>
+        <?php endif; ?>
+
+        <tbody>
+        <?php if (($this->getCollection()->getSize()>0) && (!$this->getIsCollapsed())): ?>
+        <?php foreach ($this->getCollection() as $_index=>$_item): ?>
+        	
+            <tr style="cursor: default;" id="<?php echo $_item->getId(); ?>">
+            
+            	<?php if($_item->getIntStatus() == "invoiced"): ?>
+					<?php $color = 'add4ba'; ?>
+				<?php else: ?>
+					<?php $color = 'c87070'; ?>
+				<?php endif; ?>
+            
+            <?php $i=0;foreach ($this->getColumns() as $_column): ?>
+				<?php if($_column->getHeaderHtml() == "Color"): ?>
+					<?php continue; ?>
+				<?php endif; ?>
+				<?php if($_column->getHeaderHtml() == "Fraud"): ?>
+					<?php $fraud = $_column->getRowField($_item); ?>
+					<?php //continue; ?>
+				<?php endif; ?>
+                <?php if ($this->shouldRenderCell($_item, $_column)):?>
+                    <?php $_rowspan = $this->getRowspan($_item, $_column);?>
+                    <td <?php if(!empty($color)): ?>style="background-color: #<?php echo $color; ?>; font-weight: bold;"<?php endif; ?><?php echo ($_rowspan ? 'rowspan="' . $_rowspan . '" ' : '') ?>class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i==$numColumns?'last':'' ?>">
+                        <?php $_html = ($_column->getRowField($_item)!= '')? $_column->getRowField($_item) : ''; ?>
+                        <?php if($_column->getHeaderHtml() == "Internal Comment"): ?>
+                        	<textarea rows="4" style="resize:vertical;" cols="15" id="order_grid_internalcomment_<?php echo $_item->getId(); ?>" name="order_grid_internalcomment"><?php echo $_html ?></textarea>
+                        <?php elseif(strip_tags($_column->getHeaderHtml()) == "Int Status"): ?>
+	                        <?php $options = array(
+	                            '' => '',
+	                            'invoiced' => 'Invoiced',
+	                            'uninvoiced' => 'Uninvoiced',
+	                            'void' => 'Void',
+// 		        				'incomplete' => 'Incomplete', 
+// 		        				'unpaid' => 'Unpaid',
+// 		        				'verifying' => 'Verifying',
+// 		        				'waxing' => 'Waxing',
+// 		        				'molding' => 'Molding',
+// 		        				'casting' => 'Casting',
+// 		        				'setting' => 'Setting',
+// 		        				'polish/size' => 'Polish/Size',
+// 		        				'engraving' => 'Engraving',
+// 		        				'el fasi' => 'El fasi',
+// 		        				'pvd' => 'PVD',
+// 		        				'complete' => 'Complete',
+// 		        				'return_received' => 'Return Received',
+	        				); ?>
+                        	<select id="order_grid_int_status_<?php echo $_item->getId(); ?>" name="order_grid_int_status">
+                        		<?php foreach( $options as $key => $option ):?>
+                        			<option value="<?php echo $key; ?>"<?php if($option==$_html): ?> selected="selected"<?php endif; ?>><?php echo $option; ?></option>
+                        		<?php endforeach; ?>
+                        	</select>
+                        <?php elseif(strip_tags($_column->getHeaderHtml()) == "Ext Status"): ?>
+	                        <?php $options = array( 'processing' => 'Processing', 'complete' => 'Shipped', 'canceled' => 'Canceled' ); ?>
+                        	<select id="order_grid_status_<?php echo $_item->getId(); ?>" name="order_grid_status">
+                        		<?php foreach( $options as $key => $option ):?>
+                        			<option value="<?php echo $key; ?>"<?php if($option==$_html): ?> selected="selected"<?php endif; ?>><?php echo $option; ?></option>
+                        		<?php endforeach; ?>
+                        	</select>
+                        <?php elseif(strip_tags($_column->getHeaderHtml()) == "Processing Functions"): ?>
+                        	<?php 
+                        	$orderId = $_item->getId();
+                        	$trackingnumber = false;
+                        	$shipmentCollection = $shipmentCollection = Mage::getResourceModel('sales/order_shipment_collection')->setOrderFilter($_item)->load();
+                        	foreach ($shipmentCollection as $shipment){
+                        		foreach($shipment->getAllTracks() as $tracknum) {
+                        			$trackingnumber = $tracknum->getNumber();
+                        		}
+                        	}
+                        	$order_prod_ids = array();
+                        	$order_item_ids = array();
+							?>
+					        <?php foreach ($_item->getAllItems() as $itemId => $item): ?>
+					        	<?php $order_prod_ids[] = $item->getProductId(); ?>
+					        	<?php $order_item_ids[] = $item->getItemId(); ?>
+					        <?php endforeach;?>
+					        <?php $params_obj = "order_id:".$_item->getId().", prods_ids:[ '".implode("','",$order_prod_ids)."' ], items_ids:[ '".implode("','",$order_item_ids)."' ]"; ?>
+                        	<?php $order = Mage::getModel('sales/order')->load($_item->getId());?>
+                        	<div class="func-rows">
+		                        <button id="print_miniappraisal_<?php echo $_item->getId(); ?>" title="Print Mini Appraisal" type="button" class="scalable " onclick="clicked(this.id, 'open_miniappr_urls', { <?php echo $params_obj; ?> }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_miniappraisal')" style=""><span><span><span>PA</span></span></span></button>
+		                        <button id="print_invoice_<?php echo $_item->getId(); ?>" title="Print Invoice" type="button" class="scalable " onclick="clicked(this.id, 'open_in_new_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/printinv', array( 'order_id'  => $orderId )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_invoice')" style=""><span><span><span>PI</span></span></span></button>
+		                        <button id="print_work_order_<?php echo $_item->getId(); ?>" title="Print Work Order" type="button" class="scalable " onclick="clicked(this.id, 'open_workorder_urls', { <?php echo $params_obj; ?> }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_work_order')" style=""><span><span><span>PW</span></span></span></button>
+				    			<button id="print_wax_order_<?php echo $_item->getId(); ?>" title="Print Wax Order" type="button" class="scalable " onclick="clicked(this.id, 'open_wax_urls', { <?php echo $params_obj; ?> }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_wax_order');" style=""><span><span><span>WAX</span></span></span></button>
+				    			<?php if ($_item->canShip() && !$_item->getForcedDoShipmentWithInvoice()): ?>
+						  			<button id="order_ship_<?php echo $_item->getId(); ?>" title="Ship" type="button" class="scalable" onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/sales_order_shipment/start', array( 'order_id'=>$orderId )) ?> ' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/order_ship')" style=""><span><span><span>SH</span></span></span></button>
+								<?php endif; ?>
+								<button id="edit_order_<?php echo $_item->getId(); ?>" title="Edit Order" type="button" class="scalable " onclick="setLocation('<?php echo $this->getUrl('*/*/view', array( 'order_id'=>$orderId )); ?>')" style=""><span><span><span>ED</span></span></span></button>
+								<?php $items = $order->getAllItems(); ?>
+								<?php foreach ($items as $order_item): ?>
+									<?php $_product = Mage::getModel('catalog/product')->load($order_item->getProductId()); ?>
+									<?php $attributes = $_product->getAttributes(); ?>
+									<?php $availableAttrs = array('metal_type', 'peiceweight', 'carat_weight'); ?>
+									<?php foreach ($attributes as $attribute): ?>
+										<?php if ($attribute->getAttributeCode()=='mold'): ?>
+											<?php $val = $attribute->getFrontend()->getValue($_product); ?>
+											<?php if ($_product->hasData($attribute->getAttributeCode()) && !(string)$val == ''): ?>
+												<button title="Mold#" style="background:#e74c3c;color: #fff;" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span><?php echo trim($val); ?></span></span></span></button>
+											<?php endif; ?>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								<?php endforeach; ?>
+							</div>
+							<div class="func-rows">
+		                        <?php if($order->getGiftMessageId()): ?>
+						    		<button id="print_gift_<?php echo $_item->getId(); ?>" title="Print Gift Message" type="button" class="scalable green" onclick="clicked(this.id, 'open_in_new_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/printgift', array( 'order_id'=>$orderId )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_gift')" style=""><span><span><span>PG</span></span></span></button>
+						    	<?php else: ?>
+						    		<button id="print_gift_<?php echo $_item->getId(); ?>" title="Print Gift Message" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>PG</span></span></span></button>
+						    	<?php endif; ?>
+						    	<button id="authorize_return_<?php echo $_item->getId(); ?>" title="Authorize Return" type="button" class="scalable" onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'authret', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/authorize_return')" style=""><span><span><span>AR</span></span></span></button>
+						    	<?php if ($trackingnumber): ?>
+									<button id="email_tracking_number_<?php echo $_item->getId(); ?>" title="Email Tracking Number" type="button" class="scalable" onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'tracknum', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/email_tracking_number')" style=""><span><span><span>ET</span></span></span></button>
+								<?php else: ?>
+									<button id="email_tracking_number_<?php echo $_item->getId(); ?>" title="Email Tracking Number" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>ET</span></span></span></button>
+								<?php endif; ?>
+								<button id="print_appraisal_<?php echo $_item->getId(); ?>" title="Print Appraisal" type="button" class="scalable " onclick="clicked(this.id, 'open_appr_urls', { <?php echo $params_obj; ?> }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/print_appraisal')" style=""><span><span><span>A2</span></span></span></button>
+								<?php if (count( $_item->getAllItems() ) > 1): ?>
+									<button id="long_backorder_email_<?php echo $_item->getId(); ?>" title="Long Backorder Email" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>LBE</span></span></span></button>
+								<?php else: ?>
+									<button id="long_backorder_email_<?php echo $_item->getId(); ?>" title="Long Backorder Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'long', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/long_backorder_email')" style=""><span><span><span>LBE</span></span></span></button>
+								<?php endif; ?>
+								<button id="save_<?php echo $_item->getId(); ?>" title="Save" type="button" class="scalable " onclick="save_order_status(<?php echo $_item->getId(); ?>)" style=""><span><span><span>SAVE</span></span></span></button>
+							</div>
+							<div class="func-rows">
+		                        <?php if (count( $_item->getAllItems() ) > 1): ?>
+									<button id="adorn_backorder_email_<?php echo $_item->getId(); ?>" title="Adorn Backorder Email" type="button" class="scalable back" onclick="return false;" style="cursor: default"><span style="background:none;padding:0;"><span><span>AD</span></span></span></button>
+									<button id="idi_backorder_email_<?php echo $_item->getId(); ?>" title="IDI Backorder Email" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>IDI</span></span></span></button>
+									<button id="short_backorder_email_<?php echo $_item->getId(); ?>" title="Short Backorder Email" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>SBE</span></span></span></button>
+									<button id="medium_backorder_email_<?php echo $_item->getId(); ?>" title="Medium Backorder Email" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>MBE</span></span></span></button>
+									<button id="discontinued_item_email_<?php echo $_item->getId(); ?>" title="Discontinued Item Email" type="button" class="scalable back" onclick="return false;" style="cursor: default;"><span style="background:none;padding:0;"><span><span>DIE</span></span></span></button>
+								<?php else: ?>
+									<button id="adorn_backorder_email_<?php echo $_item->getId(); ?>" title="Adorn Backorder Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'adorn', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/adorn_backorder_email')" style=""><span><span><span>AD</span></span></span></button>
+									<button id="idi_backorder_email_<?php echo $_item->getId(); ?>" title="IDI Backorder Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'idi', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/idi_backorder_email')" style=""><span><span><span>IDI</span></span></span></button>
+									<button id="short_backorder_email_<?php echo $_item->getId(); ?>" title="Short Backorder Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'short', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/short_backorder_email')" style=""><span><span><span>SBE</span></span></span></button>
+									<button id="medium_backorder_email_<?php echo $_item->getId(); ?>" title="Medium Backorder Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'medium', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/medium_backorder_email')" style=""><span><span><span>MBE</span></span></span></button>
+									<button id="discontinued_item_email_<?php echo $_item->getId(); ?>" title="Discontinued Item Email" type="button" class="scalable " onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'discontinued', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/discontinued_item_email')" style=""><span><span><span>DIE</span></span></span></button>
+								<?php endif; ?>
+								<button id="custom_message_<?php echo $_item->getId(); ?>" title="Custom Message to <?php echo $order->getCustomerEmail() ?>" type="button" class="scalable jqModal CMmodal" 
+										onclick="jQuery('#CMdialog .CMto').val('<?php echo $order->getCustomerEmail() ?>'); jQuery('#CMdialog #custom_message_send').attr('rel', '<?php echo $_item->getId() ?>');" 
+										style=""><span><span><span>CM</span></span></span></button>
+							</div>
+							<!-- ********************************************************************************************************* -->
+							<div class="func-rows">
+								<button id="return_received_<?php echo $_item->getId(); ?>" title="Return Received" type="button" class="scalable" onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('*/*/sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'returnreceived', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('*/*/clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/return_received')" style=""><span><span><span>RR</span></span></span></button>
+								<?php /* 
+								<button id="authorize_return_<?php echo $_item->getId(); ?>" title="Authorize Return" type="button" class="scalable" onclick="clicked(this.id, 'open_in_current_tab', { <?php echo $params_obj; ?>, url:'<?php echo $this->getUrl('* /* /sendbackorderemail', array( 'order_id'=>$orderId, 'type'=>'authret', 'back'=>'index' )); ?>' }, '<?php echo $this->getUrl('* /* /clicked', array( 'order_id'=>$_item->getId() )); ?>button_id/authorize_return')" style=""><span><span><span>AR</span></span></span></button>
+								*/ ?>
+
+								<button id="return_shipped_<?php echo $_item->getId(); ?>" title="Return Shipped" type="button" class="scalable jqModal RSmodal" 
+										onclick="jQuery('#RSdialog .RSto').val('<?php echo $order->getCustomerEmail() ?>'); jQuery('#RSdialog #return_shipped_send').attr('rel', '<?php echo $_item->getId() ?>');" 
+										style=""><span><span><span>RS</span></span></span></button>
+								<?php /* 
+								<button id="custom_message_<?php echo $_item->getId(); ?>" title="Custom Message to <?php echo $order->getCustomerEmail() ?>" type="button" class="scalable jqModal" 
+										onclick="jQuery('#CMdialog .CMto').val('<?php echo $order->getCustomerEmail() ?>'); jQuery('#CMdialog #custom_message_send').attr('rel', '<?php echo $_item->getId() ?>');" 
+										style=""><span><span><span>CM</span></span></span></button>
+								*/ ?>
+							</div>
+							<!-- ********************************************************************************************************* -->
+							<?php 
+							$table = $resource->getTableName('clicked_buttons');
+							$result = $readConnection->fetchRow('SELECT * FROM ' . $table . ' WHERE order_id = ' . $_item->getId());
+							$buttons_clicked = unserialize($result['buttons_clicked']);
+							?>
+							<script type="text/javascript">
+								//document.observe('dom:loaded', function(){
+								<?php foreach ($buttons_clicked as $k=>$v): ?>
+									$$('#<?php echo $k.'_'.$_item->getId(); ?>').invoke('addClassName', 'blue');
+								<?php endforeach; ?>
+								//})
+							</script>
+						<?php elseif(strip_tags($_column->getHeaderHtml()) == "Customer Comment"): ?>
+							<div style="max-height: 70px; max-width: 160px; overflow: auto;"><?php echo $_html ?></div>
+						<?php elseif(strip_tags($_column->getHeaderHtml()) == "Purchased On"): ?>
+							<?php echo $_html ?>
+							<div class="item-opts">
+							<?php foreach( $_item->getAllItems() as $prod ): ?>
+								<?php $_product = Mage::getModel('catalog/product')->load($prod->getProductId()); ?>
+								<?php $order = Mage::getModel('sales/order')->load($_item->getId());?>
+								<?php $opt = $prod->getProductOptions(); ?>
+								<p><?php echo $this->htmlEscape($_product->getSku()) ?> <?php foreach($opt['options'] as $opts): ?>
+									<?php if( $opts['label'] != 'Gold Color' ) { echo $opts['label'].': '; } echo $opts['print_value']; ?>
+								<?php endforeach; ?></p>
+							<?php endforeach; ?>
+							</div>
+						<?php elseif(strip_tags($_column->getHeaderHtml()) == "Fraud"): ?>
+							<strong style="font-size: 11px"><?php echo $_html ?></strong>
+                        <?php else: ?>
+                        	<?php echo $_html ?>
+						<?php endif; ?>
+                        <?php if(!empty($color)): ?>
+                        	
+                        	<p style="margin: 0.5em 0 0 0; text-align: left; "><input type="checkbox" name="runner_list[]" value="<?php echo $_item->getId(); ?>"></p>
+                        	
+                        <?php unset($color); endif; ?>
+                        <?php if($_column->getHeaderHtml() == "Image"): ?>
+                        	<?php $num = count( $_item->getAllItems() ); ?>
+                        	<?php if($num==1) { $size = 75; } elseif($num>1&&$num<5) { $size = 35; } else { $size = 15; }?>
+							<?php foreach( $_item->getAllItems() as $prod ): ?>
+								<?php $_product = Mage::getModel('catalog/product')->load($prod->getProductId()); ?>
+								<img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize($size, $size)->setQuality(85); ?>" title="<?php echo $this->htmlEscape($_product->getSku()) ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+							<?php endforeach; ?>
+						<?php endif; ?>
+						<?php if(strip_tags($_column->getHeaderHtml()) == "Ship to Name"): ?>
+							<?php $shipmentCollection = Mage::getResourceModel('sales/order_shipment_collection')->setOrderFilter($_item)->load(); ?>
+							<?php $tracknums = array(); ?>
+							<?php foreach ($shipmentCollection as $shipment): ?>
+								<?php foreach($shipment->getAllTracks() as $_track): ?>
+									<p>
+									<?php if ($_track->isCustom()): ?>
+					                	<strong><?php echo $this->escapeHtml($_track->getNumber()) ?></strong>
+					                <?php else: ?>
+										<a href="#" onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_track) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes');return false;"><?php echo $this->escapeHtml($_track->getNumber()) ?></a>
+					                	<div id="shipment_tracking_info_response_<?php echo $_track->getId() ?>"></div>
+					                <?php endif; ?>
+									</p>
+								<?php endforeach; ?>
+							<?php endforeach; ?>
+						<?php endif; ?>
+                    </td>
+                    <?php if ($this->shouldRenderEmptyCell($_item, $_column)):?>
+                        <td colspan="<?php echo $this->getEmptyCellColspan($_item)?>" class="last"><?php echo $this->getEmptyCellLabel()?></td>
+                    <?php endif;?>
+                <?php endif;?>
+
+            <?php endforeach; ?>
+            </tr>
+            <?php if ($_multipleRows = $this->getMultipleRows($_item)):?>
+                <?php foreach ($_multipleRows as $_i):?>
+                <tr>
+                    <?php $i=0;foreach ($this->getMultipleRowColumns($_i) as $_column): ?>
+                        <td class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i==$numColumns-1?'last':'' ?>">
+                            <?php echo (($_html = $_column->getRowField($_i)) != '' ? $_html : '&nbsp;') ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+                <?php endforeach;?>
+            <?php endif;?>
+
+            <?php if ($this->shouldRenderSubTotal($_item)): ?>
+                <tr class="subtotals">
+                    <?php $i = 0; foreach ($this->getSubTotalColumns() as $_column): ?>
+                        <td class="<?php echo $_column->getCssProperty() ?> <?php echo ++$i == $numColumns ? 'last' : '' ?>">
+                            <?php echo ($_column->hasSubtotalsLabel() ? $_column->getSubtotalsLabel() :
+                                $_column->getRowField($this->getSubTotalItem($_item))
+                            );
+                            ?>
+                        </td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <?php elseif ($this->getEmptyText()): ?>
+            <tr>
+                <td class="empty-text <?php echo $this->getEmptyTextClass() ?>" colspan="<?php echo $numColumns ?>"><?php echo $this->getEmptyText() ?></td>
+            </tr>
+        <?php endif; ?>
+        </tbody>
+
+    </table>
+    </div>
+</div>
+<?php /* Fix added by @wsm */ ?>
+<?php endif; ?>
+<?php if($this->canDisplayContainer()): ?>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    <?php echo $this->getJsObjectName() ?> = new varienGrid('<?php echo $this->getId() ?>', '<?php echo $this->getGridUrl() ?>', '<?php echo $this->getVarNamePage() ?>', '<?php echo $this->getVarNameSort() ?>', '<?php echo $this->getVarNameDir() ?>', '<?php echo $this->getVarNameFilter() ?>');
+    <?php echo $this->getJsObjectName() ?>.useAjax = '<?php echo $this->getUseAjax() ?>';
+    <?php if($this->getRowClickCallback()): ?>
+        <?php echo $this->getJsObjectName() ?>.rowClickCallback = <?php echo $this->getRowClickCallback() ?>;
+    <?php endif; ?>
+    <?php if($this->getCheckboxCheckCallback()): ?>
+        <?php echo $this->getJsObjectName() ?>.checkboxCheckCallback = <?php echo $this->getCheckboxCheckCallback() ?>;
+    <?php endif; ?>
+    <?php if($this->getRowInitCallback()): ?>
+        <?php echo $this->getJsObjectName() ?>.initRowCallback = <?php echo $this->getRowInitCallback() ?>;
+        <?php echo $this->getJsObjectName() ?>.initGridRows();
+    <?php endif; ?>
+    <?php if($this->getMassactionBlock()->isAvailable()): ?>
+    <?php echo $this->getMassactionBlock()->getJavaScript() ?>
+    <?php endif ?>
+    <?php echo $this->getAdditionalJavaScript(); ?>
+//]]>
+</script>
+<script type="text/javascript">
+	function clicked(button_id, func, url, loadurl) {
+		new Ajax.Request(loadurl, {
+			method: 'get',
+			asynchronous: true,
+			onComplete: function(transport) {
+				$$('#' + transport.responseText).invoke('addClassName', 'blue');
+				this[func](url);
+			}
+		});
+		$$('#' + button_id).invoke('addClassName', 'blue');
+	}
+
+	function open_in_new_tab(url) {
+		var win=window.open(url.url, '_blank');
+		win.focus();
+	}
+	function open_in_current_tab(url) {
+		setLocation(url.url);
+	}
+	function open_appr_urls(obj) {
+		for (var i = 0; i < obj.prods_ids.length; i++) {
+			window.open('<?php echo $this->getUrl('*/*/printappr'); ?>item_id/'+obj.prods_ids[i]+'/order_id/'+obj.order_id+'/', 
+'_blank');	
+		}	
+	}
+	function open_miniappr_urls(obj) {
+		for (var i = 0; i < obj.prods_ids.length; i++) {
+			window.open('<?php echo $this->getUrl('*/*/printminiappr'); ?>item_id/'+obj.prods_ids[i]+'/order_id/'+obj.order_id+'/', 
+'_blank');	
+		}	
+	}
+	function open_wax_urls(obj) {
+		for (var i = 0; i < obj.prods_ids.length; i++) {
+			window.open('<?php echo $this->getUrl('*/*/printwax'); ?>item_id/'+obj.prods_ids[i]+'/order_id/'+obj.order_id+'/', 
+'_blank');	
+		}
+	}
+	function open_workorder_urls(obj) {
+		for (var i = 0; i < obj.items_ids.length; i++) {
+			window.open('<?php echo $this->getUrl('*/*/printworkorder'); ?>item_id/'+obj.items_ids[i]+'/order_id/'+obj.order_id+'/', 
+'_blank');	
+		}
+	}
+	
+	function runner_list_printout() {
+		var runner_list_ids = '';
+		var rows = jQuery('input[name="runner_list[]"]:checked');
+		rows.each(function() {
+			runner_list_ids += jQuery(this).val() + ',';
+		});
+		if (runner_list_ids.length > 0) {
+			window.open('<?php echo $this->getUrl('*/*/runner')?>runner_list_orders/' + runner_list_ids);
+		}
+	}
+
+	function return_list_printout() {
+		var return_list_ids = '';
+		var rows = jQuery('input[name="runner_list[]"]:checked');
+		rows.each(function() {
+			return_list_ids += jQuery(this).val() + ',';
+		});
+		if (return_list_ids.length > 0) {
+			window.open('<?php echo $this->getUrl('*/*/return')?>return_list_orders/' + return_list_ids);
+		}
+	}
+	
+	function mass_save_order_status() {
+		var json = [];
+		var rows = jQuery('#sales_order_grid_table tbody tr');
+		rows.each(function(index) {
+			var row = jQuery(this);
+			var data = { 
+				id: row.attr('id'),
+// 			    color: row.find('select[name="order_grid_color"]').val(),
+				int_st: row.find('select[name="order_grid_int_status"]').val(),
+				ext_st: row.find('select[name="order_grid_status"]').val(),
+				comment: row.find('textarea[name="order_grid_internalcomment"]').val()
+			};
+			json.push(data);
+		});
+		new Ajax.Request('<?php echo $this->getUrl('*/*/masssavestatus'); ?>', {
+			method: 'post',
+			asynchronous: true,
+			parameters: {
+				data: JSON.stringify(json)
+			},
+			onComplete: function(transport) {
+				if(transport.responseText.length>0) {
+					alert(transport.responseText);
+				}
+				window.location.reload();
+			}
+		});
+	}
+	function save_order_status(id) {
+// 		var color = $('order_grid_color_'+id).value;
+		var intSt = $('order_grid_int_status_'+id).value;
+		var extSt = $('order_grid_status_'+id).value;
+		var comment = $('order_grid_internalcomment_'+id).value;
+		new Ajax.Request('<?php echo $this->getUrl('*/*/savestatus'); ?>', {
+			method: 'post',
+			asynchronous: true,
+			parameters: {
+				id: id,
+// 		        color: color,
+				int_st: intSt,
+				ext_st: extSt,
+				comment: comment
+		    },
+			onComplete: function(transport) {
+				if(transport.responseText.length>0) {
+					alert(transport.responseText);
+				} else {
+					window.location.reload();
+				}
+			}
+		});
+	}
+	function uncheckall() {
+		$$('input[name="runner_list[]"]').each(function(d) {
+			  d.checked = false;
+		});
+	}
+	
+</script>
+<?php endif; ?>
+<?php endif ?>

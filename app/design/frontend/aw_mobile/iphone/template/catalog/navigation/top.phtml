@@ -1,0 +1,138 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see Mage_Catalog_Block_Navigation
+ */
+?>
+<!--<div class="debug"></div>-->
+<div class="header-nav-container">
+    <div id="home" class="header-nav current">
+        <script type="text/javascript">
+            homeCatId = <?php echo $this->getHomeId(); ?>;
+        </script>
+        <?php $i = 0; ?>
+        <div><?php echo $this->getChildHtml('nav_messages'); ?></div>
+        <ul id="nav">
+        <?php foreach ($this->getStoreCategories() as $category): ?>
+        	<?php if(!in_array($category->getId(), array(384,385,386))): ?>
+            <li class="arrow cat-<?php echo $category->getId(); ?>">
+            	<?php if($category->getId()==408) { $link = "/blog/celebrity-diamond-jewelry/"; } else { $link = ($this->isParent($category) ? '#category'.$category->getId() : $this->getCategoryUrl($category)); } ?>
+                <a href="<?php echo $link; ?>"<?php if ($this->isParent($category)) echo " class=\"to_child\""?>>
+                	<?php if($category->getId()!=408): ?>
+	            		<img alt="<?php echo $this->escapeHtml($category->getName()); ?>" src="<?php echo($this->getSkinUrl('images/cat-'.$category->getId().'.png')) ?>" class="home-cat-img img-<?php echo $category->getId(); ?>" />
+	            	<?php endif; ?>
+                	<?php switch($this->htmlEscape($category->getName())) {
+                		case "Wedding Rings":
+			        		if($category->getId()==54) { 
+			        			$cat = "Bridal";
+			        		} else {
+			        			$cat = $this->escapeHtml($category->getName());
+			        		}
+			        	break;
+			        	case "Who's Wearing Avianne &amp; Co?":
+			        		$cat = "Celebrities";
+			        	break;
+			        	default:
+			        		$cat = $this->htmlEscape($category->getName());
+			        	break;
+                	}?>
+                	<?php echo $cat; ?>
+                </a>
+                <script type="text/javascript">
+                    catPath[<?php echo $category->getId(); ?>] = '<?php echo(Mage::getStoreConfig('catalog/frontend/flat_catalog_category') ? $category->getPath() : $category->getPathId());?>';
+                    catUrl[<?php echo $category->getId(); ?>] = '<?php echo $this->getCategoryUrl($category); ?>';
+                </script>
+            </li>
+            <?php $i ++ ; ?>
+            <?php endif; ?>
+        <?php endforeach ?>
+        </ul>
+        <?php if ($i ==0 ): ?>
+        <div><ul class="messages"><li class="notice-msg"><ul><li><?php echo $this->__('There are no categories.'); ?></li></ul></li></ul></div>
+        <?php endif; ?>
+        <?php //echo $this->getChildHtml('navigation.newsletter'); ?>
+    </div>
+
+    <?php if (Mage::getStoreConfig('catalog/frontend/flat_catalog_category')): ?>
+            <?php if (count($frames = Mage::registry(AW_Mobile_Block_Catalog_Navigation::NAVIGATION_FRAMES))): ?>
+                <?php foreach ($frames as $frame):?>
+                    <?php if ($this->__getChildrenCount($frame) > 0): ?>
+                        <?php echo $this->getDir($frame);?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php else: ?>
+            <?php if (count($frames = Mage::registry(AW_Mobile_Block_Catalog_Navigation::NAVIGATION_FRAMES))): ?>
+                <?php foreach ($frames as $frame):?>
+                    <?php if ($this->__getChildrenCount($frame) > 0): ?>
+                        <div class="header-nav" id="<?php echo $frame->getFrameId(); ?>">
+                            <ul id="nav">
+                            <?php if($frame->getFrameId()=="category233") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-rings-1"><span>Diamond Rings</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category257") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-chains-1"><span>Diamond Chains</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category261") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-earrings-1"><span>Diamond Earrings</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category254") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-pendants-1"><span>Diamond Pendants</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category258") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-bracelets-1"><span>Diamond Bracelets</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category283") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'womens-diamond-rings-1"><span>Diamond Rings</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category291") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'womens-diamond-earrings-1"><span>Diamond Earrings</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category309") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'womens-diamond-bracelets-1"><span>Diamond Bracelets</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category287") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'womens-diamond-pendants-1"><span>Diamond Pendants</span></a></li>'; } ?>
+                            <?php if($frame->getFrameId()=="category64") { echo '<li class="arrow"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'pre-set-diamond-engagement-rings"><span>Engagement Rings</span></a></li>'; } ?>
+                            <?php foreach ($frame->getChildren() as $category): ?>
+                            	<?php if(!in_array($category->getId(), array(384,385,386))): ?>
+	                                <li class="arrow">
+	                                    <?php $link = ($this->isParent($category) ? '#category'.$category->getId() : $this->getCategoryUrl($category)); ?>
+	                                    <a href="<?php echo $link; ?>"<?php if ($this->isParent($category) ) echo " class=\"to_child\""?>><?php echo $this->htmlEscape($category->getName()); ?></a>
+	                                    <script type="text/javascript">
+	                                        catPath[<?php echo $category->getId(); ?>] = '<?php echo $category->getPathId(); ?>';
+	                                        catUrl[<?php echo $category->getId(); ?>] = '<?php echo $this->getCategoryUrl($category); ?>';
+	                                    </script>
+	                                </li>
+	                                <?php if($category->getId()==285): ?>
+	                                	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'pre-set-diamond-engagement-rings"><span>Diamond Engagement Rings</span></a></li>'; ?>
+							        	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'eternity-bands"><span>Diamond Eternity Bands</span></a></li>'; ?>
+							        	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'womens-wedding-bands"><span>Womens Wedding Bands</span></a></li>'; ?>
+							        	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'five-stone-diamond-rings"><span>Five-Stone Diamond Rings</span></a></li>'; ?>
+							        	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'three-stone-diamond-rings"><span>Three-Stone Diamond Rings</span></a></li>'; ?>
+	                                <?php endif; ?>
+	                                <?php if($category->getId()==149): ?>
+	                                	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'mens-diamond-wedding-bands"><span>Diamond Wedding Bands</span></a></li>'; ?>
+	                                <?php endif; ?>
+	                                <?php if($category->getId()==284 || $category->getId()==59): ?>
+	                                	<?php echo '<li class="level2 nav-2-1-0"><a href="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'gold-wedding-bands"><span>Gold Wedding Bands</span></a></li>'; ?>
+	                                <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach ?>
+                            <script type="text/javascript">
+                                $('<?php echo $frame->getFrameId(); ?>').category_id = <?php echo $frame->getFrameCategoryId() ?>;
+                            </script>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+</div>
+<div style="clear: both;"></div>
+
+
+<script type="text/javascript">
+    var navigation = new MobileNavigation();
+</script>

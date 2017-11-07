@@ -1,0 +1,8 @@
+<config>
+	<modules>
+		<Mango_Redirect>
+			<active>true</active>
+			<codePool>local</codePool>
+		</Mango_Redirect>
+	</modules>
+</config>

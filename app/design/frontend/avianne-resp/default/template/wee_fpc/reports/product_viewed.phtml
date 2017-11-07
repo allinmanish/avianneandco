@@ -1,0 +1,85 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<!--product_viewed_start-->
+<!-- 3-- -->
+<div class="mini-related-items">
+    <div class="head">
+        <h4><?php echo $this->__('Recently Viewed Products'); ?></h4>
+    </div>
+    <div class="content">
+		<?php
+		$_products = $this->getRecentlyViewedProducts();
+		?>
+		<table border="0" width="100%" id="recently-viewed-items">
+			<tr>
+			<?php
+			$i = 0; 
+			foreach ($_products as $_item_r) {
+				$_item = Mage::getModel('catalog/product')->load($_item_r->getID());
+				if (2 > $i++) :?>
+				<td>
+	        		<a href="/<?php echo $_item->getUrlPath(); ?>"><img src="<?php echo $this->helper('catalog/image')->init($_item,'thumbnail')->resize(170)?>" alt="<?php echo $this->htmlEscape($_item->getName())?>" width="170" height="170" /></a>
+					<p class="name"><a href="/<?php echo $_item->getUrlPath(); ?>"><?php echo $this->htmlEscape($_item->getName())?></a></p>
+					<p class="price"><?php echo '&#36;' . number_format($_item->getFinalPrice(),2);?></p>
+				</td>
+			<?php
+				endif; 
+			}?>
+			<?php 
+			if (count($_products) < 2) {
+			$_addprods_ids = array(); $i=0;
+				$db = Mage::getSingleton('core/resource')->getConnection('core_read');
+				$result = $db->query("SELECT i.product_id, v.value AS product_url
+										FROM sales_flat_order_item i
+										LEFT JOIN catalog_product_entity_varchar v ON i.product_id = v.entity_id
+										WHERE v.attribute_id =570
+										AND v.store_id =0
+										ORDER BY i.created_at DESC 
+										LIMIT 0 , 2");
+				while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+					$_addprods_ids[$i]['id'] = $row['product_id'];
+					$_addprods_ids[$i]['url'] = $row['product_url'];
+					$i++;
+				}
+
+				for ($i=0; $i<(2-count($_products)); $i++) {
+					$_item = Mage::getModel('catalog/product')->load($_addprods_ids[$i]['id']);
+					$_url = $_addprods_ids[$i]['url'] ? $_addprods_ids[$i]['url'] : "/".$_item->getUrlPath() ?>
+					<td>
+		        		<a href="<?php echo $_url; ?>"><img src="<?php echo $this->helper('catalog/image')->init($_item,'thumbnail')->resize(170)?>" alt="<?php echo $this->htmlEscape($_item->getName())?>" width="170" height="170" /></a>
+						<p class="name"><a href="<?php echo $_url; ?>"><?php echo $this->htmlEscape($_item->getName())?></a></p>
+						<p class="price"><?php echo '&#36;' . number_format($_item->getFinalPrice(),2);?></p>
+					</td><?php 
+				}
+			}
+			?>
+			</tr>
+		</table>
+    </div>
+</div>
+<!--product_viewed_end-->

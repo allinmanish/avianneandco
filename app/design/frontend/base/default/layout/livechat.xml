@@ -1,0 +1,1 @@
+<?xml version="1.0"?><layout version="2.0.1">    <default>		<reference name="head">			<block type="livechat/livechat" name="head.livechat.monitor" >				<action method="setTemplate">					<template>livechat/monitor.phtml</template> 				</action>			</block>        </reference>    </default>  </layout> 

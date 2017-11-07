@@ -1,0 +1,22 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Points
+ * @copyright  Copyright (c) 2008-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php if (Mage::helper('points/config')->getInfoPageId()): ?>
+    <a href="<?php echo $this->getUrl('points/index/infopage') ?>" title="<?php echo $this->__('What is it?') ?>">
+        <img src="<?php echo $this->getSkinUrl('images/aw_points/question.png') ?>" />
+    </a>
+<?php endif; ?>

@@ -1,0 +1,182 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div id="header-top-container">
+    <div class="header-top">
+        <h4 id="logo">
+            <a href="<?php echo $this->getUrl('') ?>">
+                <img src="<?php echo $this->getSkinUrl('images/skin-avianne-resp/avianne-logo@2x.png'); ?>" srcset="<?php echo $this->getSkinUrl('images/skin-avianne-resp/avianne-logo@2x.png'); ?> 2x, <?php echo $this->getSkinUrl('images/skin-avianne-resp/avianne-logo@3x.png'); ?> 3x" />
+            </a>
+        </h4>
+
+        <span class="desktop-only">
+            <div class="contacts-list">
+                <img src="<?php echo $this->getSkinUrl('images/skin-avianne-resp/phone-icon-phone-squared.png'); ?>" srcset="<?php echo $this->getSkinUrl('images/skin-avianne-resp/phone-icon-phone-squared@2x.png'); ?> 2x, <?php echo $this->getSkinUrl('images/skin-avianne-resp/phone-icon-phone-squared@3x.png'); ?> 3x">
+                <span class="phone-number">888 - 243 - 4344</span>
+            </div>
+            <div class="chat-phones">
+                <?php echo $this->getChildHtml('topLinks') ?> 
+            </div>
+        </span>
+
+        <span class="mobile-only">
+            <div class="mobile-icons">
+                <?php /* <img class="search-icon" src="<?php echo $this->getSkinUrl('images/skin-avianne-resp/search-icon.png'); ?>" srcset="<?php echo $this->getSkinUrl('images/skin-avianne-resp/search-icon@2x.png'); ?> 2x, <?php echo $this->getSkinUrl('images/skin-avianne-resp/search-icon@3x.png'); ?> 3x"> */ ?>
+                <?php $count = Mage::helper('checkout/cart')->getItemsCount(); ?>
+                <a class="cart-icon" href="<?php echo Mage::helper('checkout/cart')->getCartUrl(); ?>"><img class="search-icon" src="<?php echo $this->getSkinUrl('images/skin-avianne-resp/shopping-bag-icon.png'); ?>" srcset="<?php echo $this->getSkinUrl('images/skin-avianne-resp/shopping-bag-icon@2x.png'); ?> 2x, <?php echo $this->getSkinUrl('images/skin-avianne-resp/shopping-bag-icon@3x.png'); ?> 3x"><?php echo $count ? '<b>'.$count.'</b>' : '' ?></a>
+                <img class="hamburger-icon" src="<?php echo $this->getSkinUrl('images/skin-avianne-resp/hamburger-icon.png'); ?>" srcset="<?php echo $this->getSkinUrl('images/skin-avianne-resp/hamburger-icon@2x.png'); ?> 2x, <?php echo $this->getSkinUrl('images/skin-avianne-resp/hamburger-icon@3x.png'); ?> 3x"
+                        onclick="jQuery('.search_mini_form').toggleClass('active'); jQuery('.mobile-menu .header-nav').toggleClass('active');">
+            </div>
+            <?php if (Mage::getSingleton('customer/session')->isLoggedIn()) { ?>
+                <style>.mobile-menu #nav .nav-logout { display: block !important; }</style>
+            <?php } ?>
+        </span>
+
+    </div>
+</div>
+
+<span class="desktop-only">
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('mainmenu')->toHtml(); ?>
+
+<?php
+$parentCategoryId = 3;
+$category = Mage::getModel('catalog/category')->load($parentCategoryId );
+$children = Mage::getModel('catalog/category')->getCollection()->setStoreId(Mage::app()->getStore()->getId());
+$children->addAttributeToSelect('*')//->addAttributeToFilter('parent_id', $category->getId())
+->addAttributeToFilter('is_active', 1)//get only active categories if you want
+->addAttributeToSort('name');//sort by position 
+?>
+<script>
+    <?php
+    echo 'var infovar = {' . "\n";
+    foreach ($children as $child) {
+        // $cat_url = str_replace('', '', $child->getUrl());
+        $cat_url = parse_url($child->getUrl());
+        $cat_url = $cat_url['path'];
+        $cat_img = $child->getImageUrl();
+        $cat_descr = $child->getDescription();
+        echo '"'.$cat_url.'" : {' . "\n";
+            echo '"image" : "'.str_replace('local.avianne', 'dev.avianneandco.com', $cat_img).'", ' . "\n";
+            echo '"descr" : "'.preg_replace( "/[\r\n]/", "",  addslashes( $cat_descr ) ).'" ' . "\n";
+        echo '}, ' . "\n";
+    }
+    echo '}' . "\n\n";
+    /*
+    foreach ($children as $child) {
+        $cat_img = $child->getImageUrl();
+        if ($cat_img) {
+            echo 'images = new Image();' . "\n";
+            echo 'images.src = "' . str_replace('local.avianne', 'dev.avianneandco.com', $cat_img) . '"; ' . "\n";
+        }
+    }
+    */
+    ?>
+
+jQuery(document).ready(function(){
+    jQuery('.header-nav #nav a').bind('mouseover', function() {
+        // var infovar;
+        cur_href = jQuery(this).attr('href');
+        /*
+        if (infovar[cur_href]['image']) {
+            jQuery('#nav li.infoholder .infoimage').html('<img src="' + infovar[cur_href]['image'] + '">');
+            jQuery('#nav li.infoholder').show();
+        } else {
+            jQuery('#nav li.infoholder .infoimage').html('');
+        }
+        */
+        if (infovar[cur_href]['descr']) {
+            jQuery('#nav li.infoholder .infodescr').html(infovar[cur_href]['descr']);
+            jQuery('#nav li.infoholder').show();
+        } else {
+            jQuery('#nav li.infoholder .infodescr').html('');
+        }
+        // console.log(infovar[cur_href]['image'], infovar[cur_href]['descr']);
+    });
+    jQuery('#nav > li.level0').bind('mouseout', function() {
+        if (jQuery(this).hasClass('over')) {
+            console.log(jQuery(this), jQuery(this).hasClass('over'));
+        } else {
+            jQuery('#nav li.infoholder').hide();
+        }
+    });
+});
+</script>
+
+</span>
+<script>
+/* Toggle Search bar */
+jQuery('#nav li.nav-search > img, .mobile-icons > img.search-icon').click(function() {
+    jQuery('.search_mini_form').slideToggle('fast');
+})
+</script>
+
+<?php echo $this->getChildHtml('topSearch') ?>
+
+
+<div class="mobile-only mobile-menu">
+    <?php // echo $this->getLayout()->createBlock('cms/block')->setBlockId('mainmenu')->toHtml(); ?>
+    <?php echo str_replace( 'onmouseout="toggleMenu(this,0)" onmouseover="toggleMenu(this,1)"', ' ',  $this->getLayout()->createBlock('cms/block')->setBlockId('mainmenu')->toHtml() ); ?>
+</div>
+<script>
+// ❬ ❮ ❰ ❭ ❯ ❱
+// <a class="arrow arrow-up">❯</a>
+
+jQuery('.mobile-menu #nav li.parent').not('.nav-myaccount, .nav-logout').each(function() {
+    jQuery(this).prepend('<a class="arrow arrow-down">❯</a>');
+});
+jQuery('.mobile-menu #nav li.parent > a.arrow').bind('click', function() {
+    if (jQuery(this).hasClass('arrow-down')) {
+        jQuery('.mobile-menu #nav li').not(jQuery(this).parents('li.parent')).slideUp('fast');
+        // jQuery(this).parents('li.parent').slideDown();
+        jQuery(this).siblings('ul').slideDown('fast');
+        jQuery(this).siblings('ul > li').slideDown('fast');
+        jQuery(this).toggleClass('arrow-down');
+    } else {
+        // jQuery('.mobile-menu #nav li.parent').slideUp();
+        jQuery(this).siblings('ul').slideUp('fast');
+        jQuery(this).parents('li.parent').eq(0).siblings('li').slideDown('fast');
+        // jQuery(this).parents('li.parent').slideUp();
+        // jQuery(this).siblings('ul').children('li').slideUp();
+        jQuery(this).toggleClass('arrow-down');
+    }
+
+    return false;
+});
+
+jQuery('.mobile-menu #nav li > a').not('.arrow').bind('click', function() {
+    // alert('click');
+    return false;
+});
+
+jQuery('.mobile-menu #nav li > a').not('.arrow').bind('touchend', function() {
+    link = jQuery(this).attr('href');
+    // console.log('touchend, ' + link);
+    document.location = link;
+    return false;
+});
+
+
+</script>

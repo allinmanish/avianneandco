@@ -1,0 +1,65 @@
+<?php 
+function getGalleryMenu(AsiaConnect_Gallery_Model_Album $album, $level=0, $last=false)
+{
+	$html ='';
+	if($album->getStatus())
+	{
+		$html .="<li";
+		$hasChildren = $album->getChildrenAlbum();
+        if ($hasChildren) {
+             $html.= ' onmouseover="toggleMenu(this,1)" onmouseout="toggleMenu(this,0)"';
+        }
+		$html.= ' class="level'.$level;
+	    if ($last) {
+            $html .= ' last';
+        }
+	    if ($hasChildren) {
+            $cnt = 0;
+            foreach ($hasChildren as $child) {
+                if ($child->getStatus()) {
+                    $cnt++;
+                }
+            }
+            if ($cnt > 0) {
+                $html .= ' parent';
+            }
+        }
+        $html.= '">'."\n";
+        $html.= '<a href="'.$album->getUrlRewrite().'"><span>'.$album->getTitle().'</span></a>'."\n";
+        if ($hasChildren){
+
+            $j = 0;
+            $htmlChildren = '';
+            foreach ($hasChildren as $child) {
+                if ($child->getStatus()) {
+                    $htmlChildren.= getGalleryMenu($child, $level+1, ++$j >= $cnt);
+                }
+            }
+
+            if (!empty($htmlChildren)) {
+                $html.= '<ul class="level' . $level . '">'."\n"
+                        .$htmlChildren
+                        .'</ul>';
+            }
+
+        }
+        $html.= '</li>'."\n";
+        return $html;
+	}
+}
+$rootAlbum = Mage::getModel('gallery/album')->load(1);
+?>
+<div class="header-nav-container">
+    <div class="header-nav">
+        <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+        <ul id="nav">
+        <?php foreach ($this->getStoreCategories() as $_category): ?>
+            <?php echo $this->drawItem($_category) ?>
+        <?php endforeach ?>
+        <?php if(Mage::getStoreConfig("gallery/info/menu_enabled")):?>
+        	<?php echo getGalleryMenu($rootAlbum, 0, false)?>
+        <?php endif;?>
+        </ul>
+    </div>
+    <?php echo $this->getChildHtml('topLeftLinks') ?>
+</div>

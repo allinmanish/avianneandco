@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <AW_Advancedmenu>
+            <active>true</active>
+            <codePool>local</codePool>
+        </AW_Advancedmenu>
+    </modules>
+</config>

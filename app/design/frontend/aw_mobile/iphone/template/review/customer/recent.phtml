@@ -1,0 +1,44 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<?php if( $this->getCollection() && $this->count()): ?>
+<div class="account-box ad-reviews">
+    <div class="head">
+        <h4><?php echo $this->__('My Recent Reviews') ?></h4>
+        <a href="<?php echo $this->getAllReviewsUrl() ?>"><small><?php echo $this->__('View All Reviews') ?></small></a>
+    </div>
+    <?php $iterator = 0 ?>
+    <?php foreach ($this->getCollection() as $_review): ?>
+    <ol class="recent-reviews">
+        <li<?php if($iterator % 2 == 0): ?> class="odd"<?php endif; ?>>
+            <div class="count"><?php echo ++$iterator ?></div>
+            <div class="content">
+                <a href="<?php echo $this->getReviewUrl($_review->getReviewId()) ?>"><?php echo $this->htmlEscape($_review->getName()) ?></a>
+                <?php if($_review->getSum()): ?>
+                <div class="ratings">
+                    <small><?php echo $this->__('Rating:') ?></small>
+                        <div class="rating-box">
+                            <div class="rating" style="width:<?php echo ( $_review->getSum() / $_review->getCount() ) ?>%;"></div>
+                        </div>
+                 </div>
+                <?php endif; ?>
+            </div>
+        </li>
+    </ol>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>

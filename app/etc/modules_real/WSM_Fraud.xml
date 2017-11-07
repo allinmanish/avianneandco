@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+    	<WSM_Fraud>
+        	<active>false</active>
+        	<codePool>false</codePool>
+    	</WSM_Fraud>
+	</modules>
+</config>

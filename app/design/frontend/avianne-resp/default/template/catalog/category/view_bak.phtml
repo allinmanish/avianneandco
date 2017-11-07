@@ -1,0 +1,970 @@
+<style>
+/* Banner for the Royal Collection page */
+body.category-royal-collection .sub-category .heading-wrapper { background: url(/skin/frontend/avianne/default/images/royal_collection.jpg) 0 0 no-repeat; background-size: cover; border: 0 none; }
+body.category-royal-collection .sub-category .heading-wrapper .heading { visibility: hidden; }
+body.category-royal-collection .sub-category .heading-wrapper .heading { min-height: 348px; }
+/* /Banner for the Royal Collection page */
+</style>
+<?php
+$_helper = $this->helper('catalog/output');
+$_category = $this->getCurrentCategory();
+$_imgHtml = '';
+if ($_imageUrl = $_category->getImageUrl()) {
+	$_imgHtml = '<img src="'.$_imageUrl.'" alt="'.$this->htmlEscape($_category->getName()).'" width="232" />';
+	$_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+}
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php 
+if(($_category->getLevel()==2) || ($_category->getId()==211)) {
+	$pinit = $this->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'logo.jpg';
+} elseif($_category->getLevel()>2) {
+	$pinit = $_category->getParentCategory()->getImageUrl();
+} else {
+	$pinit = $_category->getImageUrl();
+}
+?>
+<?php         /* Content mode */                 ?>
+
+<?php if($this->isContentMode()&&!isset($_GET['view-all'])): ?>
+<?php 
+	$related_cats = '<div class="category-static-related">';
+	if($_category->getLevel()==2) {
+		$root_cats = array_diff(array('Mens Diamond Jewelry'=>35,'Womens Diamond Jewelry'=>43,'Bridal Jewelry'=>54,'Custom Diamond Jewelry'=>99),array($_category->getID())); $i=0;
+	    $related_cats.= '<p>Related Categories:</p><ul>';
+	    foreach ($root_cats as $name => $cat) {
+	    	$related_cats.= '<li><a href="'.Mage::getModel("catalog/category")->load($cat)->getUrl().'">'.$name.'</a></li>';
+	    }
+	    $related_cats.= '</ul>';
+	} else {
+		$parentCategory = $_category->getParentCategory();
+		if($parentCategory->hasChildren()) {
+			$child_amount = count(explode(",",$parentCategory->getChildren()))-1; $i = 0;
+			$related_cats.= '<p>You May Also Like...</p><ul>';
+			foreach ($parentCategory->getChildrenCategories() as $cat) {
+				if($cat->getID()!=$_category->getID()&&$cat->getId()!=55) {
+					$related_cats.= '<li><a href="'.$cat->getUrl().'">'.$cat->getName().'</a></li>';
+	    			$i++;
+	    			if($i==8) break;
+	    			/*if( $i%3==0 ) {
+	    				$related_cats.= '</ul><ul>';
+	    			}*/
+	    		}
+			}
+	    }
+	    $related_cats.= '</ul>';
+	}
+	$related_cats.= '</div>';
+?>
+<?php /*   Mens Diamond Jewelry   */ ?>
+<?php if($_category->getId()==35):?>
+	<div class="root-category category-view item-35">
+		<div class="heading">
+			<h1><?php echo $this->__('Mens Diamond Jewelry'); ?></h1>
+			<div>
+				<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+			    <div class="category-description std">
+			        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,450) ?>
+			    </div>
+			    <?php endif; ?>
+			   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View All Mens Diamond Jewelry'); ?></a></p>
+			    <div class="category-static-related">
+					<p><?php echo $this->__('Related Categories:'); ?></p>
+					<ul>
+						<li><a href="/womens-diamond-jewelry"><?php echo $this->__('Womens Diamond Jewelry'); ?></a></li>
+						<li><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('Celebrity Diamond Jewelry'); ?></a></li>
+						<li><a href="/pre-set-diamond-engagement-rings-1"><?php echo $this->__('Bridal Jewelry'); ?></a></li>
+						<li><a href="/custom-jewelry"><?php echo $this->__('Custom Diamond Jewelry'); ?></a></li>
+						<li><a href="/watches"><?php echo $this->__('Watches'); ?></a></li>
+						<li><a href="/blog"><?php echo $this->__('Blog'); ?></a></li>
+					</ul>
+				</div>
+		    </div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-rings-1"><span><?php echo $this->__('Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/mens-diamond-earrings-1"><span><?php echo $this->__('Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/mens-diamond-pendants-1"><span><?php echo $this->__('Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/mens-diamond-chains-1"><span><?php echo $this->__('Diamond Chains'); ?></span></a></div>
+			<div class="box item-5"><a href="/mens-diamond-bracelets-1"><span><?php echo $this->__('Bracelets'); ?></span></a></div>
+			<div class="box item-6"><a href="/mens-solid-gold-jewelry"><span><?php echo $this->__('Solid Gold Jewelry'); ?></span></a></div>
+			<div class="box item-7"><a href="/bling-hip-hop-diamond-jewelry"><span><?php echo $this->__('Hip Hop Jewelry'); ?></span></a></div>
+			<div class="box item-8"><a href="/diamond-cufflinks"><span><?php echo $this->__('Cufflinks'); ?></span></a></div>
+		</div>
+	</div>
+<?php /*   Womens Diamond Jewelry   */ ?>
+<?php elseif($_category->getId()==43):?>
+	<div class="root-category category-view item-43">
+		<div class="heading">
+			<h1><?php echo $this->__('Womens Diamond Jewelry'); ?></h1>
+			<div>
+				<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+			    <div class="category-description std">
+			        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,450) ?>
+			    </div>
+			    <?php endif; ?>
+			   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View All Womens Diamond Jewelry'); ?></a></p>
+			    <div class="category-static-related">
+					<p><?php echo $this->__('Related Categories:'); ?></p>
+					<ul>
+						<li><a href="/mens-diamond-jewelry"><?php echo $this->__('Mens Diamond Jewelry'); ?></a></li>
+						<li><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('Celebrity Diamond Jewelry'); ?></a></li>
+						<li><a href="/pre-set-diamond-engagement-rings-1"><?php echo $this->__('Bridal Jewelry'); ?></a></li>
+						<li><a href="/custom-jewelry"><?php echo $this->__('Custom Diamond Jewelry'); ?></a></li>
+						<li><a href="/watches"><?php echo $this->__('Watches'); ?></a></li>
+						<li><a href="/blog"><?php echo $this->__('Blog'); ?></a></li>
+					</ul>
+				</div>
+		    </div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-rings-1"><span><?php echo $this->__('Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/gemstone-jewelry"><span><?php echo $this->__('Gemstone Jewelry'); ?></span></a></div>
+			<div class="box item-3"><a href="/womens-diamond-pendants-1"><span><?php echo $this->__('Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-diamond-bracelets-1"><span><?php echo $this->__('Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/womens-diamond-necklaces"><span><?php echo $this->__('Necklaces'); ?></span></a></div>
+			<div class="box item-6"><a href="/diamond-pearl-jewelry"><span><?php echo $this->__('Pearl Jewelry'); ?></span></a></div>
+			<div class="box item-7"><a href="/high-end-designer-jewelry"><span><?php echo $this->__('High End Jewelry'); ?></span></a></div>
+			<div class="box item-8"><a href="/womens-gold-jewelry"><span><?php echo $this->__('Solid Gold Jewelry'); ?></span></a></div>
+		</div>
+	</div>
+<?php /*   Bridal Jewelry Collection   */ ?>
+<?php elseif($_category->getId()==54):?>
+	<div class="root-category category-view item-54">
+		<div class="heading">
+			<div>
+				<h1><?php echo $this->__('Bridal Jewelry'); ?></h1>
+				<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+			    <div class="category-description std">
+			        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,450) ?>
+			    </div>
+			    <?php endif; ?>
+			   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View All Bridal Jewelry'); ?></a></p>
+			    <div class="category-static-related">
+					<p><?php echo $this->__('Related Categories:'); ?></p>
+					<ul>
+						<li><a href="/mens-diamond-jewelry"><?php echo $this->__('Mens Diamond Jewelry'); ?></a></li>
+						<li><a href="/womens-diamond-jewelry"><?php echo $this->__('Womens Diamond Jewelry'); ?></a></li>
+						<li><a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('Celebrity Diamond Jewelry'); ?></a></li>
+						<li><a href="/custom-jewelry"><?php echo $this->__('Custom Diamond Jewelry'); ?></a></li>
+						<li><a href="/watches"><?php echo $this->__('Watches'); ?></a></li>
+						<li><a href="/blog"><?php echo $this->__('Blog'); ?></a></li>
+					</ul>
+				</div>
+		    </div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/pre-set-diamond-engagement-rings"><span><?php echo $this->__('Engagement Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/mens-diamond-wedding-bands"><span><?php echo $this->__('Mens Wedding Bands'); ?></span></a></div>
+			<div class="box item-3"><a href="/womens-diamond-wedding-bands"><span><?php echo $this->__('Womens Wedding Bands'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-bridal-ring-sets"><span><?php echo $this->__('Bridal Ring Sets'); ?></span></a></div>
+			<div class="box item-5"><a href="/eternity-bands"><span><?php echo $this->__('Eternity Bands'); ?></span></a></div>
+			<div class="box item-6"><a href="/solitaire-diamond-engagement-rings"><span><?php echo $this->__('Solitaire Engagement Rings'); ?></span></a></div>
+			<div class="box item-7"><a href="/diamond-anniversary-rings"><span><?php echo $this->__('Anniversary Rings'); ?></span></a></div>
+			<div class="box item-8"><a href="/gold-wedding-bands"><span><?php echo $this->__('Solid Gold Bands'); ?></span></a></div>
+		</div>
+	</div>
+		
+<?php /*   Watches   */ ?>
+<?php elseif($_category->getId()==77):?>
+	<div class="sub-category category-view item-77">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Diamond & Luxury Watches'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Diamond & Luxury Watches'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-watches"><span><?php echo $this->__('Mens Diamond Watches'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-diamond-watches"><span><?php echo $this->__('Womens Diamond Watches'); ?></span></a></div>
+			<div class="box item-3"><a href="/mens-luxury-wrist-watches"><span><?php echo $this->__('Mens Luxury Watches'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-luxury-watches"><span><?php echo $this->__('Womens Luxury Watches'); ?></span></a></div>
+			<div class="box item-5"><a href="/watch-accessories"><span><?php echo $this->__('Watch Accessories'); ?></span></a></div>
+		</div>
+	</div>
+	
+	
+<?php /*   Mens Diamond Rings   */ ?>
+<?php elseif($_category->getId()==233):?>
+	<div class="sub-category category-view item-233">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Diamond Rings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Diamond Rings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-rings-1?view-all=1"><span><?php echo $this->__('Diamond Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/mens-diamond-pinky-rings"><span><?php echo $this->__('Diamond Pinky Rings'); ?></span></a></div>
+			<div class="box item-3"><a href="/multi-colored-diamond-rings"><span><?php echo $this->__('Colored Diamond Rings'); ?></span></a></div>
+			<div class="box item-4"><a href="/mens-black-diamond-rings"><span><?php echo $this->__('Black Diamond Rings'); ?></span></a></div>
+			<div class="box item-5"><a href="/diamond-hip-hop-rings"><span><?php echo $this->__('Hip Hop Rings'); ?></span></a></div>
+			<div class="box item-6"><a href="/mens-diamond-wedding-bands"><span><?php echo $this->__('Wedding Bands'); ?></span></a></div>
+			<div class="box item-7"><a href="/gold-wedding-bands"><span><?php echo $this->__('Solid Gold Bands'); ?></span></a></div>
+		</div>
+	</div>
+	
+<?php /*   Womens Solid Gold Jewelry   */ ?>
+<?php elseif($_category->getId()==124):?>
+	<div class="sub-category category-view item-124">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Solid Gold Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Solid Gold Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/gold-wedding-bands"><span><?php echo $this->__('Solid Gold Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-gold-pendants"><span><?php echo $this->__('Solid Gold Pendants'); ?></span></a></div>
+			<div class="box item-3"><a href="/womens-gold-bracelets"><span><?php echo $this->__('Solid Gold Bracelets'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-rubber-and-gold-bracelets"><span><?php echo $this->__('Rubber & Gold Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/womens-gold-chains-necklaces"><span><?php echo $this->__('Solid Gold Necklaces'); ?></span></a></div>
+		</div>
+	</div>
+	
+<?php /*   Womens Silver Jewelry   */ ?>
+<?php elseif($_category->getId()==418):?>
+	<div class="sub-category category-view item-418">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Silver Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Silver Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-silver-rings"><span><?php echo $this->__('Silver Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-silver-earrings"><span><?php echo $this->__('Silver Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/womens-silver-pendants"><span><?php echo $this->__('Silver Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-silver-pendants"><span><?php echo $this->__('Silver Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/jewelry-sets"><span><?php echo $this->__('Silver Jewelry Set'); ?></span></a></div>
+		</div>
+	</div>
+		
+<?php /*   Mens Diamond Earrings   */ ?>
+<?php elseif($_category->getId()==261):?>
+	<div class="sub-category category-view item-261">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Diamond Earrings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Diamond Earrings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-earrings-1?view-all=1"><span><?php echo $this->__('Diamond Earrings'); ?></span></a></div>
+			<div class="box item-2"><a href="/mens-diamond-stud-earrings"><span><?php echo $this->__('Diamond Stud Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/mens-solitaire-diamond-earrings"><span><?php echo $this->__('Solitaire Diamond Earrings'); ?></span></a></div>
+			<div class="box item-4"><a href="/mens-black-diamond-earrings"><span><?php echo $this->__('Black Diamond Earrings'); ?></span></a></div>
+			<div class="box item-5"><a href="/diamond-hip-hop-earrings"><span><?php echo $this->__('Hip Hop Earrings'); ?></span></a></div>
+			<div class="box item-6"><a href="/mens-multi-color-diamond-earrings"><span><?php echo $this->__('Colored Diamond Earrings'); ?></span></a></div>
+			<div class="box item-7"><a href="/mens-diamond-earrings-1?view-all=1&price=0-500"><span><?php echo $this->__('Diamond Earrings Under $500'); ?></span></a></div>
+			<div class="box item-8 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+		
+<?php /*   Mens Diamond Bracelets   */ ?>
+<?php elseif($_category->getId()==258):?>
+	<div class="sub-category category-view item-258">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Diamond Bracelets'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Diamond Bracelets'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-bracelets-1?view-all=1"><span><?php echo $this->__('Diamond Bracelets'); ?></span></a></div>
+			<div class="box item-2"><a href="/diamond-hip-hop-bracelets"><span><?php echo $this->__('Hip Hop Bracelets'); ?></span></a></div>
+			<div class="box item-3"><a href="/gold-diamond-bangle-bracelets"><span><?php echo $this->__('Diamond Bangles'); ?></span></a></div>
+			<div class="box item-4"><a href="/mens-colored-diamond-bracelets"><span><?php echo $this->__('Colored Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/mens-black-diamond-bracelets"><span><?php echo $this->__('Black Diamond Bracelets'); ?></span></a></div>
+			<div class="box item-6"><a href="/onyx-ball-bead-bracelet"><span><?php echo $this->__('Ball Bead Bracelets'); ?></span></a></div>
+			<div class="box item-7"><a href="/mens-diamond-bracelets-1?view-all=1&price=0-500"><span><?php echo $this->__('Mens Diamond Bracelets Under $500'); ?></span></a></div>
+			<div class="box item-8 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+			
+<?php /*   Mens Diamond Pendants   */ ?>
+<?php elseif($_category->getId()==254):?>
+	<div class="sub-category category-view item-254">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Diamond Pendants'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Diamond Pendants'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-pendants-1?view-all=1"><span><?php echo $this->__('Diamond Pendants'); ?></span></a></div>
+			<div class="box item-2"><a href="/diamond-hip-hop-pendants"><span><?php echo $this->__('Hip Hop Diamond Pendants'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-dog-tag-pendants"><span><?php echo $this->__('Dog Tag Diamond Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-lock-and-key-pendants"><span><?php echo $this->__('Diamond Key Pendants'); ?></span></a></div>
+			<div class="box item-5"><a href="/diamond-skull-pendants"><span><?php echo $this->__('Skull Diamond Pendants'); ?></span></a></div>
+			<div class="box item-6"><a href="/diamond-initial-pendants"><span><?php echo $this->__('Initial Diamond Pendants'); ?></span></a></div>
+			<div class="box item-7"><a href="/mens-black-diamond-pendants"><span><?php echo $this->__('Black Diamond Pendants'); ?></span></a></div>
+			<div class="box item-8"><a href="/diamond-jesus-pendants"><span><?php echo $this->__('Diamond Jesus Pendants'); ?></span></a></div>
+			<div class="box item-9"><a href="/mens-diamond-crosses"><span><?php echo $this->__('Cross Diamond Pendants'); ?></span></a></div>
+			<div class="box item-10"><a href="/mens-diamond-pendants-1?view-all=1&price=0-500"><span><?php echo $this->__('Mens Diamond Pendants Under $500'); ?></span></a></div>
+			<div class="box item-11 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+			
+<?php /*   Mens Diamond Chains   */ ?>
+<?php elseif($_category->getId()==257):?>
+	<div class="sub-category category-view item-257">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Diamond Chains'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Diamond Chains'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-chains-1?view-all=1"><span><?php echo $this->__('Diamond Chains'); ?></span></a></div>
+			<div class="box item-2"><a href="/diamond-tennis-chains"><span><?php echo $this->__('Diamond Tennis Chains'); ?></span></a></div>
+			<div class="box item-3"><a href="/mens-diamond-onyx-chains"><span><?php echo $this->__('Ball Bead Chains'); ?></span></a></div>
+			<div class="box item-4"><a href="/colored-diamond-chains"><span><?php echo $this->__('Colored Diamond Chains'); ?></span></a></div>
+			<div class="box item-5"><a href="/black-diamond-chains"><span><?php echo $this->__('Black Diamond Chains'); ?></span></a></div>
+			<div class="box item-6"><a href="/mens-gold-chains"><span><?php echo $this->__('Solid Gold Chains'); ?></span></a></div>
+			<div class="box item-7"><a href="/cuban-chains"><span><?php echo $this->__('Solid Gold Cuban Chains'); ?></span></a></div>
+			<div class="box item-8"><a href="/franco-chains"><span><?php echo $this->__('Solid Gold Franco Chains'); ?></span></a></div>
+		</div>
+	</div>
+					
+<?php /*   Hip Hop Diamond Jewelry   */ ?>
+<?php elseif($_category->getId()==134):?>
+	<div class="sub-category category-view item-134">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Hip Hop Diamond Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Hip Hop Diamond Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/diamond-hip-hop-rings"><span><?php echo $this->__('Hip Hop Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/diamond-hip-hop-earrings"><span><?php echo $this->__('Hip Hop Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-hip-hop-bracelets"><span><?php echo $this->__('Hip Hop Bracelets'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-hip-hop-pendants"><span><?php echo $this->__('Hip Hop Chains'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+						
+<?php /*   Solid Gold Jewelry   */ ?>
+<?php elseif($_category->getId()==123):?>
+	<div class="sub-category category-view item-123">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Solid Gold Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Solid Gold Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-gold-chains"><span><?php echo $this->__('Solid Gold Chains'); ?></span></a></div>
+			<div class="box item-2"><a href="/gold-bracelets"><span><?php echo $this->__('Solid Gold Bracelets'); ?></span></a></div>
+			<div class="box item-3"><a href="/mens-gold-pendants"><span><?php echo $this->__('Solid Gold Mens Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/cuban-bracelets"><span><?php echo $this->__('Solid Gold Cuban Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/cuban-chains"><span><?php echo $this->__('Solid Gold Cuban Chains'); ?></span></a></div>
+			<div class="box item-6"><a href="/franco-chains"><span><?php echo $this->__('Solid Gold Franco Chains'); ?></span></a></div>
+			<div class="box item-7"><a href="/rubber-and-gold-bracelet"><span><?php echo $this->__('Rubber & Gold Bracelets'); ?></span></a></div>
+			<div class="box item-8"><a href="/catalogsearch/result/?q=franco+bracelet&x=-1391&y=-100&order=relevance&dir=desc"><span><?php echo $this->__('Solid Gold Franco Bracelets'); ?></span></a></div>
+		</div>
+	</div>
+							
+<?php /*   Womens Diamond Rings   */ ?>
+<?php elseif($_category->getId()==283):?>
+	<div class="sub-category category-view item-283">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Diamond Rings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Diamond Rings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-rings-1?view-all=1"><span><?php echo $this->__('Diamond Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-colored-diamond-rings"><span><?php echo $this->__('Colored Diamond Rings'); ?></span></a></div>
+			<div class="box item-3"><a href="/womens-diamond-heart-rings"><span><?php echo $this->__('Heart Rings'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-eternity-bands"><span><?php echo $this->__('Eternity Rings'); ?></span></a></div>
+			<div class="box item-5"><a href="/pre-set-diamond-engagement-rings"><span><?php echo $this->__('Engagement Rings'); ?></span></a></div>
+			<div class="box item-6"><a href="/five-stone-diamond-rings"><span><?php echo $this->__('Five-Stone Rings'); ?></span></a></div>
+			<div class="box item-7"><a href="/gold-wedding-bands"><span><?php echo $this->__('Solid Gold Rings'); ?></span></a></div>
+			<div class="box item-8"><a href="/womens-diamond-wedding-bands"><span><?php echo $this->__('Wedding Rings'); ?></span></a></div>
+			<div class="box item-9"><a href="/three-stone-diamond-rings"><span><?php echo $this->__('Three-Stone Rings'); ?></span></a></div>
+			<div class="box item-10"><a href="/womens-diamond-rings-1?view-all=1&price=0-500"><span><?php echo $this->__('Womens Diamond Rings Under $500'); ?></span></a></div>
+			<div class="box item-11 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+			
+							
+<?php /*   Mens Stainless Steel Jewelry   */ ?>
+<?php elseif($_category->getId()==263):?>
+	<div class="sub-category category-view item-263">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Mens Stainless Steel Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Mens Stainless Steel Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/stainless-steel-chain"><span><?php echo $this->__('Stainless Steel Chains'); ?></span></a></div>
+			<div class="box item-2"><a href="/stainless-steel-cufflinks"><span><?php echo $this->__('Stainless Steel Cufflinks'); ?></span></a></div>
+			<div class="box item-3"><a href="/stainless-steel-pendants"><span><?php echo $this->__('Stainless Steel Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/stainless-steel-bracelet"><span><?php echo $this->__('Stainless Steel Bracelets'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+						
+<?php /*   Womens Necklaces   */ ?>
+<?php elseif($_category->getId()==51):?>
+	<div class="sub-category category-view item-51">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Necklaces'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Necklaces'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-necklaces?view-all=1"><span><?php echo $this->__('Diamond Necklaces'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-gold-chains-necklaces"><span><?php echo $this->__('Solid Gold Necklaces'); ?></span></a></div>
+			<div class="box item-3"><a href="/ball-bead-necklaces"><span><?php echo $this->__('Ball Bead Necklaces'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-diamond-necklaces?view-all=1&price=0-500"><span><?php echo $this->__('Womens Necklaces Under $500'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+							
+<?php /*   Womens High End   */ ?>
+<?php elseif($_category->getId()==117):?>
+	<div class="sub-category category-view item-117">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens High End Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens High End Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/designer-rings"><span><?php echo $this->__('High-End Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/designer-earrings"><span><?php echo $this->__('High-End Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/designer-pendants"><span><?php echo $this->__('High-End Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/engagement-ring-settings"><span><?php echo $this->__('High-End Settings'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+													
+<?php /*   Womens Diamond Earrings   */ ?>
+<?php elseif($_category->getId()==291):?>
+	<div class="sub-category category-view item-291">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Diamond Earrings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Diamond Earrings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-earrings-1?view-all=1"><span><?php echo $this->__('Diamond Earrings'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-fashion-diamond-earrings"><span><?php echo $this->__('Unique Diamond Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/semi-mount-earrings"><span><?php echo $this->__('Semi Mount Earrings'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-diamond-stud-earrings"><span><?php echo $this->__('Stud Earrings'); ?></span></a></div>
+			<div class="box item-5"><a href="/womens-diamond-solitaire-earrings"><span><?php echo $this->__('Solitaire Diamond Earrings'); ?></span></a></div>
+			<div class="box item-6"><a href="/womens-diamond-hoop-earrings"><span><?php echo $this->__('Diamond Hoop Earrings'); ?></span></a></div>
+			<div class="box item-7"><a href="/womens-colored-diamond-earrings"><span><?php echo $this->__('Colored Diamond Earrings'); ?></span></a></div>
+			<div class="box item-8 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+								
+<?php /*   Womens Diamond Bracelets   */ ?>
+<?php elseif($_category->getId()==309):?>
+	<div class="sub-category category-view item-309">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Diamond Bracelets'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Diamond Bracelets'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-bracelets-1?view-all=1"><span><?php echo $this->__('Diamond Bracelets'); ?></span></a></div>
+			<div class="box item-2"><a href="/gold-diamond-bangle-bracelets"><span><?php echo $this->__('Diamond Bangle Bracelets'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-tennis-bracelets"><span><?php echo $this->__('Tennis Bracelets'); ?></span></a></div>
+			<div class="box item-4"><a href="/colored-diamond-bracelets-1"><span><?php echo $this->__('Colored Diamond Bracelets'); ?></span></a></div>
+			<div class="box item-5"><a href="/womens-onyx-ball-bead-bracelets"><span><?php echo $this->__('Ball Bead Bracelets'); ?></span></a></div>
+		</div>
+	</div>
+								
+<?php /*   Womens Diamond Pendants   */ ?>
+<?php elseif($_category->getId()==287):?>
+	<div class="sub-category category-view item-287">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Womens Diamond Pendants'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Womens Diamond Pendants'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/womens-diamond-pendants-1"><span><?php echo $this->__('Diamond Pendants'); ?></span></a></div>
+			<div class="box item-2"><a href="/gold-diamond-circle-pendants"><span><?php echo $this->__('Circle Pendants'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-heart-pendants-necklaces"><span><?php echo $this->__('Heart Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/womens-diamond-solitaire-pendants"><span><?php echo $this->__('Solitaire Pendants'); ?></span></a></div>
+			<div class="box item-5"><a href="/womens-diamond-crosses"><span><?php echo $this->__('Cross Pendants'); ?></span></a></div>
+			<div class="box item-6"><a href="/womens-journey-pendants"><span><?php echo $this->__('Journey Pendants'); ?></span></a></div>
+			<div class="box item-7"><a href="/diamond-initial-pendants"><span><?php echo $this->__('Initial Pendants'); ?></span></a></div>
+			<div class="box item-8"><a href="/diamond-lock-and-key-pendants"><span><?php echo $this->__('Key Pendants'); ?></span></a></div>
+		</div>
+	</div>
+								
+<?php /*   Womens Pearl Jewelry   */ ?>
+<?php elseif($_category->getId()==317):?>
+	<div class="sub-category category-view item-317">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Pearl Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Pearl Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/diamond-pearl-rings"><span><?php echo $this->__('Pearl Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/diamond-pearl-earrings"><span><?php echo $this->__('Pearl Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-pearl-pendants"><span><?php echo $this->__('Pearl Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-pearl-necklaces"><span><?php echo $this->__('Pearl Necklaces'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+											
+<?php /*   Gemstone Diamond Jewelry   */ ?>
+<?php elseif($_category->getId()==271):?>
+	<div class="sub-category category-view item-271">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Gemstone Diamond Jewelry'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Gemstone Diamond Jewelry'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/women-s-gemstone-jewelry"><span><?php echo $this->__('Gemstone Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/gemstone-earrings"><span><?php echo $this->__('Gemstone Earrings'); ?></span></a></div>
+			<div class="box item-3"><a href="/gemstone-pendants"><span><?php echo $this->__('Gemstone Pendants'); ?></span></a></div>
+			<div class="box item-4"><a href="/gemstone-bracelets"><span><?php echo $this->__('Gemstone Bracelets'); ?></span></a></div>
+			<div class="box item-5 related-cats">
+				<?php echo $related_cats; ?>
+			</div>
+		</div>
+	</div>
+										
+<?php /*   Diamond Wedding Rings   */ ?>
+<?php elseif($_category->getId()==328):?>
+	<div class="sub-category category-view item-328">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Diamond Wedding Rings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Diamond Wedding Rings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/mens-diamond-wedding-bands"><span><?php echo $this->__('Mens Wedding Bands'); ?></span></a></div>
+			<div class="box item-2"><a href="/womens-diamond-wedding-bands"><span><?php echo $this->__('Womens Wedding Bands'); ?></span></a></div>
+			<div class="box item-3"><a href="/eternity-bands"><span><?php echo $this->__('Eternity Bands'); ?></span></a></div>
+			<div class="box item-4"><a href="/diamond-bridal-ring-sets"><span><?php echo $this->__('Engagement Ring Sets'); ?></span></a></div>
+			<div class="box item-5"><a href="/gold-wedding-bands"><span><?php echo $this->__('Solid Gold Rings'); ?></span></a></div>
+		</div>
+	</div>
+											
+<?php /*   Diamond Anniversary Rings   */ ?>
+<?php elseif($_category->getId()==333):?>
+	<div class="sub-category category-view item-333">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Diamond Anniversary Rings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Diamond Anniversary Rings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/three-stone-diamond-rings"><span><?php echo $this->__('Three-Stone Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/five-stone-diamond-rings"><span><?php echo $this->__('Five-Stone Rings'); ?></span></a></div>
+		</div>
+	</div>
+												
+<?php /*   Diamond Engagement Rings   */ ?>
+<?php elseif($_category->getId()==64):?>
+	<div class="sub-category category-view item-64">
+		<div class="heading-wrapper">
+			<div class="heading">
+				<h1><?php echo $this->__('Diamond Engagement Rings'); ?></h1>
+				<div>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+				    <div class="category-description std">
+				        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+				    </div>
+				    <?php endif; ?>
+				   	<p class="view-all"><a href="<?php echo $_category->getUrl(); ?>?view-all=1"><?php echo $this->__('View all Diamond Engagement Rings'); ?></a></p>
+			    </div>
+			</div>
+		</div>
+		<?php //echo $likebox; ?>
+		<div class="sub-categories">
+			<div class="box item-1"><a href="/diamond-engagement-rings?view-all=1"><span><?php echo $this->__('Engagement Rings'); ?></span></a></div>
+			<div class="box item-2"><a href="/solitaire-diamond-engagement-rings"><span><?php echo $this->__('Solitaire Engagement Rings'); ?></span></a></div>
+			<div class="box item-3"><a href="/diamond-semi-mount-rings"><span><?php echo $this->__('Engagement Ring Settings'); ?></span></a></div>
+			<div class="box item-4"><a href="/princess-cut-diamond-engagement-rings"><span><?php echo $this->__('Princess Cut Engagement Rings'); ?></span></a></div>
+			<div class="box item-5"><a href="/diamond-bridal-ring-sets"><span><?php echo $this->__('Engagement Ring Sets'); ?></span></a></div>
+		</div>
+	</div>
+																	
+<?php else: ?>
+	<?php if($_category->getId()==211):?>
+		<?php $cms_block = $this->getCmsBlockHtml(); ?>
+		<div class="list-sub-category category-view item-<?php echo $_category->getId(); ?>">
+			<div class="heading" <?php if($_category->getImageUrl()): ?>style="position: relative; background-position: 98% 0; background-image:url(<?php echo $_category->getImageUrl(); ?>);"<?php endif; ?>>
+				<div style="padding-bottom: 60px;">
+					<h1 style="text-align: left;"><?php echo $_category->getName(); ?></h1>
+					<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+					<div class="category-description std" style="text-align: left;">
+					    <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+					</div>
+					<?php endif; ?>
+				</div>
+				<a class="massive-btn" href="/custom-diamond-jewelry-gallery"><?php echo $this->__('View Custom Jewelry Gallery'); ?></a>
+			</div>
+			<div class="likebox">
+				<?php //echo $likebox; ?>
+			</div>
+		</div>
+		<div class="custom-form">	
+			<?php echo $cms_block; ?>
+		</div>
+		<div class="slider-block">
+			<h3><?php echo $this->__('Take a look at recent custom orders'); ?></h3>
+			<div class="slider-block-inner">
+				<?php $collection = $_category->getProductCollection()->addAttributeToSort('position'); ?>
+				<?php $collection->getSelect()->limit( 10 ); ?>
+				<?php Mage::getModel('catalog/layer')->prepareProductCollection($collection); ?>
+				<ul class="bxslider">
+				<?php foreach($collection as $_item): ?>
+					<li><img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->setQuality(75)->resize(500, 540); ?>"  width="500" height="540" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" /></li>
+				<?php endforeach; ?>
+				</ul>
+				<a href="/custom-diamond-jewelry-gallery" class="inner-link"><?php echo $this->__('View Our Custom Jewelry Gallery'); ?></a>
+			</div>
+			<h3><?php echo $this->__('Need inspiration? Check out some of our famous projects...'); ?></h3>
+			<div class="slider-block-inner">
+				<div class="slider-block-bottom">
+					<p class="cj-1"><?php echo $this->__('Avianne & Co.'); ?></p>
+					<p class="cj-2"><?php echo $this->__('Celebrity'); ?></p>
+					<p class="cj-2"><?php echo $this->__('Jewelry'); ?></p>
+					<p class="cj-3"><?php echo $this->__('View our excluseive collection of fine jewelry produced'); ?><br /><?php echo $this->__('for names such as Nicki Minaj, Cam\'Ron, and many more'); ?></p>
+					<p class="cj-4"><?php echo $this->__('View our'); ?> <a href="/blog/celebrity-diamond-jewelry/"><?php echo $this->__('celebrity jewelry'); ?></a> <?php echo $this->__('or our'); ?> <a href="/custom-diamond-jewelry-gallery"><?php echo $this->__('custom jewelry'); ?></a> <?php echo $this->__('gallery'); ?></p>
+				</div>
+			</div>
+		</div>
+		<div class="production">
+			<h3><?php echo $this->__('Step 3: Begin Production'); ?></h3>
+			<ul class="production-inner">
+				<li class="item-1">
+					<p><?php echo $this->__('We send you a detailed 3D Design.'); ?><br /><?php echo $this->__('You approved the order, we go to work!'); ?></p>
+				</li>
+				<li class="item-2">
+					<p><?php echo $this->__('We send you image and video of'); ?><br /><?php echo $this->__('the max mold, with a detailed breakdown.'); ?></p>
+				</li>
+				<li class="item-3">
+					<p><?php echo $this->__('We send you an image and video of the'); ?><br /><?php echo $this->__('metal casting, and initiate stone settings.'); ?></p>
+				</li>
+				<li class="item-4">
+					<p><?php echo $this->__('The item is completed and shipped to'); ?><br /><?php echo $this->__('you overnight, via FedEx.'); ?></p>
+				</li>
+			</ul>
+		</div>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.bxslider').bxSlider({
+			  pager: false,
+			  controls: false,
+			  auto: true,
+			  speed: 3000
+			});
+	});
+</script>
+	<?php else: ?>
+		<?php $cms_block = $this->getCmsBlockHtml(); ?>
+		<?php echo $cms_block; ?>
+	<?php endif;?>
+<?php endif; ?>
+
+<?php         /* Mixed mode */                 ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+    
+<?php         /* Products mode */                 ?>
+    
+<?php else: ?>
+	<?php if($_category->getId()==211): ?>
+		<?php $block = $this->getLayout()->createBlock('cms/block')->setBlockId('custom-diamond-jewelry-desc')->toHtml(); ?>
+		<?php 
+		if($_description=$_category->getDescription()) {
+			$cat_description = nl2br($_helper->categoryAttribute($_category, $_description, 'description'));
+		} else {
+			$cat_description = '';
+		}
+		echo str_replace('[CAT-DESCRIPTION]', $cat_description, $block)
+		?>
+	<?php else: ?>
+		<?php 
+// 		$related_cats = '<div class="category-static-related">';
+		$parentCategory = $_category->getParentCategory();
+// 		if($parentCategory->hasChildren()) {
+// 			$cchild_amount = count(explode(",",$parentCategory->getChildren()))-1; $i = 0;
+// 			$related_cats.= '<p>Related Categories:</p><ul>';
+// 			foreach ($parentCategory->getChildrenCategories() as $cat) {
+// 				if($cat->getID()!=$_category->getID()&&$cat->getId()!=55) {
+// 					$related_cats.= '<li><a href="'.$cat->getUrl().'">'.$cat->getName().'</a></li>';
+// 					$i++;
+// 					if($i==2) break;
+// 				}
+// 			}
+// 		}
+// 		$related_cats.= '</ul>';
+// 		$related_cats.= '</div>';
+		
+		$likes = '<div class="category-static-related">';
+		if($_category->getLevel()==2) {
+			$topParentCategory = $parentCategory;
+		} else {
+			$topParentCategory = $parentCategory->getParentCategory();
+		}
+		if($topParentCategory->hasChildren()) {
+			$child_amount = count(explode(",",$topParentCategory->getChildren()))-1; $i = 0;
+			$likes .= '<p>You May Also Like...</p><ul>';
+			foreach ($topParentCategory->getChildrenCategories() as $cat) {
+				$likes.= '<li><a href="'.$cat->getUrl().'">'.$cat->getName().'</a></li>';
+				$i++;
+				if($i==8) break;
+			}
+		}
+		$likes .= '</ul></div>';
+		?>
+		<div class="sub-category category-view item-<?php echo $_category->getId(); ?>">
+			<div class="heading-wrapper">
+				<div class="heading" <?php if($parentCategory->getImageUrl()): ?>style="background-image:url(<?php if($_category->getId()!=53) { echo $topParentCategory->getImageUrl(); } else { echo $_category->getImageUrl(); } ?>);"<?php endif; ?>>
+					<h1><?php echo $_category->getName(); ?></h1>
+					<div>
+						<?php if( $_description = $this->getCurrentCategory()->getDescription() ): ?>
+					    <div class="category-description std">
+					        <?php echo substr(strip_tags($_helper->categoryAttribute($_category, $_description, 'description')),0,350) ?>
+					    </div>
+					    <?php endif; ?>
+					    <?php if(isset($cchild_amount) && $cchild_amount!=0):?>
+					   		<?php echo $related_cats; ?>
+					   	<?php endif; ?>
+				    </div>
+				</div>
+			</div>
+			<div class="likebox">
+				<?php //echo $likebox; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+    <?php echo $this->getProductListHtml() ?> 
+<?php endif; ?>
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery('.sub-category .heading').click(function(e) {
+			if(jQuery(e.target).hasClass('heading')) { 
+				location.href='<?php echo $_category->getUrl(); ?>?view-all=1';
+			}
+		});
+		jQuery('#extship').hover(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+		jQuery('#extship').toggle(function(e){
+			jQuery(this).find('span').show();
+		}, function(e){
+			jQuery(this).find('span').hide();
+		});
+	});
+</script>

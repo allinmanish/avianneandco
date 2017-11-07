@@ -1,0 +1,47 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="page-head"><h1><?php echo $this->getChildHtml('hello') ?></h1></div>
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social_line')->toHtml(); ?>
+<div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <ul class="my-account mobile-drop-down">
+    	<li class="parent-item parent-item-1 inactive">
+			<a class="item-1" href="#"><span>My account</span></a>
+		</li>
+		<li class="child-item child-item-1">
+			<div class="account-box ad-account-info">
+				<?php echo $this->getChildHtml('info') ?>
+		        <?php echo $this->getChildHtml('address') ?>
+	        </div>
+		</li>
+		<li class="parent-item parent-item-2 inactive">
+			<a class="item-2" href="#"><span>Wishlist</span></a>
+		</li>
+		<li class="child-item child-item-2">
+			<?php echo $this->getChildHtml('wishlist') ?>
+		</li>
+		<li class="parent-item parent-item-3 inactive">
+			<a class="item-3" href="#"><span>Order history</span></a>
+		</li>
+		<li class="child-item child-item-3">
+			<?php echo $this->getChildHtml('top') ?>
+		</li>
+    </ul>
+    
+
+</div>

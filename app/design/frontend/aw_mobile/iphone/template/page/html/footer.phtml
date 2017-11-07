@@ -1,0 +1,51 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<div class="bordered-footer">
+	<ul class="footer-inline-navigation">
+		<li class="footer-inline-link-0"><a href="/customer/account/login"><?php echo $this->__("Sign In"); ?></a></li>
+		<li class="footer-inline-link-1"><a href="/connect-with-avianneandco"><?php echo $this->__("Connect With Us"); ?></a></li>
+		<li class="footer-inline-link-2"><a href="/blog/"><?php echo $this->__("Avianne &amp; Co. News"); ?></a></li>
+		<li class="footer-inline-link-3"><a href="/about"><?php echo $this->__("Learn About Avianne &amp; Co"); ?></a></li>
+		<li class="footer-inline-link-4"><a href="/customer-service"><?php echo $this->__("Customer Service &amp; Policies"); ?></a></li>
+	</ul>
+	<div class="informational">
+		<div class="foooter_menu">
+			<span class="item first"><a title="<?php echo $this->__("Help"); ?>" href="mailto:service@avianneandco.com"><?php echo $this->__("Help"); ?></a></span>
+			<span class="sep">|</span>
+			<span class="item"><a title="<?php echo $this->__("About"); ?>" href="/about"><?php echo $this->__("About"); ?></a></span>
+			<span class="sep">|</span>
+			<span class="item last"><a title="<?php echo $this->__("Full Site"); ?>" href="/awmobile/switch/toDesktop/"><?php echo $this->__("Full Site"); ?></a></span>
+			<span class="sep">|</span>
+			<span class="item last"><a title="888-243-4344" href="tel:888-243-4344">888-243-4344</a></span>
+		</div>
+	    <?php //echo $this->getChildHtml() ?>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="foooter_bottom_menu">
+	<span class="item first"><a title="<?php echo $this->__("Customer Services"); ?>" href="/customer-service"><?php echo $this->__("Customer Services"); ?></a></span>
+	<span class="sep">|</span>
+	<span class="item"><a title="<?php echo $this->__("Privacy Policy"); ?>" href="/customer-service/#answer13"><?php echo $this->__("Privacy Policy"); ?></a></span>
+	<span class="sep">|</span>
+	<span class="item last"><a title="<?php echo $this->__("Avianne &amp; Co. Blog"); ?>" href="/blog/"><?php echo $this->__("Avianne &amp; Co. Blog"); ?></a></span>
+	<p><?php echo $this->__("&copy; 2013 Avianne &amp; Co. All Rights reserved."); ?></p>
+</div>
+<?php /*?>
+<p class="legality">
+    <?php echo Mage::helper('awmobile')->getCopyright() ? Mage::helper('awmobile')->getCopyright() : $this->__('&copy; %s aheadWorks Co.', date('Y')) ?>
+</p><?php */?>

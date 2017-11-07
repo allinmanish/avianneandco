@@ -1,0 +1,37 @@
+<?php if (Mage::helper('ultcheck')->isUltcheckEnabled()): ?>
+<script type="text/javascript">
+function toggleRegister(checkbox) {
+    if (checkbox.checked) {
+        checkout.method = 'register';
+        new Ajax.Request(
+            checkout.saveMethodUrl,
+            {method: 'post', onFailure: checkout.ajaxFailure.bind(checkout), parameters: {method:'register'}}
+        );
+        Element.show('register-customer-password');
+    } else {
+        checkout.method = 'guest';
+        new Ajax.Request(
+            checkout.saveMethodUrl,
+            {method: 'post', onFailure: checkout.ajaxFailure.bind(checkout), parameters: {method:'guest'}}
+        );
+        Element.hide('register-customer-password');
+    }
+}
+
+function toggleLogin() {
+    $('login-form').toggle();
+    $('co-billing-form').toggle();
+    $('billing-login-link').toggle();
+    $('billing-guest-link').toggle();
+}
+
+<?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+checkout.method = '<?php echo Mage::getStoreConfig('ultcheck/general_settings/default_method') ?>';
+checkout.gotoSection('billing');
+toggleRegister($('login:register'));
+<?php endif ?>
+<?php if ($this->getMessagesBlock()->getMessageCollection()->count()): // Failed login => message => hide address form / show login ?>
+toggleLogin();
+<?php endif ?>
+</script>
+<?php endif ?>

@@ -1,0 +1,56 @@
+<?php $currentAlbum = $this->getCurrentAlbum()?>
+<?php $albums = $this->getChildrenAlbum(0,1)?>
+<div>
+	<form id="frmuploadphoto" method="post" action="<?php echo Mage::getUrl('gallery/upload/save');?>" enctype="multipart/form-data">
+	<div class="entry-edit">
+	    <div class="entry-edit-head">
+		    <h4><?php echo $this->__("Upload Photo")?></h4>
+		</div>
+	    <div id="gallery_form" class="fieldset ">
+		    <div class="hor-scroll">
+		                <table cellspacing="0" class="form-list">
+			            	<tbody>
+				                <tr>
+							        <td class="label"><label for="title">Photo title <span>*</span></label></td>
+							    	<td class="value"><input type="text" class="required" value="" name="title" id="title"></td>
+							    </tr>
+								<tr>
+							        <td class="label"><label for="filename">Photo image <span>*</span></label></td>
+							    	<td class="value"><input type="file" value="" name="filename" id="filename"></td>
+							    </tr>
+								<tr>
+								    <td class="label"><label for="album_id">Album <span>*</span></label></td>
+								    <td class="value">
+								    	<select name="album_id">
+								    		<?php foreach($albums as $album):?>
+								    			<option value="<?php echo $album['value']?>"<?php echo ($this->getCurrentAlbum()->getId() == $album['value'])?" selected=\"selected\"":""; ?>><?php echo $album['label']?></option>
+								    		<?php endforeach;?>
+								    	</select>
+								    </td>
+								</tr>
+								<tr>
+							        <td class="label"><label for="content">Description</label></td>
+							    	<td class="value"><textarea class=" textarea" cols="15" rows="2" style="width: 500px; height: 200px;" title="Description" name="content" id="content"></textarea></td>
+							    </tr>
+							    <tr>
+								    <td colspan="2">
+								    	<button style="height:30px;width:100px" onclick="this.form.submit()" class="scalable add" type="button"><span><?php echo $this->__("Upload")?></span></button>
+								    </td>
+							    </tr>
+				            </tbody>
+			        </table>
+			        
+		    	</div>
+		    </div>
+	</div>
+	</form>
+	<script type="text/javascript">
+	editForm = new Validation('frmuploadphoto'); 
+	</script>
+	<div class="gallery_footer">
+		<div class="back_gallery">
+			<a href="<?php echo $currentAlbum->getUrlRewrite() ?>"><img src="<?php echo $this->getSkinUrl('gallery/images/back_gallery.gif') ?>" alt="<?php echo $this->__('Back to')." ".$currentAlbum->getTitle() ?>" /></a>
+			<a href="<?php echo $currentAlbum->getUrlRewrite() ?>" class="link_backgallery"><?php echo $this->__('Back to')." ".$currentAlbum->getTitle() ?></a>
+		</div>
+	</div>
+</div>

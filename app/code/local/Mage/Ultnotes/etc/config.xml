@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Mage_Ultnotes>
+			<version>1.5.2</version>
+		</Mage_Ultnotes>
+	</modules>
+	<global>	
+		<models>
+			<ultnotes>
+				<class>Mage_Ultnotes_Model</class>				
+			</ultnotes>
+		</models>	
+        <resources>
+            <ultnotes_setup>
+                <setup>
+                    <module>Ultimento_Theme</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ultnotes_setup>		
+            <ultnotes_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </ultnotes_write>
+            <ultnotes_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </ultnotes_read>
+        </resources>
+	</global>	
+	<adminhtml>		
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>			
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<ultnotes>
+											<title>Ultimento - All</title>
+										</ultnotes>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<events>
+            <controller_action_predispatch>
+                <observers>
+                    <ultnotes_feed>
+                        <type>singleton</type>
+                        <class>ultnotes/feed_updates</class>
+                        <method>check</method>
+                    </ultnotes_feed>					
+                </observers>
+            </controller_action_predispatch>
+        </events>		
+	</adminhtml>
+	<!-- default>
+		<ultnotes>
+			<feed>
+				<url>www.noamdesign.com/blog/tag/notices/feed/</url>
+				<use_https>0</use_https>
+				<check_frequency>86400</check_frequency>
+				<enabled>1</enabled>
+				<notify>1</notify>
+			</feed>
+		</ultnotes>
+	</default -->	
+</config>
+
+<!--
+/**
+ * Noam Design Group
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA available 
+ * through the world-wide-web at this URL:
+ * http://ultimento.com/legal/license.txt
+ * 
+ * MAGENTO EDITION USAGE NOTICE
+ * 
+ * This package is designed for Magento COMMUNITY edition. 
+ * =================================================================
+ *
+ * @package    Ultimento
+ * @copyright  Copyright (c) 2006-2011 Noam Design Group. (http://www.noamdesign.com)
+ * @license    http://ultimento.com/legal/license.txt
+ * @terms    http://ultimento.com/legal/terms
+ */
+-->

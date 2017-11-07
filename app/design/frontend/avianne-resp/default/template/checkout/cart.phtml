@@ -1,0 +1,190 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php
+/**
+ * Shopping cart template
+ *
+ * @see Mage_Checkout_Block_Cart
+ */
+?>
+<div class="page-head-alt button-level">
+	<h2><?php echo $this->__('SHOPPING CART') ?></h2>
+</div>
+<!-- <table> -->
+	<!-- <tr> -->
+		<!-- <td style="width: 100%;"> -->
+		<div class="column-left column-cart">
+			<form action="<?php echo $this->getUrl('checkout/cart/updatePost') ?>" method="post" name="shoppingCart" id="cart_form">
+			<?php echo $this->getBlockHtml('formkey'); ?>
+			<table cellspacing="0" border="0" id="shopping-cart-table" class="data-table box-table shopping-cart">
+<?php /*
+			    <col />
+			    <col />
+			    <col />
+			<?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+			    <col width="1" />
+			<?php endif ?>
+			<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			    <col  />
+			<?php endif; ?>
+			<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			    <col  />
+			<?php endif; ?>
+			    <col  />
+			<?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			    <col  />
+			<?php endif; ?>
+			<?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+			    <col  />
+			<?php endif; ?>
+*/ ?>
+			<?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+			    <tbody>
+			    <?php foreach($this->getItems() as $_item): ?>
+			        <?php echo $this->getItemHtml($_item) ?>
+			    <?php endforeach ?>
+			    </tbody>
+			</table>
+			<?php /* <script type="text/javascript">decorateTable('shopping-cart-table')</script> */ ?>
+			</form>
+			
+			<?php /*
+			<div class="cart-appraisal-box">
+				<img border="0" src="<?php echo $this->getSkinUrl(); ?>images/presbox.png" align="left" alt="Present box" title="Present box" />
+				<ul>
+					<li><b>All Items Come With:</b></li>
+					<li>- <a href="/customer-service/#answer2" target="_blank">Free Shipping</a></li>
+					<li>- <a href="/customer-service/#answer4" target="_blank">Free Appraisal Certificate</a></li>
+					<li>- <a href="/customer-service/#answer11" target="_blank">Free Gift Box and Optional Gift Message</a></li>
+				</ul>
+				<img border="0" src="<?php echo $this->getSkinUrl(); ?>images/giftbox_.png" align="left" alt="Gift box" title="Gift box" />
+				<p class="wrapped-gift">
+					<span><b>Need It Wrapped?</b></span><br /><br />
+					<span>Free gift wrapping available<br />with your purchase!</span>
+				</p>
+			</div>
+			*/ ?>
+			
+		</div>
+		<!-- </td> -->
+
+		<!-- <td> -->
+		<div class="column-right column-buttons">
+
+			<div class="btm-cart"><?php echo $this->getChildHtml('coupon') ?></div>
+
+			<div class="divider invisible"></div>
+			<div class="divider invisible"></div>
+
+			<div class="shopping-cart-totals">
+			 	<h3>ORDER INFORMATION</h3>
+			    <?php echo $this->getChildHtml('totals'); ?>
+			    <?php //if(!$this->hasError()): ?>
+			    <br>
+			    <ul class="checkout-types">
+			    	<!--<li style="margin-bottom:0"><a href="http<?=(substr($_SERVER['HTTP_HOST'], 0, 4) == 'dev.'?'':'s')?>://<?=$_SERVER['HTTP_HOST']?>/checkout/">CHECKOUT</a></li>-->
+					<li style="margin-bottom:0"><a href="<?php echo Mage::getBaseUrl();?>checkout/">CHECKOUT</a></li>
+			    </ul>
+			    <?php //endif; ?>
+			</div>
+			<br />
+
+			<div class="alt-pay" style="margin: 5px 0 15px; text-align: center;">
+				<?php echo $this->getChildHtml('methods') ?> 
+			</div>
+
+			<div class="apo-fpo" style="width: 95%;"><?php echo $this->__('APO/FPO orders are shipped via USPS. Please allow 7-10 business days for APO/FPO order delivery.'); ?><br /><br />
+			<?php echo $this->__('Standard orders are processed and shipped within 48 hours of Checkout. Sales Tax is only applied for New York State Residents.'); ?></div>
+			
+			<div class="divider invisible"></div>
+
+			<div>
+				<img style="float: right; margin-top: 2em; margin-right: 3em;" src="/skin/frontend/base/default/images/fedex-logo-90.png">
+				<div style="font-size: 13px; color: #1a1a1a;">Contact Us for Saturday Delivery</div>
+				<div style="font-size: 13px; color: #4572cc; color: var(--windows-blue); margin: 8px 0;">888-243-4344</div>
+				<div style="font-size: 13px; color: #4572cc; color: var(--windows-blue);">Sales@AvianneAndCo.com</div>
+			</div>
+
+			<div class="divider invisible"></div>
+			<br><br>
+
+			<div class="homepage-text orderscomewith-narrow">
+				<h4>ORDERS COME WITH</h4>
+				<hr style="margin: 12px 0 14px; height: 1px; width: 200px; border: 0; border-bottom: 1px solid #e6e6e6;">
+				<ul>
+					<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-ship.png" />Free Shipping</li>
+					<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-appraisal.png" />Free Appraisal Certificate</li>
+					<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-gift-box.png" />Free Gift Box</li>
+					<li><img src="/skin/frontend/avianne-resp/default/images/homepage/ic-returns.png" />14 Days Returns</li>
+				</ul>
+			</div>
+
+			<div class="divider invisible"></div>
+			<br>
+
+			<div style="font-size: 13px; font-family: 'Circular Std Bold';">NEED IT WRAPPED?</div>
+			<div style="font-size: 13px;">Free gift wrapping available with your purchase!</div>
+
+			<br>
+			<div class="divider invisible"></div>
+
+			<table style="width: 100%; text-align: center;">
+				<tr>
+					<td>
+						<a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo4_.jpg" alt="" border="0" align="middle" /></a>	
+						<br /><b class="verified">Online Checkout Security Verified</b><br />
+					</td>
+				</tr>
+			</table>
+
+		</div>
+		<!-- </td> -->
+
+		<div class="column-left column-wishlist">
+			<!-- <hr><hr> -->
+		</div>
+
+	<!-- </tr> -->
+<!-- </table> -->
+<br>
+</div>
+
+<script type="text/javascript">
+	jQuery(function() {
+		jQuery('.remove-product-link a').live('click',function(e) {
+			var id = jQuery(this).attr('class');
+			var box = jQuery('#'+id);
+			var val = box.find(":selected").val();
+			if( val > 1 ) {
+				box.val( val-1 ).attr('selected',true);
+				jQuery('#cart_form').submit();
+				e.preventDefault();
+			}
+		});
+	});
+</script>
+<!-- BEGIN: buySAFE Seal -->
+<script src="https://seal.buysafe.com/private/rollover/rollover.js"></script>
+<span id="BuySafeSealSpan"></span>
+<script type="text/javascript">
+  buySAFE.Hash = "8q7tsSQNpWW0V%2FRRsPCnQKXlWkIkRup8w1Fbdda3Rbq7LrqILX7py3qOYALlLxk4t4rO7QtsHL3LPdn2iINXRQ%3D%3D";
+  WriteBuySafeSeal("BuySafeSealSpan", "GuaranteedSeal");
+</script>
+<!-- END: buySAFE Seal -->
+<div class="clear"></div>

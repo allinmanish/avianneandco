@@ -1,0 +1,113 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for filter items block
+ *
+ * @see Mage_Catalog_Block_Layer_Filter
+ */
+?>
+
+<?php
+$filter_name = $this->getItems();
+
+if(!$filter_name) return;
+
+
+$var_name = $filter_name[0]->getFilter()->getRequestVar();
+
+$step_value = Mage::getStoreConfig('ajaxlist/ajaxlist/step');
+?>
+<?php
+
+if ($var_name == "price") {
+    ?>
+    <?php
+    $price_url = $filter_name[0]->getUrl();
+    $url_info = parse_url($price_url);
+    if ($url_info["query"]) {
+        $variableArray = explode("&", $url_info["query"]);
+        $new_variable_array = array();
+        foreach ($variableArray as $arraySet) {
+            if (strpos($arraySet, "price=") === false) {
+                $nameAndValue = explode("=", $arraySet);
+                $new_variable_array[$nameAndValue[0]] = $nameAndValue[1];
+            }
+        }
+    }
+    $url_vars = http_build_query($new_variable_array);
+
+    $filter = $this->getRequest()->getParam("price");
+
+    $filter = explode('-', $filter);
+
+    //added price min - maximum
+    list($price_min, $price_max) = $filter;
+
+
+    $price_minimum = 0;
+    $price_maximum = $filter_name[0]->getFilter()->getMaxPriceInt();
+    //die(var_dump($price_maximum));
+
+    $init_price_minimum = (int) $price_min;
+    $init_price_maximum = (int) $price_max;
+    if ($init_price_maximum == 0 || $init_price_maximum >= $price_maximum)
+        $init_price_maximum = $price_maximum;
+    ?>
+    <div id="slider_outer">
+        <div class="s3"></div>
+        <div style="padding: 0 13px 0 1px;">
+            <div id="slider-range-price"></div>
+        </div>
+    </div>
+    <div class="price-slider-values">
+        <input type="text" name="price_minimum" id="price_minimum" value="<?php echo $price_minimum; ?>"/><span class="filter-currency">&nbsp;-&nbsp;</span><input type="text" name="price_maximum" id="price_maximum" value="<?php echo $price_maximum; ?>"/>&nbsp;<a id="price-filter-button" href="#"><?php echo $this->__("Search"); ?></a>
+        <input value="<?php echo $url_info["scheme"] . "://" . $url_info["host"] . $url_info["path"] . (($url_vars) ? ("?" . $url_vars ) : ""); ?>" type="hidden" id="price_slider_url" name="price_slider_url"/>
+        <input value="<?php echo $init_price_minimum; ?>" type="hidden" id="init_price_minimum" name="init_price_minimum"/>
+        <input value="<?php echo $init_price_maximum; ?>" type="hidden" id="init_price_maximum" name="init_price_maximum"/>
+        <input value="<?php echo $step_value; ?>" type="hidden" id="step_value" name="step_value"/>
+        <input value="<?php echo $price_maximum; ?>" type="hidden" id="max_price_fix_value" name="max_price_fix_value"/>
+    </div>
+    <div class="filter-loader">&nbsp;</div>
+    <?php
+} else {
+    ?>
+    <ol>
+    <?php foreach ($this->getItems() as $_item): ?>
+            <li>
+            <?php if ($_item->getCount() > 0): ?>
+                    <a href="<?php echo $this->urlEscape($_item->getUrl()) ?>"><?php echo $_item->getLabel() ?></a>
+                <?php else: echo $_item->getLabel() ?>
+                <?php endif; ?>
+                (<?php echo $_item->getCount() ?>)
+            </li>
+    <?php endforeach ?>
+    </ol>
+        <?php
+    }
+    ?>
+

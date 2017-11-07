@@ -1,0 +1,49 @@
+<?php
+	if ($this->isActive):
+	$urlUpdater = $this->getUrl('flivechat/chat/getMessageSession', array('store_id'=>Mage::app()->getStore(true)->getId()));
+	$urlSendMessage = $this->getUrl('flivechat/chat/sendmessage', array('store_id'=>Mage::app()->getStore(true)->getId()));
+	
+	echo '<script language="javascript">';
+	echo "\nvar urlSendMessage = '$urlSendMessage';\n";
+	echo "var urlUpdater = '$urlUpdater';\n";
+	echo "var frequency = ".$this->refreshfrequency.";\n";
+	echo "var decay = ".$this->refreshdecay.";\n";
+	echo '</script>';
+?>
+
+<div class="box base-mini mini-livechat">
+    <div class="head">
+        <h4><?php echo $this->titlelabel; ?></h4>
+    </div>
+		<?php if($this->ChatSessionStarted()): ?>
+		<script language="javascript">
+			<?php
+				echo "SetUpdater();";
+			?>
+		</script>
+		<div class="content"><p id="livechat_messages"><?php
+        $messages = $this->getMessages();
+        foreach ($messages as $message)
+        {
+			echo $message->RenderLine();
+		}
+         ?></p></div>
+        <?php else: ?>
+        <div class="content" id="livechat_messages"><?php echo $this->returnChatImage();echo $this->chatlabel; ?><div style="clear: both;"></div></div>
+        <?php endif; ?>
+		<div class="actions">
+		<?php if ($this->AreOperatorOnline()):?>
+            <input type="text" id="textmessage" name="message" onKeyPress="javascript:LiveChatKeyPress(event);">
+            <img id="livechat_ajax_loader" style="display: none;" src="<?php echo $this->getSkinUrl('images/livechat/ajax-loader.gif'); ?>">
+            <?php
+				echo "<button class=\"form-button-alt\" onclick=\"javascript:SendMessage();\">";
+            ?>
+            <span><?php echo $this->__('Send'); ?></span></button>
+        <?php else:?>
+        	<?php echo $this->unavailablelabel; ?>
+        <?php endif;?>
+        </div>
+</div>
+<?php
+	endif;
+?>

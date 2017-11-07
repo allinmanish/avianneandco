@@ -1,0 +1,93 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   design_default
+ * @package    Mage
+ * @copyright  Copyright (c) 2008 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php /*
+<div class="page-head-alt button-level" style="padding:0;">
+	<h2><?php echo $this->__('BILLING INFORMATION') ?></h2>
+</div>
+*/ ?>
+<script type="text/javascript" src="<?php echo $this->getJsUrl('varien/accordion.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/opcheckout.js') ?>"></script>
+
+<ol class="opc" id="checkoutSteps">
+<?php $i=0; foreach($this->getSteps() as $_stepId => $_stepInfo): ?>
+<?php if (!$this->getChild($_stepId) || !$this->getChild($_stepId)->isShow()): continue; endif; $i++ ?>
+    <li id="opc-<?php echo $_stepId ?>" class="section<?php echo !empty($_stepInfo['allow'])?' allow':'' ?><?php echo !empty($_stepInfo['complete'])?' saved':'' ?>">
+        <div class="step-title">
+            <span class="number"><?php echo $i ?></span>
+            <h2><?php echo $_stepInfo['label'] ?></h2>
+            <a href="#"><?php echo $this->__('Edit') ?></a>
+        </div>
+        <div id="checkout-step-<?php echo $_stepId ?>" class="step a-item" style="display:none;">
+            <?php echo $this->getChildHtml($_stepId) ?>
+        </div>
+    </li>
+<?php endforeach ?>
+</ol>
+
+<?php /*
+	<div class="chekout-footer">
+		<table cellpadding="0" cellspacing="0">
+			<tbody><tr>
+				<td colspan="3">
+					<p class="verified-by-godaddy"><img border="0" src="/skin/frontend/avianne-resp/default/images/godaddy.png" alt="">The security of this site has been <a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank" rel="nofollow">verified by GoDaddy</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td><a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img src="/skin/frontend/avianne-resp/default/homeimg/footerlogo4.jpg" alt="" border="0"></a></td>
+			</tr>
+		</tbody></table>
+	</div>
+*/ ?>
+
+<script type="text/javascript">
+//<![CDATA[
+    var accordion = new Accordion('checkoutSteps', '.step-title', true);
+    <?php if($this->getActiveStep()): ?>
+    accordion.openSection('opc-<?php echo $this->getActiveStep() ?>');
+    <?php endif ?>
+    var checkout = new Checkout(accordion,{
+        progress: '<?php echo $this->getUrl('checkout/onepage/progress') ?>',
+        review: '<?php echo $this->getUrl('checkout/onepage/review') ?>',
+        saveMethod: '<?php echo $this->getUrl('checkout/onepage/saveMethod') ?>',
+        failure: '<?php echo $this->getUrl('checkout/cart') ?>',
+        disallowAccessToNextSections: false,
+        checkAllow: false
+    });
+//]]>
+</script>
+    
+<!-- script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script -->
+<!-- script type="text/javascript" src="https://fraudshieldsapp.appspot.com/script/includescript.js"></script-->
+
+<!-- BEGIN: buySAFE Seal -->
+<script src="https://seal.buysafe.com/private/rollover/rollover.js"></script>
+<span id="BuySafeSealSpan"></span>
+<script type="text/javascript">
+  buySAFE.Hash = "8q7tsSQNpWW0V%2FRRsPCnQKXlWkIkRup8w1Fbdda3Rbq7LrqILX7py3qOYALlLxk4t4rO7QtsHL3LPdn2iINXRQ%3D%3D";
+  WriteBuySafeSeal("BuySafeSealSpan", "GuaranteedSeal");
+</script>
+<!-- END: buySAFE Seal -->

@@ -1,0 +1,7 @@
+<?php 
+if ($this->getChildHtml('catalog.topnav.'.Mage::getStoreConfig('advancedmenu/displayoptions/mode'))) {
+	echo $this->getChildHtml('catalog.topnav.'.Mage::getStoreConfig('advancedmenu/displayoptions/mode'));
+} elseif ($this->getChildHtml('left.'.Mage::getStoreConfig('advancedmenu/displayoptions/mode'))) {
+	echo $this->getChildHtml('left.'.Mage::getStoreConfig('advancedmenu/displayoptions/mode'));
+}
+?>

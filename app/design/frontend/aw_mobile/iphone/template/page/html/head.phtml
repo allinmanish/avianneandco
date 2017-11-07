@@ -1,0 +1,55 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ *
+ * @category   AW
+ * @package    AW_Mobile
+ * @copyright  Copyright (c) 2010-2011 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/LICENSE-M1.txt
+ */
+?>
+<title>
+    <?php echo htmlspecialchars(html_entity_decode($this->getTitle())) ?>
+</title>
+<meta name="viewport" content="width=642, user-scalable=no">
+
+<?php if (!Mage::getStoreConfig('awmobile/behaviour/mobile_cache')): ?>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<?php endif; ?>
+
+<?php if ($logo_src = Mage::getStoreConfig('awmobile/design/bootmarks_src')): ?>
+<link rel="apple-touch-icon" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'awmobile/'.$logo_src; ?>"/>
+<?php else: ?>
+<link rel="apple-touch-icon" href="<?php echo $this->getSkinUrl('touch-icon.png'); ?>"/>
+<?php endif; ?>
+
+<script type="text/javascript">
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+</script>
+
+
+<?php  if (Mage::helper('awmobile')->BlackBerry()): ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/blackberry.css'); ?>" media="all" />
+<?php  endif; ?>
+<?php  if (Mage::helper('awmobile')->Android()): ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/android.css'); ?>" media="all" />
+<?php  endif; ?>
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'aw_mobile/jquery-1.4.4.min.js' ?>"></script>
+<script type="text/javascript">var $jQueryconflict = jQuery.noConflict();</script>
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->helper('core/js')->getTranslatorScript() ?>
+
+<?php echo $this->getChildHtml() ?>
+<script src='https://static-na.payments-amazon.com/cba/js/us/PaymentWidgets.js'></script>
+<?php  if (Mage::helper('awmobile')->winMobile()): ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/wmobile.css'); ?>" media="all" />
+<?php  endif; ?> 

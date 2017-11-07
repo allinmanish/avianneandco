@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <WSM_ArmedShipping>
+      <version>0.1.0</version>
+    </WSM_ArmedShipping>
+  </modules>
+ 
+  <global>
+    <models>
+      <armedshipping>
+        <class>WSM_ArmedShipping_Model</class>
+      </armedshipping>
+    </models>
+ 
+    <resources>
+      <armedshipping_setup>
+        <setup>
+          <module>WSM_ArmedShipping</module>
+        </setup>
+        <connection>
+          <use>core_setup</use>
+        </connection>
+      </armedshipping_setup>
+    </resources>
+  </global>
+  <default>
+        <carriers>
+            <armedshipping>
+                    <active>1</active>
+					<model>armedshipping/carrier_armedshipping</model>
+            </armedshipping>
+        </carriers>
+    </default>
+</config>

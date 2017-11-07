@@ -1,0 +1,66 @@
+<?php if( ( (strpos($this->getRequest()->getModuleName(), "gomage_checkout")!==false) && ($this->getRequest()->getControllerName()=="onepage") ) ||
+		( (strpos($this->getRequest()->getModuleName(), "ixcba")!==false) && ($this->getRequest()->getControllerName()=="inline") )  ) { ?>
+<div class="homepage" style="clear:both">
+	<div class="chekout-footer">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan="3">
+					<p class="verified-by-godaddy"><img border="0" src="<?php echo $this->getSkinUrl()?>images/godaddy.png" alt="" />The security of this site has been <a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank" rel="nofollow">verified by GoDaddy</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside" target="blank"><img src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo2.jpg" alt="" border="0" /></a></td>
+				<td><a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo4.jpg" alt="" border="0" /></a></td>
+				<td><a href="http://www.avianneandco.com/customer-service/#answer5" target ="blank"><img src="<?php echo $this->getSkinUrl()?>images/cc_types.png" alt="" border="0" /></a></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<?php } elseif( (strpos($this->getRequest()->getModuleName(), "gomage_checkout")!==false) && ($this->getRequest()->getControllerName()=="cart") ) { ?>
+<div class="homepage" style="clear:both"></div>
+<?php } else { /*?>
+<div style="clear:both;"></div>
+<div class="homepage-call-us">
+	<div class="homepage-call-us-sub">
+		<div class="homepage-call-us-sub-sub">
+			Call us toll free - <b>(888) 243 4344</b>
+		</div>
+	</div>
+</div>
+<div class="homepage-logos">
+	<table id="Table_01" width="900" height="65" border="0" cellpadding="0" cellspacing="0" padding-top="5px;">
+		<tr>
+			<td>
+				<table id="Table_001" class="home-social">
+					<tbody>
+						<tr>
+							<td><a href="http://www.facebook.com/aviannejewelers" class="sb-fb"></a></td>
+							<td><a href="http://twitter.com/#!/avianneJewelers" class="sb-tw"></a></td>
+							<td><a href="http://www.youtube.com/Avianneandco" class="sb-yt"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td><img src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo1.jpg" alt="" border="0" align="right" width="170" /></td>
+			<td><a href="https://www.paypal.com/cgi-bin/webscr?cmd=xpt/Marketing/popup/OLCWhatIsPayPal-outside"><img width="80" src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo2.jpg" alt="" border="0" align="right" /></a></td>
+			<td><a href="/customer-service/#answer5"><img src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo3.jpg" alt="" border="0" align="right" width="240" /></a></td>
+			<td><a href="https://seal.godaddy.com:443/verifySeal?sealID=tzDrLAPWj6j90HlnKOjCk4TjARZaK7wbj73ocV6SsTqikXopPzR7ny9ya" target="blank"><img width="150" src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo4.jpg" alt="" border="0" align="right" /></a></td>
+			<td><a href="https://checkout.google.com/reviews/merchant/endUserReviews?sellerId=312661932921276" target ="blank"><img width="125" src="<?php echo $this->getSkinUrl()?>homeimg/footerlogo5.jpg" alt="" border="0" align="right" /></a></td>
+		</tr>
+		<tr>
+			<td>
+				<?php if(strpos($this->getRequest()->getModuleName(), "gomage_checkout")===false) { ?>
+					<div id="footer_social_block">
+						<div class="g-plusone" data-size="medium" data-href="http://www.avianneandco.com"></div>  
+					</div>
+				<?php } ?>
+			</td>
+			<td colspan="5">
+				<p class="footer-sitemap"><a href="/catalog/seo_sitemap/category/">Site Map</a>: <a href="/mens-diamond-jewelry">Mens Diamond Jewelry</a> | <a href="/womens-diamond-jewelry">Womens Diamond Jewelry</a> | <a href="/pre-set-diamond-engagement-rings-1">Eternity Rings</a> | <a href="/custom-jewelry">Custom Jewelry</a> | 
+				<a href="/mens-diamond-chains-1">Diamond Chains</a> | <a href="/gemstone-jewelry">Gemstone Jewelry</a> | <a href="/diamond-tennis-bracelets">Tennis Bracelets</a> | <a href="/mens-diamond-rings-1">Mens Diamond Rings</a> | 
+				<a href="/watches">Diamond Watches</a> | <a href="/diamond-anniversary-rings">Anniversary Rings</a> | <a href="/diamond-wedding-rings">Wedding Bands</a> | <a href="/bling-hip-hop-diamond-jewelry">Hip Hop Jewelry</a> | <a href="/womens-diamond-rings-1">Womens Diamond Rings</a></p>
+			</td>
+		</tr>
+	</table>
+</div>
+<?php */ } ?>

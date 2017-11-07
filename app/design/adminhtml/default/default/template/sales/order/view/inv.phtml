@@ -1,0 +1,314 @@
+<?php 
+$order = $this->getOrder();
+$b_customer = array(
+		'fn' => $order->getBillingAddress()->getFirstname(),
+		'ln' => $order->getBillingAddress()->getLastname(),
+		'mn' => $order->getBillingAddress()->getMiddlename()
+		);
+$s_customer = array(
+		'fn' => $order->getShippingAddress()->getFirstname(),
+		'ln' => $order->getShippingAddress()->getLastname(),
+		'mn' => $order->getShippingAddress()->getMiddlename()
+);
+$b_address = Mage::getModel('sales/order_address')->load($order->getBillingAddress()->getId());
+$s_address = Mage::getModel('sales/order_address')->load($order->getShippingAddress()->getId());
+$_helper = $this->helper('catalog/output');
+switch ($order->getPayment()->getMethodInstance()->getTitle()) {
+	case 'Paypal Standard':
+		$payment_method = 'Paypal';
+	break;
+	case 'Paypal Direct':
+	case 'Credit Card':
+		switch ($order->getPayment()->getCcType()) {
+			case 'DI':
+				$payment_method = 'DISCOVER';
+			break;
+			case 'AE':
+				$payment_method = 'AMEX';
+			break;
+			case 'MC':
+				$payment_method = 'MASTERCARD';
+			break;
+			case 'VI':
+				$payment_method = 'VISA';
+			break;
+		}
+	break;
+	case 'Checkout By Amazon':
+		$payment_method = 'Amazon Checkout';
+	break;	
+	default:
+		$payment_method = $order->getPayment()->getMethodInstance()->getTitle();
+	break;
+}
+$items = $order->getAllItems();
+?>
+<style>
+body { margin: 0px; width: 650px; height: 880px; padding: 0 20px; text-align: center; font: 10px Times; }
+img#logo {
+	margin-top: 25px; }
+@font-face {
+    font-family: 'Times';
+    src: url('<?php echo $this->getSkinUrl('fonts/times_new_roman-webfont.eot') ?>');
+    src: url('<?php echo $this->getSkinUrl('fonts/times_new_roman-webfont.eot?#iefix') ?>') format('embedded-opentype'),
+         url('<?php echo $this->getSkinUrl('fonts/times_new_roman-webfont.woff') ?>') format('woff'),
+         url('<?php echo $this->getSkinUrl('fonts/times_new_roman-webfont.ttf') ?>') format('truetype'),
+         url('<?php echo $this->getSkinUrl('fonts/times_new_roman-webfont.svg#times_new_roman-webfont') ?>') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.logo-text {
+	font: 12px Times;
+	margin: 0 0 10px 0;
+}
+.box {
+    width: 173px;
+	float: left; 	
+	margin-right: 8px;
+}
+.box h4 {
+	font-weight: normal;
+	border-bottom: 1px solid black;
+	padding: 3px 0;
+	margin: 0;
+}
+.box p {
+	margin: 5px 0;
+}
+.data-box {
+    border: 1px solid black;
+	
+}
+.box-small {
+    width: 85px;
+	float: left;
+}
+.box-large {
+	height: 85px;
+	text-align: left;
+}
+	.box-large h4, .box-large p {
+     	padding-left: 5px;    
+	}
+.items-image {
+<?php if (count($items)==1):?>
+	float:left;
+	margin-right: 5px;
+<?php endif;?>
+	clear: both;
+	margin-top: 10px;
+    text-align: left;	
+}
+.items-image img {
+	border: 1px sold grey;
+}
+.clear {
+	height: 1px;
+	margin-bottom: 5px; clear: both;
+}
+table.items {
+<?php if (count($items)==1):?>
+	width: 470px;
+	margin: 15px 0;
+<?php else:?>
+	width: 630px;
+	margin: 5px 0;
+<?php endif;?>
+	border-width: 1px;
+	border-spacing: 2px;
+	border-style: outset;
+	border-color: black;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.items th {
+	font-weight: normal;
+	border-width: 1px;
+	padding: 3px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+	-moz-border-radius: ;
+}
+table.items td {
+	text-align: right;
+	border-width: 1px;
+	padding: 3px 5px;
+	border-style: inset;
+	border-color: black;
+	background-color: white;
+	-moz-border-radius: ;
+}
+table.items td.left {
+	text-align: left;
+}
+dl {
+	margin: 3px 2px;
+}
+dl dt {
+	font-weight: bold;
+}
+dl dd {
+	margin-left: 10px;
+}
+.bottom-box {
+	margin-right: 7px;
+	float: left;
+	height: 200px;
+	border: 1px solid black;	
+}
+.bottom-box h4 {
+	font-weight: normal;
+	border-bottom: 1px solid black;	
+	margin: 0;
+	padding: 5px 0;
+}
+.bottom-box p {
+	padding: 3px 5px;
+	text-align: left;
+	margin:0;
+}
+.bottom-box-1 {
+	width: 170px;
+}
+.bottom-box-2 {
+	width: 240px;
+}
+.bottom-box-3 {
+	width: 200px;
+}
+.footer-box {
+	float: left;
+	margin-right: 15px;
+	border: 1px solid black;
+	height: 38px;
+}
+.footer-box-1 {
+	padding: 5px 0 0;
+	height: 33px;
+	width: 420px;
+}
+.footer-box-2 {
+	vertcal-align: middle;
+	width: 190px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.footer-box-2 span.price {
+	color: #15256c;
+	font-weight: normal;
+	float: right;
+}
+.footer-box-2 p {
+	margin: 8px;
+	text-align: left;
+}
+</style>
+
+<body>
+
+<div class="wrapper">
+	<img src="<?php echo $this->getSkinUrl('images/logo_inv.png') ?>" class="logo" id="logo">
+	<p class="logo-text">
+		28 West 47th st - New York, NY - 10036<br />888-243-4344
+	</p>
+	<div class="box">
+		<div class="info-box">
+			<div class="data-box box-small" style="border-right: 0;">
+				<h4>Date</h4>
+				<p><?php echo date('n/d/Y'); ?></p>
+			</div>
+			<div class="data-box box-small">
+				<h4>Order Number</h4>
+				<p><?php echo $order->getIncrementId(); ?></p>
+			</div>
+		</div>
+		<div class="clear">&nbsp;</div>
+		<div class="data-box">
+			<h4>Payment Method</h4>
+			<p><?php echo $payment_method; ?></p>
+		</div>
+	</div>
+	<div class="data-box box box-large">
+		<h4>Bill To</h4>
+		<p>
+		<?php echo implode(" ", $b_customer) ?><br />
+		<?php echo $b_address['street'] ?><br />
+		<?php echo $b_address['city'].", ".(empty($b_address['region_id'])?$b_address['region']:(Mage::getModel("directory/region")->load($b_address['region_id'])->getCode()))." ".$b_address['postcode']; ?><br>
+		<?php echo Mage::getModel("directory/country")->load($b_address['country_id'])->getName(); ?>
+		</p>
+	</div>
+	<div class="data-box box box-large">
+		<h4>Ship To</h4>
+		<p>
+		<?php echo implode(" ", $s_customer) ?><br />
+		<?php echo $s_address['street'] ?><br />
+		<?php echo $s_address['city'].", ".(empty($s_address['region_id'])?$s_address['region']:(Mage::getModel("directory/region")->load($s_address['region_id'])->getCode()))." ".$s_address['postcode']; ?><br>
+		<?php echo Mage::getModel("directory/country")->load($s_address['country_id'])->getName(); ?>
+		</p>
+	</div>
+	<div class="clear">&nbsp;</div>
+	<div class="items-image">
+		<?php foreach ($items as $item): ?>
+			<?php $_product = Mage::getModel('catalog/product')->load($item->getProductId()); ?>
+			<?php if ($_product->getId()): ?>
+				<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(155, 155)->setQuality(90); ?>" alt="<?php echo $this->htmlEscape($_product->getName()) ?>" />
+			<?php endif; ?>
+		<?php endforeach; ?>
+	</div>
+	<table class="items">
+		<thead>
+			<tr>
+				<th>Quantity</th><th>Item Code</th><th>Description</th><th>Price Each</th><th>Amount</th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($items as $item): ?>
+			<tr>
+				<td><?php echo (int)$item->getQtyOrdered(); ?></td>
+				<td class="left"><?php echo $item->getSku(); ?></td>
+				<td class="left">
+					<?php echo $item->getName(); ?>
+					<?php $options = $item->getProductOptions(); ?>
+					<?php if(count($options["options"])>0):?>
+						<dl class="item-options">
+						<?php foreach ($options["options"] as $option): ?>
+							<dt><?php echo $option["label"];?></dt>
+							<dd><?php echo $option["print_value"];?></dd>
+						<?php endforeach;?>
+						</dl>
+					<?php endif;?>
+				</td>
+				<td><?php echo $this->helper('checkout')->formatPrice($item->getPrice()) ?></td>
+				<td><?php echo $this->helper('checkout')->formatPrice($item->getRowTotal()) ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+		<tfoot>
+			<?php $tax_amount = $order->getTaxAmount();?>
+			<?php if ($tax_amount==0.0000): ?>
+				<tr><td></td><td></td><td class="left">Out-of-state sale, exempt from sales tax</td><td></td><td>0.00</td></tr>
+			<?php else: ?>	
+				<tr><td></td><td></td><td class="left">NYS Sales Tax</td><td>8.875%</td><td><?php echo $this->helper('checkout')->formatPrice($tax_amount); ?></td></tr>
+			<?php endif; ?>
+		</tfoot>
+	</table>
+	<div class="clear">&nbsp;</div>
+	<div class="bottom-box-1 bottom-box">
+		<h4>Return Authorization Number</h4>
+	</div>
+	<div class="bottom-box-2 bottom-box">
+		<h4>Return Policy &amp; Return Instructions</h4>
+		<p>To initiate a return, customers must contact our returns department to receive a Return Authorization Number. Packages sent back to Avianne &amp; Co without a return authorization number present on the outer packaging will be refused upon arrival. Items may only be returned for a refund within 14 days of receiving the product. Upon receiving your return, the item will be reviewed by our Quality Inspection Team. Please note that items showing signs of wear or those that have been altered or damaged in any way, are not eligible for a return.</p>
+	</div>
+	<div class="bottom-box-3 bottom-box">
+		<h4>Order Comments:</h4>
+		<p><?php echo $order->getCustomerNote(); ?></p>
+	</div>
+	<div class="clear">&nbsp;</div>
+	<div class="footer-box footer-box-1">Thank you for your business, and for choosing Avianne &amp; Co. for all of your jewelry needs.</div>
+	<div class="footer-box footer-box-2"><p><span>Total</span> <span class="price"><?php echo $this->helper('checkout')->formatPrice($order->getGrandTotal()); ?></span></p></div>
+</div>
+
+</body>

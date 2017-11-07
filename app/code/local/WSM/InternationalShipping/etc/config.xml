@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <WSM_InternationalShipping>
+      <version>0.1.0</version>
+    </WSM_InternationalShipping>
+  </modules>
+ 
+  <global>
+    <models>
+      <internationalshipping>
+        <class>WSM_InternationalShipping_Model</class>
+      </internationalshipping>
+    </models>
+ 
+    <resources>
+      <internationalshipping_setup>
+        <setup>
+          <module>WSM_InternationalShipping</module>
+        </setup>
+        <connection>
+          <use>core_setup</use>
+        </connection>
+      </internationalshipping_setup>
+    </resources>
+  </global>
+  <default>
+        <carriers>
+            <internationalshipping>
+                    <active>1</active>
+					<model>internationalshipping/carrier_internationalshipping</model>
+            </internationalshipping>
+        </carriers>
+    </default>
+</config>

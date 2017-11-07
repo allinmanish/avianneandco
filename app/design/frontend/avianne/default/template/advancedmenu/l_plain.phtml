@@ -1,0 +1,11 @@
+<div class="header-aw-nav-container">
+    <!--div class="header-nav"-->
+        <h4 class="no-display"><?php echo $this->__('Category Navigation:') ?></h4>
+        <?php foreach ($this->getStoreCategories() as $_category): ?>
+        <ul id="nav">
+            <?php echo $this->drawItem($_category) ?>
+				</ul>            
+        <?php endforeach ?>
+    <!--/div-->
+    <?php echo $this->getChildHtml('topLeftLinks') ?>
+</div>

@@ -1,0 +1,185 @@
+<?xml version="1.0" ?>
+<config>
+
+    <modules>
+        <Mfmc_mfmcallforprice>
+            <version>0.1.0</version>
+        </Mfmc_mfmcallforprice>
+    </modules>
+ 
+    <frontend>
+        <layout>
+            <updates>
+                <mfmcallforprice>
+                    <file>mfmcallforprice.xml</file>
+                </mfmcallforprice>
+            </updates>
+        </layout>
+
+        <routers>
+            <mfmcallforprice>
+                <use>standard</use>
+                <args>
+                    <module>Mfmc_mfmcallforprice</module>
+                    <frontName>mfmcallforprice</frontName>
+                </args>
+            </mfmcallforprice>
+        </routers>
+
+    </frontend>
+
+    <global>
+        <models>
+            <mfmcallforprice>
+                <class>Mfmc_mfmcallforprice_Model</class>
+                <resourceModel>mfmcallforprice_mysql4</resourceModel>
+            </mfmcallforprice>
+            <mfmcallforprice_mysql4>
+                <class>Mfmc_mfmcallforprice_Model_Mysql4</class>
+                <entities>
+                    <mfmcallforprice>
+                         <table>mfmc_mfmcallforprice</table>
+                    </mfmcallforprice>
+                </entities>
+            </mfmcallforprice_mysql4>
+
+            <!--checkout>
+                <rewrite>
+                    <cart>Mfmc_mfmcallforprice_Model_Rewrite_FrontCheckoutCart</cart>
+                </rewrite>
+            </checkout-->
+
+            <catalogindex_mysql4>
+                <rewrite>
+                    <price>Mfmc_mfmcallforprice_Model_Rewrite_FrontCatalogindexMysql4Price</price>
+                </rewrite>
+            </catalogindex_mysql4>
+
+            <!-- <catalog>Mage_Bundle_Block_Catalog_Product_Price
+                <rewrite>
+                    <product>Mfmc_mfmcallforprice_Model_Rewrite_FrontCatalogProduct</product>
+                </rewrite>
+            </catalog> -->
+        </models>
+
+        <resources>
+            <mfmcallforprice_setup>
+                <setup><module>Mfmc_mfmcallforprice</module></setup>
+                <connection><use>core_setup</use></connection>
+            </mfmcallforprice_setup>
+            <mfmcallforprice_write>
+                <connection><use>core_write</use></connection>
+            </mfmcallforprice_write>
+            <mfmcallforprice_read>
+                <connection><use>core_read</use></connection>
+            </mfmcallforprice_read>
+        </resources>
+
+         <blocks>
+            <mfmcallforprice>
+                <class>Mfmc_mfmcallforprice_Block</class>
+            </mfmcallforprice>
+
+            <adminhtml>
+                <rewrite>
+                    <catalog_product_edit_tabs>Mfmc_mfmcallforprice_Block_Rewrite_AdminhtmlCatalogProductEditTabs</catalog_product_edit_tabs> 
+                </rewrite>
+            </adminhtml>
+
+            <catalog>
+                <rewrite>
+                    <product_list>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductList</product_list>
+                    
+                    <product_list_related>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductListRelated</product_list_related>
+                    
+                    <product_list_upsell>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductListUpsell</product_list_upsell>
+                    
+                    <product_compare_list>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductCompareList</product_compare_list>
+                    
+                    <product_view>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductView</product_view>
+
+                    <product_view_type_simple>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductViewTypeSimple</product_view_type_simple>
+                    
+                    <product_view_type_virtual>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductViewTypeVirtual</product_view_type_virtual>
+                    
+                    <product_view_type_grouped>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductViewTypeGrouped</product_view_type_grouped>
+                    
+                    <product_view_type_configurable>Mfmc_mfmcallforprice_Block_Rewrite_FrontCatalogProductViewTypeConfigurable</product_view_type_configurable>
+                </rewrite>
+            </catalog>
+
+            <bundle>
+                <rewrite>
+                    <catalog_product_view_type_bundle>Mfmc_mfmcallforprice_Block_Rewrite_FrontBundleCatalogProductViewTypeBundle</catalog_product_view_type_bundle>
+                    <catalog_product_price>Mfmc_mfmcallforprice_Block_Rewrite_FrontBundleCatalogProductPrice</catalog_product_price>
+                </rewrite>
+            </bundle>
+
+            <checkout>
+                <rewrite>
+                    <cart_crosssell>Mfmc_mfmcallforprice_Block_Rewrite_FrontCheckoutCartCrosssell</cart_crosssell>
+                </rewrite>
+            </checkout>
+
+            <downloadable>
+                <rewrite>
+                    <catalog_product_view_type>Mfmc_mfmcallforprice_Block_Rewrite_FrontDownloadableCatalogProductViewType</catalog_product_view_type>
+                </rewrite>
+            </downloadable>
+
+            <wishlist>
+                <rewrite>
+                    <!-- <share_email_items>Mfmc_mfmcallforprice_Block_Rewrite_FrontWishlistShareEmailItems</share_email_items> -->
+                    <customer_wishlist>Mfmc_mfmcallforprice_Block_Rewrite_FrontWishlistCustomerWishlist</customer_wishlist>
+                    <customer_sidebar>Mfmc_mfmcallforprice_Block_Rewrite_FrontWishlistCustomerSidebar</customer_sidebar>
+                </rewrite>
+            </wishlist>
+            
+        </blocks>
+
+        <helpers>
+            <mfmcallforprice>
+                <class>Mfmc_mfmcallforprice_Helper</class>
+            </mfmcallforprice>
+        </helpers>
+
+        <routers>
+        </routers>
+
+        <events>
+            <!-- <catalog_product_is_salable_after>
+                <observers>
+                    <mfmcallforprice>
+                        <type>singleton</type>
+                        <class>mfmcallforprice/observer</class>
+                        <method>catalog_product_is_salable_after</method>
+                    </mfmcallforprice>
+                </observers>
+            </catalog_product_is_salable_after>  -->
+        </events>
+
+    </global>
+
+    <adminhtml>
+        <menu></menu>
+        <acl></acl>
+
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <mfmcallforprice>
+                        <type>singleton</type>
+                        <class>mfmcallforprice/observer</class>
+                        <method>catalogProductSaveAfter</method>
+                    </mfmcallforprice>
+                </observers>
+            </catalog_product_save_after> 
+        </events>
+
+        <translate></translate>
+    </adminhtml>
+
+    <default>
+        <config_vars></config_vars>
+    </default>
+</config>
